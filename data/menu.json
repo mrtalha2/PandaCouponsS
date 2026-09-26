@@ -1,0 +1,699 @@
+{
+  "note": "Prices and calorie counts reflect current 2026 nationwide averages for corporate Panda Express locations. Pricing may vary slightly at airports, universities, theme parks, and third-party delivery platforms.",
+  "summaryTable": [
+    {
+      "category": "Bowl",
+      "included": "1 Entrée + 1 Side",
+      "calories": "280–1,130 Cal",
+      "price": "$9.50+",
+      "bestFor": "Quick, affordable solo meal",
+      "icon": "🥣"
+    },
+    {
+      "category": "Plate",
+      "included": "2 Entrées + 1 Side",
+      "calories": "430–1,640 Cal",
+      "price": "$11.50+",
+      "bestFor": "Most popular everyday choice",
+      "icon": "🍽️"
+    },
+    {
+      "category": "Bigger Plate",
+      "included": "3 Entrées + 1 Side",
+      "calories": "580–2,150 Cal",
+      "price": "$13.50+",
+      "bestFor": "Maximum variety & hearty appetites",
+      "icon": "🍱"
+    },
+    {
+      "category": "Panda Bundles",
+      "included": "Meal + Medium Drink",
+      "calories": "280–2,560 Cal",
+      "price": "$12.00+",
+      "bestFor": "Value combo savings",
+      "icon": "🥤"
+    },
+    {
+      "category": "Panda Cub Meal™",
+      "included": "Jr. Entrée + Side + Drink + Fruit",
+      "calories": "300–740 Cal",
+      "price": "$7.80",
+      "bestFor": "Kids' complete meal",
+      "icon": "🐼"
+    },
+    {
+      "category": "5-Person Family Meal",
+      "included": "3 Large Entrées + 2 Large Sides",
+      "calories": "2,500–5,200 Cal",
+      "price": "$46.00+",
+      "bestFor": "Families & dinner groups",
+      "icon": "🥡"
+    },
+    {
+      "category": "Catering Bundles",
+      "included": "Party Trays & Sides",
+      "calories": "Per serving",
+      "price": "$130.00+",
+      "bestFor": "Offices, parties & events",
+      "icon": "🎉"
+    }
+  ],
+  "categories": [
+    {
+      "id": "meal-combos",
+      "name": "Meal Types & Value Combos",
+      "description": "Choose your format: Bowls, Plates, Bigger Plates, Bundles, and Family Meals. Mix and match any side and wok-seared entrees.",
+      "badge": "BEST VALUE",
+      "items": [
+        {
+          "name": "Bowl",
+          "price": "$9.50+",
+          "calories": "280–1,130 Cal",
+          "description": "1 Side + 1 Entrée. A fast, portion-controlled solo meal with generous volume.",
+          "image": "/public/images/menu/bowl-menu-1.webp",
+          "tags": [
+            "Solo Lunch",
+            "Most Affordable"
+          ]
+        },
+        {
+          "name": "Plate",
+          "price": "$11.50+",
+          "calories": "430–1,640 Cal",
+          "description": "1 Side + 2 Entrées. The guest favorite offering the perfect balance of flavor variety.",
+          "image": "/public/images/menu/plate.webp",
+          "tags": [
+            "Top Seller",
+            "Balanced"
+          ]
+        },
+        {
+          "name": "Bigger Plate",
+          "price": "$13.50+",
+          "calories": "580–2,150 Cal",
+          "description": "1 Side + 3 Entrées. The lowest cost per entrée. Ideal for serious appetites.",
+          "image": "/public/images/menu/bigger-plate.webp",
+          "tags": [
+            "Hearty Meal",
+            "Max Variety"
+          ]
+        },
+        {
+          "name": "Panda Bundles",
+          "price": "$12.00+",
+          "calories": "280–2,560 Cal",
+          "description": "Your choice of Bowl, Plate, or Bigger Plate bundled with a 22oz fountain drink at a combo discount.",
+          "image": "/public/images/menu/panda-bundles.webp",
+          "tags": [
+            "Combo Deal",
+            "Includes Drink"
+          ]
+        },
+        {
+          "name": "Panda Cub Meal™",
+          "price": "$7.80",
+          "calories": "300–740 Cal",
+          "description": "Kids' meal featuring 1 Junior Entrée, 1 Junior Side, fruit snack, and choice of water or organic juice.",
+          "image": "/public/images/menu/panda-club-meal.webp",
+          "tags": [
+            "Kids Menu",
+            "Balanced"
+          ]
+        },
+        {
+          "name": "5-Person Family Meal",
+          "price": "$46.00+",
+          "calories": "Feeds 4–5 People",
+          "description": "3 Large Entrées + 2 Large Sides. Saves $30–$40 compared to individual plates for groups.",
+          "image": "/public/images/menu/5-person-family-meal.webp",
+          "tags": [
+            "Family Feast",
+            "Best Group Savings"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "entrees",
+      "name": "A La Carte Entrees",
+      "description": "Order by the box: Small, Medium, or Large. Wok-fired fresh daily with crisp vegetables and signature chef glazes.",
+      "badge": "WOK SPECIALS",
+      "items": [
+        {
+          "name": "The Original Orange Chicken",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "510 Cal",
+          "description": "Crispy chicken bites wok-tossed in a sweet, spicy, and tangy chili-citrus glaze. The world-famous classic.",
+          "image": "/public/images/menu/orange-chicken.webp",
+          "isPremium": false,
+          "guideUrl": "/panda-express-orange-chicken/",
+          "tags": [
+            "#1 Bestseller",
+            "Crispy & Sweet"
+          ]
+        },
+        {
+          "name": "Beijing Beef",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "480 Cal",
+          "description": "Crispy beef strips tossed with fresh bell peppers and sweet white onions in a tangy, savory glaze.",
+          "image": "/public/images/menu/beijing-beef-1.webp",
+          "isPremium": false,
+          "guideUrl": "/beijing-beef/",
+          "tags": [
+            "Guest Favorite",
+            "Crispy Beef"
+          ]
+        },
+        {
+          "name": "Honey Walnut Shrimp (Premium)",
+          "price": "Sm $6.90 | Med $12.50 | Lg $18.10",
+          "calories": "430 Cal",
+          "description": "Crispy tempura-battered shrimp tossed in a velvety honey glaze and topped with candied glazed walnuts.",
+          "image": "/public/images/menu/seafood-honeywalnutshrimp.webp",
+          "isPremium": true,
+          "tags": [
+            "Premium Seafood",
+            "Honey Glazed"
+          ]
+        },
+        {
+          "name": "Black Pepper Sirloin Steak (Premium)",
+          "price": "Sm $6.90 | Med $12.50 | Lg $18.10",
+          "calories": "180 Cal",
+          "description": "Tender sirloin steak slices wok-seared with crisp green beans and onions in a robust black pepper garlic sauce.",
+          "image": "/public/images/menu/black-pepper-sirloin-steak-2.webp",
+          "isPremium": true,
+          "tags": [
+            "Premium Steak",
+            "Low Calorie",
+            "180 Cal"
+          ]
+        },
+        {
+          "name": "Kung Pao Chicken",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "320 Cal",
+          "description": "Sichuan-inspired chicken with crunchy peanuts, fresh zucchini, red bell peppers, and whole chili peppers.",
+          "image": "/public/images/menu/kung-pao-chicken-1.webp",
+          "isPremium": false,
+          "tags": [
+            "Spicy",
+            "High Protein"
+          ]
+        },
+        {
+          "name": "Honey Sesame Chicken Breast",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "340 Cal",
+          "description": "Crispy chicken breast strips tossed with tender string beans, yellow bell peppers, and toasted sesame seeds.",
+          "image": "/public/images/menu/chicken-breast-honey-sesame-chicken.webp",
+          "isPremium": false,
+          "tags": [
+            "Crispy Breast",
+            "Sesame Glaze"
+          ]
+        },
+        {
+          "name": "Grilled Teriyaki Chicken",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "275 Cal",
+          "description": "Marinated grilled chicken thighs hand-sliced with sweet teriyaki glaze on the side. Packed with 33g protein!",
+          "image": "/public/images/menu/chicken-grilledteriyakichicken.webp",
+          "isPremium": false,
+          "tags": [
+            "33g Protein",
+            "Gym Friendly"
+          ]
+        },
+        {
+          "name": "Broccoli Beef",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "150 Cal",
+          "description": "Tender marinated beef strips wok-tossed with crisp steamed broccoli in a delicate ginger soy sauce.",
+          "image": "/public/images/menu/beef-broccolibeef.webp",
+          "isPremium": false,
+          "tags": [
+            "Only 150 Cal",
+            "Keto Friendly"
+          ]
+        },
+        {
+          "name": "Mushroom Chicken",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "220 Cal",
+          "description": "Diced chicken, fresh sliced white button mushrooms, and zucchini wok-seared in a light ginger garlic soy sauce.",
+          "image": "/public/images/menu/chicken-mushroom.webp",
+          "isPremium": false,
+          "tags": [
+            "Savory",
+            "Light"
+          ]
+        },
+        {
+          "name": "String Bean Chicken Breast",
+          "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
+          "calories": "210 Cal",
+          "description": "Lean chicken breast strips, fresh crunchy string beans, and sweet onions tossed in a mild ginger soy sauce.",
+          "image": "/public/images/menu/chicken-breast-string-bean-chicken.webp",
+          "isPremium": false,
+          "tags": [
+            "Lean Protein",
+            "Crunchy Veggies"
+          ]
+        },
+        {
+          "name": "Wok-Glazed Wagyu Dumplings (Premium)",
+          "price": "Sm $6.90 | Med $12.50",
+          "calories": "350 Cal",
+          "description": "Premium American Wagyu beef and vegetable dumplings pan-seared and wok-glazed in sweet soy reduction.",
+          "image": "/public/images/menu/wok-glazed-wagyu-dumplings.avif",
+          "isPremium": true,
+          "tags": [
+            "Chef Special",
+            "Wagyu Beef"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sides",
+      "name": "A La Carte Sides",
+      "description": "Generous carb and vegetable foundations. Order individually in Medium or Large cartons.",
+      "badge": "SIDES",
+      "items": [
+        {
+          "name": "Chow Mein",
+          "price": "Med $4.40 | Lg $5.60",
+          "calories": "510 Cal",
+          "description": "Wheat noodles stir-fried in the wok with shredded cabbage, fresh celery, and sweet yellow onions.",
+          "image": "/public/images/menu/chow-mein.webp",
+          "tags": [
+            "Signature Side",
+            "Wok Tossed"
+          ]
+        },
+        {
+          "name": "Fried Rice",
+          "price": "Med $4.40 | Lg $5.60",
+          "calories": "520 Cal",
+          "description": "Steamed jasmine rice wok-fried with scrambled eggs, fresh green peas, diced carrots, and scallions.",
+          "image": "/public/images/menu/fried-rice.webp",
+          "tags": [
+            "Classic Favorite",
+            "Egg & Peas"
+          ]
+        },
+        {
+          "name": "White Steamed Rice",
+          "price": "Med $4.40 | Lg $5.60",
+          "calories": "380 Cal",
+          "description": "Fluffy, perfectly steamed premium jasmine rice. Zero fat, clean carbohydrate base.",
+          "image": "/public/images/menu/white-steamed-rice.webp",
+          "tags": [
+            "Zero Fat",
+            "Gluten-Free Side"
+          ]
+        },
+        {
+          "name": "Super Greens",
+          "price": "Med $4.40 | Lg $5.60",
+          "calories": "90 Cal",
+          "description": "A nutritious medley of tender broccoli florets, kale, and green cabbage steamed to crisp perfection.",
+          "image": "/public/images/menu/super-green.webp",
+          "tags": [
+            "Only 90 Cal",
+            "High Fiber",
+            "Vegan"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "appetizers",
+      "name": "Appetizers & Desserts",
+      "description": "Crispy fried rolls, wontons, and sweet treats to accompany your meal.",
+      "badge": "SNACKS & SWEETS",
+      "items": [
+        {
+          "name": "Chicken Egg Roll",
+          "price": "$2.30+",
+          "calories": "200 Cal",
+          "description": "Crispy golden egg roll skin stuffed with seasoned chicken, cabbage, carrots, and celery.",
+          "image": "/public/images/menu/chicken-egg-roll.webp",
+          "tags": [
+            "Crunchy",
+            "Savory Chicken"
+          ]
+        },
+        {
+          "name": "Veggie Spring Roll",
+          "price": "$2.10+",
+          "calories": "150 Cal",
+          "description": "Thin, crispy rice wrapper filled with shredded cabbage, carrots, green beans, and water chestnuts.",
+          "image": "/public/images/menu/veggie-spring-roll.webp",
+          "tags": [
+            "Vegetarian",
+            "Crispy"
+          ]
+        },
+        {
+          "name": "Cream Cheese Rangoon",
+          "price": "$2.40+",
+          "calories": "190 Cal (3 pcs)",
+          "description": "Crispy wonton blossom pouches filled with sweet, smooth cream cheese and green onions.",
+          "image": "/public/images/menu/cream-cheese-rangoon.webp",
+          "tags": [
+            "Creamy Center",
+            "Guest Favorite"
+          ]
+        },
+        {
+          "name": "Apple Pie Roll",
+          "price": "$2.00+",
+          "calories": "150 Cal",
+          "description": "Warm, flaky pastry roll filled with spiced cinnamon apples and lightly dusted in cinnamon sugar.",
+          "image": "/public/images/menu/appetizers-and-more.webp",
+          "tags": [
+            "Warm Dessert",
+            "Cinnamon Apple"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "crafted-drinks",
+      "name": "Panda Crafted Beverages & Refreshers",
+      "description": "Custom artisan brewed teas and fruit refreshers made with natural fruit purées and botanicals.",
+      "badge": "CRAFTED DRINKS",
+      "items": [
+        {
+          "name": "Mango Guava Flavored Tea",
+          "price": "$3.60+",
+          "calories": "195 Cal",
+          "description": "Freshly brewed black tea infused with tropical sweet mango purée and fragrant guava essence.",
+          "image": "/public/images/menu/mango-guava-flavored-tea.webp",
+          "tags": [
+            "Tropical",
+            "Artisan Brew"
+          ]
+        },
+        {
+          "name": "Peach Lychee Flavored Refresher",
+          "price": "$3.60+",
+          "calories": "200 Cal",
+          "description": "Light, invigorating green tea refresher blended with sweet white peach and aromatic lychee fruit.",
+          "image": "/public/images/menu/peach-lychee-flavored-refresher.webp",
+          "tags": [
+            "Fruity",
+            "Crisp Refresher"
+          ]
+        },
+        {
+          "name": "Pomegranate Pineapple Lemonade",
+          "price": "$3.60+",
+          "calories": "240 Cal",
+          "description": "Tart and tangy signature lemonade blended with deep ruby pomegranate and sweet pineapple nectar.",
+          "image": "/public/images/menu/pomegranate-pineapple-flavored-lemonade.webp",
+          "tags": [
+            "Sweet & Tart",
+            "Lemonade Blend"
+          ]
+        },
+        {
+          "name": "Watermelon Mango Refresher",
+          "price": "$3.60+",
+          "calories": "210 Cal",
+          "description": "Hydrating summer cooler combining sweet ripe watermelon juice with juicy mango puree over ice.",
+          "image": "/public/images/menu/watermelon-mango-flavored-refresher.webp",
+          "tags": [
+            "Hydrating",
+            "Real Fruit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Fountain & Bottled Drinks",
+      "description": "Refreshing fountain sodas, iced teas, bottled spring waters, and sports beverages.",
+      "badge": "BEVERAGES",
+      "items": [
+        {
+          "name": "Fountain Sodas (Coca-Cola, Sprite, Dr Pepper)",
+          "price": "Sm $2.30 | Med $2.50 | Lg $2.70",
+          "calories": "0–380 Cal",
+          "description": "Fresh fountain sodas including Coca-Cola, Diet Coke, Coke Zero, Sprite, Dr Pepper, Fanta, and Root Beer.",
+          "image": "/public/images/menu/coca-cola.webp",
+          "tags": [
+            "Fountain Drink",
+            "Free Refills In-Store"
+          ]
+        },
+        {
+          "name": "Barq's Root Beer",
+          "price": "Sm $2.30 | Med $2.50 | Lg $2.70",
+          "calories": "160 Cal",
+          "description": "Classic rich, frothy root beer with distinctive bite and vanilla notes.",
+          "image": "/public/images/menu/barqs-root-bear.webp",
+          "tags": [
+            "Fountain Soda"
+          ]
+        },
+        {
+          "name": "Minute Maid Lemonade",
+          "price": "Sm $2.30 | Med $2.50 | Lg $2.70",
+          "calories": "150 Cal",
+          "description": "Sweet, tangy lemonade made with real lemon juice for a thirst-quenching citrus burst.",
+          "image": "/public/images/menu/lemonade.webp",
+          "tags": [
+            "Citrus",
+            "Fountain"
+          ]
+        },
+        {
+          "name": "Fuze Raspberry Iced Tea",
+          "price": "Sm $2.30 | Med $2.50 | Lg $2.70",
+          "calories": "100 Cal",
+          "description": "Crisp iced tea naturally flavored with refreshing ripe raspberry essence.",
+          "image": "/public/images/menu/fuze-raspberry.webp",
+          "tags": [
+            "Berry Tea",
+            "Fountain"
+          ]
+        },
+        {
+          "name": "Dasani Bottled Water",
+          "price": "$2.50",
+          "calories": "0 Cal",
+          "description": "Purified bottled water enhanced with minerals for a pure, fresh taste on the go.",
+          "image": "/public/images/menu/dasani.webp",
+          "tags": [
+            "Bottled Water",
+            "0 Cal"
+          ]
+        },
+        {
+          "name": "Smartwater (700ml)",
+          "price": "$3.00",
+          "calories": "0 Cal",
+          "description": "Vapour-distilled premium spring water enriched with electrolytes for optimal hydration.",
+          "image": "/public/images/menu/smart-water.webp",
+          "tags": [
+            "Electrolytes",
+            "700ml Bottle"
+          ]
+        },
+        {
+          "name": "Mexican Coke (12oz Glass Bottle)",
+          "price": "$3.20",
+          "calories": "150 Cal",
+          "description": "Imported Coca-Cola crafted with 100% real cane sugar in an authentic retro glass bottle.",
+          "image": "/public/images/menu/coke-mexico.webp",
+          "tags": [
+            "Real Cane Sugar",
+            "Glass Bottle"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kids-menu",
+      "name": "Panda Cub Meal™ (Kids Menu)",
+      "description": "Specially balanced meal combos for younger diners. Includes a junior side, junior entrée, fruit snack, and kid's drink.",
+      "badge": "KIDS FAVORITES",
+      "items": [
+        {
+          "name": "Orange Chicken Panda Cub Meal™",
+          "price": "$7.80",
+          "calories": "510 Cal",
+          "description": "Kid-sized portion of crispy Orange Chicken with choice of side, apple crisps, and water or juice.",
+          "image": "/public/images/menu/orange-chicken-panda-cub-meal-cub-meal.webp",
+          "tags": [
+            "Kids Choice",
+            "Complete Meal"
+          ]
+        },
+        {
+          "name": "Grilled Teriyaki Chicken Cub Meal",
+          "price": "$7.80",
+          "calories": "330 Cal",
+          "description": "Tender grilled chicken slices served with teriyaki sauce, junior side, fruit snack, and kid drink.",
+          "image": "/public/images/menu/grilled-teriyaki-chicken-panda-cub-meal.webp",
+          "tags": [
+            "High Protein Kids",
+            "330 Cal"
+          ]
+        },
+        {
+          "name": "Broccoli Beef Panda Cub Meal™",
+          "price": "$7.80",
+          "calories": "250 Cal",
+          "description": "Tender beef and fresh broccoli with kid-sized rice or noodles, healthy fruit, and drink.",
+          "image": "/public/images/menu/broccoli-beef-panda-cub-meal-cub-meal.webp",
+          "tags": [
+            "Veggies & Beef",
+            "250 Cal"
+          ]
+        },
+        {
+          "name": "Build Your Own Panda Cub Meal™",
+          "price": "$7.80",
+          "calories": "300–740 Cal",
+          "description": "Mix and match any junior entrée with chow mein, fried rice, or super greens for a custom kids box.",
+          "image": "/public/images/menu/build-your-own-panda-cub-meal-cub-meal.webp",
+          "tags": [
+            "Custom Box",
+            "Balanced"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "protein-plates",
+      "name": "Balanced Protein & Fitness Plates",
+      "description": "Nutritionist-approved macro configurations designed for athletic performance, clean eating, and high-protein targets.",
+      "badge": "HEALTH & MACROS",
+      "items": [
+        {
+          "name": "Double Protein Plate",
+          "price": "$11.50+",
+          "calories": "875 Cal | 76g Protein",
+          "description": "Super Greens side with double portions of Grilled Teriyaki Chicken. Maximum muscle fuel with 76g lean protein!",
+          "image": "/public/images/menu/double-protein-plate.webp",
+          "tags": [
+            "76g Protein",
+            "Gym Fuel"
+          ]
+        },
+        {
+          "name": "Harmonious Macros Plate",
+          "price": "$11.50+",
+          "calories": "555 Cal | 57g Protein",
+          "description": "Half Super Greens, half White Steamed Rice with String Bean Chicken and Mushroom Chicken for balanced energy.",
+          "image": "/public/images/menu/harmonious-macros-plate.webp",
+          "tags": [
+            "Balanced Fuel",
+            "Clean Carbs"
+          ]
+        },
+        {
+          "name": "Bold and Flavorful Plate",
+          "price": "$11.50+",
+          "calories": "450 Cal | 45g Protein",
+          "description": "Super Greens paired with Kung Pao Chicken and Broccoli Beef. Big wok flavors with under 450 calories.",
+          "image": "/public/images/menu/balanced-protein-plates.webp",
+          "tags": [
+            "Under 450 Cal",
+            "Spicy Kick"
+          ]
+        },
+        {
+          "name": "Power Packed Plate",
+          "price": "$11.50+",
+          "calories": "280 Cal | 43g Protein",
+          "description": "Double Super Greens side with single Grilled Teriyaki Chicken (no sauce). Ultra-low carb, ketogenic gold standard.",
+          "image": "/public/images/menu/build-your-own-plate.webp",
+          "tags": [
+            "280 Cal",
+            "Keto Friendly"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "catering",
+      "name": "Catering Menu & Party Trays",
+      "description": "Generous party pans and bundles for office luncheons, family reunions, tailgates, and school celebrations.",
+      "badge": "CATERING PACKS",
+      "items": [
+        {
+          "name": "Party Size Side Tray",
+          "price": "$24.00+",
+          "calories": "10–12 Servings",
+          "description": "Deep party tray filled with Chow Mein, Fried Rice, Steamed Rice, or Super Greens for a crowd.",
+          "image": "/public/images/menu/party-size-side.webp",
+          "tags": [
+            "10-12 Servings",
+            "Catering Tray"
+          ]
+        },
+        {
+          "name": "Party Size Entree Tray",
+          "price": "$48.00+ ($62.00 Premium)",
+          "calories": "12–14 Servings",
+          "description": "Full catering pan of Orange Chicken, Beijing Beef, Kung Pao, or Honey Walnut Shrimp. Feeds up to 14 guests.",
+          "image": "/public/images/menu/party-size-entree.webp",
+          "tags": [
+            "12-14 Servings",
+            "Wok Hot"
+          ]
+        },
+        {
+          "name": "Party Size Appetizer Tray",
+          "price": "$26.00+",
+          "calories": "12–14 Servings",
+          "description": "Platter of crispy Chicken Egg Rolls, Veggie Spring Rolls, or Cream Cheese Rangoons with dipping sauces.",
+          "image": "/public/images/menu/party-size-appetizer.webp",
+          "tags": [
+            "Appetizer Platter",
+            "Party Snacks"
+          ]
+        },
+        {
+          "name": "12–16 Person Party Bundle",
+          "price": "$130.00+",
+          "calories": "2 Trays Entrees + 2 Trays Sides",
+          "description": "Includes 2 Party Size Entrées, 2 Party Size Sides, and a box of Fortune Cookies. Perfect for office meetings.",
+          "image": "/public/images/menu/12-16-person-party-bundle.webp",
+          "tags": [
+            "Feeds 12-16",
+            "Fortune Cookies Included"
+          ]
+        },
+        {
+          "name": "18–22 Person Party Bundle",
+          "price": "$185.00+",
+          "calories": "3 Trays Entrees + 3 Trays Sides",
+          "description": "Includes 3 Party Size Entrées, 3 Party Size Sides, and Fortune Cookies. Excellent for medium parties.",
+          "image": "/public/images/menu/18-22-person-party-bundle.webp",
+          "tags": [
+            "Feeds 18-22",
+            "Full Variety"
+          ]
+        },
+        {
+          "name": "26–30 Person Party Bundle",
+          "price": "$240.00+",
+          "calories": "4 Trays Entrees + 4 Trays Sides",
+          "description": "Includes 4 Party Size Entrées, 4 Party Size Sides, and Fortune Cookies. Maximum value for large banquets.",
+          "image": "/public/images/menu/26-30-person-party-bundle.webp",
+          "tags": [
+            "Feeds 26-30",
+            "Ultimate Feast"
+          ]
+        }
+      ]
+    }
+  ]
+}

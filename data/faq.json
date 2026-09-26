@@ -1,0 +1,42 @@
+[
+  {
+    "id": "faq-1",
+    "question": "Does Panda Express have a working coupon code right now?",
+    "answer": "Yes, though availability changes often. As of September 2026, codes like PANDA20 and FAMILY10 have multiple recent reports of working, while others circulating online are unconfirmed or likely expired. Always check the status table above before relying on a specific code, and confirm the discount appears in your cart before paying."
+  },
+  {
+    "id": "faq-2",
+    "question": "Can I use more than one coupon per order?",
+    "answer": "No. Panda Express allows only one coupon or promo code per order, even if you have several that seem applicable. The checkout system will typically apply the better of two, not both."
+  },
+  {
+    "id": "faq-3",
+    "question": "Do Panda Express codes work on DoorDash or Uber Eats?",
+    "answer": "No. Codes entered on pandaexpress.com or the official app do not carry over to delivery platforms. DoorDash, Uber Eats, and Grubhub run their own separate promotions, found in each app's own deals or offers tab."
+  },
+  {
+    "id": "faq-4",
+    "question": "Is there a current code for the Family Meal?",
+    "answer": "FAMILY10 has been reported working for $10 off a Family Meal as of September 2026. Other codes tied to Family Meal promotions, like seasonal offers, tend to be shorter-lived and app-exclusive — check the status table for the most current read."
+  },
+  {
+    "id": "faq-5",
+    "question": "Why isn't my Panda Express coupon code working?",
+    "answer": "The most common reasons are an expired code, a cart total below the minimum spend, a single-use code already redeemed by someone else, or a restriction to a specific region or franchise location. Running through the checklist in the \"why codes fail\" section above will usually identify which one applies."
+  },
+  {
+    "id": "faq-6",
+    "question": "Does Panda Express offer a military or student discount?",
+    "answer": "Military, veterans, first responders, and hospital workers can get 10% off in-store at participating corporate-owned locations with valid ID. There's no nationwide student discount, though some campus-area locations offer their own local discount — this varies by store, so it's worth asking at the counter."
+  },
+  {
+    "id": "faq-7",
+    "question": "How do I verify a code is still active before ordering?",
+    "answer": "There's no public way to check a code's status before checkout, since Panda Express doesn't publish a live coupon feed. The most reliable approach is applying the code and confirming the discount actually appears in your order total before you pay — if it doesn't apply, treat it as expired or restricted."
+  },
+  {
+    "id": "faq-8",
+    "question": "What can't a Panda Express coupon code do?",
+    "answer": "A Panda Express coupon code can't be combined with another coupon code, doesn't work on third-party delivery platforms, and generally can't be applied on top of an already-discounted item like a promotional bundle. It also won't override a location's franchise-specific restrictions."
+  }
+]

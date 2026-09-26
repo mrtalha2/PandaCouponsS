@@ -1,0 +1,122 @@
+{
+  "lastVerified": "September 2026",
+  "footnote": "Codes rotate and may deactivate regionally without notice. Always confirm the discount appears in your cart before completing payment.",
+  "coupons": [
+    {
+      "code": "PANDA20",
+      "discount": "20% Off Entire Order",
+      "bestFor": "Online orders",
+      "minOrder": "None",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Test edit verified",
+      "category": "Online Deals",
+      "expiry": "Ongoing",
+      "isDraft": false
+    },
+    {
+      "code": "FAMILY10",
+      "discount": "$10 Off Family Meal",
+      "bestFor": "Family orders",
+      "minOrder": "Family Meal",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Feeds 4–5 people. Applies at digital checkout.",
+      "category": "Family Meals",
+      "expiry": "Ongoing",
+      "isDraft": false
+    },
+    {
+      "code": "ACK",
+      "discount": "$3 off",
+      "bestFor": "Solo lunch",
+      "minOrder": "$5+",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Great for single bowls or plates meeting the $5 minimum."
+    },
+    {
+      "code": "EATFIVE",
+      "discount": "$5 off",
+      "bestFor": "Medium orders",
+      "minOrder": "$25+",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Requires at least $25 pre-tax cart total before applying."
+    },
+    {
+      "code": "EGGROLL",
+      "discount": "Free egg roll",
+      "bestFor": "Any online order",
+      "minOrder": "None",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Adds a complimentary Chicken Egg Roll or Veggie Spring Roll."
+    },
+    {
+      "code": "FREEDRINK",
+      "discount": "Free soft drink",
+      "bestFor": "Any online order",
+      "minOrder": "Online only",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Redeemable for a 22oz fountain drink on digital orders."
+    },
+    {
+      "code": "BOGO",
+      "discount": "Free bowl",
+      "bestFor": "Chili Crisp Shrimp order",
+      "minOrder": "Item purchase required",
+      "status": "Check App",
+      "confidence": "Reported, Unconfirmed",
+      "notes": "Buy one featured entree, get a second bowl complimentary.",
+      "category": "Online Deals",
+      "expiry": "Ongoing",
+      "isDraft": false
+    },
+    {
+      "code": "FEAST",
+      "discount": "$30 Family Meal",
+      "bestFor": "Feeds 5 people",
+      "minOrder": "Family Meal",
+      "status": "Check App",
+      "confidence": "Reported, Unconfirmed",
+      "notes": "Promotional flat-rate Family Meal deal for up to 5 people."
+    },
+    {
+      "code": "SAVE6",
+      "discount": "6% off",
+      "bestFor": "Any order",
+      "minOrder": "None",
+      "status": "Active",
+      "confidence": "Multiple Recent Sources",
+      "notes": "Site-wide discount valid on standard online cart items."
+    },
+    {
+      "code": "THANKSMOM",
+      "discount": "30% off or $30 Family Meal",
+      "bestFor": "Limited time",
+      "minOrder": "Varies",
+      "status": "Check App",
+      "confidence": "Reported, Unconfirmed",
+      "notes": "Promotional campaign offer; verify in app before placing order."
+    }
+  ],
+  "familyMealCodes": [
+    {
+      "code": "FAMILY10",
+      "offer": "$10 off Family Meal",
+      "details": "Online checkout, feeds 4–5 people"
+    },
+    {
+      "code": "FEAST",
+      "offer": "$30 Family Meal",
+      "details": "Feeds 5 people, promotional flat-rate Family Meal deal"
+    },
+    {
+      "code": "THANKSMOM",
+      "offer": "30% off or $30 flat",
+      "details": "App verification required, check local store"
+    }
+  ]
+}

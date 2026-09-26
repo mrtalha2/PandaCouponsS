@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="foodGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDFBF7" />
+      <stop offset="100%" stop-color="#F2EFE9" />
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#foodGrad)" rx="12" />
+  <circle cx="300" cy="180" r="110" fill="#FFFFFF" stroke="#E5E5E5" stroke-width="4" />
+  <circle cx="300" cy="180" r="92" fill="#FAF6EE" stroke="#E2D9CC" stroke-width="2" />
+  
+  <!-- Stylized Wok Dish Graphics -->
+  <path d="M230 190 Q300 230 370 190 Q360 210 300 215 Q240 210 230 190 Z" fill="#C8102E" opacity="0.85" />
+  <circle cx="270" cy="165" r="14" fill="#D97706" />
+  <circle cx="320" cy="160" r="16" fill="#B45309" />
+  <circle cx="295" cy="180" r="12" fill="#C8102E" />
+  <path d="M305 145 Q315 135 330 142 Q320 152 305 145 Z" fill="#1E8E3E" />
+  <path d="M260 175 Q250 165 240 172 Q250 182 260 175 Z" fill="#1E8E3E" />
+  
+  <!-- Chopsticks -->
+  <line x1="210" y1="90" x2="380" y2="260" stroke="#854D0E" stroke-width="6" stroke-linecap="round" />
+  <line x1="230" y1="80" x2="400" y2="250" stroke="#A16207" stroke-width="6" stroke-linecap="round" />
+  
+  <!-- Label Banner -->
+  <rect x="180" y="320" width="240" height="36" rx="18" fill="#1A1A1A" />
+  <text x="300" y="343" fill="#FFFFFF" font-family="system-ui, sans-serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="1">FRESH WOK SPECIALTY</text>
+</svg>
