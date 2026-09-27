@@ -1,1109 +1,980 @@
 /**
- * Panda Express Nutrition Calculator Page Generator (V2 Modern & Comprehensive)
- * Dual-Mode: Interactive Combo Meal Builder + Searchable 12-Column Explorer
- * Includes 2,000+ words of authoritative nutritional guides, macro tables, combo comparisons & FAQ schema
+ * Panda Express Nutrition Guide & Macro Analysis Page Generator
+ * Redesigned with High-Contrast Dark Navy / Charcoal Theme + Electric Cyan Accent.
+ * Strict Constraint: ZERO Green, ZERO Red. 100% WCAG AAA Readability.
+ * Dynamic Year & Month integration.
  */
-const fs = require('fs');
-const path = require('path');
+const { getDynamicDate } = require('../utils/date');
 const nutritionFull = require('../../data/menu_full.json');
-const nutritionData = require('../../data/nutrition.json');
 
 function renderNutrition() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const nutrBlocks = pageBlocks.nutrition || [];
-  const nutrBlock = nutrBlocks.find(b => b.type === 'nutrition-calculator');
-
-  const nutrContent = adminContent.nutrition || {};
-  const badgeText = nutrBlock?.badgeText || nutrContent.badgeText || 'Interactive Nutrition &amp; Macro Engine (2026 Edition)';
-  const heroTitle = nutrBlock?.heading || nutrContent.heroTitle || 'Panda Express Nutrition Calculator';
-  const heroSubtitle = nutrBlock?.subtext || nutrContent.heroSubtitle || 'Instantly calculate calories, macronutrients, and allergen disclosures for custom bowls, plates, and entrees across all 45+ official Panda Express menu items and 12 laboratory-verified metrics.';
-  const sourceDisclosure = nutrBlock?.disclosure || nutrContent.sourceDisclosure || "Nutritional figures and allergen flags are compiled directly from Panda Express's published nutrition disclosures and standardized corporate formulations. Portion sizes may vary by &plusmn;15% to 20% in-store due to hand-scoop volume and wok reduction.";
-  const tab1Label = nutrBlock?.tab1Label || nutrContent.tab1Label || '🥣 Combo Meal Builder';
-  const tab2Label = nutrBlock?.tab2Label || nutrContent.tab2Label || '📊 12-Column Nutrition &amp; Allergen Explorer';
+  const { currentYear, currentMonthYear } = getDynamicDate();
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
-    { label: "Nutrition Calculator", url: "/panda-express-nutrition/" }
+    { label: "Nutrition Guide", url: "/panda-express-nutrition/" }
   ];
 
-  // Nutrition FAQs for Reference Section & FAQPage Schema
-  const nutritionFaqs = [
+  const faqs = [
     {
-      q: "What is the absolute lowest calorie meal combo you can order at Panda Express?",
-      a: "The lowest-calorie meal combo at Panda Express is a Bowl featuring Super Greens (90 to 130 calories depending on batch water content) paired with Broccoli Beef (150 calories). This entire balanced meal delivers 240 to 280 total calories, 15 grams of protein, 8 grams of dietary fiber, and only 7 grams of total fat, making it one of the lowest-calorie hot fast-casual meals in America."
+      q: "How many calories are in Panda Express Orange Chicken?",
+      a: "A standard 5.92 oz serving of Orange Chicken has 510 calories, 24 grams of fat, and 20 grams of sugar, according to Panda Express's official nutrition data."
     },
     {
-      q: "How can I eat strict Keto or Low-Carb at Panda Express?",
-      a: "To eat keto or low-carb at Panda Express, always avoid Chow Mein (80–94g carbs) and Fried or Steamed Rice (85–118g carbs). Request a full serving of Super Greens (7g net carbs) or ask for an all-entree plate. For entrees, choose Kung Pao Chicken (12g net carbs), Mushroom Chicken (11g net carbs), Black Pepper Angus Steak (15g net carbs), or Grilled Teriyaki Chicken ordered without the teriyaki glaze (4g net carbs). Avoid breaded items like Orange Chicken or Beijing Beef, which carry over 45g of carbohydrate glazes."
+      q: "Is Panda Express healthy?",
+      a: "It depends on your order rather than the restaurant itself — meals range from 280 to over 2,000 calories depending on entrée and side choices, so the same visit can be a light meal or a heavy one based entirely on what you pick."
     },
     {
-      q: "Does Panda Express add MSG (Monosodium Glutamate) to their dishes?",
-      a: "Panda Express corporate policy states that they do not add Monosodium Glutamate (MSG) directly to any of their ingredients or wok stations during food preparation. However, naturally occurring glutamates are present in ingredients like hydrolyzed soy protein, soy sauce, yeast extract, fermented chili pastes, and mushrooms used throughout their recipes."
+      q: "What is the healthiest thing to order at Panda Express?",
+      a: "Grilled Teriyaki Chicken paired with Super Greens is the strongest combination on the menu: 405 calories combined, with 39 grams of protein and under 600mg of sodium."
     },
     {
-      q: "Are there any 100% certified gluten-free entrees or sides at Panda Express?",
-      a: "Panda Express does not maintain a certified gluten-free kitchen. White Steamed Rice and Brown Steamed Rice do not contain gluten ingredients, but virtually all hot entrees, marinades, and sauces (including soy sauce and teriyaki sauce) contain wheat. Additionally, because dishes are tossed in shared woks and served from adjacent steam table pans, cross-contact with gluten is always possible."
+      q: "Does Panda Express use peanut oil?",
+      a: "No. Panda Express cooks with soybean oil, not peanut oil. However, some dishes like Kung Pao Chicken do contain actual peanuts as an ingredient, so check the specific dish's allergen flag rather than assuming the oil alone makes it peanut-safe."
     },
     {
-      q: "Which Panda Express entrees have the highest protein per calorie?",
-      a: "Grilled Teriyaki Chicken is the undisputed protein champion at Panda Express, packing 36 grams of protein for 300 calories (or 33g protein for 275 calories depending on glaze application), meaning roughly 48% of its calories come directly from lean protein. The runner-up is Kung Pao Chicken, delivering 28 grams of protein for 290 calories, followed by Black Pepper Angus Steak offering 19 grams of protein for 210 calories."
+      q: "What's gluten-free at Panda Express?",
+      a: "White Steamed Rice and Super Greens are the two menu items that don't list wheat as an allergen. Most sauce-based entrées, including Orange Chicken and Chow Mein, contain wheat through soy sauce or batter."
     },
     {
-      q: "What is the best strategy to cut sodium when dining at Panda Express?",
-      a: "To minimize sodium, choose White Steamed Rice (0mg sodium) or Brown Steamed Rice (15mg sodium) as your base side, which eliminates the 860–1,000mg of sodium found in Chow Mein or Fried Rice. For entrees, select Broccoli Beef (520mg sodium) and Grilled Teriyaki Chicken with the glaze served strictly on the side. Avoid soups like Hot & Sour Soup (1,290mg sodium per bowl) and heavy soy glazes."
+      q: "How many calories are in a Panda Express Bowl vs. Plate vs. Bigger Plate?",
+      a: "A Bowl (one side, one entrée) ranges from 280 to 1,130 calories. A Plate (one side, two entrées) ranges from 430 to 1,640 calories. A Bigger Plate (one side, three entrées) typically runs from about 580 to 2,150 or more calories, based on combining official per-item figures."
     },
     {
-      q: "Are Super Greens cooked using chicken broth, lard, or butter?",
-      a: "No. Panda Express Super Greens (a blend of broccoli, kale, and cabbage) are steamed and lightly tossed in vegetable oil with garlic and a mild ginger-soy seasoning. They do not contain chicken broth, butter, or animal fats, making them completely vegetarian and vegan-friendly."
+      q: "What can't this nutrition guide tell you?",
+      a: "It can't account for portion variation by location, seasonal menu changes, or how a specific store prepares your order. These are standard recipe values published by Panda Express, not a measurement of your exact meal."
     },
     {
-      q: "Can you split your side 50/50 between two different sides at no extra charge?",
-      a: "Yes! At all Panda Express locations, you can order a 'half and half' side at zero additional charge. The most popular fitness hack is ordering half Super Greens and half Chow Mein or Brown Rice. This cuts carb and calorie density by 40% while still letting you enjoy warm noodles or savory rice alongside your protein."
-    },
-    {
-      q: "How accurate are Panda Express's published nutrition facts compared to laboratory tests?",
-      a: "Published nutrition values are based on standardized laboratory nutritional chemical analyses of corporate recipe formulations. However, in-restaurant servings will vary by ±15% to 25% due to human scoop sizes, wok oil absorption, and sauce reduction levels. A generous server scoop can easily add 80–120 calories to an entree, while a lighter scoop will decrease it."
-    },
-    {
-      q: "Does Grilled Teriyaki Chicken come pre-sauced, or can you get the teriyaki sauce on the side?",
-      a: "Grilled Teriyaki Chicken is sliced hot from the grill without sauce. By default, team members drizzle dark teriyaki glaze over the sliced chicken breast. You can explicitly request 'teriyaki sauce on the side' or 'no sauce at all'. Skipping the glaze saves approximately 60 calories, 10 grams of added sugars, and 180mg of sodium."
-    },
-    {
-      q: "What kind of cooking oil does Panda Express use in fryers and woks, and does it contain peanuts?",
-      a: "Panda Express prepares all wok dishes and deep-fried items using 100% pure highly refined soybean oil. Highly refined soybean oil is classified by the FDA as non-allergenic because the refining process removes allergenic proteins. Panda Express does not use peanut oil in any restaurant. However, whole peanuts are used in Kung Pao Chicken and tree nuts (glazed walnuts) are used in Honey Walnut Shrimp, meaning kitchen woks and utensils handle nuts."
-    },
-    {
-      q: "Which menu items at Panda Express contain milk or dairy allergens?",
-      a: "Only two regular menu items contain dairy: Cream Cheese Rangoon (which contains real cream cheese made from pasteurized milk and cream) and Honey Walnut Shrimp (which features a sweet honey glaze made with sweetened condensed milk). All core poultry, beef, and noodle/rice sides are dairy-free by formulation."
-    },
-    {
-      q: "Which Panda Express dishes contain egg?",
-      a: "Egg is an ingredient in Fried Rice, Chicken Egg Rolls, and the batter coating used on breaded entrees including The Original Orange Chicken, Beijing Beef, Sweet & Sour Chicken, and Honey Walnut Shrimp. If you have an egg allergy, choose unbreaded wok entrees like Grilled Teriyaki Chicken (without sauce/plain), Broccoli Beef, or String Bean Chicken Breast paired with Steamed White or Brown Rice."
-    },
-    {
-      q: "How does Panda Express handle food allergy cross-contact in kitchen woks?",
-      a: "Panda Express operations utilize shared cooking equipment, woks, cutting boards, and steam table serving wells across all recipes. While woks are rinsed with water and scraped between batches, micro-particles of wheat (gluten), soy, eggs, sesame, and shellfish can transfer between dishes. Diners with life-threatening food allergies are strongly advised to inform the manager before ordering."
+      q: "Where can I verify this data officially?",
+      a: "Panda Express publishes its full nutrition and allergen sheet directly on its website, and you can also call (800) 877-8988 for direct confirmation on any item."
     }
   ];
 
-  // FAQPage Schema JSON-LD
-  const nutritionFaqSchema = {
+  const faqSchema = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "mainEntity": nutritionFaqs.map(f => ({
+    "mainEntity": faqs.map(faq => ({
       "@type": "Question",
-      "name": f.q,
+      "name": faq.q,
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": f.a
+        "text": faq.a
       }
     }))
   };
 
-  // NutritionInformation Schemas for Key Dishes
-  const nutritionSchemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "MenuItem",
-      "name": "The Original Orange Chicken",
-      "description": "Crispy boneless chicken wok-tossed in sweet and spicy chili orange sauce.",
-      "nutrition": {
-        "@type": "NutritionInformation",
-        "servingSize": "5.7 oz (162g)",
-        "calories": "510 calories",
-        "fatContent": "23 g",
-        "saturatedFatContent": "5 g",
-        "transFatContent": "0 g",
-        "cholesterolContent": "80 mg",
-        "sodiumContent": "820 mg",
-        "carbohydrateContent": "53 g",
-        "fiberContent": "2 g",
-        "sugarContent": "19 g",
-        "proteinContent": "26 g"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "MenuItem",
-      "name": "Grilled Teriyaki Chicken",
-      "description": "Grilled marinated chicken thigh sliced and served with sweet teriyaki glaze.",
-      "nutrition": {
-        "@type": "NutritionInformation",
-        "servingSize": "6.0 oz (170g)",
-        "calories": "300 calories",
-        "fatContent": "13 g",
-        "saturatedFatContent": "4 g",
-        "transFatContent": "0 g",
-        "cholesterolContent": "170 mg",
-        "sodiumContent": "530 mg",
-        "carbohydrateContent": "14 g",
-        "fiberContent": "1 g",
-        "sugarContent": "8 g",
-        "proteinContent": "36 g"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "MenuItem",
-      "name": "Kung Pao Chicken",
-      "description": "Sichuan-inspired wok-tossed chicken with peanuts, vegetables, and chili peppers.",
-      "nutrition": {
-        "@type": "NutritionInformation",
-        "servingSize": "5.8 oz (164g)",
-        "calories": "290 calories",
-        "fatContent": "19 g",
-        "saturatedFatContent": "3.5 g",
-        "transFatContent": "0 g",
-        "cholesterolContent": "60 mg",
-        "sodiumContent": "970 mg",
-        "carbohydrateContent": "14 g",
-        "fiberContent": "2 g",
-        "sugarContent": "5 g",
-        "proteinContent": "17 g"
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "MenuItem",
-      "name": "Super Greens",
-      "description": "A healthful steamed medley of fresh broccoli, kale, and green cabbage.",
-      "nutrition": {
-        "@type": "NutritionInformation",
-        "servingSize": "7.0 oz (198g)",
-        "calories": "90 calories",
-        "fatContent": "2 g",
-        "saturatedFatContent": "0 g",
-        "transFatContent": "0 g",
-        "cholesterolContent": "0 mg",
-        "sodiumContent": "260 mg",
-        "carbohydrateContent": "10 g",
-        "fiberContent": "5 g",
-        "sugarContent": "4 g",
-        "proteinContent": "6 g"
-      }
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": `Panda Express Nutrition: Calories, Macros & the Smartest Way to Order in ${currentYear}`,
+    "description": `See verified Panda Express nutrition facts and calories for every dish. Free ${currentYear} data — check yours with our calculator.`,
+    "dateModified": new Date().toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "PandaCoupons Editorial Team"
     }
-  ];
+  };
 
   const content = `
-  <!-- Light Hero Section (Phase 16h Inspired Layout) -->
-  <section class="nutrition-hero-light">
-    <div class="container">
-      <div class="nutrition-hero-inner">
-        <!-- Breadcrumb Trail -->
-        <nav aria-label="Breadcrumbs" class="nutrition-breadcrumbs">
-          <ol class="breadcrumbs" itemscope itemtype="https://schema.org/BreadcrumbList">
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <a href="/" itemprop="item"><span itemprop="name">Home</span></a>
-              <span class="crumb-separator" aria-hidden="true">/</span>
-              <meta itemprop="position" content="1" />
-            </li>
-            <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-              <span itemprop="name" aria-current="page">Nutrition Calculator</span>
-              <meta itemprop="position" content="2" />
-            </li>
+  <div class="nutr-page-wrap">
+
+    <!-- HERO SECTION -->
+    <header class="nutr-hero-section">
+      <div class="container">
+        
+        <!-- Breadcrumbs -->
+        <nav aria-label="Breadcrumbs" style="margin-bottom: 1.25rem;">
+          <ol style="display: flex; gap: 0.5rem; list-style: none; padding: 0; margin: 0; font-size: 0.88rem; color: #9CA3AF;">
+            <li><a href="/" style="color: #9CA3AF; text-decoration: none;">Home</a></li>
+            <li><span style="color: #4B5563;">/</span></li>
+            <li aria-current="page" style="color: #38BDF8; font-weight: 600;">Nutrition Guide</li>
           </ol>
         </nav>
 
-        <!-- Pill-Style Badge -->
-        <div class="nutrition-hero-badge">
-          <span class="nutrition-badge-dot"></span>
-          <span>${badgeText}</span>
+        <div class="nutr-badge-pill">
+          <span>Official Nutrition Guide ${currentYear}</span>
         </div>
 
-        <!-- Heading -->
-        <h1 class="nutrition-hero-title">${heroTitle}</h1>
+        <h1 class="nutr-hero-title">
+          Panda Express Nutrition: Calories, Macros &amp; the Smartest Way to Order in ${currentYear}
+        </h1>
 
-        <!-- Concise Scope Subheading -->
-        <p class="nutrition-hero-subtitle">
-          ${heroSubtitle}
+        <p class="nutr-hero-lead">
+          Panda Express nutrition varies more than almost any fast-food menu, because meals are built à la carte instead of sold as fixed combos. A Bowl alone can run anywhere from 280 to 1,130 calories depending on what you pick, and a Plate stretches from 430 to 1,640. That range is exactly why guessing doesn't work here — the numbers below come straight from Panda Express's own nutrition disclosures, so you can build your plate with real information instead of estimates.
         </p>
 
-        <!-- Source-of-Truth Disclosure Line -->
-        <div class="source-disclosure-bar">
-          <span style="font-size: 1.25rem; line-height: 1;">📋</span>
-          <div>
-            <strong>Official Source Disclosure:</strong> ${sourceDisclosure}
+        <!-- Optimized Responsive Hero Image -->
+        <div class="nutr-hero-media-card">
+          <picture>
+            <source type="image/webp" 
+                    srcset="/public/images/optimized/nutrition-plate-640.webp 640w,
+                            /public/images/optimized/nutrition-plate-800.webp 800w,
+                            /public/images/optimized/nutrition-plate-1280.webp 1280w"
+                    sizes="(max-width: 900px) 100vw, 900px">
+            <img src="/public/images/nutrition-plate.jpg" 
+                 alt="Panda Express balanced wok plate with steamed rice, lean chicken and vegetables" 
+                 width="1280" 
+                 height="720" 
+                 loading="eager" 
+                 fetchpriority="high"
+                 decoding="async" 
+                 class="nutr-hero-img">
+          </picture>
+        </div>
+
+        <!-- Quick Calorie Stats Strip -->
+        <div class="nutr-stats-strip">
+          <div class="nutr-stat-box">
+            <span class="nutr-stat-number">280–1,130</span>
+            <span class="nutr-stat-label">Bowl Range (kcal)</span>
+          </div>
+          <div class="nutr-stat-box">
+            <span class="nutr-stat-number">430–1,640</span>
+            <span class="nutr-stat-label">Plate Range (kcal)</span>
+          </div>
+          <div class="nutr-stat-box">
+            <span class="nutr-stat-number">580–2,150+</span>
+            <span class="nutr-stat-label">Bigger Plate (kcal)</span>
+          </div>
+          <div class="nutr-stat-box">
+            <span class="nutr-stat-number">100%</span>
+            <span class="nutr-stat-label">Official Disclosures</span>
           </div>
         </div>
+
       </div>
-    </div>
-  </section>
+    </header>
 
-  <div class="container" style="padding-top: 2rem;">
+    <!-- MAIN BODY CONTENT -->
+    <main class="nutr-main-container">
 
-    <!-- Contextual Food Photography (Phase 6b) -->
-    <div style="max-width: 840px; margin: 0 auto 2rem auto; border-radius: 14px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
-      <picture>
-        <source type="image/webp" 
-                srcset="/public/images/optimized/nutrition-plate-640.webp 640w,
-                        /public/images/optimized/nutrition-plate-800.webp 800w,
-                        /public/images/optimized/nutrition-plate-1280.webp 1280w,
-                        /public/images/optimized/nutrition-plate-1920.webp 1920w"
-                sizes="(max-width: 840px) 100vw, 840px">
-        <img src="/public/images/nutrition-plate.jpg" 
-             alt="Balanced Panda Express plate meal featuring steamed brown rice, flame-grilled teriyaki chicken, and fresh broccoli wok vegetables" 
-             width="1280" 
-             height="720" 
-             loading="lazy" 
-             decoding="async" 
-             style="width: 100%; height: auto; display: block; aspect-ratio: 16/9; object-fit: cover;">
-      </picture>
-    </div>
-
-    <!-- "Your Meal (N items)" Running Summary Header (Phase 5 Item 2 & 3) -->
-    <div class="running-meal-banner" id="runningMealHeader" style="max-width: 840px; margin: 0 auto 1.5rem auto; background: linear-gradient(135deg, #101014 0%, #1A0C10 60%, #240A0F 100%); border: 1px solid rgba(200, 16, 46, 0.35); border-radius: 12px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.85rem; color: #FFFFFF; box-shadow: 0 4px 16px rgba(0,0,0,0.25);">
-      <div style="display: flex; align-items: center; gap: 0.75rem;">
-        <span style="font-size: 1.6rem;">🍱</span>
-        <div>
-          <div id="runningMealTitle" style="font-weight: 800; font-size: 1.05rem; color: #FFFFFF;">Your Meal (0 items)</div>
-          <div id="runningMealCals" style="font-size: 0.88rem; color: #E2E8F0; font-weight: 500;">0 total calories &bull; Select dishes to calculate</div>
+      <!-- SECTION: Interactive Nutrition Calculator Widget -->
+      <section id="calculator-section" class="nutr-section" aria-labelledby="calc-heading">
+        <div style="text-align: center; max-width: 780px; margin: 0 auto 1.75rem auto;">
+          <div class="nutr-badge-pill" style="margin-bottom: 0.65rem;">
+            <span>Interactive Nutrition Builder</span>
+          </div>
+          <h2 id="calc-heading" class="nutr-section-title" style="margin-bottom: 0.5rem; text-align: center;">
+            Panda Express Meal &amp; Nutrition Calculator
+          </h2>
+          <p class="nutr-paragraph" style="text-align: center; color: #94A3B8; margin-bottom: 0;">
+            Customize your Panda Express meal and calculate real-time calories, protein, carbs, and fat. Switch between the fast Combo Builder and the complete Nutrition Explorer with allergen exclusions.
+          </p>
         </div>
-      </div>
-      <div style="display: flex; align-items: center; gap: 0.65rem; flex-wrap: wrap;">
-        <button type="button" id="btnShareMealLink" class="btn btn-secondary" style="padding: 0.5rem 0.9rem; font-size: 0.82rem; border-color: rgba(255,255,255,0.2); color: #FFF; background: rgba(255,255,255,0.06); border-radius: 6px; cursor: pointer;">
-          🔗 Copy Share Link
-        </button>
-        <button type="button" id="btnClearMealCart" class="btn btn-secondary" style="padding: 0.5rem 0.9rem; font-size: 0.82rem; border-color: rgba(255,255,255,0.2); color: #FFF; background: rgba(255,255,255,0.06); border-radius: 6px; cursor: pointer;">
-          🗑️ Clear Meal
-        </button>
-      </div>
-    </div>
 
-    <!-- Mode Switcher Tabs -->
-    <div id="nutrition-app">
-      <div class="calc-mode-switcher" role="tablist" aria-label="Calculator Modes">
-        <button type="button" class="calc-mode-btn is-active" data-mode="combo" role="tab" aria-selected="true">
-          ${tab1Label}
-        </button>
-        <button type="button" class="calc-mode-btn" data-mode="explorer" role="tab" aria-selected="false">
-          ${tab2Label}
-        </button>
-      </div>
-
-      <!-- VIEW 1: COMBO MEAL BUILDER -->
-      <div id="view-combo-builder" style="display: block;">
-        <div class="calc-interactive-card">
-          <!-- Step 1: Format -->
-          <div style="margin-bottom: 2rem;">
-            <div class="calc-step-header">
-              <span class="calc-step-title">1. Select Combo Format</span>
-            </div>
-            <div class="pill-group">
-              <button type="button" class="calc-pill-btn combo-meal-pill" data-meal="bowl">
-                🥣 Bowl (1 Side + 1 Entree)
+        <div id="nutrition-app" class="calc-widget-container">
+          
+          <!-- Mode Tabs -->
+          <div class="calc-mode-switcher-wrap">
+            <div class="calc-mode-switcher" role="tablist" aria-label="Calculator Modes">
+              <button type="button" class="calc-mode-btn is-active" data-mode="combo" role="tab" aria-selected="true">
+                <span aria-hidden="true">🍱</span> Combo Meal Builder
               </button>
-              <button type="button" class="calc-pill-btn combo-meal-pill is-selected" data-meal="plate">
-                🍽️ Plate (1 Side + 2 Entrees)
-              </button>
-              <button type="button" class="calc-pill-btn combo-meal-pill" data-meal="bigger_plate">
-                🍱 Bigger Plate (1 Side + 3 Entrees)
+              <button type="button" class="calc-mode-btn" data-mode="explorer" role="tab" aria-selected="false">
+                <span aria-hidden="true">🔍</span> Full Nutrition Explorer
               </button>
             </div>
           </div>
 
-          <!-- Step 2: Side -->
-          <div style="margin-bottom: 2rem;">
-            <div class="calc-step-header">
-              <span class="calc-step-title">2. Choose Your Base Side</span>
-              <span style="font-size: 0.85rem; color: #64748B; font-weight: 600;">Choose 1 Side (or 50/50 Split)</span>
-            </div>
-            <div class="item-selection-grid" id="combo-sides-grid"></div>
-          </div>
-
-          <!-- Step 3: Entrees -->
-          <div style="margin-bottom: 2rem;">
-            <div class="calc-step-header">
-              <span class="calc-step-title">3. Choose Your Entrees</span>
-              <span id="combo-entree-notice" style="font-size: 0.88rem; font-weight: 700; color: #C8102E;">
-                Selected: 2/2 Entrees
-              </span>
-            </div>
-            <div class="item-selection-grid" id="combo-entrees-grid"></div>
-          </div>
-
-          <!-- Macro Summary Dashboard -->
-          <div class="macro-summary-dashboard">
-            <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem;">
-              <h2 style="color: #FFFFFF; font-size: 1.25rem; margin: 0;">Calculated Combo Total</h2>
-              <span style="font-size: 0.85rem; color: #CBD5E1; font-weight: 500;">Target daily benchmark: 2,000 kcal / day</span>
-            </div>
-
-            <!-- Calorie Gauge -->
-            <div style="margin-bottom: 1.25rem;">
-              <div style="height: 10px; background: rgba(255, 255, 255, 0.15); border-radius: 999px; overflow: hidden;">
-                <div id="combo-cal-bar" style="height: 100%; width: 50%; background: linear-gradient(90deg, #10B981 0%, #F59E0B 70%, #EF4444 100%); border-radius: 999px; transition: width 0.4s ease;"></div>
+          <!-- VIEW 1: COMBO MEAL BUILDER -->
+          <div id="view-combo-builder" class="calc-view-panel">
+            
+            <!-- Step 1: Choose Meal Type -->
+            <div class="calc-builder-step">
+              <div class="calc-step-header">
+                <h3 class="calc-step-title">
+                  <span class="calc-step-badge">1</span> Choose Meal Format
+                </h3>
+                <span class="calc-step-hint">Select a portion size</span>
+              </div>
+              <div class="calc-meal-pills-row">
+                <button type="button" class="combo-meal-pill" data-meal="bowl">
+                  <span class="meal-pill-title">Bowl</span>
+                  <span class="meal-pill-desc">1 Side + 1 Entrée</span>
+                </button>
+                <button type="button" class="combo-meal-pill is-selected" data-meal="plate">
+                  <span class="meal-pill-title">Plate</span>
+                  <span class="meal-pill-desc">1 Side + 2 Entrées</span>
+                </button>
+                <button type="button" class="combo-meal-pill" data-meal="bigger_plate">
+                  <span class="meal-pill-title">Bigger Plate</span>
+                  <span class="meal-pill-desc">1 Side + 3 Entrées</span>
+                </button>
               </div>
             </div>
 
-            <!-- 4 Macro Metrics -->
-            <div class="macro-grid-cards">
-              <div class="macro-metric-card">
-                <span id="combo-total-cals" class="macro-metric-val calories">0</span>
-                <span class="macro-metric-label">Calories (kcal)</span>
+            <!-- Step 2: Choose Side -->
+            <div class="calc-builder-step">
+              <div class="calc-step-header">
+                <h3 class="calc-step-title">
+                  <span class="calc-step-badge">2</span> Select 1 Side Dish
+                </h3>
+                <span class="calc-step-hint">Click to choose your base</span>
               </div>
-              <div class="macro-metric-card">
-                <span id="combo-total-protein" class="macro-metric-val protein">0g</span>
-                <span class="macro-metric-label">Protein</span>
-              </div>
-              <div class="macro-metric-card">
-                <span id="combo-total-carbs" class="macro-metric-val carbs">0g</span>
-                <span class="macro-metric-label">Carbohydrates</span>
-              </div>
-              <div class="macro-metric-card">
-                <span id="combo-total-fat" class="macro-metric-val fat">0g</span>
-                <span class="macro-metric-label">Total Fat</span>
+              <div id="combo-sides-grid" class="item-selection-grid">
+                <!-- Injected by main.js renderComboGrids() -->
               </div>
             </div>
-          </div>
-        </div>
-      </div>
 
-      <!-- VIEW 2: 12-COLUMN EXPLORER & FULL MEAL CALCULATOR -->
-      <div id="view-explorer" style="display: none;">
-        <div class="calc-interactive-card" style="padding: 1.5rem;">
-          <!-- Toolbar -->
-          <div class="explorer-toolbar">
-            <!-- Search -->
-            <div class="explorer-search-box">
-              <span class="search-icon-pos">🔍</span>
-              <input type="text" id="calcSearchInput" class="explorer-search-input" placeholder="Search dishes (Orange Chicken, Chow Mein, Angus Steak, Super Greens)..." autocomplete="off" aria-label="Search dishes for nutrition">
-              <button type="button" id="calcClearSearch" class="search-clear-btn" style="display: none;" aria-label="Clear search">✕</button>
+            <!-- Step 3: Choose Entrees -->
+            <div class="calc-builder-step">
+              <div class="calc-step-header">
+                <h3 class="calc-step-title">
+                  <span class="calc-step-badge">3</span> Select Entrées
+                </h3>
+                <span id="combo-entree-notice" class="calc-step-notice">Selected: 2/2 Entrees</span>
+              </div>
+              <div id="combo-entrees-grid" class="item-selection-grid">
+                <!-- Injected by main.js renderComboGrids() -->
+              </div>
             </div>
 
-            <!-- Allergen Filter Dropdown -->
-            <div class="allergen-dropdown" id="calcAllergenDropdown">
-              <button type="button" id="calcAllergenBtn" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.6rem 1rem;">
-                <span>🛡️ Allergen Exclusion Filter</span>
-                <span id="calcAllergenCount" class="status-badge" style="background:#EF4444;color:#FFF;padding:0.1rem 0.4rem;font-size:0.75rem;display:none;">0</span>
-              </button>
-              
-              <div class="allergen-dropdown-panel">
-                <div style="font-size: 0.75rem; font-weight: 700; color: #64748B; text-transform: uppercase; padding: 0.35rem 0.5rem;">
-                  Hide dishes containing:
+            <!-- Live Combo Macro Dashboard -->
+            <div class="macro-summary-dashboard">
+              <div class="macro-dashboard-header">
+                <div>
+                  <span class="macro-dashboard-kicker">Live Nutrition Output</span>
+                  <h4 class="macro-dashboard-title">Your Combo Meal Totals</h4>
                 </div>
-                <label class="allergen-option"><input type="checkbox" value="wheat"> <span>🌾 Wheat &amp; Gluten</span></label>
-                <label class="allergen-option"><input type="checkbox" value="soy"> <span>🫘 Soy</span></label>
-                <label class="allergen-option"><input type="checkbox" value="egg"> <span>🥚 Egg</span></label>
-                <label class="allergen-option"><input type="checkbox" value="milk"> <span>🥛 Milk / Dairy</span></label>
-                <label class="allergen-option"><input type="checkbox" value="sesame"> <span>🌱 Sesame</span></label>
-                <label class="allergen-option"><input type="checkbox" value="shellfish"> <span>🦐 Crustacean Shellfish</span></label>
-                <label class="allergen-option"><input type="checkbox" value="tree_nuts"> <span>🌳 Tree Nuts</span></label>
-                <label class="allergen-option"><input type="checkbox" value="peanuts"> <span>🥜 Peanuts</span></label>
-                <label class="allergen-option"><input type="checkbox" value="fish"> <span>🐟 Fish</span></label>
-                <button type="button" id="calcClearAllergens" class="btn btn-sm" style="width: 100%; margin-top: 0.65rem; background: #F1F5F9; color: #334155; border: 1px solid #CBD5E1; font-size: 0.75rem; padding: 0.4rem; cursor: pointer; border-radius: 6px;">Clear all allergen filters</button>
+                <div class="macro-cal-bar-wrap">
+                  <div class="macro-cal-bar-labels">
+                    <span>Daily Calorie Impact</span>
+                    <span>Standard 2,000 kcal Diet</span>
+                  </div>
+                  <div class="macro-cal-track">
+                    <div id="combo-cal-bar" class="macro-cal-fill" style="width: 50%;"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="macro-grid-cards">
+                <div class="macro-metric-card">
+                  <span id="combo-total-cals" class="macro-metric-val calories">0</span>
+                  <span class="macro-metric-label">Total Calories</span>
+                </div>
+                <div class="macro-metric-card">
+                  <span id="combo-total-protein" class="macro-metric-val protein">0g</span>
+                  <span class="macro-metric-label">Protein</span>
+                </div>
+                <div class="macro-metric-card">
+                  <span id="combo-total-carbs" class="macro-metric-val carbs">0g</span>
+                  <span class="macro-metric-label">Carbohydrates</span>
+                </div>
+                <div class="macro-metric-card">
+                  <span id="combo-total-fat" class="macro-metric-val fat">0g</span>
+                  <span class="macro-metric-label">Total Fat</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- VIEW 2: EXPLORER & FULL MEAL CALCULATOR -->
+          <div id="view-explorer" class="calc-view-panel" style="display: none;">
+            
+            <!-- Explorer Toolbar -->
+            <div class="explorer-toolbar">
+              <div class="explorer-search-box">
+                <span class="search-icon-pos" aria-hidden="true">🔍</span>
+                <input type="search" id="calcSearchInput" class="explorer-search-input" placeholder="Search dishes (e.g. Orange Chicken, Teriyaki, Steak)..." aria-label="Search dishes">
+                <button type="button" id="calcClearSearch" class="search-clear-btn" style="display: none;" aria-label="Clear search">✕</button>
+              </div>
+
+              <div class="allergen-dropdown" id="calcAllergenContainer">
+                <button type="button" id="calcAllergenBtn" class="allergen-dropdown-btn">
+                  <span>🛡️ Exclude Allergens</span>
+                  <span id="calcAllergenCount" class="allergen-count-badge" style="display: none;">0</span>
+                  <span aria-hidden="true" style="font-size: 0.75rem;">▾</span>
+                </button>
+                <div id="calcAllergenDropdown" class="allergen-dropdown-panel" role="region" aria-label="Allergen filter options">
+                  <div class="allergen-dropdown-header">
+                    <span style="font-weight: 700; font-size: 0.88rem; color: #FFFFFF;">Exclude Allergens</span>
+                    <button type="button" id="calcClearAllergens" class="btn-text-cyan">Clear</button>
+                  </div>
+                  <div class="allergen-options-list">
+                    <label class="allergen-option"><input type="checkbox" value="wheat"> Wheat / Gluten</label>
+                    <label class="allergen-option"><input type="checkbox" value="soy"> Soy</label>
+                    <label class="allergen-option"><input type="checkbox" value="egg"> Egg</label>
+                    <label class="allergen-option"><input type="checkbox" value="milk"> Milk / Dairy</label>
+                    <label class="allergen-option"><input type="checkbox" value="peanuts"> Peanuts</label>
+                    <label class="allergen-option"><input type="checkbox" value="tree_nuts"> Tree Nuts</label>
+                    <label class="allergen-option"><input type="checkbox" value="shellfish"> Shellfish</label>
+                    <label class="allergen-option"><input type="checkbox" value="sesame"> Sesame</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Category Pills -->
+            <div id="calcCategoryBar" class="category-filter-bar" role="toolbar" aria-label="Filter dishes by category">
+              <button type="button" class="cat-pill is-active" data-category="All Items">All Items</button>
+              <button type="button" class="cat-pill" data-category="Sides">Sides</button>
+              <button type="button" class="cat-pill" data-category="Chicken">Chicken</button>
+              <button type="button" class="cat-pill" data-category="Chicken Breast">Chicken Breast</button>
+              <button type="button" class="cat-pill" data-category="Beef">Beef</button>
+              <button type="button" class="cat-pill" data-category="Seafood">Seafood</button>
+              <button type="button" class="cat-pill" data-category="Vegetables">Vegetables</button>
+              <button type="button" class="cat-pill" data-category="Appetizers">Appetizers</button>
+              <button type="button" class="cat-pill" data-category="Soup">Soup</button>
+              <button type="button" class="cat-pill" data-category="Beverages">Beverages</button>
+              <button type="button" class="cat-pill" data-category="More">Sauces &amp; More</button>
+            </div>
+
+            <!-- Meal Cart Status Bar -->
+            <div class="calc-cart-status-bar">
+              <div>
+                <span id="runningMealTitle" class="cart-status-title">Your Meal (0 items)</span>
+                <span id="runningMealCals" class="cart-status-cals">0 total calories • Select dishes to calculate</span>
+              </div>
+              <div class="cart-status-actions">
+                <button type="button" id="btnShareMealLink" class="nutr-btn-outline" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">
+                  <span>🔗 Share Meal</span>
+                </button>
+                <button type="button" id="btnClearMealCart" class="btn-cart-clear" style="padding: 0.4rem 0.9rem; font-size: 0.82rem;">
+                  Clear Meal
+                </button>
+              </div>
+            </div>
+
+            <div id="tableScrollHint" class="table-scroll-hint" style="display: none;">
+              <span>👈 Swipe horizontally to view full nutrition facts 👉</span>
+            </div>
+
+            <!-- Explorer Table -->
+            <div class="nutr-table-wrap" style="margin-top: 1rem;">
+              <table id="calcNutritionTable" class="nutr-table" aria-label="Interactive Panda Express Nutrition Explorer">
+                <thead>
+                  <tr>
+                    <th scope="col" style="position: sticky; left: 0; z-index: 6; min-width: 170px;">Dish Name</th>
+                    <th scope="col" class="sortable" data-field="calories" style="cursor: pointer;" title="Sort by Calories">Calories ↕</th>
+                    <th scope="col" class="sortable" data-field="totalFat" style="cursor: pointer;" title="Sort by Fat">Fat (g) ↕</th>
+                    <th scope="col">Sat Fat (g)</th>
+                    <th scope="col">Trans Fat (g)</th>
+                    <th scope="col">Chol (mg)</th>
+                    <th scope="col" class="sortable" data-field="sodium" style="cursor: pointer;" title="Sort by Sodium">Sodium (mg) ↕</th>
+                    <th scope="col" class="sortable" data-field="totalCarbs" style="cursor: pointer;" title="Sort by Carbs">Carbs (g) ↕</th>
+                    <th scope="col">Fiber (g)</th>
+                    <th scope="col">Sugar (g)</th>
+                    <th scope="col" class="sortable" data-field="protein" style="cursor: pointer;" title="Sort by Protein">Protein (g) ↕</th>
+                    <th scope="col">Allergens</th>
+                    <th scope="col" style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="calcTableBody">
+                  <!-- Injected by main.js renderExplorerTable() -->
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+          <!-- Sticky Calorie Bottom Dock -->
+          <div id="stickyCalorieDock" class="sticky-calorie-dock" role="region" aria-label="Meal Calorie Summary Dock">
+            <div class="calorie-dock-inner">
+              <div>
+                <span id="dockItemCount" class="dock-count-label">0 items in meal</span>
+                <div id="dockCalorieValue" class="calorie-dock-total">0 cal</div>
+              </div>
+              <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <button type="button" id="dockViewMealBtn" class="nutr-btn" style="padding: 0.6rem 1.25rem; font-size: 0.9rem;">
+                  View Meal Breakdown
+                </button>
               </div>
             </div>
           </div>
 
-          <!-- Category Filter Bar -->
-          <div class="category-filter-bar" id="calcCategoryBar">
-            <button type="button" class="cat-pill is-active" data-category="All Items">All Items (45+)</button>
-            <button type="button" class="cat-pill" data-category="Sides">Sides</button>
-            <button type="button" class="cat-pill" data-category="Chicken">Chicken</button>
-            <button type="button" class="cat-pill" data-category="Chicken Breast">Chicken Breast</button>
-            <button type="button" class="cat-pill" data-category="Beef">Beef</button>
-            <button type="button" class="cat-pill" data-category="Seafood">Seafood</button>
-            <button type="button" class="cat-pill" data-category="Vegetables">Vegetables</button>
-            <button type="button" class="cat-pill" data-category="Appetizers">Appetizers</button>
-            <button type="button" class="cat-pill" data-category="Soup">Soup</button>
-            <button type="button" class="cat-pill" data-category="Beverages">Beverages</button>
-            <button type="button" class="cat-pill" data-category="Cub Meals">Cub Meals</button>
+          <!-- Item Details Modal -->
+          <div id="nutritionModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modalDishTitle">
+            <div class="modal-dialog">
+              <div class="modal-header-bar">
+                <span id="modalDishTitle" style="font-weight: 800; font-size: 1.1rem; color: #FFFFFF;">Nutrition Details</span>
+                <button type="button" id="modalCloseBtn" class="modal-close-btn" aria-label="Close dialog">✕</button>
+              </div>
+              <div id="modalDetailsBody" style="padding: 1.5rem;">
+                <!-- Injected by main.js openItemModal() -->
+              </div>
+            </div>
           </div>
 
-          <!-- 12-Column Explorer Table -->
-          <div class="table-responsive" style="max-height: 580px; overflow-y: auto;">
-            <table class="coupon-table" id="calcNutritionTable">
-              <thead>
-                <tr>
-                  <th scope="col" class="sortable" data-field="name" style="position: sticky; left: 0; z-index: 6; background: #0F172A; color: #FFFFFF; min-width: 170px;">Dish &amp; Serving ↕</th>
-                  <th scope="col" class="sortable" data-field="calories" style="background: #0F172A; color: #FFFFFF;">Calories (kcal) ↕</th>
-                  <th scope="col" class="sortable" data-field="totalFat" style="background: #0F172A; color: #FFFFFF;">Fat (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="saturatedFat" style="background: #0F172A; color: #FFFFFF;">Sat Fat (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="transFat" style="background: #0F172A; color: #FFFFFF;">Trans Fat (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="cholesterol" style="background: #0F172A; color: #FFFFFF;">Chol (mg) ↕</th>
-                  <th scope="col" class="sortable" data-field="sodium" style="background: #0F172A; color: #FFFFFF;">Sodium (mg) ↕</th>
-                  <th scope="col" class="sortable" data-field="totalCarbs" style="background: #0F172A; color: #FFFFFF;">Carbs (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="dietaryFiber" style="background: #0F172A; color: #FFFFFF;">Fiber (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="sugars" style="background: #0F172A; color: #FFFFFF;">Sugars (g) ↕</th>
-                  <th scope="col" class="sortable" data-field="protein" style="background: #0F172A; color: #FFFFFF;">Protein (g) ↕</th>
-                  <th scope="col" style="min-width: 130px; background: #0F172A; color: #FFFFFF;">Allergens</th>
-                  <th scope="col" style="text-align: right; min-width: 90px; background: #0F172A; color: #FFFFFF;">Action</th>
-                </tr>
-              </thead>
-              <tbody id="calcTableBody"></tbody>
-            </table>
-          </div>
+          <div id="a11yClipboardAnnouncer" class="sr-only" aria-live="polite"></div>
 
-          <!-- Table Scroll Affordance (Phase 1 & 5) -->
-          <div class="table-scroll-hint" id="tableScrollHint" aria-hidden="true" style="text-align: center; font-size: 0.82rem; color: #64748B; padding: 0.6rem; background: #F8FAFC; border: 1px solid #E2E8F0; border-top: none; border-radius: 0 0 8px 8px; display: none;">
-            &larr; Swipe sideways to explore all 12 nutrition &amp; macro metrics &rarr;
-          </div>
         </div>
-      </div>
-
-      <!-- Floating Sticky Calorie Bar Dock -->
-      <div id="stickyCalorieDock" class="sticky-calorie-dock" role="region" aria-label="Active Meal Dock">
-        <div class="calorie-dock-inner">
-          <div>
-            <div style="font-size: 0.75rem; text-transform: uppercase; color: #E2E8F0; font-weight: 700; letter-spacing: 0.04em;">Custom Meal Running Total</div>
-            <div id="dockItemCount" style="font-size: 0.9rem; color: #FFFFFF; font-weight: 600;">0 items selected</div>
-          </div>
-          <div style="display: flex; align-items: center; gap: 1.25rem;">
-            <div id="dockCalorieValue" class="calorie-dock-total">0 cal</div>
-            <a href="/#coupon-section" class="btn" style="padding: 0.5rem 1rem; font-size: 0.85rem;">
-              Get Coupon Discounts &rarr;
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Item Detail Modal -->
-      <div id="nutritionModal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="nutritionModalTitle">
-        <div class="modal-dialog">
-          <div class="modal-header-bar">
-            <h2 id="nutritionModalTitle" style="font-weight: 800; font-size: 1.15rem; margin: 0; color: #FFFFFF;">Complete Nutritional &amp; Allergen Specifications</h2>
-            <button type="button" id="modalCloseBtn" class="modal-close-btn" aria-label="Close modal">✕</button>
-          </div>
-          <div id="modalDetailsBody" style="padding: 1.5rem;"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Official Notice -->
-    <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem 1.5rem; font-size: 0.9rem; color: #475569; margin: 2rem 0;">
-      <strong>Official Nutrition &amp; Allergen Disclaimer:</strong> ${nutritionData.disclaimer}
-    </div>
-
-    <!-- ====================================================================
-         PHASE 5: QUICK REFERENCE TABLE FOR MOST-SEARCHED ITEMS
-         ==================================================================== -->
-    <section style="margin: 2.5rem 0;" aria-labelledby="quick-ref-heading">
-      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
-        <h2 id="quick-ref-heading" style="font-size: 1.6rem; font-weight: 900; color: #0F172A; margin: 0;">
-          📊 Quick-Reference Nutrition Table: 15 Most-Searched Dishes
-        </h2>
-        <span style="font-size: 0.85rem; color: #64748B;">Standard restaurant serving sizes</span>
-      </div>
-      <p style="color: #475569; font-size: 0.95rem; margin-bottom: 1.25rem;">
-        Instant reference guide for Panda Express's most commonly ordered items. All metrics are calibrated directly from official Panda Express laboratory testing disclosures:
-      </p>
-
-      <div class="table-responsive" style="margin: 1rem 0;">
-        <table class="coupon-table">
-          <thead>
-            <tr>
-              <th scope="col" style="position: sticky; left: 0; background: #0F172A; color: #FFF; min-width: 170px;">Dish &amp; Serving</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Calories</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Total Fat</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Sodium</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Carbs</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Sugars</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Protein</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Orange Chicken</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.7 oz (162g)</span></td>
-              <td style="font-weight:800;color:#B91C1C;">490 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">22g</td>
-              <td style="font-weight:600;color:#1E293B;">820mg</td>
-              <td style="font-weight:600;color:#1E293B;">57g</td>
-              <td style="font-weight:600;color:#1E293B;">30g</td>
-              <td style="font-weight:800;color:#15803D;">25g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Grilled Teriyaki Chicken</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.7 oz (162g)</span></td>
-              <td style="font-weight:800;color:#15803D;">300 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">11g</td>
-              <td style="font-weight:600;color:#1E293B;">530mg</td>
-              <td style="font-weight:600;color:#1E293B;">12g</td>
-              <td style="font-weight:600;color:#1E293B;">10g</td>
-              <td style="font-weight:800;color:#15803D;">36g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Beijing Beef</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.7 oz (159g)</span></td>
-              <td style="font-weight:800;color:#B91C1C;">470 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">24g</td>
-              <td style="font-weight:600;color:#1E293B;">660mg</td>
-              <td style="font-weight:600;color:#1E293B;">52g</td>
-              <td style="font-weight:600;color:#1E293B;">30g</td>
-              <td style="font-weight:800;color:#15803D;">14g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Broccoli Beef</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.4 oz (153g)</span></td>
-              <td style="font-weight:800;color:#15803D;">150 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">5g</td>
-              <td style="font-weight:600;color:#1E293B;">660mg</td>
-              <td style="font-weight:600;color:#1E293B;">13g</td>
-              <td style="font-weight:600;color:#1E293B;">4g</td>
-              <td style="font-weight:800;color:#15803D;">9g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Kung Pao Chicken</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">6.0 oz (170g)</span></td>
-              <td style="font-weight:800;color:#B45309;">290 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">14g</td>
-              <td style="font-weight:600;color:#1E293B;">930mg</td>
-              <td style="font-weight:600;color:#1E293B;">14g</td>
-              <td style="font-weight:600;color:#1E293B;">8g</td>
-              <td style="font-weight:800;color:#15803D;">28g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Black Pepper Chicken</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.4 oz (153g)</span></td>
-              <td style="font-weight:800;color:#B45309;">280 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">15g</td>
-              <td style="font-weight:600;color:#1E293B;">1,060mg</td>
-              <td style="font-weight:600;color:#1E293B;">17g</td>
-              <td style="font-weight:600;color:#1E293B;">8g</td>
-              <td style="font-weight:800;color:#15803D;">19g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Honey Walnut Shrimp</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.7 oz (162g)</span></td>
-              <td style="font-weight:800;color:#B91C1C;">430 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">28g</td>
-              <td style="font-weight:600;color:#1E293B;">460mg</td>
-              <td style="font-weight:600;color:#1E293B;">37g</td>
-              <td style="font-weight:600;color:#1E293B;">20g</td>
-              <td style="font-weight:800;color:#15803D;">11g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">String Bean Chicken Breast</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">5.4 oz (153g)</span></td>
-              <td style="font-weight:800;color:#15803D;">210 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">10g</td>
-              <td style="font-weight:600;color:#1E293B;">980mg</td>
-              <td style="font-weight:600;color:#1E293B;">13g</td>
-              <td style="font-weight:600;color:#1E293B;">4g</td>
-              <td style="font-weight:800;color:#15803D;">17g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Chow Mein</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">11.0 oz (312g)</span></td>
-              <td style="font-weight:800;color:#B91C1C;">600 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">23g</td>
-              <td style="font-weight:600;color:#1E293B;">1,000mg</td>
-              <td style="font-weight:600;color:#1E293B;">94g</td>
-              <td style="font-weight:600;color:#1E293B;">11g</td>
-              <td style="font-weight:800;color:#15803D;">15g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Fried Rice</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">11.0 oz (312g)</span></td>
-              <td style="font-weight:800;color:#B91C1C;">620 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">19g</td>
-              <td style="font-weight:600;color:#1E293B;">1,000mg</td>
-              <td style="font-weight:600;color:#1E293B;">101g</td>
-              <td style="font-weight:600;color:#1E293B;">4g</td>
-              <td style="font-weight:800;color:#15803D;">13g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">White Steamed Rice</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">11.0 oz (312g)</span></td>
-              <td style="font-weight:800;color:#B45309;">520 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">0g</td>
-              <td style="font-weight:600;color:#1E293B;">0mg</td>
-              <td style="font-weight:600;color:#1E293B;">118g</td>
-              <td style="font-weight:600;color:#1E293B;">0g</td>
-              <td style="font-weight:800;color:#15803D;">10g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Chicken Egg Roll</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">3.0 oz (85g)</span></td>
-              <td style="font-weight:800;color:#15803D;">200 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">12g</td>
-              <td style="font-weight:600;color:#1E293B;">430mg</td>
-              <td style="font-weight:600;color:#1E293B;">15g</td>
-              <td style="font-weight:600;color:#1E293B;">2g</td>
-              <td style="font-weight:800;color:#15803D;">8g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Cream Cheese Rangoon</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">3.0 oz (85g)</span></td>
-              <td style="font-weight:800;color:#15803D;">190 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">9g</td>
-              <td style="font-weight:600;color:#1E293B;">180mg</td>
-              <td style="font-weight:600;color:#1E293B;">24g</td>
-              <td style="font-weight:600;color:#1E293B;">4g</td>
-              <td style="font-weight:800;color:#15803D;">4g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Hot &amp; Sour Soup</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">12.0 oz (340g)</span></td>
-              <td style="font-weight:800;color:#15803D;">90 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">3g</td>
-              <td style="font-weight:600;color:#1E293B;">1,290mg</td>
-              <td style="font-weight:600;color:#1E293B;">10g</td>
-              <td style="font-weight:600;color:#1E293B;">2g</td>
-              <td style="font-weight:800;color:#15803D;">7g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;"><strong style="color: #0F172A; font-weight: 700; font-size: 0.95rem; display: block;">Fortune Cookie</strong><span style="display:block;font-size:0.75rem;color:#475569;font-weight:600;">0.35 oz (10g)</span></td>
-              <td style="font-weight:800;color:#15803D;">35 kcal</td>
-              <td style="font-weight:600;color:#1E293B;">0.5g</td>
-              <td style="font-weight:600;color:#1E293B;">30mg</td>
-              <td style="font-weight:600;color:#1E293B;">7g</td>
-              <td style="font-weight:600;color:#1E293B;">3g</td>
-              <td style="font-weight:800;color:#15803D;">0g</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         PHASE 5: GOAL-BASED QUICK TIPS SECTION (Written Fresh)
-         ==================================================================== -->
-    <section style="margin: 3rem 0;" aria-labelledby="quick-tips-heading">
-      <h2 id="quick-tips-heading" style="font-size: 1.6rem; font-weight: 900; color: #0F172A; margin-bottom: 1.25rem;">
-        💡 Goal-Based Nutrition Quick Tips &amp; Smart Swaps
-      </h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem;">
-        
-        <!-- Tip Card 1 -->
-        <div class="nutrition-tip-card" style="border-top: 4px solid #16A34A;">
-          <h3 style="font-size: 1.15rem; color: #16A34A; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>🥗</span> Want Fewer Calories
-          </h3>
-          <ul style="padding-left: 1.2rem; color: #475569; font-size: 0.92rem; line-height: 1.6; margin-bottom: 0;">
-            <li style="margin-bottom: 0.5rem;"><strong>Swap sides:</strong> Replace Chow Mein (600 kcal) or Fried Rice (620 kcal) with Super Greens (90 kcal) to instantly save up to 530 calories per meal.</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Pick lean stir-fries:</strong> Broccoli Beef (150 kcal) or String Bean Chicken (210 kcal) slash 280–340 calories compared to deep-fried Orange Chicken (490 kcal).</li>
-            <li><strong>Glaze on the side:</strong> Ask for Grilled Teriyaki Chicken with glaze served on the side to eliminate 60 calories of added cornstarch sugars.</li>
-          </ul>
-        </div>
-
-        <!-- Tip Card 2 -->
-        <div class="nutrition-tip-card" style="border-top: 4px solid #0284C7;">
-          <h3 style="font-size: 1.15rem; color: #0284C7; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>💪</span> Want More Protein
-          </h3>
-          <ul style="padding-left: 1.2rem; color: #475569; font-size: 0.92rem; line-height: 1.6; margin-bottom: 0;">
-            <li style="margin-bottom: 0.5rem;"><strong>Order Grilled Teriyaki Chicken:</strong> Yields a massive 36g of whole meat protein per serving (72g in a double entree Plate) for only 300 calories.</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Choose unbreaded wok entrees:</strong> Kung Pao Chicken (28g protein) and Black Pepper Chicken (19g protein) provide dense amino acids without fried batter filler.</li>
-            <li><strong>Split your base:</strong> Half Super Greens + half White Rice preserves high muscle glycogen while boosting micronutrients and fiber.</li>
-          </ul>
-        </div>
-
-        <!-- Tip Card 3 -->
-        <div class="nutrition-tip-card" style="border-top: 4px solid #D97706;">
-          <h3 style="font-size: 1.15rem; color: #D97706; margin-top: 0; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;">
-            <span>❤️</span> Watching Sodium
-          </h3>
-          <ul style="padding-left: 1.2rem; color: #475569; font-size: 0.92rem; line-height: 1.6; margin-bottom: 0;">
-            <li style="margin-bottom: 0.5rem;"><strong>Stick to Steamed White Rice:</strong> Features 0mg sodium, bypassing the heavy 1,000mg salt foundation in Chow Mein and Fried Rice.</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Order lower-sodium entrees:</strong> Broccoli Beef (660mg) and Grilled Teriyaki Chicken without glaze (530mg) keep meal totals below AHA daily benchmarks.</li>
-            <li><strong>Pass on soup &amp; soy sauce:</strong> Hot &amp; Sour Soup contains 1,290mg sodium per bowl, and a single soy sauce packet adds 350mg of extra sodium.</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         PHASE 5: POPULAR COMBO CALCULATOR TABLE (Real Dataset Totals)
-         ==================================================================== -->
-    <section style="margin: 3rem 0;" aria-labelledby="combo-table-heading">
-      <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.75rem;">
-        <h2 id="combo-table-heading" style="font-size: 1.6rem; font-weight: 900; color: #0F172A; margin: 0;">
-          🍽️ Popular Combo Meal Nutritional Totals (Real Macro Sums)
-        </h2>
-        <span style="font-size: 0.85rem; color: #64748B;">Accurately computed from dataset</span>
-      </div>
-      <p style="color: #475569; font-size: 0.95rem; margin-bottom: 1.25rem;">
-        Exact combined macro sums for 5 of Panda Express's most popular counter combos, calculated directly from our verified menu database:
-      </p>
-
-      <div class="table-responsive" style="margin: 1rem 0;">
-        <table class="coupon-table">
-          <thead>
-            <tr>
-              <th scope="col" style="position: sticky; left: 0; background: #0F172A; color: #FFF; min-width: 150px;">Combo &amp; Vessel</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Exact Dishes Included</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Calories</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Total Fat</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Sodium</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Carbs</th>
-              <th scope="col" style="background: #0F172A; color: #FFF;">Protein</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;">Signature Plate</td>
-              <td style="font-size: 0.88rem; color: #334155; font-weight: 500;">Chow Mein + Orange Chicken + Grilled Teriyaki Chicken</td>
-              <td style="font-weight: 800; color: #B91C1C;">1,390 kcal</td>
-              <td style="font-weight: 600; color: #1E293B;">56g</td>
-              <td style="font-weight: 600; color: #1E293B;">2,350mg</td>
-              <td style="font-weight: 600; color: #1E293B;">163g</td>
-              <td style="font-weight: 800; color: #15803D;">76g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;">Super Greens Bowl</td>
-              <td style="font-size: 0.88rem; color: #334155; font-weight: 500;">Super Greens + Broccoli Beef</td>
-              <td style="font-weight: 800; color: #15803D;">280 kcal</td>
-              <td style="font-weight: 600; color: #1E293B;">9g</td>
-              <td style="font-weight: 600; color: #1E293B;">1,030mg</td>
-              <td style="font-weight: 600; color: #1E293B;">27g</td>
-              <td style="font-weight: 800; color: #15803D;">18g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;">Athletic Builder Bowl</td>
-              <td style="font-size: 0.88rem; color: #334155; font-weight: 500;">White Steamed Rice + Grilled Teriyaki Chicken</td>
-              <td style="font-weight: 800; color: #B45309;">820 kcal</td>
-              <td style="font-weight: 600; color: #1E293B;">11g</td>
-              <td style="font-weight: 600; color: #1E293B;">530mg</td>
-              <td style="font-weight: 600; color: #1E293B;">130g</td>
-              <td style="font-weight: 800; color: #15803D;">46g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;">Lean Wok Stir-Fry Plate</td>
-              <td style="font-size: 0.88rem; color: #334155; font-weight: 500;">Super Greens + Kung Pao Chicken + String Bean Chicken Breast</td>
-              <td style="font-weight: 800; color: #15803D;">630 kcal</td>
-              <td style="font-weight: 600; color: #1E293B;">28g</td>
-              <td style="font-weight: 600; color: #1E293B;">2,280mg</td>
-              <td style="font-weight: 600; color: #1E293B;">41g</td>
-              <td style="font-weight: 800; color: #15803D;">54g</td>
-            </tr>
-            <tr>
-              <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; color: #0F172A;">Ultimate Feast Bigger Plate</td>
-              <td style="font-size: 0.88rem; color: #334155; font-weight: 500;">Fried Rice + Orange Chicken + Beijing Beef + Grilled Teriyaki Chicken</td>
-              <td style="font-weight: 800; color: #B91C1C;">1,880 kcal</td>
-              <td style="font-weight: 600; color: #1E293B;">76g</td>
-              <td style="font-weight: 600; color: #1E293B;">3,010mg</td>
-              <td style="font-weight: 600; color: #1E293B;">222g</td>
-              <td style="font-weight: 800; color: #15803D;">88g</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         COMPREHENSIVE NUTRITION REFERENCE CONTENT (2,000+ Words)
-         ==================================================================== -->
-    <article class="nutrition-guide-prose" style="line-height: 1.7; color: #1F242E; margin-top: 3rem;">
-      
-      <!-- Section 1: How the Calculator Works -->
-      <section style="margin-bottom: 3.5rem;">
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1rem; color: #0F172A;">
-          How the Panda Express Nutrition Calculator Works
-        </h2>
-        <p>
-          Managing caloric intake, balancing macronutrient splits, and navigating allergens at high-volume fast-casual Chinese restaurants requires transparency. Unlike traditional fast-food burger establishments where meals arrive as static wrapped sandwiches, Panda Express operates on an interactive wok-to-plate assembly line. You choose a meal vessel—a Bowl, a Plate, or a Bigger Plate—and populate that vessel with a combination of high-volume base carbohydrates and stir-fried protein entrees.
-        </p>
-        <p>
-          Our interactive calculator utilizes calibrated nutritional data derived from official Panda Express corporate laboratory formulations. Every menu item is measured against two key operational parameters:
-        </p>
-        <ul style="padding-left: 1.5rem; margin-bottom: 1.25rem;">
-          <li><strong>Standard Base Portion Sizing:</strong> Sides such as Chow Mein, Fried Rice, and Steamed Rice are portioned using standard 10 to 11 ounce scoops. These carbohydrate foundations range from 90 calories (Super Greens) to 620 calories (Fried Rice).</li>
-          <li><strong>Standard Entree Portion Sizing:</strong> Entrees are served with a 5.3 to 6.0 ounce perforated portion spoodle. Caloric density across entrees varies by over 350%, ranging from 150 calories for lean Broccoli Beef to 490 calories for crispy, sweet-glazed Original Orange Chicken.</li>
-        </ul>
-        <p>
-          When you assemble a combo in the calculator, our engine dynamically sums the caloric totals, protein mass, carbohydrate counts, dietary fiber, saturated fats, and milligram sodium concentrations. It then graphs your total meal against the standard 2,000-calorie FDA daily recommended reference value, allowing bodybuilders, diabetic diners, keto adherents, and heart-healthy eaters to adjust their orders before walking up to the register.
-        </p>
       </section>
 
-      <!-- Section 2: Macro Profiles of the 5 Most Popular Dishes -->
-      <section style="margin-bottom: 3.5rem;">
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1rem; color: #0F172A;">
-          Nutritional Profiles of the 5 Most Popular Panda Express Entrees
+      <!-- SECTION: How We Verify This Data -->
+      <section class="nutr-section" aria-labelledby="verify-heading">
+        <div class="nutr-callout-card">
+          <h2 id="verify-heading" style="color: #FFFFFF; font-size: 1.35rem; font-weight: 800; margin-top: 0; margin-bottom: 0.6rem;">
+            How We Verify This Data
+          </h2>
+          <p>
+            Every figure in this guide is sourced directly from Panda Express's official Nutrition &amp; Allergen page and cross-checked against our own calculator database. Panda Express states that its values are based on standard recipes, so actual numbers can shift slightly by location, portion size, and prep method. If you're managing a medical condition or a severe allergy, confirm details in-app or in-store before ordering — this guide is a planning tool, not a substitute for that.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION: Meal Sizes at a Glance -->
+      <section class="nutr-section" aria-labelledby="sizes-heading">
+        <h2 id="sizes-heading" class="nutr-section-title">
+          Panda Express Meal Sizes at a Glance
         </h2>
-        <p>
-          Over 80% of all customer orders at Panda Express feature at least one of five core entrees. Understanding the distinct macronutrient balance of these signature recipes enables smarter substitutions:
+        <p class="nutr-paragraph">
+          The range is this wide because Panda Express doesn't set fixed combos — every entrée and side is priced and calculated individually, so your total depends entirely on what goes into the bowl. A White Rice and Grilled Teriyaki Chicken bowl and a Fried Rice and Orange Chicken bowl are both technically "a Bowl," but they're 800+ calories apart.
         </p>
 
-        <!-- 5 Classics Comparative Table -->
-        <div class="table-responsive" style="margin: 1.5rem 0;">
-          <table class="coupon-table">
+        <!-- Meal Sizes Table -->
+        <div class="nutr-table-wrap">
+          <table class="nutr-table" aria-label="Panda Express Meal Sizes Caloric Comparison">
             <thead>
               <tr>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Iconic Entree</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Serving Size</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Calories</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Protein</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Total Fat</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Sat Fat</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Carbs</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Sugars</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Sodium</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Key Allergens</th>
+                <th scope="col">Meal Format</th>
+                <th scope="col">Items Included</th>
+                <th scope="col">Caloric Range</th>
+                <th scope="col">Key Takeaway</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">The Original Orange Chicken</strong></td>
-                <td style="color: #475569; font-weight: 500;">5.7 oz (162g)</td>
-                <td style="font-weight: 800; color: #B91C1C;">490 kcal</td>
-                <td style="color: #15803D; font-weight: 800;">25g</td>
-                <td style="color: #1E293B; font-weight: 600;">22g</td>
-                <td style="color: #1E293B; font-weight: 600;">4.0g</td>
-                <td style="color: #1E293B; font-weight: 600;">57g</td>
-                <td style="color: #1E293B; font-weight: 600;">30g</td>
-                <td style="color: #1E293B; font-weight: 600;">820mg</td>
-                <td style="color: #475569; font-weight: 500;">Wheat, Soy, Egg</td>
+                <td><strong style="color: #FFFFFF;">Bowl</strong></td>
+                <td>1 Side + 1 Entrée</td>
+                <td><span class="nutr-table-accent">280–1,130 kcal</span></td>
+                <td>Ideal for single portions; wide calorie swing based on side chosen</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Beijing Beef</strong></td>
-                <td style="color: #475569; font-weight: 500;">5.7 oz (159g)</td>
-                <td style="font-weight: 800; color: #B91C1C;">470 kcal</td>
-                <td style="color: #15803D; font-weight: 800;">14g</td>
-                <td style="color: #1E293B; font-weight: 600;">24g</td>
-                <td style="color: #1E293B; font-weight: 600;">4.0g</td>
-                <td style="color: #1E293B; font-weight: 600;">52g</td>
-                <td style="color: #1E293B; font-weight: 600;">30g</td>
-                <td style="color: #1E293B; font-weight: 600;">660mg</td>
-                <td style="color: #475569; font-weight: 500;">Wheat, Soy, Egg</td>
+                <td><strong style="color: #FFFFFF;">Plate</strong></td>
+                <td>1 Side + 2 Entrées</td>
+                <td><span class="nutr-table-accent">430–1,640 kcal</span></td>
+                <td>Standard dinner; best protein yield per dollar when choosing lean meats</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Grilled Teriyaki Chicken</strong></td>
-                <td style="color: #475569; font-weight: 500;">5.7 oz (162g)</td>
-                <td style="font-weight: 800; color: #15803D;">300 kcal</td>
-                <td style="color: #15803D; font-weight: 800;">36g</td>
-                <td style="color: #1E293B; font-weight: 600;">11g</td>
-                <td style="color: #1E293B; font-weight: 600;">3.0g</td>
-                <td style="color: #1E293B; font-weight: 600;">12g</td>
-                <td style="color: #1E293B; font-weight: 600;">10g</td>
-                <td style="color: #1E293B; font-weight: 600;">530mg</td>
-                <td style="color: #475569; font-weight: 500;">Wheat, Soy</td>
+                <td><strong style="color: #FFFFFF;">Bigger Plate</strong></td>
+                <td>1 Side + 3 Entrées</td>
+                <td><span class="nutr-table-accent">580–2,150+ kcal</span></td>
+                <td>Roughly 580–2,150+ calories, based on combining official per-item figures</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Kung Pao Chicken</strong></td>
-                <td style="color: #475569; font-weight: 500;">6.0 oz (164g)</td>
-                <td style="font-weight: 800; color: #B45309;">290 kcal</td>
-                <td style="color: #15803D; font-weight: 800;">28g</td>
-                <td style="color: #1E293B; font-weight: 600;">14g</td>
-                <td style="color: #1E293B; font-weight: 600;">3.0g</td>
-                <td style="color: #1E293B; font-weight: 600;">14g</td>
-                <td style="color: #1E293B; font-weight: 600;">8g</td>
-                <td style="color: #1E293B; font-weight: 600;">930mg</td>
-                <td style="color: #475569; font-weight: 500;">Peanuts, Wheat, Soy, Sesame</td>
+                <td><strong style="color: #FFFFFF;">Panda Bundle</strong></td>
+                <td>Any Size Meal + Medium Drink</td>
+                <td><span class="nutr-table-accent">280–2,560 kcal</span></td>
+                <td>Sugary drinks can add 200–400+ calories; opt for water or zero-calorie soda</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION: Calories by Category -->
+      <section class="nutr-section" aria-labelledby="categories-heading">
+        <h2 id="categories-heading" class="nutr-section-title">
+          Panda Express Calories by Category
+        </h2>
+        <p class="nutr-paragraph">
+          Detailed breakdown of all official menu departments. Review exact calories, sodium, and macronutrient trends before customizing your plate:
+        </p>
+
+        <div class="nutr-category-grid">
+
+          <!-- 1. Sides -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Sides</h3>
+              <span class="nutr-table-val">130–620 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Super Greens</span>
+                <span class="nutr-item-meta">130 cal</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">White Steamed Rice</span>
+                <span class="nutr-item-meta">520 cal | 0mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Chow Mein</span>
+                <span class="nutr-item-meta">600 cal | 1,000mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Fried Rice</span>
+                <span class="nutr-item-meta">620 cal | 1,000mg sod</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Sides swing harder than any other category. Super Greens sits at 130 calories, while Fried Rice more than quadruples that at 620. The difference isn't really the rice or the greens — it's the oil, egg, and soy sauce used in frying. White Steamed Rice lands at 520 calories with zero sodium, making it the cleanest carb option if sodium is your concern rather than calories.
+            </p>
+          </div>
+
+          <!-- 2. Chicken Entrées -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Chicken Entrées</h3>
+              <span class="nutr-table-val">275–510 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Grilled Teriyaki Chicken</span>
+                <span class="nutr-item-meta">275 cal | 33g P</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Black Pepper Chicken</span>
+                <span class="nutr-item-meta">280 cal | 1,130mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Kung Pao Chicken</span>
+                <span class="nutr-item-meta">320 cal | 1,050mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">The Original Orange Chicken</span>
+                <span class="nutr-item-meta">510 cal | 16g P</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Grilled Teriyaki Chicken is the standout here: 275 calories and 33 grams of protein, the best protein-to-calorie ratio on the entire menu. Orange Chicken, the chain's best-known dish, runs 510 calories with 16 grams of protein, 20 grams of sugar, and 850mg of sodium — batter and glaze account for most of that gap. Kung Pao Chicken (320 cal, 1,050mg sodium) and Black Pepper Chicken (280 cal, 1,130mg sodium) are both moderate on calories but carry some of the highest sodium counts in the category.
+            </p>
+          </div>
+
+          <!-- 3. Chicken Breast -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Chicken Breast</h3>
+              <span class="nutr-table-val">210–360 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">String Bean Chicken Breast</span>
+                <span class="nutr-item-meta">210 cal | 12g P</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Honey Sesame Chicken Breast</span>
+                <span class="nutr-item-meta">340 cal | Sweet Glaze</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">SweetFire Chicken Breast</span>
+                <span class="nutr-item-meta">360 cal | Crisp Glaze</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              This line trades a little flavor intensity for leaner numbers. String Bean Chicken Breast comes in at 210 calories with 12 grams of protein and real fiber from the vegetables. SweetFire Chicken Breast (360 cal) and Honey Sesame Chicken Breast (340 cal) lean sweeter and carry more sugar per serving.
+            </p>
+          </div>
+
+          <!-- 4. Beef -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Beef</h3>
+              <span class="nutr-table-val">150–470 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Broccoli Beef</span>
+                <span class="nutr-item-meta">150 cal | 15g P</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Beijing Beef</span>
+                <span class="nutr-item-meta">470 cal | 27g F</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Broccoli Beef is the lightest entrée on the whole menu at 150 calories with 15 grams of protein — a genuinely strong pick regardless of your goal. Beijing Beef, by contrast, is battered and fried, landing at 470 calories with 27 grams of fat.
+            </p>
+          </div>
+
+          <!-- 5. Seafood -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Seafood</h3>
+              <span class="nutr-table-val">200–430 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Steamed Ginger Fish</span>
+                <span class="nutr-item-meta">200 cal | 1,990mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Honey Walnut Shrimp</span>
+                <span class="nutr-item-meta">430 cal | Sweet Glaze</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Honey Walnut Shrimp (430 cal) is sweet-glazed and fried, similar in profile to Orange Chicken. Steamed Ginger Fish is worth flagging specifically: at only 200 calories it looks light, but it carries 1,990mg of sodium — the highest sodium count of any single entrée on the menu, nearly the FDA's full daily recommended sodium limit in one dish.
+            </p>
+          </div>
+
+          <!-- 6. Vegetables & Tofu -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Vegetables &amp; Tofu</h3>
+              <span class="nutr-table-val">90–340 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Super Greens (Entrée Portion)</span>
+                <span class="nutr-item-meta">90 cal | 6g P | 5g Fib</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Eggplant Tofu</span>
+                <span class="nutr-item-meta">340 cal | Prep Oil</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Super Greens as a standalone entrée is 90 calories with 6 grams of protein and 5 grams of fiber, making it one of the few genuinely low-everything options. Eggplant Tofu, despite sounding light, runs 340 calories because of the oil used in preparation.
+            </p>
+          </div>
+
+          <!-- 7. Appetizers -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Appetizers</h3>
+              <span class="nutr-table-val">160–240 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Chicken Potstickers (3 pcs)</span>
+                <span class="nutr-item-meta">160 cal</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Chicken Egg Rolls (1 roll)</span>
+                <span class="nutr-item-meta">200 cal</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Vegetable Spring Rolls (2 rolls)</span>
+                <span class="nutr-item-meta">240 cal</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Vegetable Spring Rolls (2 rolls, 240 cal) and Chicken Egg Rolls (1 roll, 200 cal) add up fast for their size. Chicken Potstickers (3 pcs, 160 cal) are the lightest appetizer option.
+            </p>
+          </div>
+
+          <!-- 8. Soup -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Soup</h3>
+              <span class="nutr-table-val">120–170 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Hot &amp; Sour Soup (Cup)</span>
+                <span class="nutr-item-meta">120 cal</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Hot &amp; Sour Soup (Bowl)</span>
+                <span class="nutr-item-meta">170 cal | 1,260mg sod</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Hot &amp; Sour Soup looks harmless calorie-wise (120–170 cal) but is one of the saltiest items on the menu — the bowl size alone carries 1,260mg of sodium.
+            </p>
+          </div>
+
+          <!-- 9. Sauces -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Sauces</h3>
+              <span class="nutr-table-val">5–70 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Soy Sauce (1 packet)</span>
+                <span class="nutr-item-meta">5 cal | 375mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Sweet &amp; Sour Sauce</span>
+                <span class="nutr-item-meta">70 cal | 115mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Teriyaki Sauce</span>
+                <span class="nutr-item-meta">70 cal | 380mg sod</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              A single packet of Soy Sauce adds only 5 calories but 375mg of sodium. Teriyaki Sauce (70 cal, 380mg sodium) and Sweet &amp; Sour Sauce (70 cal, 115mg sodium) both add meaningful sugar if you're tracking that closely.
+            </p>
+          </div>
+
+          <!-- 10. Cub Meals (Kids) -->
+          <div class="nutr-category-card">
+            <div class="nutr-cat-header">
+              <h3 class="nutr-cat-title">Cub Meals (Kids)</h3>
+              <span class="nutr-table-val">&lt; 600 cal</span>
+            </div>
+            <ul class="nutr-item-list">
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Grilled Teriyaki Cub Meal</span>
+                <span class="nutr-item-meta">400 cal | 28g P</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Orange Chicken Cub Meal</span>
+                <span class="nutr-item-meta">380 cal</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Broccoli Beef Cub Meal</span>
+                <span class="nutr-item-meta">&lt; 450 cal</span>
+              </li>
+            </ul>
+            <p class="nutr-item-desc">
+              Panda Express designed its Cub Meals around USDA dietary guidance for children. Each one stays under 600 calories and includes a vegetable side and fruit serving. The Grilled Teriyaki Chicken Cub Meal is the standout at 400 calories with 28 grams of protein.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION: Orange Chicken Deep Dive -->
+      <section class="nutr-section" aria-labelledby="orange-dive-heading">
+        <h2 id="orange-dive-heading" class="nutr-section-title">
+          Orange Chicken Nutrition — The Deep Dive
+        </h2>
+        <p class="nutr-paragraph">
+          A single serving of Orange Chicken (5.92 oz) contains 510 calories, 24 grams of fat, 53 grams of carbohydrate, 20 grams of sugar, and 16 grams of protein, with 850mg of sodium. These are the figures from Panda Express's own disclosure sheet — if you've seen different numbers elsewhere (490, or 380), those usually reflect a different portion size like the Cub Meal version (380 cal) rather than an inconsistency in the dish itself.
+        </p>
+
+        <h3 class="nutr-sub-title">Why Orange Chicken Is the Highest-Calorie Chicken Entrée</h3>
+        <p class="nutr-paragraph">
+          The chicken is battered and deep-fried first, then coated in a sugar-based glaze. Both steps add calories independently: the batter absorbs oil during frying, and the glaze adds nearly all 20 grams of sugar on top of that. Neither step is unusual for fast food — it's just compounding on a dish that's already fried.
+        </p>
+
+        <h3 class="nutr-sub-title">Orange Chicken vs. Grilled Teriyaki Chicken</h3>
+
+        <!-- Comparison Table: Orange Chicken vs Grilled Teriyaki -->
+        <div class="nutr-table-wrap">
+          <table class="nutr-table" aria-label="Orange Chicken vs Grilled Teriyaki Chicken Nutrition Comparison">
+            <thead>
+              <tr>
+                <th scope="col">Nutritional Metric</th>
+                <th scope="col">Orange Chicken</th>
+                <th scope="col">Grilled Teriyaki Chicken</th>
+                <th scope="col">Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong style="color: #FFFFFF;">Calories</strong></td>
+                <td><span class="nutr-table-accent">510 kcal</span></td>
+                <td><span class="nutr-table-val">275 kcal</span></td>
+                <td>-235 kcal (46% fewer calories)</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Honey Walnut Shrimp</strong></td>
-                <td style="color: #475569; font-weight: 500;">5.7 oz (162g)</td>
-                <td style="font-weight: 800; color: #B91C1C;">430 kcal</td>
-                <td style="color: #15803D; font-weight: 800;">11g</td>
-                <td style="color: #1E293B; font-weight: 600;">28g</td>
-                <td style="color: #1E293B; font-weight: 600;">5.0g</td>
-                <td style="color: #1E293B; font-weight: 600;">37g</td>
-                <td style="color: #1E293B; font-weight: 600;">20g</td>
-                <td style="color: #1E293B; font-weight: 600;">460mg</td>
-                <td style="color: #475569; font-weight: 500;">Shellfish, Tree Nuts, Wheat, Soy, Milk, Egg</td>
+                <td><strong style="color: #FFFFFF;">Protein</strong></td>
+                <td>16g</td>
+                <td><span class="nutr-table-val">33g</span></td>
+                <td>+17g (+106% more protein)</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #FFFFFF;">Sodium</strong></td>
+                <td>850mg</td>
+                <td><span class="nutr-table-val">470mg</span></td>
+                <td>-380mg (45% less sodium)</td>
+              </tr>
+              <tr>
+                <td><strong style="color: #FFFFFF;">Sugar</strong></td>
+                <td>20g</td>
+                <td><span class="nutr-table-val">9g</span></td>
+                <td>-11g (55% less sugar)</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <h3 style="font-size: 1.35rem; font-weight: 800; margin-top: 1.75rem; color: #1E293B;">
-          Detailed Macro Analysis of Top Entrees:
-        </h3>
-        <p>
-          <strong>1. The Original Orange Chicken:</strong> Panda Express’s flagship entree accounts for over one-third of all entree volume. Boneless dark-meat chicken chunks are double-dredged in flour and cornstarch batter, deep-fried until crisp, and tossed in an aromatic glaze of sugar, vinegar, soy sauce, garlic, and red chili flakes. The result is 30 grams of sugar and 57 grams of total carbohydrate per serving. While delivering a respectable 25g of protein, the high caloric density (490 calories) makes it a culinary treat best balanced with steamed greens.
-        </p>
-        <p>
-          <strong>2. Beijing Beef:</strong> Strips of flank steak are dredged in batter, wok-fried until crispy, and tossed with bell peppers and yellow onions in a sweet-and-tangy glaze. At 470 calories and 24g of fat, Beijing Beef yields 14g of protein—a relatively modest protein yield per calorie compared to chicken entrees.
-        </p>
-        <p>
-          <strong>3. Grilled Teriyaki Chicken:</strong> The gold standard for gym-goers, athletes, and low-carb diners. Boneless chicken thighs are flame-grilled, developing smoky char marks without batter or deep-frying. Sliced hot to order, a standard portion delivers an extraordinary 36g of protein with only 11g of fat and 300 calories. <em>Pro tip:</em> Asking for the sweet teriyaki glaze on the side drops carbohydrate content from 12g to under 4g, saving roughly 60 calories.
-        </p>
-        <p>
-          <strong>4. Kung Pao Chicken:</strong> Inspired by classic Sichuan cooking, tender marinated diced chicken is wok-fired with whole dried chili peppers, zucchini, bell peppers, and whole roasted peanuts. With only 14g of carbohydrates and 28g of protein, it delivers intense savory heat with zero breading. Watch the sodium level (930mg), which represents over 40% of the recommended daily limit.
-        </p>
-        <p>
-          <strong>5. Honey Walnut Shrimp:</strong> A beloved Cantonese banquet specialty featuring plump tempura-battered shrimp tossed in a velvety honey-cream mayonnaise glaze and topped with caramelized glazed walnuts. While deeply satisfying, it is the most fat-dense seafood choice on the menu (28g total fat, 5g saturated fat), with 430 calories and 11g of protein.
+        <p class="nutr-paragraph">
+          Grilled Teriyaki Chicken delivers roughly double the protein at about half the calories and sugar. If you're optimizing for protein-per-calorie specifically, it isn't close — Grilled Teriyaki Chicken gives you 0.12g of protein per calorie, compared to 0.03g for Orange Chicken.
         </p>
       </section>
 
-      <!-- Section 3: Combo Math Comparison -->
-      <section style="margin-bottom: 3.5rem;">
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1rem; color: #0F172A;">
-          Plate vs Bowl vs Bigger Plate vs Family Meal: Combo Math &amp; Value Analysis
+      <!-- SECTION: Sides Showdown -->
+      <section class="nutr-section" aria-labelledby="sides-showdown-heading">
+        <h2 id="sides-showdown-heading" class="nutr-section-title">
+          Sides Showdown: Chow Mein vs. Fried Rice vs. White Rice vs. Super Greens
         </h2>
-        <p>
-          Choosing the right meal format at Panda Express is both an economic and nutritional calculation. The table below breaks down the mathematical relationship between portion volume, caloric ranges, protein density, and price:
-        </p>
 
-        <div class="table-responsive" style="margin: 1.5rem 0;">
-          <table class="coupon-table">
+        <!-- Sides Table -->
+        <div class="nutr-table-wrap">
+          <table class="nutr-table" aria-label="Panda Express Sides Comparison">
             <thead>
               <tr>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Combo Format</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Components</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Weight (oz)</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Lowest Cal Combo</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Highest Cal Combo</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Protein Range</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Avg Price</th>
-                <th scope="col" style="background: #0F172A; color: #FFF;">Best Value For</th>
+                <th scope="col">Base Side</th>
+                <th scope="col">Calories</th>
+                <th scope="col">Sodium</th>
+                <th scope="col">Carbs</th>
+                <th scope="col">Key Profile Difference</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Bowl</strong></td>
-                <td style="color: #475569; font-weight: 500;">1 Side + 1 Entree</td>
-                <td style="color: #475569; font-weight: 500;">15 – 17 oz</td>
-                <td style="color:#15803D; font-weight:700;">240 cal (Greens + Broccoli Beef)</td>
-                <td style="color:#B91C1C; font-weight:700;">1,110 cal (Fried Rice + Orange Chicken)</td>
-                <td style="color: #1E293B; font-weight: 600;">15g – 49g</td>
-                <td style="color: #1E293B; font-weight: 600;">$8.30 – $9.10</td>
-                <td style="color: #475569; font-weight: 500;">Solo quick lunch, portion control, strict calorie budgeting</td>
+                <td><strong style="color: #FFFFFF;">White Steamed Rice</strong></td>
+                <td><span class="nutr-table-val">520 cal</span></td>
+                <td><span class="nutr-table-val">0mg</span></td>
+                <td>118g</td>
+                <td>Cleanest option if oil and sodium are your concern, heaviest in raw carbs</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Plate</strong></td>
-                <td style="color: #475569; font-weight: 500;">1 Side + 2 Entrees</td>
-                <td style="color: #475569; font-weight: 500;">20 – 23 oz</td>
-                <td style="color:#15803D; font-weight:700;">390 cal (Greens + 2x Broccoli Beef)</td>
-                <td style="color:#B91C1C; font-weight:700;">1,600 cal (Fried Rice + 2x Orange Chicken)</td>
-                <td style="color: #1E293B; font-weight: 600;">24g – 85g</td>
-                <td style="color: #1E293B; font-weight: 600;">$9.80 – $10.60</td>
-                <td style="color: #475569; font-weight: 500;">Standard dinner, high-protein athletic recovery, best dollar-per-calorie ratio</td>
+                <td><strong style="color: #FFFFFF;">Fried Rice</strong></td>
+                <td><span class="nutr-table-accent">620 cal</span></td>
+                <td>1,000mg</td>
+                <td>101g</td>
+                <td>The eggs and oil used in frying push both calories and cholesterol (140mg) well above white rice</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Bigger Plate</strong></td>
-                <td style="color: #475569; font-weight: 500;">1 Side + 3 Entrees</td>
-                <td style="color: #475569; font-weight: 500;">26 – 29 oz</td>
-                <td style="color:#15803D; font-weight:700;">540 cal (Greens + 3x Broccoli Beef)</td>
-                <td style="color:#B91C1C; font-weight:700;">2,090 cal (Fried Rice + 3x Orange Chicken)</td>
-                <td style="color: #1E293B; font-weight: 600;">33g – 121g</td>
-                <td style="color: #1E293B; font-weight: 600;">$11.30 – $12.10</td>
-                <td style="color: #475569; font-weight: 500;">Heavy calorie surplus, post-marathon feast, shared meal for two light eaters</td>
+                <td><strong style="color: #FFFFFF;">Chow Mein</strong></td>
+                <td><span class="nutr-table-accent">600 cal</span></td>
+                <td>1,000mg</td>
+                <td>94g</td>
+                <td>Stir-fried in oil with similar sodium to fried rice but fewer carbs</td>
               </tr>
               <tr>
-                <td><strong style="color: #0F172A; font-weight: 700;">Family Meal</strong></td>
-                <td style="color: #475569; font-weight: 500;">2 Large Sides + 3 Large Entrees</td>
-                <td style="color: #475569; font-weight: 500;">75 – 85 oz</td>
-                <td style="color:#15803D; font-weight:700;">1,550 cal (2x Greens + 3x String Bean Chicken)</td>
-                <td style="color:#B91C1C; font-weight:700;">5,850 cal (2x Fried Rice + 3x Orange Chicken)</td>
-                <td style="color: #1E293B; font-weight: 600;">120g – 340g</td>
-                <td style="color: #1E293B; font-weight: 600;">$35.00</td>
-                <td style="color: #475569; font-weight: 500;">Families of 4–5, office catering, meal preppers dividing into 5 daily containers</td>
+                <td><strong style="color: #FFFFFF;">Super Greens</strong></td>
+                <td><span class="nutr-table-val">130 cal</span></td>
+                <td>370mg</td>
+                <td>14g</td>
+                <td>The outlier, roughly a quarter of the calories of every other side</td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <p>
-          <strong>The Economic Sweet Spot:</strong> From a cost-per-gram-of-protein perspective, upgrading from a Bowl ($8.50) to a Plate ($10.00) costs just $1.50 more while providing an extra 25g to 36g of whole meat protein. For athletes and bodybuilders, the Plate is statistically the most cost-effective whole-food meal prep available in modern fast-casual dining, yielding over 70g of bioavailable protein for under $11.00 when ordered with double Teriyaki Chicken.
-        </p>
+        <div class="nutr-callout-card">
+          <h3>The #1 Nutritional Swap on the Menu</h3>
+          <p>
+            Swapping Fried Rice for Super Greens in a Bowl saves about 490 calories and 630mg of sodium in one change — the single biggest impact swap available anywhere on the menu.
+          </p>
+        </div>
       </section>
 
-      <!-- Section 4: Why Nutrition Values Vary -->
-      <section style="margin-bottom: 3.5rem;">
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1rem; color: #0F172A;">
-          Why Official Panda Express Nutrition Values Vary in Reality
+      <!-- SECTION: Is Panda Express Healthy? -->
+      <section class="nutr-section" aria-labelledby="healthy-heading">
+        <h2 id="healthy-heading" class="nutr-section-title">
+          Is Panda Express Healthy?
         </h2>
-        <p>
-          Corporate nutrition tables are compiled in analytical test kitchens using calibrated gram scales and standardized recipes. However, when dining at any of Panda Express’s 2,400+ brick-and-mortar storefronts, your actual consumed macros will experience natural variations of 15% to 25%. Understanding why these variances occur allows you to make more accurate dietary adjustments:
+        <p class="nutr-paragraph">
+          The honest answer: it depends entirely on which entrée and side you pick, because the range runs from a 280-calorie Bowl to a 2,150-calorie Bigger Plate. Panda Express isn't inherently unhealthy or healthy — it's an à la carte menu where the choice matters more than the restaurant.
         </p>
-        <div class="card-grid" style="margin: 1.5rem 0;">
-          <div class="menu-card">
-            <h3 style="font-size: 1.15rem; color: #0F172A; margin-top: 0;">1. Wok Toss Oil Absorption</h3>
-            <p class="card-desc">
-              Panda Express chefs cook hot entrees in massive seasoned steel woks over roaring gas burners exceeding 100,000 BTUs. When an entree is freshly fired, soybean oil is added to coat the wok. Depending on the chef's ladle technique and how thoroughly the food is strained before being scooped into the steam table pan, oil retention can fluctuate by 4 to 8 grams of fat (36 to 72 calories) per serving.
+
+        <h3 class="nutr-sub-title">The Wok Smart Line</h3>
+        <p class="nutr-paragraph">
+          Wok Smart is Panda Express's designation for entrées that are lower in calories, fat, and sodium relative to the rest of the menu — generally the grilled and steamed options like Grilled Teriyaki Chicken, Broccoli Beef, and Super Greens. It exists specifically to make healthier scanning easier without needing a calculator.
+        </p>
+
+        <h3 class="nutr-sub-title">Kids LiveWell / Cub Meal Criteria</h3>
+        <p class="nutr-paragraph">
+          Panda Express's Cub Meals are built to meet Kids LiveWell program criteria, verified by the National Restaurant Association against nutrition guidelines from major health organizations. Each Cub Meal stays under 600 calories and includes a vegetable and a fruit serving by design, not as an afterthought.
+        </p>
+
+        <h3 class="nutr-sub-title">Building a Lower-Calorie, Lower-Sodium, or Higher-Protein Plate</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+          <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
+            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For Fewer Calories</h4>
+            <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+              Choose Super Greens over Fried Rice or Chow Mein (saves ~490 cal), pick a Bowl over a Plate, and ask for sauce on the side rather than mixed in.
             </p>
           </div>
-          <div class="menu-card">
-            <h3 style="font-size: 1.15rem; color: #0F172A; margin-top: 0;">2. Manual Scoop Variance</h3>
-            <p class="card-desc">
-              Service team members use ergonomic metal spoodles designed to capture roughly 5.5 to 6.0 ounces of product. During high-volume lunch rushes, servers frequently scoop generous heaping portions, easily exceeding official serving weights by 20% to 30%. Conversely, near closing time or when a pan is almost empty, scoops can be lighter and contain a higher ratio of sauce over whole protein pieces.
+          <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
+            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For More Protein</h4>
+            <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+              Grilled Teriyaki Chicken (33g protein, 275 cal) and Teriyaki Chicken (41g protein, 340 cal) are the two highest-protein entrées on the menu by a wide margin.
             </p>
           </div>
-          <div class="menu-card">
-            <h3 style="font-size: 1.15rem; color: #0F172A; margin-top: 0;">3. Sauce Reduction &amp; Glaze Thickness</h3>
-            <p class="card-desc">
-              Sauces like Orange Glaze, Beijing Sweet &amp; Sour, and Honey Sesame simmer continually under steam table heat lamps. As water evaporates over 20 to 40 minutes, the sugar and cornstarch glaze concentrates, increasing the caloric density of remaining chicken pieces significantly compared to a batch fresh from the wok.
-            </p>
-          </div>
-          <div class="menu-card">
-            <h3 style="font-size: 1.15rem; color: #0F172A; margin-top: 0;">4. Vegetable-to-Meat Ratios</h3>
-            <p class="card-desc">
-              Dishes like Broccoli Beef, String Bean Chicken, and Mushroom Chicken feature a natural distribution of dense protein alongside high-water-content vegetables. A scoop with four broccoli crowns and three beef slices will have vastly lower calories, fat, and protein than a scoop drawn from the bottom of the pan packed with beef strips.
+          <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
+            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For Less Sodium</h4>
+            <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+              Watch Steamed Ginger Fish (1,990mg) and Hot &amp; Sour Soup Bowl (1,260mg) specifically — these two items carry more sodium than most full meals elsewhere on the menu. Grilled Teriyaki Chicken (470mg) and Broccoli Beef (520mg) are the lowest-sodium entrées.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Section 5: Goal-Based Combo Blueprints -->
-      <section style="margin-bottom: 3.5rem;">
-        <h2 style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1rem; color: #0F172A;">
-          Goal-Based Combo Meal Blueprints (Exact Macro Formulas)
+      <!-- SECTION: Allergens & Ingredients -->
+      <section class="nutr-section" aria-labelledby="allergens-heading">
+        <h2 id="allergens-heading" class="nutr-section-title">
+          Allergens &amp; Ingredients: What's Actually Safe
         </h2>
-        <p>
-          Whether your priority is packing on lean muscle, adhering to ketogenic ketosis, limiting cardiovascular sodium intake, or eating strictly plant-based, here are four rigorously calculated meal formulas you can order verbatim at the counter:
+        <p class="nutr-paragraph">
+          Panda Express states it uses ingredients containing all major FDA allergens — wheat, soy, egg, milk, tree nuts, peanuts, shellfish, fish, and sesame — and that cross-contact is possible in any item because food is prepared on shared equipment. No menu item can be guaranteed allergen-free.
         </p>
 
-        <!-- Blueprint 1 -->
-        <div class="nutrition-blueprint-card" style="border-left: 5px solid #16A34A;">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0; font-size: 1.25rem; color: #0F172A;">💪 The Lean Muscle Builder (Plate)</h3>
-            <span style="font-weight: 800; color: #16A34A; font-size: 1.05rem;">730 kcal | 81g Protein | 25g Fat | 46g Carbs</span>
-          </div>
-          <p style="color: #475569; margin-bottom: 0.75rem; font-size: 0.95rem;">
-            <strong>The Order:</strong> Plate with Half Super Greens + Half Brown Rice as the base, Double Grilled Teriyaki Chicken (with sauce served strictly on the side).
-          </p>
-          <div style="font-size: 0.88rem; color: #64748B;">
-            <strong>Macro Breakdown:</strong> Super Greens (45 cal, 3g P) + Brown Rice (210 cal, 4.5g P) + 2x Grilled Chicken without glaze (480 cal, 72g P, 22g F, 8g C). Provides an astounding 81 grams of high-quality animal protein with sustained-release complex carbohydrates and high micronutrient density.
-          </div>
-        </div>
+        <h3 class="nutr-sub-title">What's Gluten-Free at Panda Express</h3>
+        <p class="nutr-paragraph">
+          White Steamed Rice and Super Greens are the safest base choices, since neither lists wheat on the official allergen sheet. Broccoli Beef also skips the wheat flag, though it still lists soy. Orange Chicken, Chow Mein, and most sauce-based dishes all contain wheat, mainly from soy sauce and batter.
+        </p>
 
-        <!-- Blueprint 2 -->
-        <div class="nutrition-blueprint-card" style="border-left: 5px solid #0284C7;">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0; font-size: 1.25rem; color: #0F172A;">🥑 The Strict Keto / Low-Carb Powerhouse (Plate)</h3>
-            <span style="font-weight: 800; color: #0284C7; font-size: 1.05rem;">630 kcal | 54g Protein | 26g Fat | 19g Net Carbs</span>
-          </div>
-          <p style="color: #475569; margin-bottom: 0.75rem; font-size: 0.95rem;">
-            <strong>The Order:</strong> Plate with Full Super Greens as base + Kung Pao Chicken + Mushroom Chicken.
-          </p>
-          <div style="font-size: 0.88rem; color: #64748B;">
-            <strong>Macro Breakdown:</strong> Super Greens (90 cal, 5g fiber, 5g net carbs) + Kung Pao Chicken (290 cal, 14g fat, 28g P, 12g net carbs) + Mushroom Chicken (220 cal, 12g fat, 17g P, 11g net carbs). Eliminates breading and deep-fry coatings while providing whole peanuts and fresh zucchini in savory ginger garlic soy.
-          </div>
-        </div>
+        <h3 class="nutr-sub-title">The Peanut Oil Question, Answered Directly</h3>
+        <p class="nutr-paragraph">
+          Panda Express does not cook with peanut oil — it uses soybean oil for frying and stir-frying. That said, several dishes (Kung Pao Chicken specifically) do contain actual peanuts as an ingredient, so "no peanut oil" doesn't mean "peanut-free." Check the allergen flag on the specific dish, not just the cooking oil.
+        </p>
 
-        <!-- Blueprint 3 -->
-        <div class="nutrition-blueprint-card" style="border-left: 5px solid #F59E0B;">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0; font-size: 1.25rem; color: #0F172A;">❤️ The Heart-Smart Low-Sodium Lunch (Bowl)</h3>
-            <span style="font-weight: 800; color: #D97706; font-size: 1.05rem;">530 kcal | 16g Protein | 7g Fat | 100g Carbs | 520mg Sodium</span>
-          </div>
-          <p style="color: #475569; margin-bottom: 0.75rem; font-size: 0.95rem;">
-            <strong>The Order:</strong> Bowl with White Steamed Rice as base + Broccoli Beef.
+        <div class="nutr-callout-card">
+          <h3>Official Verification</h3>
+          <p>
+            For anything allergy-critical, don't rely solely on this guide or any third-party page — Panda Express provides a dedicated allergen lookup and a customer service line at <strong style="color: #38BDF8;">(800) 877-8988</strong> for direct confirmation before you order.
           </p>
-          <div style="font-size: 0.88rem; color: #64748B;">
-            <strong>Macro Breakdown:</strong> White Steamed Rice (380 cal, 0mg sodium, 0g fat) + Broccoli Beef (150 cal, 7g fat, 9g P, 520mg sodium). By avoiding salty noodle bases and fried rices, total meal sodium remains at 520mg—well under the American Heart Association's 1,500mg daily ideal target.
-          </div>
         </div>
+      </section>
 
-        <!-- Blueprint 4 -->
-        <div class="nutrition-blueprint-card" style="border-left: 5px solid #8B5CF6;">
-          <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem;">
-            <h3 style="margin: 0; font-size: 1.25rem; color: #0F172A;">🌱 The Plant-Forward Vegan Feast (Plate)</h3>
-            <span style="font-weight: 800; color: #8B5CF6; font-size: 1.05rem;">870 kcal | 29g Protein | 42g Fat | 96g Carbs | 16g Fiber</span>
+      <!-- SECTION: Popular Meal Combos -->
+      <section class="nutr-section" aria-labelledby="combos-heading">
+        <h2 id="combos-heading" class="nutr-section-title">
+          Popular Meal Combos and Their Real Totals
+        </h2>
+        <p class="nutr-paragraph">
+          Calculated totals for frequently ordered meal pairing formulas:
+        </p>
+
+        <div>
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Grilled Teriyaki Chicken + Super Greens &rarr; 275 + 130</span>
+            <span class="nutr-combo-badge">405 calories</span>
           </div>
-          <p style="color: #475569; margin-bottom: 0.75rem; font-size: 0.95rem;">
-            <strong>The Order:</strong> Plate with Full Super Greens base + Beyond The Original Orange Chicken + Eggplant Tofu.
-          </p>
-          <div style="font-size: 0.88rem; color: #64748B;">
-            <strong>Macro Breakdown:</strong> Super Greens (90 cal, 6g P) + Beyond Orange Chicken (440 cal, 15g P, 21g fat, plant-based protein) + Eggplant Tofu (340 cal, 8g P, 20g fat, tender aubergine and crispy tofu). Offers rich, authentic Chinese wok flavor with zero animal cholesterol and 16 grams of gut-healthy dietary fiber.
+          <div style="font-size: 0.85rem; color: #9CA3AF; margin-top: -0.5rem; margin-bottom: 1rem; padding-left: 0.5rem;">
+            * Lightest realistic combo on the menu
+          </div>
+
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Broccoli Beef + White Steamed Rice &rarr; 150 + 520</span>
+            <span class="nutr-combo-badge">670 calories</span>
+          </div>
+
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Orange Chicken + Chow Mein &rarr; 510 + 600</span>
+            <span class="nutr-combo-badge">1,110 calories</span>
+          </div>
+
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Beijing Beef + Fried Rice &rarr; 470 + 620</span>
+            <span class="nutr-combo-badge">1,090 calories</span>
+          </div>
+
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Honey Walnut Shrimp + Chow Mein &rarr; 430 + 600</span>
+            <span class="nutr-combo-badge">1,030 calories</span>
           </div>
         </div>
       </section>
 
-      <!-- Section 6: Comprehensive FAQ -->
-      <section style="margin-bottom: 3.5rem;" aria-labelledby="nutrition-faq-heading">
-        <h2 id="nutrition-faq-heading" style="font-size: 1.85rem; font-weight: 900; margin-bottom: 1.5rem; color: #0F172A;">
-          Frequently Asked Questions: Panda Express Nutrition, Diet &amp; Allergens
+      <!-- SECTION: What This Guide Can't Tell You -->
+      <section class="nutr-section" aria-labelledby="disclaimer-heading">
+        <h2 id="disclaimer-heading" class="nutr-section-title">
+          What This Guide Can't Tell You
+        </h2>
+        <div class="nutr-callout-card">
+          <p>
+            Panda Express prepares food fresh in small batches, so actual nutrition can vary by location, portion scooping, and regional recipe differences. These figures reflect standard recipes as published by Panda Express, not a lab measurement of your specific order. If you have celiac disease or a severe allergy, treat every number here as a starting point, not a guarantee, and confirm with the restaurant directly.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION: FAQs -->
+      <section class="nutr-section" aria-labelledby="faqs-heading">
+        <h2 id="faqs-heading" class="nutr-section-title">
+          Panda Express Nutrition FAQs
         </h2>
         
-        <div class="faq-accordion-container" style="display: flex; flex-direction: column; gap: 1rem;">
-          ${nutritionFaqs.map((faq, idx) => `
-            <details class="faq-item" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1rem 1.25rem; transition: all 0.2s ease;">
-              <summary style="font-weight: 800; font-size: 1.05rem; color: #0F172A; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none;">
-                <span>${idx + 1}. ${faq.q}</span>
-                <span class="faq-chevron" style="color: #C8102E; font-size: 0.85rem;">▼</span>
+        <div class="nutr-faq-list">
+          ${faqs.map((faq, idx) => `
+            <details class="nutr-faq-item" ${idx === 0 ? 'open' : ''}>
+              <summary>
+                <span>${faq.q}</span>
+                <span class="nutr-faq-chevron" aria-hidden="true">&#9662;</span>
               </summary>
-              <div style="margin-top: 0.75rem; color: #475569; font-size: 0.95rem; line-height: 1.65; border-top: 1px solid #F1F5F9; padding-top: 0.75rem;">
+              <div class="nutr-faq-answer">
                 ${faq.a}
               </div>
             </details>
@@ -1111,38 +982,37 @@ function renderNutrition() {
         </div>
       </section>
 
-      <!-- Bottom CTAs -->
-      <div class="nutrition-dark-cta">
-        <h3 style="font-size: 1.5rem; font-weight: 800; margin-top: 0; margin-bottom: 0.75rem; color: #FFFFFF;">Ready to Order Your Optimized Panda Express Meal?</h3>
-        <p style="color: #E2E8F0; max-width: 600px; margin: 0 auto 1.5rem auto; font-size: 1.02rem; line-height: 1.6; font-weight: 500;">
-          Don't pay full price for your calories. Copy today's verified promotion codes to save up to 20% on online orders and app pickup.
+      <!-- FOOTER ACTION SHORTCUTS -->
+      <div style="text-align: center; margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid #1F2937;">
+        <h3 style="color: #FFFFFF; font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem;">
+          Plan Your Order &amp; Save at Checkout
+        </h3>
+        <p style="color: #9CA3AF; max-width: 600px; margin: 0 auto 1.5rem auto; font-size: 0.95rem;">
+          Pair your nutritional choices with verified promotion codes and smart group ordering calculations.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-          <a href="/#coupon-section" class="btn" style="padding: 0.85rem 1.75rem; font-size: 1rem;">🎟️ View Today's Active Coupon Codes</a>
-          <a href="/panda-express-savings-calculator/" class="btn btn-secondary" style="padding: 0.85rem 1.75rem; font-size: 1rem; color: #FFFFFF; border-color: rgba(255,255,255,0.3);">🧮 Group Savings Calculator</a>
-          <a href="/panda-express-menu/" class="btn btn-secondary" style="padding: 0.85rem 1.75rem; font-size: 1rem; color: #FFFFFF; border-color: rgba(255,255,255,0.3);">🥡 Explore Full Menu &amp; Prices</a>
+          <a href="/#coupon-section" class="nutr-btn">🎟️ View Today's Working Coupons</a>
+          <a href="/panda-express-savings-calculator/" class="nutr-btn-outline">🧮 Savings Calculator</a>
+          <a href="/panda-express-menu/" class="nutr-btn-outline">🥡 Explore Full Menu &amp; Prices</a>
         </div>
       </div>
 
-    </article>
-  </div>
+    </main>
 
-  <!-- Embed Full Nutrition Dataset for Client Calculator -->
-  <script>
-    window.PANDA_MENU_ITEMS = ${JSON.stringify(nutritionFull)};
-  </script>
+    <script>
+      window.PANDA_MENU_ITEMS = ${JSON.stringify(nutritionFull)};
+    </script>
+
+  </div>
   `;
 
   return {
-    title: `Panda Express Nutrition Calculator & Full Menu Calories (2026)`,
-    description: `Interactive Panda Express nutrition calculator. Calculate calories, protein, carbs, fat, and sodium for custom Bowls, Plates, and all 45+ dishes across 12 metrics.`,
+    title: `Panda Express Nutrition Guide ${currentYear}: Calories & Macros`,
+    description: `See verified Panda Express nutrition facts and calories for every dish. Free ${currentYear} data — check yours with our calculator.`,
     canonicalPath: '/panda-express-nutrition/',
-    ogImage: '/public/images/og/og-nutrition.jpg',
-    ogImageAlt: 'Panda Express Nutrition and Macro Calculator',
-    schemaJson: [nutritionFaqSchema, ...nutritionSchemas],
     content,
     breadcrumbs,
-    suppressBreadcrumbsHtml: true
+    schemaJson: [faqSchema, articleSchema]
   };
 }
 

@@ -7,8 +7,11 @@ const path = require('path');
 const couponsData = require('../../data/coupons.json');
 const faqData = require('../../data/faq.json');
 const config = require('../../data/site.config');
+const { getDynamicDate } = require('../utils/date');
 
 function renderHome() {
+  const { currentMonthYear, currentMonth, currentYear } = getDynamicDate();
+  const lastVerifiedDate = currentMonthYear;
   const liveCoupons = (couponsData.coupons || []).filter(c => c.isDraft !== true);
 
   const faqSchema = {
@@ -65,7 +68,7 @@ function renderHome() {
       <div class="hero-badge-row">
         <div class="pill-verified-date">
           <span class="pulse-dot-green"></span>
-          <span>Last checked: <strong class="js-current-month-year">${couponsData.lastVerified}</strong></span>
+          <span>Last checked: <strong class="js-current-month-year">${lastVerifiedDate}</strong></span>
         </div>
         <div class="pill-trust-badge">
           <span>🔒 Direct Checkout • No Data Saved</span>
@@ -73,7 +76,7 @@ function renderHome() {
       </div>
 
       <h1 id="home-hero-heading" class="hero-main-title">
-        Panda Express Coupon Code: What Actually Works in <span class="highlight-gold js-current-month-year">${couponsData.lastVerified}</span>
+        Panda Express Coupon Code: What Actually Works in <span class="highlight-gold js-current-month-year">${lastVerifiedDate}</span>
       </h1>
 
       <div class="hero-lead-box">
@@ -130,7 +133,7 @@ function renderHome() {
       </div>
       <div class="stat-dock-divider"></div>
       <div class="stat-dock-item">
-        <div class="stat-dock-num js-current-month-year">${couponsData.lastVerified}</div>
+        <div class="stat-dock-num js-current-month-year">${lastVerifiedDate}</div>
         <div class="stat-dock-label">Database Freshness</div>
       </div>
       <div class="stat-dock-divider"></div>
@@ -152,7 +155,7 @@ function renderHome() {
       </summary>
       <nav class="home-toc-links" aria-label="Table of contents mobile">
         <a href="#how-codes-work" class="toc-link">⚙️ How Coupon Codes Actually Work</a>
-        <a href="#coupon-section" class="toc-link">🎟️ Status Table (${couponsData.lastVerified})</a>
+        <a href="#coupon-section" class="toc-link">🎟️ Status Table (${lastVerifiedDate})</a>
         <a href="#howto-section-heading" class="toc-link">📋 How to Apply a Code</a>
         <a href="#why-fail-heading" class="toc-link">⚠️ Why Codes Fail at Checkout</a>
         <a href="#delivery-platforms-section" class="toc-link">🛵 DoorDash, Uber Eats &amp; Grubhub</a>
@@ -198,7 +201,7 @@ function renderHome() {
       <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 1.5rem;">
         <div class="feature-lift-card feature-card-green">
           <div class="card-icon-round icon-bg-green"><svg class="step-svg-icon color-green" aria-hidden="true"><use href="#icon-check-circle"></use></svg></div>
-          <h3 style="color: #15803D;">Where a Code Can Be Used</h3>
+          <h3>Where a Code Can Be Used</h3>
           <p>
             Panda Express codes <strong>only work through direct channels</strong> — the official website (<a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer">pandaexpress.com</a>) or the official mobile app. Enter the code, place the order, get the discount.
           </p>
@@ -206,7 +209,7 @@ function renderHome() {
 
         <div class="feature-lift-card feature-card-red">
           <div class="card-icon-round icon-bg-red"><svg class="step-svg-icon color-red" aria-hidden="true"><use href="#icon-clock"></use></svg></div>
-          <h3 style="color: #B91C1C;">Where a Code Won't Work</h3>
+          <h3>Where a Code Won't Work</h3>
           <p>
             Codes <strong>do not work on DoorDash, Uber Eats, or Grubhub</strong>. Those platforms run their own separate promotions, controlled by the delivery app, not by Panda Express. If you're ordering through a delivery app, skip the search for a Panda Express code entirely. Check that app's own deals tab instead.
           </p>
@@ -214,7 +217,7 @@ function renderHome() {
 
         <div class="feature-lift-card feature-card-gold">
           <div class="card-icon-round icon-bg-gold"><svg class="step-svg-icon color-gold" aria-hidden="true"><use href="#icon-tag"></use></svg></div>
-          <h3 style="color: #92400E;">Why Panda Express Doesn't Run Public Sitewide Coupons</h3>
+          <h3>Why Panda Express Doesn't Run Public Sitewide Coupons</h3>
           <p>
             Most fast food chains blast the same discount to everyone. Panda Express runs things differently. Discounts mostly come through three channels: the <strong>Panda Rewards program</strong>, <strong>app-only offers</strong>, and <strong>short-term event promotions</strong>. That's exactly why so many "codes" floating around the internet are shaky. They were never meant to be permanent, public, or universal. Someone found one, it worked once, and it's been copied onto coupon sites ever since — long after it stopped working.
           </p>
@@ -229,7 +232,7 @@ function renderHome() {
     <div class="container">
       <div class="section-title-header text-center">
         <span class="kicker-tag kicker-gold">VERIFIED STATUS TABLE</span>
-        <h2 id="coupon-section-title" class="title-light">Panda Express Coupon Codes — Status Table (${couponsData.lastVerified})</h2>
+        <h2 id="coupon-section-title" class="title-light">Panda Express Coupon Codes — Status Table (${lastVerifiedDate})</h2>
         <p class="subtitle-light" style="max-width: 860px; margin-left: auto; margin-right: auto;">
           Before you copy any code from this table or anywhere else, understand this: <strong>no coupon site — including this one — can guarantee a code works at the exact moment you check out</strong>. Codes rotate, deactivate after one use, or get switched off regionally without notice. What we can do is tell you how much corroboration each code has, so you're not wasting time on something that's been dead for months.
         </p>
@@ -1030,8 +1033,8 @@ function renderHome() {
   `;
 
   return {
-    title: `Panda Express Coupon Codes  Verified & Working - September 2026`,
-    description: `Panda Express coupon code list for Sep 2026, checked and rated by confidence. Free, no signup, no data saved. See what still works.`,
+    title: `Panda Express Coupon Codes Verified & Working - ${lastVerifiedDate}`,
+    description: `Panda Express coupon code list for ${currentMonth} ${currentYear}, checked and rated by confidence. Free, no signup, no data saved. See what still works.`,
     canonicalPath: '/',
     ogImage: '/public/images/og/og-home.jpg',
     ogImageAlt: 'Panda Express Coupon Codes and Deals - Verified Working',

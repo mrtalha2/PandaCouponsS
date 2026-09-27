@@ -29,7 +29,7 @@ function renderDisclaimer() {
   const defaultBody = `
     <!-- Table of Contents -->
     <div class="legal-toc-card">
-      <h3 style="margin-top: 0; font-size: 1.1rem; color: #0F172A;">Table of Contents</h3>
+      <h3 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h3>
       <ul style="margin-bottom: 0; padding-left: 1.25rem;">
         <li><a href="#independence">1. Independent Status</a></li>
         <li><a href="#trademarks">2. Ownership of Trademarks</a></li>
@@ -41,7 +41,7 @@ function renderDisclaimer() {
       </ul>
     </div>
 
-    <div style="font-size: 1rem; color: #374151; line-height: 1.7;">
+    <div style="font-size: 1rem; line-height: 1.7;">
       <section id="independence" class="section-border" style="padding: 1.75rem 0;">
         <h2>1. Independent Website Disclaimer</h2>
         <p>
@@ -112,7 +112,7 @@ function renderDisclaimer() {
     const nonH1Blocks = disclaimerBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
     bodyContent = renderBlocks(nonH1Blocks, {});
   } else if (disclaimerContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; color: #374151; line-height: 1.8;">${disclaimerContent.bodyHtml}</div>`;
+    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${disclaimerContent.bodyHtml}</div>`;
   }
 
   const content = `

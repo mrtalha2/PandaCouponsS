@@ -233,6 +233,7 @@ function initNutritionSystem() {
   let activeCategory = 'All Items';
   let allergensToAvoid = [];
   let sortField = 'calories';
+  let sortOrder = 'desc';
   let cartItems = JSON.parse(localStorage.getItem('panda-meal-cart') || '[]');
 
   // Hydrate cart from share link (?meal=orange-chicken:1,chow-mein:1)
@@ -441,6 +442,18 @@ function initNutritionSystem() {
   const dockCount = document.getElementById('dockItemCount');
   const dockValue = document.getElementById('dockCalorieValue');
   const viewMealBtn = document.getElementById('dockViewMealBtn');
+  if (viewMealBtn) {
+    viewMealBtn.addEventListener('click', () => {
+      const explorerBtn = calcContainer.querySelector('.calc-mode-btn[data-mode="explorer"]');
+      if (explorerBtn && !explorerBtn.classList.contains('is-active')) {
+        explorerBtn.click();
+      }
+      const runningMealEl = document.getElementById('runningMealTitle') || document.getElementById('calcNutritionTable');
+      if (runningMealEl) {
+        runningMealEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    });
+  }
 
   // Modal elements
   const modalBackdrop = document.getElementById('nutritionModal');
@@ -567,11 +580,11 @@ function initNutritionSystem() {
     if (sorted.length === 0) {
       explorerTableBody.innerHTML = `
         <tr>
-          <td colspan="13" style="text-align: center; padding: 3rem 1rem; color: #64748B;">
+          <td colspan="13" style="text-align: center; padding: 3rem 1rem; color: #94A3B8; background: #111827;">
             <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🔍</div>
-            <div style="font-weight: 800; font-size: 1.1rem; color: #1E293B; margin-bottom: 0.35rem;">No dishes match your search or allergen filters</div>
-            <div style="font-size: 0.88rem; margin-bottom: 1.25rem; color: #64748B;">Try adjusting your keywords or clearing allergen exclusions.</div>
-            <button type="button" id="btnClearNutritionFilters" class="btn btn-secondary" style="padding: 0.5rem 1.2rem; font-size: 0.85rem; border-radius: 6px; cursor: pointer;">
+            <div style="font-weight: 800; font-size: 1.1rem; color: #FFFFFF; margin-bottom: 0.35rem;">No dishes match your search or allergen filters</div>
+            <div style="font-size: 0.88rem; margin-bottom: 1.25rem; color: #94A3B8;">Try adjusting your keywords or clearing allergen exclusions.</div>
+            <button type="button" id="btnClearNutritionFilters" style="padding: 0.55rem 1.25rem; font-size: 0.85rem; font-weight: 800; border-radius: 8px; cursor: pointer; background: #38BDF8; color: #0B0F19; border: none;">
               Clear All Filters
             </button>
           </td>
@@ -608,49 +621,47 @@ function initNutritionSystem() {
       const cartEntry = cartItems.find((c) => c.id === item.id);
       const qty = cartEntry ? cartEntry.quantity : 0;
 
-      // Calorie highlight class
-      let calColor = '#15803D';
-      if (item.calories >= 400) calColor = '#DC2626';
-      else if (item.calories >= 250) calColor = '#D97706';
+      // Clean, minimal calorie styling with electric cyan
+      const calColor = '#38BDF8';
 
       return `
-        <tr>
-          <td style="position: sticky; left: 0; background: #FFFFFF; font-weight: 700; z-index: 5; box-shadow: 2px 0 6px rgba(0, 0, 0, 0.08); min-width: 170px; color: #0F172A;">
-            <a href="#" class="item-modal-link" data-id="${item.id}" style="color: #0F172A; display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 700;">
+        <tr style="border-bottom: 1px solid #1F2937;">
+          <td style="position: sticky; left: 0; background: #111827; font-weight: 700; z-index: 5; box-shadow: 3px 0 8px rgba(0, 0, 0, 0.45); min-width: 170px; color: #FFFFFF; border-bottom: 1px solid #1F2937;">
+            <a href="#" class="item-modal-link" data-id="${item.id}" style="color: #FFFFFF; display: inline-flex; align-items: center; gap: 0.35rem; font-weight: 700; text-decoration: none;">
               <span>${item.name}</span>
               ${item.isSpicy ? '<span title="Spicy">🌶️</span>' : ''}
-              ${item.isVegetarian ? '<span title="Vegetarian" style="color:#16A34A;font-size:0.75rem;">🌱</span>' : ''}
-              ${item.isGlutenFree ? '<span title="Gluten-Free" style="color:#2563EB;font-size:0.75rem;">GF</span>' : ''}
+              ${item.isVegetarian ? '<span title="Vegetarian" style="color:#60A5FA;font-size:0.75rem;">🌱</span>' : ''}
+              ${item.isGlutenFree ? '<span title="Gluten-Free" style="color:#38BDF8;font-size:0.75rem;font-weight:700;">GF</span>' : ''}
             </a>
-            <div style="font-size: 0.78rem; color: #475569; font-weight: 600;">${item.servingSize ? item.servingSize + ' oz' : 'Standard'}</div>
+            <div style="font-size: 0.78rem; color: #94A3B8; font-weight: 500;">${item.servingSize ? item.servingSize + ' oz' : 'Standard'}</div>
           </td>
-          <td style="color: ${calColor}; font-weight: 800; font-size: 0.95rem;">${item.calories}</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.totalFat}g</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.saturatedFat ?? 0}g</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.transFat ?? 0}g</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.cholesterol ?? 0}mg</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.sodium}mg</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.totalCarbs}g</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.dietaryFiber ?? 0}g</td>
-          <td style="color: #1E293B; font-weight: 600;">${item.sugars ?? 0}g</td>
-          <td style="font-weight: 800; color: #15803D; font-size: 0.95rem;">${item.protein}g</td>
-          <td>
+          <td style="color: ${calColor}; font-weight: 800; font-size: 0.95rem; border-bottom: 1px solid #1F2937;">${item.calories}</td>
+          <td style="color: #E2E8F0; font-weight: 600; border-bottom: 1px solid #1F2937;">${item.totalFat}g</td>
+          <td style="color: #94A3B8; font-weight: 500; border-bottom: 1px solid #1F2937;">${item.saturatedFat ?? 0}g</td>
+          <td style="color: #94A3B8; font-weight: 500; border-bottom: 1px solid #1F2937;">${item.transFat ?? 0}g</td>
+          <td style="color: #E2E8F0; font-weight: 600; border-bottom: 1px solid #1F2937;">${item.cholesterol ?? 0}mg</td>
+          <td style="color: #E2E8F0; font-weight: 600; border-bottom: 1px solid #1F2937;">${item.sodium}mg</td>
+          <td style="color: #E2E8F0; font-weight: 600; border-bottom: 1px solid #1F2937;">${item.totalCarbs}g</td>
+          <td style="color: #94A3B8; font-weight: 500; border-bottom: 1px solid #1F2937;">${item.dietaryFiber ?? 0}g</td>
+          <td style="color: #94A3B8; font-weight: 500; border-bottom: 1px solid #1F2937;">${item.sugars ?? 0}g</td>
+          <td style="font-weight: 800; color: #38BDF8; font-size: 0.95rem; border-bottom: 1px solid #1F2937;">${item.protein}g</td>
+          <td style="border-bottom: 1px solid #1F2937;">
             <div style="display: flex; gap: 0.25rem; flex-wrap: wrap;">
               ${(item.allergens && item.allergens.length > 0)
-                ? item.allergens.map((a) => `<span style="font-size: 0.75rem; background:#EEF2F6; color:#0F172A; font-weight: 700; border: 1px solid #CBD5E1; padding:0.15rem 0.45rem; border-radius:4px; text-transform:capitalize;">${a}</span>`).join('')
-                : '<span style="font-size:0.75rem; color:#15803D; font-weight:700; background:#DCFCE7; padding:0.15rem 0.45rem; border-radius:4px;">None</span>'
+                ? item.allergens.map((a) => `<span style="font-size: 0.72rem; background: #1F2937; color: #E5E7EB; font-weight: 600; border: 1px solid #374151; padding: 0.15rem 0.45rem; border-radius: 4px; text-transform: capitalize;">${a}</span>`).join('')
+                : '<span style="font-size: 0.72rem; color: #38BDF8; font-weight: 700; background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); padding: 0.15rem 0.45rem; border-radius: 4px;">None</span>'
               }
             </div>
           </td>
-          <td style="text-align: right; white-space: nowrap;">
+          <td style="text-align: right; white-space: nowrap; border-bottom: 1px solid #1F2937;">
             ${qty > 0 ? `
-              <div style="display: inline-flex; align-items: center; gap: 0.35rem; background: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 6px; padding: 0.15rem;">
-                <button type="button" class="btn-qty-minus" data-id="${item.id}" style="width:24px;height:24px;border:none;background:#FFFFFF;border-radius:4px;cursor:pointer;font-weight:bold;">-</button>
-                <span style="font-weight: 800; font-size: 0.85rem; min-width: 18px; text-align: center; color: #0F172A;">${qty}</span>
-                <button type="button" class="btn-qty-plus" data-id="${item.id}" style="width:24px;height:24px;border:none;background:#FFFFFF;border-radius:4px;cursor:pointer;font-weight:bold;">+</button>
+              <div style="display: inline-flex; align-items: center; gap: 0.35rem; background: #1F2937; border: 1px solid #374151; border-radius: 6px; padding: 0.15rem;">
+                <button type="button" class="btn-qty-minus" data-id="${item.id}" style="width:24px;height:24px;border:none;background:#374151;color:#FFFFFF;border-radius:4px;cursor:pointer;font-weight:bold;">-</button>
+                <span style="font-weight: 800; font-size: 0.85rem; min-width: 18px; text-align: center; color: #FFFFFF;">${qty}</span>
+                <button type="button" class="btn-qty-plus" data-id="${item.id}" style="width:24px;height:24px;border:none;background:#374151;color:#FFFFFF;border-radius:4px;cursor:pointer;font-weight:bold;">+</button>
               </div>
             ` : `
-              <button type="button" class="btn btn-sm btn-add-item" data-id="${item.id}" style="padding: 0.35rem 0.75rem; font-size: 0.8rem;">
+              <button type="button" class="btn-add-item" data-id="${item.id}" style="background: #38BDF8; color: #0B0F19; font-weight: 800; border: none; border-radius: 6px; padding: 0.35rem 0.8rem; font-size: 0.8rem; cursor: pointer;">
                 + Add
               </button>
             `}
@@ -749,7 +760,7 @@ function initNutritionSystem() {
   }
 
   // Open item nutrition modal
-  function openItemModal(itemId) {
+  function openItemModal(itemId, openerEl) {
     const item = menuData.find((i) => i.id === itemId);
     if (!item || !modalBackdrop || !modalContent) return;
 
@@ -757,55 +768,55 @@ function initNutritionSystem() {
       <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
         <div>
           <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem;">
-            <span style="font-weight: 700; color: #C8102E;">${item.category}</span>
-            ${item.isSpicy ? '<span style="background:#FEE2E2;color:#DC2626;padding:0.2rem 0.5rem;border-radius:999px;font-size:0.75rem;font-weight:700;">🌶️ Spicy</span>' : ''}
-            ${item.isVegetarian ? '<span style="background:#DCFCE7;color:#15803D;padding:0.2rem 0.5rem;border-radius:999px;font-size:0.75rem;font-weight:700;">🌱 Vegetarian</span>' : ''}
-            ${item.isGlutenFree ? '<span style="background:#DBEAFE;color:#2563EB;padding:0.2rem 0.5rem;border-radius:999px;font-size:0.75rem;font-weight:700;">GF</span>' : ''}
+            <span style="font-weight: 700; color: #38BDF8; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em;">${item.category}</span>
+            ${item.isSpicy ? '<span style="background: rgba(56, 189, 248, 0.15); color: #38BDF8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.2rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">🌶️ Spicy</span>' : ''}
+            ${item.isVegetarian ? '<span style="background: rgba(96, 165, 250, 0.15); color: #60A5FA; border: 1px solid rgba(96, 165, 250, 0.3); padding: 0.2rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">🌱 Vegetarian</span>' : ''}
+            ${item.isGlutenFree ? '<span style="background: rgba(129, 140, 248, 0.15); color: #818CF8; border: 1px solid rgba(129, 140, 248, 0.3); padding: 0.2rem 0.55rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700;">GF</span>' : ''}
           </div>
 
-          <h2 style="font-size: 1.6rem; margin-top: 0; margin-bottom: 0.5rem;">${item.name}</h2>
-          <p style="color: #475569; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
+          <h2 style="font-size: 1.6rem; color: #FFFFFF; font-weight: 800; margin-top: 0; margin-bottom: 0.5rem;">${item.name}</h2>
+          <p style="color: #94A3B8; font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem;">
             ${item.description || 'Authentic wok-crafted Panda Express specialty prepared fresh daily.'}
           </p>
 
           <!-- Macro Bars -->
-          <div style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
-            <h3 style="font-size: 0.95rem; margin-top: 0; margin-bottom: 0.75rem; text-transform: uppercase; color: #64748B;">Macro vs Daily Value</h3>
+          <div style="background: #1F2937; border: 1px solid #374151; border-radius: 12px; padding: 1.25rem; margin-bottom: 1.5rem;">
+            <h3 style="font-size: 0.82rem; margin-top: 0; margin-bottom: 0.85rem; text-transform: uppercase; color: #94A3B8; letter-spacing: 0.08em; font-weight: 700;">Macro vs Daily Value</h3>
             
-            <div style="margin-bottom: 0.75rem;">
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
-                <span>Protein</span>
-                <span style="color: #16A34A;">${item.protein}g (${Math.round((item.protein / 50) * 100)}% DV)</span>
+            <div style="margin-bottom: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">
+                <span style="color: #E2E8F0;">Protein</span>
+                <span style="color: #38BDF8;">${item.protein}g (${Math.round((item.protein / 50) * 100)}% DV)</span>
               </div>
-              <div class="macro-progress-bar"><div class="macro-progress-fill" style="width: ${Math.min((item.protein / 50) * 100, 100)}%; background: #16A34A;"></div></div>
+              <div class="macro-progress-bar" style="background: #374151; height: 8px; border-radius: 999px; overflow: hidden;"><div class="macro-progress-fill" style="width: ${Math.min((item.protein / 50) * 100, 100)}%; background: #38BDF8; height: 100%; border-radius: 999px;"></div></div>
             </div>
 
-            <div style="margin-bottom: 0.75rem;">
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
-                <span>Carbohydrates</span>
-                <span style="color: #0284C7;">${item.totalCarbs}g (${Math.round((item.totalCarbs / 275) * 100)}% DV)</span>
+            <div style="margin-bottom: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">
+                <span style="color: #E2E8F0;">Carbohydrates</span>
+                <span style="color: #60A5FA;">${item.totalCarbs}g (${Math.round((item.totalCarbs / 275) * 100)}% DV)</span>
               </div>
-              <div class="macro-progress-bar"><div class="macro-progress-fill" style="width: ${Math.min((item.totalCarbs / 275) * 100, 100)}%; background: #0284C7;"></div></div>
+              <div class="macro-progress-bar" style="background: #374151; height: 8px; border-radius: 999px; overflow: hidden;"><div class="macro-progress-fill" style="width: ${Math.min((item.totalCarbs / 275) * 100, 100)}%; background: #60A5FA; height: 100%; border-radius: 999px;"></div></div>
             </div>
 
             <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700;">
-                <span>Total Fat</span>
-                <span style="color: #D97706;">${item.totalFat}g (${Math.round((item.totalFat / 78) * 100)}% DV)</span>
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem;">
+                <span style="color: #E2E8F0;">Total Fat</span>
+                <span style="color: #93C5FD;">${item.totalFat}g (${Math.round((item.totalFat / 78) * 100)}% DV)</span>
               </div>
-              <div class="macro-progress-bar"><div class="macro-progress-fill" style="width: ${Math.min((item.totalFat / 78) * 100, 100)}%; background: #D97706;"></div></div>
+              <div class="macro-progress-bar" style="background: #374151; height: 8px; border-radius: 999px; overflow: hidden;"><div class="macro-progress-fill" style="width: ${Math.min((item.totalFat / 78) * 100, 100)}%; background: #93C5FD; height: 100%; border-radius: 999px;"></div></div>
             </div>
           </div>
 
           <!-- Add to Meal Button -->
-          <button type="button" class="btn" id="modalAddBtn" style="width: 100%; justify-content: center;">
+          <button type="button" id="modalAddBtn" style="width: 100%; display: flex; justify-content: center; align-items: center; background: #38BDF8; color: #0B0F19; font-weight: 800; font-size: 1rem; padding: 0.8rem 1.5rem; border: none; border-radius: 8px; cursor: pointer;">
             Add to Meal (${item.calories} cal)
           </button>
         </div>
 
         <!-- FDA Nutrition Box -->
         <div style="display: flex; justify-content: center;">
-          <aside class="nutrition-panel" style="width: 100%; max-width: 320px;">
+          <aside class="nutrition-panel" style="width: 100%; max-width: 320px; background: #FFFFFF; color: #000000; border: 3px solid #000000; padding: 1.15rem; border-radius: 4px;">
             <div class="nutrition-panel-title">Nutrition Facts</div>
             <div class="nutrition-serving">Serving Size: ${item.servingSize || 5.7} oz</div>
             <div class="nutrition-calories-row">

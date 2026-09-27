@@ -10,8 +10,10 @@ const { generateBlockId } = require('./block-schema');
 
 const DATA_DIR = path.join(__dirname, '../../data');
 const ADMIN_DATA_DIR = path.join(DATA_DIR, 'admin');
+const { getDynamicDate } = require('../utils/date');
 
 function getInitialPageBlocks(pageKey) {
+  const { currentMonthYear } = getDynamicDate();
   let pageContent = {};
   try {
     const pcPath = path.join(ADMIN_DATA_DIR, 'page-content.json');
@@ -20,7 +22,7 @@ function getInitialPageBlocks(pageKey) {
     }
   } catch (e) {}
 
-  let couponsData = { coupons: [], lastVerified: 'September 2026' };
+  let couponsData = { coupons: [], lastVerified: currentMonthYear };
   try {
     const cPath = path.join(DATA_DIR, 'coupons.json');
     if (fs.existsSync(cPath)) couponsData = JSON.parse(fs.readFileSync(cPath, 'utf8'));
@@ -35,7 +37,7 @@ function getInitialPageBlocks(pageKey) {
           type: 'hero',
           locked: true,
           kicker: home.kicker || '🔒 Direct Checkout • No Data Saved',
-          title: home.heroHeading ? home.heroHeading.replace(/\[MONTH_YEAR\]/g, 'September 2026') : 'Panda Express Coupon Codes September 2026: Verified Deals & Family Savings',
+          title: home.heroHeading ? home.heroHeading.replace(/\[MONTH_YEAR\]/g, currentMonthYear) : `Panda Express Coupon Codes ${currentMonthYear}: Verified Deals & Family Savings`,
           subtitle: home.heroSubtext || 'Real, manually-tested promo codes for <a href="https://pandaexpress.com" target="_blank" rel="noopener noreferrer">pandaexpress.com</a> and the official mobile app. Stop clicking dead links—check honest verification status, save up to 20%, and maximize your Panda Rewards.',
           primaryBtnText: home.btnCodesText || "🎟️ Get Today's Codes",
           primaryBtnUrl: '#coupon-section',
@@ -50,7 +52,7 @@ function getInitialPageBlocks(pageKey) {
           items: [
             { num: String((couponsData.coupons || []).filter(c => !c.isDraft).length || 5), label: 'Tracked Codes' },
             { num: String((couponsData.coupons || []).filter(c => c.status === 'Active' && !c.isDraft).length || 3), label: 'Confirmed Active' },
-            { num: couponsData.lastVerified || 'September 2026', label: 'Last Database Check' },
+            { num: couponsData.lastVerified || currentMonthYear, label: 'Last Database Check' },
             { num: 'App & Web', label: 'Official Compatibility', color: '#F5B301' }
           ]
         },

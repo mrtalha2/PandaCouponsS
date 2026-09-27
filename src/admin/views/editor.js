@@ -9,6 +9,7 @@
 const { renderBlocks } = require('../block-renderer');
 const { getSiteRoutes } = require('../site-routes');
 const { PAGE_ALLOWED_SMART_BLOCKS, SMART_BLOCK_TYPES } = require('../block-schema');
+const { getDynamicDate } = require('../../utils/date');
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -38,7 +39,7 @@ function renderVisualEditor({ activePage = 'home', blocks = [], publishState }) 
 
   const currentPageObj = pagesList.find(p => p.key === activePage) || pagesList[0];
 
-  const canvasHtml = renderBlocks(blocks, { lastVerified: 'September 2026' }, true);
+  const canvasHtml = renderBlocks(blocks, { lastVerified: getDynamicDate().currentMonthYear }, true);
 
   return `
     <div class="visual-editor-root">

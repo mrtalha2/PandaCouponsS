@@ -13,7 +13,19 @@ module.exports = {
   contactEmail: "help@pandacoupons.org",
   // TODO: replace with real Formspree form ID
   formEndpoint: "https://formspree.io/f/placeholder",
-  currentYear: 2026,
+  get currentYear() {
+    return new Date().getFullYear();
+  },
+  get currentMonth() {
+    const monthNames = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ];
+    return monthNames[new Date().getMonth()];
+  },
+  get currentMonthYear() {
+    return `${this.currentMonth} ${this.currentYear}`;
+  },
 
   // Branding & Colors
   // Matches authentic brand guidelines and fallback specifications

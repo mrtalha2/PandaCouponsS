@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '../../data');
+const { getDynamicDate } = require('../utils/date');
 
 function escapeHtml(str) {
   if (!str) return '';
@@ -213,7 +214,7 @@ function renderBlock(block, context = {}, isEditor = false) {
             <div class="hero-badge-row">
               <div class="pill-verified-date">
                 <span class="pulse-dot-green"></span>
-                <span>Verified for <strong class="js-current-month-year">${context.lastVerified || 'September 2026'}</strong></span>
+                <span>Verified for <strong class="js-current-month-year">${context.lastVerified || getDynamicDate().currentMonthYear}</strong></span>
               </div>
               <div class="pill-trust-badge">
                 <span class="${isEditor ? 'block-editable' : ''}" ${isEditor ? `contenteditable="true" data-field="kicker" data-block-id="${id}"` : ''}>${block.kicker || '🔒 Direct Checkout • No Data Saved'}</span>
@@ -258,7 +259,7 @@ function renderBlock(block, context = {}, isEditor = false) {
       const items = block.items || [
         { num: '5', label: 'Tracked Codes' },
         { num: '3', label: 'Confirmed Active' },
-        { num: context.lastVerified || 'September 2026', label: 'Last Database Check' },
+        { num: context.lastVerified || getDynamicDate().currentMonthYear, label: 'Last Database Check' },
         { num: 'App & Web', label: 'Official Compatibility', color: '#F5B301' }
       ];
       blockInnerHtml = `

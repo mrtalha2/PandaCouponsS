@@ -2,8 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../data/site.config');
 const { renderBlocks } = require('../admin/block-renderer');
+const { getDynamicDate } = require('../utils/date');
 
 function renderPrivacy() {
+  const { currentMonthYear } = getDynamicDate();
   let adminContent = {};
   try {
     const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
@@ -29,7 +31,7 @@ function renderPrivacy() {
   const defaultBody = `
     <!-- Table of Contents -->
     <div class="legal-toc-card">
-      <h3 style="margin-top: 0; font-size: 1.1rem; color: #0F172A;">Table of Contents</h3>
+      <h3 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h3>
       <ul style="margin-bottom: 0; padding-left: 1.25rem;">
         <li><a href="#no-accounts">1. Zero Sensitive Data Retention</a></li>
         <li><a href="#data-collected">2. Information We Collect</a></li>
@@ -41,7 +43,7 @@ function renderPrivacy() {
       </ul>
     </div>
 
-    <div style="font-size: 1rem; color: #374151; line-height: 1.7;">
+    <div style="font-size: 1rem; line-height: 1.7;">
       <section id="no-accounts" class="section-border" style="padding: 1.75rem 0;">
         <h2>1. No User Accounts, Financial Processing, or Order Storage</h2>
         <div class="notice-callout-green" style="margin-top: 0.75rem;">
@@ -114,7 +116,7 @@ function renderPrivacy() {
     const nonH1Blocks = privacyBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
     bodyContent = renderBlocks(nonH1Blocks, {});
   } else if (privacyContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; color: #374151; line-height: 1.8;">${privacyContent.bodyHtml}</div>`;
+    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${privacyContent.bodyHtml}</div>`;
   }
 
   const content = `
@@ -124,7 +126,7 @@ function renderPrivacy() {
       <div class="dish-hero-kicker">LEGAL &amp; COMPLIANCE</div>
       <h1 class="dish-hero-title">${privacyHeading}</h1>
       <p class="dish-hero-subtitle">
-        Last Revised: September 2026 • Our commitment to consumer data protection and privacy.
+        Last Revised: ${currentMonthYear} • Our commitment to consumer data protection and privacy.
       </p>
     </div>
   </section>

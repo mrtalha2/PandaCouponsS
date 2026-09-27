@@ -30,18 +30,18 @@ function renderAbout() {
     <!-- Editorial Mission -->
     <section>
       <h2>Our Mission: Fighting Dead Coupon Fatigue</h2>
-      <p style="font-size: 1.1rem; color: #1F242E; line-height: 1.75;">
+      <p style="font-size: 1.1rem; line-height: 1.75;">
         If you have ever ordered dinner online and spent twenty minutes copying and pasting dozens of alphanumeric codes from generic aggregator sites—only to be met with constant "Coupon Expired" or "Invalid Promo Code" errors—you know how frustrating digital coupon hunting has become.
       </p>
-      <p style="font-size: 1.05rem; color: #2D3748; line-height: 1.75;">
+      <p style="font-size: 1.05rem; line-height: 1.75;">
         Most commercial coupon directories prioritize search engine ranking over user experience, publishing bot-scraped garbage codes and automated clickbait buttons to generate ad revenue.
       </p>
       
       <div class="highlight-callout-box" style="margin: 2rem 0;">
         <div class="callout-icon">🎯</div>
         <div>
-          <h3 style="color: #92400E; margin-top: 0;">Our Editorial Promise</h3>
-          <p style="color: #78350F; margin-bottom: 0;">
+          <h3 class="callout-h" style="margin-top: 0;">Our Editorial Promise</h3>
+          <p class="callout-p" style="margin-bottom: 0;">
             Provide a clean, lightning-fast, and trustworthy resource where Panda Express diners can check verified deals, understand loyalty point math, calculate accurate meal nutrition, and actually save money at checkout.
           </p>
         </div>
@@ -108,7 +108,7 @@ function renderAbout() {
         <div>
           <h3 style="margin-top: 0; margin-bottom: 0.25rem;">PandaCoupons Editorial Desk</h3>
           <p style="font-size: 0.9rem; font-weight: 700; color: #C8102E; margin-bottom: 0.5rem;">Lead Editorial Team &amp; Fast-Casual Dining Analysts</p>
-          <p style="font-size: 0.95rem; color: #2D3748; margin-bottom: 0;">
+          <p style="font-size: 0.95rem; margin-bottom: 0;">
             Our independent research group tests and catalogs verified restaurant savings, loyalty rewards economics, and authentic nutrition metrics to give everyday diners an honest, ad-clutter-free resource.
           </p>
         </div>
@@ -118,15 +118,15 @@ function renderAbout() {
     <!-- Independence Statement -->
     <section class="section-border" style="padding: 2.5rem 0;">
       <h2>Strict Independence Statement</h2>
-      <p style="background: #F8FAFC; border: 1.5px solid #E2E8F0; border-left: 5px solid #0B0B0B; padding: 1.25rem; font-size: 0.95rem; color: #374151; border-radius: 8px;">
+      <p class="statement-callout-box" style="padding: 1.25rem; font-size: 0.95rem; border-radius: 8px;">
         ${config.independenceDisclaimer} All trademarks, registered logos, dish titles, and corporate service marks featured or referenced on this website remain the sole intellectual property of their respective trademark proprietors. Reference to any third-party commercial brand does not constitute an endorsement, sponsorship, or recommendation by either party.
       </p>
     </section>
 
     <!-- Contact CTA -->
     <div class="subpage-contact-card">
-      <h3 style="margin-top: 0; color: #991B1B;">Have a Question or Found a New Code?</h3>
-      <p style="color: #2D3748; max-width: 600px; margin: 0 auto 1.25rem auto;">
+      <h3 style="margin-top: 0;">Have a Question or Found a New Code?</h3>
+      <p style="max-width: 600px; margin: 0 auto 1.25rem auto;">
         We welcome submissions from fellow diners! If you discover a fresh regional promo code or notice that an existing code has ceased functioning, reach out to our editorial desk:
       </p>
       <a href="mailto:helppandacoupons@gmail.com" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
@@ -140,7 +140,7 @@ function renderAbout() {
     const nonH1Blocks = aboutBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
     bodyContent = renderBlocks(nonH1Blocks, {});
   } else if (aboutContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; color: #374151; line-height: 1.8;">${aboutContent.bodyHtml}</div>`;
+    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${aboutContent.bodyHtml}</div>`;
   }
 
   const content = `

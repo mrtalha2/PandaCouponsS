@@ -38,7 +38,7 @@ function renderHeader(currentPath = '/') {
             <a href="/" class="nav-link ${currentPath === '/' ? 'is-current' : ''}">Home</a>
           </li>
           <li>
-            <a href="/panda-express-savings-calculator/" class="nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}">Savings Calc</a>
+            <a href="/panda-express-savings-calculator/" class="nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}">Savings Calculator</a>
           </li>
           <li>
             <a href="/panda-express-menu/" class="nav-link ${currentPath.includes('menu') ? 'is-current' : ''}">Menu</a>

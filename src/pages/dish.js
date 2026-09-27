@@ -96,8 +96,8 @@ function renderDish(dishData) {
     <!-- Main Content & Floating Nutrition Card -->
     <div class="dish-content-grid">
       <div class="dish-main-text">
-        <h2 style="margin-top: 0; color: #0F172A;">About Panda Express ${dishTitle}</h2>
-        <p style="font-size: 1.12rem; color: #1E293B; line-height: 1.75; margin-bottom: 1.5rem; font-weight: 500;">
+        <h2 style="margin-top: 0;">About Panda Express ${dishTitle}</h2>
+        <p style="font-size: 1.12rem; line-height: 1.75; margin-bottom: 1.5rem; font-weight: 500;">
           ${dishIntro}
         </p>
 
@@ -117,15 +117,15 @@ function renderDish(dishData) {
 
         <!-- Health Assessment Section -->
         <section class="section-border" style="padding: 2rem 0;">
-          <h2 style="color: #0F172A;">${dishData.isHealthy.headline}</h2>
-          <p style="font-size: 1.05rem; color: #1E293B; line-height: 1.75; font-weight: 500;">
+          <h2>${dishData.isHealthy.headline}</h2>
+          <p style="font-size: 1.05rem; line-height: 1.75; font-weight: 500;">
             ${dishData.isHealthy.content}
           </p>
         </section>
 
         <!-- How to Order for Less -->
         <section class="section-border" style="padding: 2rem 0;">
-          <h2 style="color: #0F172A;">${dishData.howToOrderForLess.headline}</h2>
+          <h2>${dishData.howToOrderForLess.headline}</h2>
           <ul class="checklist" style="margin-top: 1.25rem;">
             ${dishData.howToOrderForLess.tips.map((tip) => {
               const colonIdx = tip.indexOf(':');
@@ -149,12 +149,12 @@ function renderDish(dishData) {
 
         <!-- Expert Ordering Tips -->
         <section class="section-border" style="padding: 2rem 0;">
-          <h2 style="color: #0F172A;">Expert Ordering &amp; Nutrition Tips</h2>
+          <h2>Expert Ordering &amp; Nutrition Tips</h2>
           <div class="card-grid" style="grid-template-columns: 1fr; gap: 1rem;">
             ${dishData.orderingTips.map((tip) => `
-              <div class="feature-lift-card" style="padding: 1.35rem; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px;">
+              <div class="feature-lift-card" style="padding: 1.35rem; border-radius: 12px;">
                 <h3 style="font-size: 1.12rem; color: #C8102E; margin-top: 0; margin-bottom: 0.4rem; font-weight: 800;">${tip.title}</h3>
-                <p style="margin-bottom: 0; font-size: 0.98rem; color: #1E293B; line-height: 1.6; font-weight: 500;">${tip.detail}</p>
+                <p style="margin-bottom: 0; font-size: 0.98rem; line-height: 1.6; font-weight: 500;">${tip.detail}</p>
               </div>
             `).join('')}
           </div>
@@ -229,9 +229,9 @@ function renderDish(dishData) {
               <img src="${relatedPhoto}" alt="Panda Express ${dishData.relatedDish.name}" width="600" height="400" loading="lazy" decoding="async" class="zoom-on-hover-img" style="width:100%;height:100%;object-fit:cover;">
             </picture>
           </div>
-          <div style="padding: 1.5rem; background:#FFFFFF; border: 1px solid #E5E7EB; border-top: none; border-radius: 0 0 12px 12px;">
+          <div class="menu-card" style="padding: 1.5rem; border-top: none; border-radius: 0 0 12px 12px;">
             <h3 style="margin-top:0;">${dishData.relatedDish.name}</h3>
-            <p style="color: #4B5563; font-size: 0.95rem;">${dishData.relatedDish.tagline}</p>
+            <p style="font-size: 0.95rem;">${dishData.relatedDish.tagline}</p>
             <a href="${dishData.relatedDish.url}" class="btn" style="width: 100%; justify-content: center;">
               Read Full ${dishData.relatedDish.name} Guide &rarr;
             </a>

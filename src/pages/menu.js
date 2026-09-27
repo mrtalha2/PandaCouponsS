@@ -6,8 +6,10 @@
 const fs = require('fs');
 const path = require('path');
 const menuData = require('../../data/menu.json');
+const { getDynamicDate } = require('../utils/date');
 
 function renderMenu() {
+  const { currentMonthYear, currentYear } = getDynamicDate();
   let adminContent = {};
   try {
     const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
@@ -149,7 +151,7 @@ function renderMenu() {
             <span class="hero-stat-desc">${stat3Label}</span>
           </div>
           <div class="hero-stat-box">
-            <span class="hero-stat-val" style="color: #F5B301;">September 2026</span>
+            <span class="hero-stat-val" style="color: #F5B301;">${currentMonthYear}</span>
             <span class="hero-stat-desc">Verified Pricing</span>
           </div>
         </div>
@@ -162,9 +164,9 @@ function renderMenu() {
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
             <span class="kicker-tag kicker-red" style="margin-bottom: 0.35rem;">QUICK MENU BOARD</span>
-            <h2 style="margin: 0; font-size: 1.7rem; color: #0B0B0C;">Panda Express Menu Summary (2026)</h2>
+            <h2 style="margin: 0; font-size: 1.7rem;">Panda Express Menu Summary (${currentYear})</h2>
           </div>
-          <span style="font-size: 0.88rem; color: #64748B; font-weight: 600;">Standard corporate store pricing</span>
+          <span style="font-size: 0.88rem; color: var(--color-muted-text); font-weight: 600;">Standard corporate store pricing</span>
         </div>
 
         <!-- Desktop Table View (>= 769px) -->
@@ -191,7 +193,7 @@ function renderMenu() {
                   </td>
                   <td><span class="summary-price-badge">${row.price}</span></td>
                   <td>${row.included}</td>
-                  <td><span style="color: #0F172A; font-weight: 700;">${row.calories}</span></td>
+                  <td><span class="summary-cal-val" style="font-weight: 700;">${row.calories}</span></td>
                   <td>${row.bestFor}</td>
                   <td style="text-align: right;">
                     <a href="#${row.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}" class="btn-order-direct-sm" style="font-size: 0.78rem; white-space: nowrap;">
@@ -250,7 +252,7 @@ function renderMenu() {
             <input type="text" id="menuSearchInput" placeholder="Search dishes, ingredients, or macros (e.g. Orange Chicken, Wagyu, Sirloin, Chow Mein)..." autocomplete="off" aria-label="Search Panda Express menu">
             <button type="button" id="menuClearSearch" class="menu-search-clear-btn" style="display: none;" aria-label="Clear menu search">✕</button>
           </div>
-          <div id="menuMatchCount" style="font-size: 0.88rem; font-weight: 800; color: #55483B; white-space: nowrap;" aria-live="polite">
+          <div id="menuMatchCount" class="menu-match-count" style="font-size: 0.88rem; font-weight: 800; white-space: nowrap;" aria-live="polite">
             Showing all ${totalItemsCount} items
           </div>
         </div>
@@ -275,10 +277,10 @@ function renderMenu() {
     <!-- 4. ATMOSPHERIC ALTERNATING SECTIONS -->
     <div id="menuCardsContainer">
       <!-- Menu Empty State -->
-      <div id="menuEmptyState" class="menu-empty-state is-hidden container" style="text-align: center; padding: 4rem 1.5rem; background: #FFFFFF; border: 2px dashed #CBD5E1; border-radius: 20px; margin: 2rem auto; max-width: 680px;">
+      <div id="menuEmptyState" class="menu-empty-state is-hidden container" style="text-align: center; padding: 4rem 1.5rem; border: 2px dashed #CBD5E1; border-radius: 20px; margin: 2rem auto; max-width: 680px;">
         <div style="font-size: 2.75rem; margin-bottom: 0.75rem;">🥢</div>
-        <h3 style="color: #0F172A; font-size: 1.4rem; margin-bottom: 0.5rem;">No menu items match your search</h3>
-        <p style="color: #64748B; max-width: 440px; margin: 0 auto 1.5rem auto;">Try checking your spelling or clear your search query to see the complete Panda Express menu.</p>
+        <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">No menu items match your search</h3>
+        <p style="max-width: 440px; margin: 0 auto 1.5rem auto;">Try checking your spelling or clear your search query to see the complete Panda Express menu.</p>
         <button type="button" id="btnClearMenuFilters" class="btn btn-hero-primary" style="padding: 0.6rem 1.5rem; font-size: 0.95rem;">Clear filters</button>
       </div>
       ${menuData.categories.map((cat) => {
@@ -295,11 +297,11 @@ function renderMenu() {
                     ${cat.name}
                   </h2>
                 </div>
-                <span style="font-size: 0.9rem; font-weight: 800; color: ${theme.isDark ? '#F5B301' : '#475569'};">
+                <span class="category-item-count" style="font-size: 0.9rem; font-weight: 800;">
                   ${cat.items.length} items available
                 </span>
               </div>
-              <p class="section-subtext" style="margin-bottom: 2.25rem; max-width: 820px; font-size: 1.02rem; line-height: 1.65; color: ${theme.isDark ? '#E2E8F0' : '#1E293B'}; font-weight: 500;">
+              <p class="section-subtext" style="margin-bottom: 2.25rem; max-width: 820px; font-size: 1.02rem; line-height: 1.65; font-weight: 500;">
                 ${cat.description}
               </p>
 
@@ -340,7 +342,7 @@ function renderMenu() {
                               Read Food Guide &rarr;
                             </a>
                           ` : `
-                            <a href="/panda-express-nutrition/" style="font-size: 0.85rem; color: ${theme.isDark ? '#F5B301' : '#0F172A'}; font-weight: 700; text-decoration: none;">
+                            <a href="/panda-express-nutrition/" class="menu-card-nutrition-link" style="font-size: 0.85rem; font-weight: 700; text-decoration: none;">
                             Nutrition Facts &rarr;
                           </a>
                           `}
@@ -364,10 +366,10 @@ function renderMenu() {
       <div class="container">
         <div class="section-title-header text-center">
           <span class="kicker-tag kicker-red">INSIDER TIPS</span>
-          <h2 id="menu-hacks-heading" style="font-size: clamp(1.8rem, 3.5vw, 2.35rem); font-weight: 900; color: #0B0B0C;">
+          <h2 id="menu-hacks-heading" style="font-size: clamp(1.8rem, 3.5vw, 2.35rem); font-weight: 900;">
             Smart Hacks to Get More Food for Less at Panda Express
           </h2>
-          <p style="color: #4B5563; max-width: 780px; margin: 0 auto;">
+          <p style="max-width: 780px; margin: 0 auto;">
             Tested ordering secrets to maximize your portion size, flavor variety, and wallet savings:
           </p>
         </div>

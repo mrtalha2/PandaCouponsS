@@ -26,6 +26,7 @@ const renderPages = require('./src/admin/views/pages');
 const renderVisualEditor = require('./src/admin/views/editor');
 const { renderBlocks } = require('./src/admin/block-renderer');
 const { loadAllPageBlocks } = require('./src/admin/block-converter');
+const { getDynamicDate } = require('./src/utils/date');
 const renderMeta = require('./src/admin/views/meta');
 const renderCode = require('./src/admin/views/code');
 const renderRedirects = require('./src/admin/views/redirects');
@@ -499,7 +500,7 @@ const server = http.createServer(async (req, res) => {
       if (pathname === '/admin/api/blocks/render-canvas' && req.method === 'POST') {
         const body = await parseJsonBody(req);
         const cleanBlocks = (body.blocks || []).map(sanitizeBlock);
-        const canvasHtml = renderBlocks(cleanBlocks, { lastVerified: 'September 2026' }, true);
+        const canvasHtml = renderBlocks(cleanBlocks, { lastVerified: getDynamicDate().currentMonthYear }, true);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         return res.end(JSON.stringify({ success: true, html: canvasHtml }));
       }

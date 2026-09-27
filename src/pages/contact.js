@@ -46,8 +46,8 @@ function renderContact() {
     <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
       <!-- Direct Email Box -->
       <div class="contact-info-card">
-        <h2 style="font-size: 1.35rem; margin-top: 0; color: #0F172A;">${boxTitle}</h2>
-        <p style="color: #2D3748; font-size: 0.98rem; margin-bottom: 1rem;">
+        <h2 style="font-size: 1.35rem; margin-top: 0;">${boxTitle}</h2>
+        <p style="font-size: 0.98rem; margin-bottom: 1rem;">
           ${boxDesc}
         </p>
         <p style="margin-bottom: 0;">
@@ -60,7 +60,7 @@ function renderContact() {
       <!-- Form Box -->
       <div class="contact-form-card">
         <h2 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 0.5rem;">Send Us a Message</h2>
-        <p style="color: #64748B; font-size: 0.92rem; margin-bottom: 1.75rem;">
+        <p class="section-subtitle-muted" style="font-size: 0.92rem; margin-bottom: 1.75rem;">
           Fill out the form below and our team will get back to you shortly.
         </p>
 
