@@ -156,8 +156,9 @@ function renderLayout({
   <!-- Preload Critical Self-Hosted Fonts -->
   <link rel="preload" href="/public/fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/public/fonts/plus-jakarta-sans-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/public/fonts/plus-jakarta-sans-900.woff2" as="font" type="font/woff2" crossorigin>
 ${preloadHero ? `
-  <!-- Preload Homepage Hero Image (Phase 7b) -->
+  <!-- Preload Homepage Hero Image (LCP critical path) -->
   <link rel="preload" as="image"
         imagesrcset="/public/images/optimized/hero-wok-640.webp 640w,
                      /public/images/optimized/hero-wok-800.webp 800w,
@@ -166,7 +167,6 @@ ${preloadHero ? `
         imagesizes="100vw"
         fetchpriority="high">` : ''}
 
-  <!-- Core Stylesheet (Production Minified with Cache-Bust) -->
   <!-- Core Stylesheet (Production Minified with Cache-Bust) -->
   <link rel="stylesheet" href="/assets/css/style.min.css${vParam}">
 

@@ -184,9 +184,20 @@ async function build() {
   fs.writeFileSync(path.join(DIST_DIR, 'assets', 'css', 'style.min.css'), cleanCssResult.styles, 'utf8');
   console.log(`  ✓ style.min.css: ${rawCss.length}B -> ${cleanCssResult.styles.length}B (${((1 - cleanCssResult.styles.length / rawCss.length) * 100).toFixed(1)}% savings)`);
 
+  // Remove unminified CSS from dist (only serve the .min version)
+  const distRawCss = path.join(DIST_DIR, 'assets', 'css', 'style.css');
+  if (fs.existsSync(distRawCss)) {
+    fs.unlinkSync(distRawCss);
+    console.log('  ✓ Removed unminified style.css from dist (saves 161KB)');
+  }
+
   const rawJs = fs.readFileSync(path.join(__dirname, 'assets', 'js', 'main.js'), 'utf8');
   const terserResult = await terserMinify(rawJs, {
-    compress: { drop_console: false },
+    compress: {
+      drop_console: false, // Keep console.error/warn for runtime debugging
+      drop_debugger: true,  // Remove debugger statements
+      passes: 2             // Two compression passes for better ratio
+    },
     mangle: true
   });
   if (!terserResult.code) {
@@ -194,6 +205,13 @@ async function build() {
   }
   fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', 'main.min.js'), terserResult.code, 'utf8');
   console.log(`  ✓ main.min.js: ${rawJs.length}B -> ${terserResult.code.length}B (${((1 - terserResult.code.length / rawJs.length) * 100).toFixed(1)}% savings)`);
+
+  // Remove unminified JS from dist (only serve the .min version)
+  const distRawJs = path.join(DIST_DIR, 'assets', 'js', 'main.js');
+  if (fs.existsSync(distRawJs)) {
+    fs.unlinkSync(distRawJs);
+    console.log('  ✓ Removed unminified main.js from dist (saves 62KB)');
+  }
 
   // Content-based cache-bust hash for static assets (Phase 7e)
   const assetHash = crypto.createHash('md5')

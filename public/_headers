@@ -2,18 +2,34 @@
   X-Content-Type-Options: nosniff
   X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
+  X-XSS-Protection: 0
   Permissions-Policy: geolocation=(), camera=(), microphone=()
 
-/assets/*
-  Cache-Control: public, max-age=31536000, immutable
+/assets/css/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
-/public/images/optimized/*
-  Cache-Control: public, max-age=31536000, immutable
+/assets/js/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
 
 /public/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
+/public/images/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/public/*.png
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+/public/*.ico
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/public/*.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
 /*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
   Cache-Control: public, max-age=0, must-revalidate
 
 /admin/*

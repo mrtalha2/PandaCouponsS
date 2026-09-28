@@ -101,47 +101,41 @@ function renderSavingsCalculator() {
       </div>
 
       <h1 id="savings-calc-h1" class="title-light subpage-main-title">
-        Panda Express Savings Calculator: Group Value &amp; Cost Estimator
+        Panda Express Savings Calculator
       </h1>
-      
-      <p class="subtitle-light subpage-main-desc" style="max-width: 780px; margin-left: auto; margin-right: auto;">
-        Planning lunch or dinner for a crowd? Our <strong>Panda Express savings calculator</strong> computes exact per-person costs across Individual Plates, Bigger Plates, Family Meals, and Party Catering to find the absolute cheapest way to feed your party size.
+      <p class="subtitle-light subpage-main-desc" style="max-width: 680px; margin-left: auto; margin-right: auto;">
+        Find the cheapest way to feed your group — compare Plates, Family Meals &amp; Catering instantly.
       </p>
     </div>
   </section>
 
   <!-- CALCULATOR TOOL SECTION -->
   <section class="section section-soft" id="calculator-tool" aria-labelledby="calc-tool-title">
-    <div class="container" style="max-width: 960px;">
-      
+    <div class="container" style="max-width: 900px;">
+
       <!-- Interactive Calculator Card -->
       <div class="calc-main-card">
-        <div class="calc-card-header">
-          <h2 id="calc-tool-title" class="calc-tool-title">
-            Interactive Group Cost Calculator
-          </h2>
-          <p class="calc-tool-subtitle">
-            Adjust your group size and toggle promotional discount pricing to view the cheapest meal format.
-          </p>
+
+        <!-- Card Header -->
+        <div class="calc-card-header" style="margin-bottom: 2rem;">
+          <h2 id="calc-tool-title" class="calc-tool-title" style="margin-bottom: 0.35rem;">Group Cost Calculator</h2>
+          <p class="calc-tool-subtitle" style="margin: 0;">Set your party size and optionally apply a coupon to see the best value instantly.</p>
         </div>
 
-        <!-- Controls Row -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; align-items: center; margin-bottom: 2rem;">
-          
+        <!-- ── Controls Row ── -->
+        <div class="calc-controls-row">
+
           <!-- Party Size Stepper -->
-          <div>
-            <label for="partySizeInput" class="calc-field-label">
-              👥 Number of People to Feed:
-            </label>
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <button type="button" id="btnPartyMinus" class="btn-calc-step calc-stepper-btn" aria-label="Decrease party size by 1">-</button>
-              <input type="number" id="partySizeInput" min="1" max="50" value="5" aria-label="Party size number" class="calc-number-input">
-              <button type="button" id="btnPartyPlus" class="btn-calc-step calc-stepper-btn" aria-label="Increase party size by 1">+</button>
+          <div class="calc-control-group">
+            <label for="partySizeInput" class="calc-field-label">👥 People to Feed</label>
+            <div class="calc-stepper-row">
+              <button type="button" id="btnPartyMinus" class="calc-stepper-btn" aria-label="Decrease party size by 1">−</button>
+              <input type="number" id="partySizeInput" min="1" max="50" value="5" aria-label="Party size" class="calc-number-input">
+              <button type="button" id="btnPartyPlus" class="calc-stepper-btn" aria-label="Increase party size by 1">+</button>
             </div>
-            
-            <!-- Quick Chips -->
-            <div style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-top: 0.6rem;">
-              <span style="font-size: 0.78rem; color: #64748B; align-self: center; margin-right: 0.2rem;">Quick:</span>
+            <!-- Quick-select chips -->
+            <div class="calc-chips-row">
+              <span class="calc-chips-label">Quick:</span>
               <button type="button" class="btn-quick-party" data-size="1">1</button>
               <button type="button" class="btn-quick-party" data-size="2">2</button>
               <button type="button" class="btn-quick-party" data-size="4">4</button>
@@ -153,154 +147,139 @@ function renderSavingsCalculator() {
             </div>
           </div>
 
-          <!-- Coupon Code Toggle -->
+          <!-- Coupon Toggle -->
           <div class="calc-promo-box">
-            <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer; user-select: none;">
-              <input type="checkbox" id="couponToggleCheckbox" style="width: 20px; height: 20px; accent-color: #C8102E; cursor: pointer;">
-              <div>
-                <strong class="calc-promo-title">🎟️ I have a promo / coupon code</strong>
-                <span class="calc-promo-desc">Applies active $10 off Family Meal or ~20% order discount</span>
+            <label class="calc-promo-label">
+              <input type="checkbox" id="couponToggleCheckbox" class="calc-promo-checkbox">
+              <div class="calc-promo-text">
+                <strong class="calc-promo-title">🎟️ Apply Coupon Code</strong>
+                <span class="calc-promo-desc">~20% off plates or $10 off a Family Meal</span>
               </div>
             </label>
           </div>
         </div>
 
-        <!-- Dynamic Recommendation Callout Banner -->
-        <div id="calcRecommendationBanner" style="background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); color: #FFFFFF; border-radius: var(--radius-md); padding: 1.35rem; margin-bottom: 2rem; border-left: 5px solid #22C55E; box-shadow: 0 4px 14px rgba(0,0,0,0.15);">
-          <div style="display: flex; align-items: flex-start; gap: 0.75rem;">
-            <span style="font-size: 1.8rem; line-height: 1;">🏆</span>
+        <!-- ── Recommendation Banner ── -->
+        <div id="calcRecommendationBanner" class="calc-recommendation-banner">
+          <div class="calc-rec-inner">
+            <span class="calc-rec-icon">🏆</span>
             <div>
-              <div style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: #86EFAC; font-weight: 800;">Recommended Best Value</div>
-              <h3 id="recommendationTitle" style="color: #FFFFFF; margin: 0.25rem 0 0.4rem 0; font-size: 1.25rem;">
-                Family Meal (1 Bundle)
-              </h3>
-              <p id="recommendationReasoning" style="color: #CBD5E1; font-size: 0.92rem; line-height: 1.5; margin-bottom: 0;">
-                For 5 people, 1 Family Meal feeds everyone for ~$7–$9 per person ($35–$45 total) compared to $60–$70 for individual plates.
+              <div class="calc-rec-eyebrow">Best Value for Your Group</div>
+              <h3 id="recommendationTitle" class="calc-rec-title">Family Meal (1 Bundle)</h3>
+              <p id="recommendationReasoning" class="calc-rec-body">
+                For 5 people, 1 Family Meal feeds everyone for ~$7–$9 per person ($35–$45 total) vs. $60–$70 for individual plates.
               </p>
             </div>
           </div>
         </div>
 
-        <!-- Comparative Output Grid (Cards for Each Format) -->
-        <div style="margin-bottom: 2rem;">
-          <h3 class="calc-comparison-header">
-            Cost Comparison Across Order Types (<span id="displayPartySize">5</span> People)
-          </h3>
-          
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;" id="calcComparisonCards">
-            
-            <!-- Plate Option -->
-            <div class="calc-option-card" id="cardPlate">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 1.5rem;">🍱</span>
-                <span class="badge-rec" id="badgePlate" style="display: none; background: #DCFCE7; color: #15803D; font-size: 0.72rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 999px;">BEST VALUE</span>
-              </div>
-              <h4 class="calc-option-title">Individual Plates</h4>
-              <div class="calc-option-subtitle" id="qtyPlate">5 Plates (2 Entrees / ea)</div>
-              <div style="margin: 0.75rem 0 0.25rem 0;">
-                <div class="calc-option-cost" id="costPlate">$60–$70</div>
-                <div class="calc-option-per-person" id="perPersonPlate">~$12–$14 / person</div>
-              </div>
-            </div>
+        <!-- ── Comparison Cards ── -->
+        <div class="calc-section-label">Cost Comparison — <span id="displayPartySize">5</span> People</div>
+        <div class="calc-cards-grid" id="calcComparisonCards">
 
-            <!-- Bigger Plate Option -->
-            <div class="calc-option-card" id="cardBiggerPlate">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 1.5rem;">🍽️</span>
-                <span class="badge-rec" id="badgeBiggerPlate" style="display: none; background: #DCFCE7; color: #15803D; font-size: 0.72rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 999px;">BEST VALUE</span>
-              </div>
-              <h4 class="calc-option-title">Bigger Plates</h4>
-              <div class="calc-option-subtitle" id="qtyBiggerPlate">5 Bigger Plates (3 Entrees / ea)</div>
-              <div style="margin: 0.75rem 0 0.25rem 0;">
-                <div class="calc-option-cost" id="costBiggerPlate">$70–$80</div>
-                <div class="calc-option-per-person" id="perPersonBiggerPlate">~$14–$16 / person</div>
-              </div>
+          <!-- Plate -->
+          <div class="calc-option-card" id="cardPlate">
+            <div class="calc-card-top">
+              <span class="calc-card-emoji">🍱</span>
+              <span class="badge-rec" id="badgePlate" style="display:none;">BEST VALUE</span>
             </div>
+            <h4 class="calc-option-title">Individual Plates</h4>
+            <div class="calc-option-subtitle" id="qtyPlate">5 Plates (2 Entrees ea.)</div>
+            <div class="calc-option-cost" id="costPlate">$60–$70</div>
+            <div class="calc-option-per-person" id="perPersonPlate">~$12–$14 / person</div>
+          </div>
 
-            <!-- Family Meal Option -->
-            <div class="calc-option-card is-recommended" id="cardFamilyMeal">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 1.5rem;">🥡</span>
-                <span class="badge-rec" id="badgeFamilyMeal" style="display: inline-block; background: #DCFCE7; color: #15803D; font-size: 0.72rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 999px;">BEST VALUE</span>
-              </div>
-              <h4 class="calc-option-title">Family Meal</h4>
-              <div class="calc-option-subtitle" id="qtyFamilyMeal">1 Bundle (3 Lg Entrees + 2 Lg Sides)</div>
-              <div style="margin: 0.75rem 0 0.25rem 0;">
-                <div class="calc-option-cost" id="costFamilyMeal">$45–$55</div>
-                <div class="calc-option-per-person" id="perPersonFamilyMeal">~$9–$11 / person</div>
-              </div>
+          <!-- Bigger Plate -->
+          <div class="calc-option-card" id="cardBiggerPlate">
+            <div class="calc-card-top">
+              <span class="calc-card-emoji">🍽️</span>
+              <span class="badge-rec" id="badgeBiggerPlate" style="display:none;">BEST VALUE</span>
             </div>
+            <h4 class="calc-option-title">Bigger Plates</h4>
+            <div class="calc-option-subtitle" id="qtyBiggerPlate">5 Bigger Plates (3 Entrees ea.)</div>
+            <div class="calc-option-cost" id="costBiggerPlate">$70–$80</div>
+            <div class="calc-option-per-person" id="perPersonBiggerPlate">~$14–$16 / person</div>
+          </div>
 
-            <!-- Catering Option -->
-            <div class="calc-option-card" id="cardCatering">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                <span style="font-size: 1.5rem;">📦</span>
-                <span class="badge-rec" id="badgeCatering" style="display: none; background: #DCFCE7; color: #15803D; font-size: 0.72rem; font-weight: 800; padding: 0.15rem 0.5rem; border-radius: 999px;">BEST VALUE</span>
-              </div>
-              <h4 class="calc-option-title">Party Catering</h4>
-              <div class="calc-option-subtitle" id="qtyCatering">1 Set (Serves 10-12)</div>
-              <div style="margin: 0.75rem 0 0.25rem 0;">
-                <div class="calc-option-cost" id="costCatering">$90–$120</div>
-                <div class="calc-option-per-person" id="perPersonCatering">~$18–$24 / person</div>
-              </div>
+          <!-- Family Meal -->
+          <div class="calc-option-card is-recommended" id="cardFamilyMeal">
+            <div class="calc-card-top">
+              <span class="calc-card-emoji">🥡</span>
+              <span class="badge-rec" id="badgeFamilyMeal" style="display:inline-block;">BEST VALUE</span>
             </div>
+            <h4 class="calc-option-title">Family Meal</h4>
+            <div class="calc-option-subtitle" id="qtyFamilyMeal">1 Bundle (3 Lg Entrees + 2 Sides)</div>
+            <div class="calc-option-cost" id="costFamilyMeal">$45–$55</div>
+            <div class="calc-option-per-person" id="perPersonFamilyMeal">~$9–$11 / person</div>
+          </div>
+
+          <!-- Catering -->
+          <div class="calc-option-card" id="cardCatering">
+            <div class="calc-card-top">
+              <span class="calc-card-emoji">📦</span>
+              <span class="badge-rec" id="badgeCatering" style="display:none;">BEST VALUE</span>
+            </div>
+            <h4 class="calc-option-title">Party Catering</h4>
+            <div class="calc-option-subtitle" id="qtyCatering">1 Set (Serves 10–12)</div>
+            <div class="calc-option-cost" id="costCatering">$90–$120</div>
+            <div class="calc-option-per-person" id="perPersonCatering">~$18–$24 / person</div>
           </div>
         </div>
 
-        <!-- Visual Cost-Per-Person Bar Chart -->
+        <!-- ── Bar Chart ── -->
         <div class="calc-chart-box">
-          <h4 class="calc-chart-title">
-            Cost-Per-Person Visual Comparison
-          </h4>
-          
-          <div style="display: flex; flex-direction: column; gap: 1rem;">
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem;">
+          <h4 class="calc-chart-title">Cost-Per-Person Visual Comparison</h4>
+          <div class="calc-chart-rows">
+
+            <div class="calc-chart-row">
+              <div class="calc-chart-meta">
                 <span class="calc-chart-row-label">🍱 Individual Plates</span>
                 <span id="chartLabelPlate" class="calc-chart-row-value">~$13/person</span>
               </div>
-              <div class="calc-chart-track" style="height: 12px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                <div id="chartBarPlate" style="height: 100%; width: 75%; background: #64748B; border-radius: 999px; transition: width 0.3s ease;"></div>
+              <div class="calc-chart-track">
+                <div id="chartBarPlate" class="calc-chart-bar" style="width:75%; background:#CBD5E1;"></div>
               </div>
             </div>
 
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem;">
+            <div class="calc-chart-row">
+              <div class="calc-chart-meta">
                 <span class="calc-chart-row-label">🍽️ Bigger Plates</span>
                 <span id="chartLabelBiggerPlate" class="calc-chart-row-value">~$15/person</span>
               </div>
-              <div class="calc-chart-track" style="height: 12px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                <div id="chartBarBiggerPlate" style="height: 100%; width: 85%; background: #64748B; border-radius: 999px; transition: width 0.3s ease;"></div>
+              <div class="calc-chart-track">
+                <div id="chartBarBiggerPlate" class="calc-chart-bar" style="width:85%; background:#CBD5E1;"></div>
               </div>
             </div>
 
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem;">
+            <div class="calc-chart-row">
+              <div class="calc-chart-meta">
                 <span class="calc-chart-row-label">🥡 Family Meal</span>
-                <span id="chartLabelFamilyMeal" style="color: #16A34A; font-weight: 800;">~$10/person</span>
+                <span id="chartLabelFamilyMeal" class="calc-chart-row-value calc-chart-row-value--best">~$10/person</span>
               </div>
-              <div class="calc-chart-track" style="height: 12px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                <div id="chartBarFamilyMeal" style="height: 100%; width: 50%; background: #16A34A; border-radius: 999px; transition: width 0.3s ease;"></div>
+              <div class="calc-chart-track">
+                <div id="chartBarFamilyMeal" class="calc-chart-bar" style="width:50%; background:#0F172A;"></div>
               </div>
             </div>
 
-            <div>
-              <div style="display: flex; justify-content: space-between; font-size: 0.92rem; font-weight: 700; margin-bottom: 0.35rem;">
+            <div class="calc-chart-row">
+              <div class="calc-chart-meta">
                 <span class="calc-chart-row-label">📦 Catering Set</span>
                 <span id="chartLabelCatering" class="calc-chart-row-value">~$21/person</span>
               </div>
-              <div class="calc-chart-track" style="height: 12px; background: #E2E8F0; border-radius: 999px; overflow: hidden;">
-                <div id="chartBarCatering" style="height: 100%; width: 100%; background: #94A3B8; border-radius: 999px; transition: width 0.3s ease;"></div>
+              <div class="calc-chart-track">
+                <div id="chartBarCatering" class="calc-chart-bar" style="width:100%; background:#CBD5E1;"></div>
               </div>
             </div>
+
           </div>
         </div>
 
-        <!-- Callout to main coupon page -->
+        <!-- ── CTA callout ── -->
         <div class="calc-order-callout">
-          Ready to order? <a href="/#coupon-section" style="font-weight: 700; color: #C8102E; text-decoration: underline;">Check today's verified Panda Express coupon codes</a> before heading to checkout on pandaexpress.com or the official mobile app.
+          Ready to order? <a href="/#coupon-section">Check today's verified Panda Express coupon codes →</a>
         </div>
-      </div>
+
+      </div><!-- /calc-main-card -->
     </div>
   </section>
 
@@ -350,12 +329,12 @@ function renderSavingsCalculator() {
               <td>$11–$13</td>
               <td>$11–$16</td>
             </tr>
-            <tr class="direct-order-row" style="background: #F0FDF4;">
-              <td><strong style="color: #15803D;">Family Meal</strong></td>
+            <tr style="background: #F8FAFC;">
+              <td><strong style="color: #0F172A;">Family Meal</strong></td>
               <td><strong>4–5</strong></td>
               <td>$45–$55</td>
-              <td><strong style="color: #16A34A;">$35–$45</strong></td>
-              <td><strong style="color: #16A34A;">$7–$9</strong></td>
+              <td><strong style="color: #0F172A;">$35–$45</strong></td>
+              <td><strong style="color: #0F172A;">$7–$9</strong></td>
             </tr>
             <tr>
               <td><strong>Catering (10)</strong></td>

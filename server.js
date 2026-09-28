@@ -228,6 +228,8 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
   res.setHeader('X-Frame-Options', 'SAMEORIGIN');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('X-XSS-Protection', '0');
+  res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=()');
 
   // Search engine indexation control: explicitly block indexing of admin/preview routes
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/')) {
@@ -788,10 +790,16 @@ const server = http.createServer(async (req, res) => {
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
   // Cache headers
-  if (['.woff2', '.webp', '.jpg', '.png', '.svg'].includes(ext)) {
+  // Only fonts are truly immutable (filenames never change in practice).
+  // Images use plain names — must not be immutable or stale caches can't be busted.
+  if (ext === '.woff2') {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (['.webp', '.avif', '.jpg', '.jpeg', '.png', '.svg', '.ico'].includes(ext)) {
+    res.setHeader('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
   } else if (['.css', '.js'].includes(ext)) {
-    res.setHeader('Cache-Control', 'public, max-age=86400');
+    res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=86400');
+  } else if (ext === '.html') {
+    res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   } else {
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   }

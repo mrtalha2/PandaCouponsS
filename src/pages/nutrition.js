@@ -1012,7 +1012,9 @@ function renderNutrition() {
     canonicalPath: '/panda-express-nutrition/',
     content,
     breadcrumbs,
-    schemaJson: [faqSchema, articleSchema]
+    schemaJson: [faqSchema, articleSchema],
+    ogImage: '/public/images/og/og-nutrition.jpg',
+    ogImageAlt: `Panda Express Nutrition Facts and Calorie Calculator ${currentYear}`
   };
 }
 

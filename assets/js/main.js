@@ -1464,10 +1464,10 @@ function initSavingsCalculator() {
       { card: cardCat, badge: badgeCat, isBest: best === 'catering' }
     ].forEach(({ card, badge, isBest }) => {
       if (card) {
-        card.style.background = isBest ? '#F0FDF4' : '#FFFFFF';
-        card.style.borderColor = isBest ? '#22C55E' : '#E2E8F0';
+        card.style.background = isBest ? '#F8FAFC' : '#FFFFFF';
+        card.style.borderColor = isBest ? '#0F172A' : '#E2E8F0';
         card.style.borderWidth = isBest ? '2px' : '1px';
-        card.style.boxShadow = isBest ? '0 4px 12px rgba(34,197,94,0.15)' : 'none';
+        card.style.boxShadow = isBest ? '0 2px 12px rgba(0,0,0,0.08)' : 'none';
       }
       if (badge) {
         badge.style.display = isBest ? 'inline-block' : 'none';
@@ -1526,11 +1526,11 @@ function initSavingsCalculator() {
       if (bar) {
         const pct = Math.max(15, Math.min(100, Math.round((avg / maxAvg) * 100)));
         bar.style.width = `${pct}%`;
-        bar.style.background = isBest ? '#22C55E' : '#94A3B8';
+        bar.style.background = isBest ? '#0F172A' : '#CBD5E1';
       }
       if (label) {
         label.textContent = `~$${Math.round(avg)}/person`;
-        label.style.color = isBest ? '#16A34A' : '#64748B';
+        label.style.color = isBest ? '#0F172A' : '#64748B';
         label.style.fontWeight = isBest ? '800' : '700';
       }
     };
@@ -1545,13 +1545,13 @@ function initSavingsCalculator() {
       const chipSize = parseInt(chip.dataset.size, 10);
       chip.classList.toggle('is-active', chipSize === size);
       if (chipSize === size) {
-        chip.style.borderColor = '#C8102E';
-        chip.style.background = '#FEE2E2';
-        chip.style.color = '#C8102E';
+        chip.style.borderColor = '#0F172A';
+        chip.style.background = '#0F172A';
+        chip.style.color = '#FFFFFF';
       } else {
         chip.style.borderColor = '#E2E8F0';
-        chip.style.background = '#F1F5F9';
-        chip.style.color = '#1E293B';
+        chip.style.background = 'transparent';
+        chip.style.color = '#64748B';
       }
     });
   }

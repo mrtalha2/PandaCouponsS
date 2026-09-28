@@ -313,7 +313,7 @@ function renderMenu() {
                       <div class="card-img-wrapper">
                         <div class="card-img-scrim"></div>
                         ${item.isPremium ? '<div class="premium-ribbon-gold">⭐ Premium Entrée</div>' : ''}
-                        <img src="${item.image}" alt="${item.name} - Panda Express Menu with Prices & Pictures" width="600" height="400" loading="lazy" class="zoom-on-hover-img">
+                        <img src="${item.image}" alt="${item.name} - Panda Express Menu with Prices &amp; Pictures" width="600" height="400" loading="lazy" decoding="async" class="zoom-on-hover-img">
                         <span class="card-cal-badge">${item.calories}</span>
                       </div>
 
