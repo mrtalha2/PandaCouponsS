@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Critical interactive systems
   initEmailDecoders();
   initCopyButtons();
+  initHeroCopyButtons();
   initMobileNav();
   initFaqAccordion();
   initCouponFilterAndToggle();
@@ -94,6 +95,59 @@ function initCopyButtons() {
       }, 2200);
     } catch (err) {
       console.error('Failed to copy code:', err);
+    }
+  });
+}
+/**
+ * 2b. Hero Coupon Card Copy Buttons
+ */
+function initHeroCopyButtons() {
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.hero-copy-btn');
+    if (!btn) return;
+
+    const code = btn.getAttribute('data-hero-code');
+    if (!code) return;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(code);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = code;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+      }
+
+      const labelEl = btn.querySelector('.hero-copy-label');
+      const iconEl = btn.querySelector('.hero-copy-icon');
+      btn.classList.add('is-copied');
+      if (labelEl) labelEl.textContent = 'Copied!';
+      if (iconEl) {
+        iconEl.innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+      }
+
+      // Accessible announcement
+      const announcer = document.getElementById('a11yClipboardAnnouncer');
+      if (announcer) {
+        announcer.textContent = `Promo code ${code} copied to clipboard!`;
+        setTimeout(() => { announcer.textContent = ''; }, 3000);
+      }
+
+      setTimeout(() => {
+        btn.classList.remove('is-copied');
+        if (labelEl) labelEl.textContent = 'Copy Code';
+        if (iconEl) {
+          iconEl.innerHTML = '<rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>';
+        }
+      }, 2500);
+    } catch (err) {
+      console.error('Hero copy failed:', err);
     }
   });
 }

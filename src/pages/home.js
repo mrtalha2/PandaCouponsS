@@ -40,6 +40,21 @@ function renderHome() {
   const totalCodesCount = liveCoupons.length;
   const activeCount = liveCoupons.filter(c => c.status === 'Active').length;
 
+  // Extract top 2 active codes from the table for the hero header cards
+  const heroActiveCoupons = liveCoupons.filter(c => c.status === 'Active');
+  const heroCoupon1 = heroActiveCoupons[0] || {
+    code: 'PANDA20',
+    discount: '20% Off Entire Order',
+    bestFor: 'Online orders',
+    minOrder: 'None'
+  };
+  const heroCoupon2 = heroActiveCoupons[1] || {
+    code: 'FAMILY10',
+    discount: '$10 Off Family Meal',
+    bestFor: 'Family orders',
+    minOrder: 'Family Meal'
+  };
+
   const content = `
   <!-- 1. HERO SECTION WITH CINEMATIC PHOTOGRAPHY & SEO-OPTIMIZED ARTICLE LEAD -->
   <section class="hero-premium" aria-labelledby="home-hero-heading">
@@ -68,10 +83,11 @@ function renderHome() {
       <div class="hero-badge-row">
         <div class="pill-verified-date">
           <span class="pulse-dot-green"></span>
-          <span>Last checked: <strong class="js-current-month-year">${lastVerifiedDate}</strong></span>
+          <span>Updated <strong class="js-current-month-year">${lastVerifiedDate}</strong></span>
         </div>
         <div class="pill-trust-badge">
-          <span>🔒 Direct Checkout • No Data Saved</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <span>Direct Checkout &bull; No Data Saved</span>
         </div>
       </div>
 
@@ -80,24 +96,72 @@ function renderHome() {
       </h1>
 
       <div class="hero-lead-box">
-        <p class="hero-subtitle" style="margin-bottom: 0.85rem;">
-          Finding a working Panda Express coupon code is harder than most sites make it look. Dozens of pages list the same fifteen codes, copy-pasted from one another, most of them dead. This page does something different. Below, every code is marked with a confidence level — verified today, reported recently, or likely expired — so you know exactly what you're working with before you get to checkout.
+        <p class="hero-subtitle">
+          Most coupon lists are copied from each other and expired. Every code here is tagged verified, reported, or likely expired, so you know before you order.
         </p>
-        <p class="hero-subtitle" style="font-size: 0.95rem; color: #CBD5E1; margin-bottom: 0;">
-          We'll also show you why most codes fail, which discounts beat any code entirely, and how to stack savings the way regular customers actually do it.
-        </p>
+      </div>
+
+      <!-- Hero Coupon Cards (Extracted directly from coupons table) -->
+      <div class="hero-coupon-cards" id="heroCouponCards">
+        <!-- Card 1 -->
+        <div class="hero-coupon-card" data-card-code="${heroCoupon1.code}">
+          <div class="hero-card-header-row">
+            <div class="hero-coupon-status">
+              <span class="hero-coupon-dot"></span>
+              <span>Verified active</span>
+            </div>
+            <span class="hero-deal-pill pill-flame">🔥 Top Pick</span>
+          </div>
+          <div class="hero-coupon-deal">${heroCoupon1.discount}</div>
+          <div class="hero-coupon-code-row">
+            <code class="hero-coupon-code" id="heroCode0">${heroCoupon1.code}</code>
+            <button type="button" class="hero-copy-btn" data-hero-code="${heroCoupon1.code}" aria-label="Copy code ${heroCoupon1.code}">
+              <svg class="hero-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span class="hero-copy-label">Copy Code</span>
+            </button>
+          </div>
+          <div class="hero-coupon-footer">
+            <div class="hero-coupon-terms">${heroCoupon1.bestFor || 'Online orders'} &bull; ${heroCoupon1.minOrder && heroCoupon1.minOrder.toLowerCase() !== 'none' ? 'Min. ' + heroCoupon1.minOrder : 'No minimum'}</div>
+            <a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer" class="hero-redeem-hint" aria-label="Apply code ${heroCoupon1.code} on Panda Express">Apply at pandaexpress.com ↗</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="hero-coupon-card" data-card-code="${heroCoupon2.code}">
+          <div class="hero-card-header-row">
+            <div class="hero-coupon-status">
+              <span class="hero-coupon-dot"></span>
+              <span>Verified active</span>
+            </div>
+            <span class="hero-deal-pill pill-group">🥡 Best for Groups</span>
+          </div>
+          <div class="hero-coupon-deal">${heroCoupon2.discount}</div>
+          <div class="hero-coupon-code-row">
+            <code class="hero-coupon-code" id="heroCode1">${heroCoupon2.code}</code>
+            <button type="button" class="hero-copy-btn" data-hero-code="${heroCoupon2.code}" aria-label="Copy code ${heroCoupon2.code}">
+              <svg class="hero-copy-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span class="hero-copy-label">Copy Code</span>
+            </button>
+          </div>
+          <div class="hero-coupon-footer">
+            <div class="hero-coupon-terms">${heroCoupon2.bestFor || 'Family orders'} &bull; ${heroCoupon2.minOrder && heroCoupon2.minOrder.toLowerCase() !== 'none' ? heroCoupon2.minOrder : 'App &amp; web'}</div>
+            <a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer" class="hero-redeem-hint" aria-label="Apply code ${heroCoupon2.code} on Panda Express">Apply at pandaexpress.com ↗</a>
+          </div>
+        </div>
       </div>
 
       <div class="hero-cta-group">
         <a href="#coupon-section" class="btn btn-hero-primary" id="heroGetCodesBtn">
-          <span>🎟️ View Status Table</span>
-          <span class="btn-arrow">&darr;</span>
+          <span>Explore All ${totalCodesCount} Codes</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
         </a>
-        <a href="#how-codes-work" class="btn btn-hero-secondary">
-          <span>📖 How Codes Work</span>
+        <a href="#how-codes-work" class="btn btn-hero-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
+          <span>How We Verify</span>
         </a>
-        <a href="#family-meal-deals" class="btn btn-hero-secondary">
-          <span>🥡 Family Meal Math</span>
+        <a href="#family-meal-deals" class="btn btn-hero-ghost">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+          <span>Family Meal Math</span>
         </a>
       </div>
 
@@ -105,19 +169,20 @@ function renderHome() {
       <div class="hero-trust-points">
         <div class="trust-point-item">
           <svg class="check-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-          <span>100% Free &amp; Direct Checkout</span>
+          <span>100% free</span>
         </div>
         <div class="trust-point-item">
           <svg class="check-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-          <span>Multi-Source Corroboration</span>
+          <span>Checked across multiple sources</span>
         </div>
         <div class="trust-point-item">
           <svg class="check-icon" aria-hidden="true"><use href="#icon-check-circle"></use></svg>
-          <span>Zero Data Stored</span>
+          <span>Zero data stored</span>
         </div>
       </div>
     </div>
   </section>
+
 
   <!-- 2. QUICK STATS BAR (OVERLAPPING HERO) -->
   <div class="container stats-bar-container">
