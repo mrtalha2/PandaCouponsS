@@ -45,7 +45,10 @@ async function writePage(routePath, pageData, assetHash) {
     pageData.preloadHero = true;
   }
 
-  const fullHtml = renderLayout(pageData);
+  let fullHtml = renderLayout(pageData);
+  const { currentMonthYear } = require('./src/utils/date').getDynamicDate();
+  const dateRegex = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s20\d\d\b/g;
+  fullHtml = fullHtml.replace(dateRegex, currentMonthYear);
   let finalHtml = fullHtml;
 
   try {

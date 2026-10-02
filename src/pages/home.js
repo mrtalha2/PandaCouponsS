@@ -729,6 +729,7 @@ function renderHome() {
       <div class="family-glass-layout">
         <!-- What's Included & Honest Math -->
         <div class="family-deals-card">
+          <img src="/public/images/optimized/content-food-spread.jpg" alt="Panda Express Family Meal spread featuring Orange Chicken and Chow Mein takeout boxes" style="width: 100%; height: auto; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: block; border: 1px solid rgba(255, 255, 255, 0.1);" loading="lazy" decoding="async">
           <h3 class="family-card-title">What's Included in a Family Meal</h3>
           <ul style="color: #E2E8F0; font-size: 0.95rem; margin-bottom: 1.5rem; padding-left: 1.25rem;">
             <li><strong>3 large entrees</strong> (your choice)</li>

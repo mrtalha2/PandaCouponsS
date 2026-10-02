@@ -346,9 +346,6 @@ function renderMenu() {
                             Nutrition Facts &rarr;
                           </a>
                           `}
-                          <a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer" class="btn-order-direct-sm" title="Order ${item.name} on pandaexpress.com">
-                            <span>Order ↗</span>
-                          </a>
                         </div>
                       </div>
                     </article>

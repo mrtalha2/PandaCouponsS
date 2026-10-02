@@ -1,134 +1,7 @@
-[
-  {
-    "slug": "panda-express-orange-chicken",
-    "name": "Orange Chicken",
-    "metaTitle": "Panda Express Orange Chicken: Calories, Nutrition & Deals",
-    "metaDescription": "Panda Express Orange Chicken guide: 510 calories, 26g protein, full nutrition facts, allergen details, healthy meal pairings, and 20% off coupon code savings.",
-    "intro": "Orange Chicken is universally celebrated as Panda Express's iconic flagship entree. Created by Chef Andy Kao in 1987, this beloved dish pairs bite-sized pieces of crispy wok-fried chicken with a sweet, tangy chili glaze infused with hints of real orange peel, garlic, and ginger. It accounts for tens of millions of pounds of chicken served every year across thousands of locations.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving (approx. 5.7 oz)",
-      "calories": 510,
-      "fat": 23,
-      "saturatedFat": 5,
-      "cholesterol": 80,
-      "sodium": 820,
-      "carbs": 53,
-      "fiber": 1,
-      "sugar": 19,
-      "protein": 26
-    },
-    "isHealthy": {
-      "headline": "Is Panda Express Orange Chicken Healthy?",
-      "content": "While Orange Chicken provides a substantial 26 grams of lean poultry protein, it is also calorie-dense and higher in carbohydrates and sugars compared to other wok entrees. Because the chicken is battered and deep-fried before being coated in a sweetened glaze, a single serving carries 510 calories and 23g of total fat. It functions best as an occasional savory indulgence rather than an everyday diet staple. However, when thoughtfully paired with nutrient-dense sides, you can comfortably incorporate it into a balanced lifestyle."
-    },
-    "howToOrderForLess": {
-      "headline": "How to Order Orange Chicken for Less",
-      "tips": [
-        "Use active coupon codes: Apply codes like PANDA20 during online checkout for 20% off your entire meal ticket.",
-        "Upgrade with Rewards Points: Redeem 250 Panda Rewards points to step up from a single Bowl to a 2-entree Plate without paying extra out-of-pocket.",
-        "Include it in a Family Meal: Ordering 3 large entrees and 2 large sides feeds 4 to 5 people for around $35–$45, bringing the cost of a hearty Orange Chicken serving down to under $8 per person.",
-        "Complete customer feedback surveys: Check the back of your paper receipt for the Panda Express guest satisfaction survey, which frequently yields a free additional entree code on your subsequent purchase."
-      ]
-    },
-    "orderingTips": [
-      {
-        "title": "Pair with Super Greens or Steamed White Rice",
-        "detail": "Counterbalance the 510 calories and 53g carbs of Orange Chicken by selecting Super Greens (only 90 cal) as your side. This cuts over 400 calories compared to fried rice or chow mein."
-      },
-      {
-        "title": "Split a Family Meal Among Friends",
-        "detail": "Ordering a Family Meal and splitting the large portion of Orange Chicken with coworkers or family members gives everyone their craving fix while slashing the per-person cost."
-      },
-      {
-        "title": "Request Extra Sauce on the Side",
-        "detail": "Asking for the sauce on the side or requesting a lightly tossed batch lets you enjoy the crispiness of the chicken while moderating overall sugar and sodium intake."
-      }
-    ],
-    "faq": [
-      {
-        "question": "How many calories are in Panda Express Orange Chicken?",
-        "answer": "A standard serving of Panda Express Orange Chicken contains 510 calories, 23 grams of fat, 53 grams of carbohydrates, and 26 grams of protein."
-      },
-      {
-        "question": "Is Panda Express Orange Chicken gluten-free?",
-        "answer": "No. The chicken pieces are coated in a wheat-flour batter, and the glaze contains traditional soy sauce brewed with wheat, making it unsuitable for a gluten-free diet."
-      },
-      {
-        "question": "Can I get Orange Chicken with a coupon code?",
-        "answer": "Yes. General percentage-off discounts like PANDA20 (20% off) and meal bundle codes like FAMILY10 apply to orders containing Orange Chicken when placed through the official Panda Express website or mobile app."
-      }
-    ],
-    "relatedDish": {
-      "name": "Beijing Beef",
-      "url": "/beijing-beef/",
-      "tagline": "Prefer tender wok-seared beef with bell peppers and onions? Check out our complete Beijing Beef guide."
-    }
-  },
-  {
-    "slug": "beijing-beef",
-    "name": "Beijing Beef",
-    "metaTitle": "Panda Express Beijing Beef: Calories, Nutrition & Deals",
-    "metaDescription": "Panda Express Beijing Beef guide: 480 calories, 14g protein, complete macro breakdown, crispy wok ingredients, healthy pairings, and discount coupon strategies.",
-    "intro": "Beijing Beef is one of Panda Express's most popular savory beef specialties. It features tender strips of marinated flank-style beef, lightly crisped on the exterior, and wok-tossed with fresh red bell peppers and sweet yellow onions in a complex sweet-tangy sauce. It offers a punchy alternative to traditional chicken entrees with deep, caramelized flavor notes.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving (approx. 5.6 oz)",
-      "calories": 480,
-      "fat": 27,
-      "saturatedFat": 5,
-      "cholesterol": 40,
-      "sodium": 660,
-      "carbs": 46,
-      "fiber": 1,
-      "sugar": 24,
-      "protein": 14
-    },
-    "isHealthy": {
-      "headline": "Is Panda Express Beijing Beef Healthy?",
-      "content": "Beijing Beef clocks in at 480 calories and 27 grams of fat per serving, along with 46 grams of carbohydrates (including 24g of sugar). While it provides satisfying red meat flavor and crunchy wok-charred vegetables, it carries more fat and less protein (14g) than poultry alternatives like Grilled Teriyaki Chicken (33g protein) or Black Pepper Chicken. If you are watching sodium or saturated fats, enjoying Beijing Beef as an occasional treat alongside high-fiber vegetables is the healthiest strategy."
-    },
-    "howToOrderForLess": {
-      "headline": "How to Save Money on Beijing Beef",
-      "tips": [
-        "Check working promo codes: Enter current site codes such as PANDA20 for 20% off your checkout cart at pandaexpress.com.",
-        "Take advantage of Panda Rewards: Earn 10 points per dollar spent and redeem 1,250 points for a free Bowl containing a generous portion of Beijing Beef.",
-        "Build a Bigger Plate: If you are extra hungry, getting a Bigger Plate (3 entrees) gives you more food volume per dollar spent than buying separate smaller meals.",
-        "Leverage discounted gift cards: Purchase wholesale gift cards from Costco or Sam's Club at 15–20% off face value and pay for your online Beijing Beef orders through the app."
-      ]
-    },
-    "orderingTips": [
-      {
-        "title": "Balance the Richness with Super Greens",
-        "detail": "Because Beijing Beef is rich and glazed, pair it with steamed Super Greens instead of oily Chow Mein to add crisp texture while maintaining a moderate calorie ceiling."
-      },
-      {
-        "title": "Combine with a High-Protein Entree",
-        "detail": "If ordering a 2-entree Plate, pair Beijing Beef with Grilled Teriyaki Chicken or Broccoli Beef to bump up your overall protein intake while moderating total fats."
-      },
-      {
-        "title": "Ask for Fresh-From-the-Wok Batches",
-        "detail": "Beijing Beef retains its signature crispy exterior best when freshly prepared. Ordering during peak lunch or dinner hours ensures maximum crunch."
-      }
-    ],
-    "faq": [
-      {
-        "question": "How many calories are in Panda Express Beijing Beef?",
-        "answer": "One standard serving of Beijing Beef contains approximately 480 calories, 27g of total fat, 46g of carbohydrates, and 14g of protein."
-      },
-      {
-        "question": "Is Beijing Beef spicy?",
-        "answer": "Beijing Beef has a mild to medium tangy kick derived from its chili-infused sweet glaze, but it is substantially less spicy than Kung Pao Chicken."
-      },
-      {
-        "question": "What is the difference between Beijing Beef and Broccoli Beef?",
-        "answer": "Beijing Beef is lightly battered, crispy, and tossed with bell peppers and sweet onions in a sweet-tangy glaze (480 cal, 14g protein). Broccoli Beef features unbattered tender beef slices tossed with steamed broccoli florets in a savory ginger soy sauce (150 cal, 9g protein)."
-      }
-    ],
-    "relatedDish": {
-      "name": "Orange Chicken",
-      "url": "/panda-express-orange-chicken/",
-      "tagline": "Craving the famous sweet citrus classic? View our complete Orange Chicken nutritional and savings guide."
-    }
-  },
+const fs = require('fs');
+const path = require('path');
+
+const newDishes = [
   {
     "slug": "panda-express-grilled-teriyaki",
     "name": "Grilled Teriyaki Chicken",
@@ -464,4 +337,19 @@
       "tagline": "Pair your noodles with a classic. Read the Orange Chicken guide."
     }
   }
-]
+];
+
+const dishesPath = path.join(__dirname, 'data', 'dishes.json');
+const currentDishes = JSON.parse(fs.readFileSync(dishesPath, 'utf8'));
+
+// Filter out any existing to avoid duplicates if run multiple times
+const existingSlugs = new Set(currentDishes.map(d => d.slug));
+const toAdd = newDishes.filter(d => !existingSlugs.has(d.slug));
+
+if (toAdd.length > 0) {
+  currentDishes.push(...toAdd);
+  fs.writeFileSync(dishesPath, JSON.stringify(currentDishes, null, 2), 'utf8');
+  console.log('Added ' + toAdd.length + ' new dishes to data/dishes.json');
+} else {
+  console.log('Dishes already exist.');
+}

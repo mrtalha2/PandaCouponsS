@@ -46,11 +46,20 @@ function renderHeader(currentPath = '/') {
           <li>
             <a href="/panda-express-nutrition/" class="nav-link ${currentPath.includes('nutrition') ? 'is-current' : ''}">Nutrition</a>
           </li>
-          <li>
-            <a href="/panda-express-orange-chicken/" class="nav-link ${currentPath.includes('orange-chicken') ? 'is-current' : ''}">Orange Chicken</a>
-          </li>
-          <li>
-            <a href="/beijing-beef/" class="nav-link ${currentPath.includes('beijing-beef') ? 'is-current' : ''}">Beijing Beef</a>
+          <li class="nav-dropdown">
+            <button type="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+              Food Guides <span class="dropdown-arrow">▼</span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="/panda-express-orange-chicken/" class="${currentPath.includes('orange-chicken') ? 'is-current' : ''}">Orange Chicken</a></li>
+              <li><a href="/beijing-beef/" class="${currentPath.includes('beijing-beef') ? 'is-current' : ''}">Beijing Beef</a></li>
+              <li><a href="/panda-express-grilled-teriyaki/" class="${currentPath.includes('grilled-teriyaki') ? 'is-current' : ''}">Grilled Teriyaki</a></li>
+              <li><a href="/panda-express-cream-cheese/" class="${currentPath.includes('cream-cheese') ? 'is-current' : ''}">Cream Cheese Rangoon</a></li>
+              <li><a href="/panda-express-black-pepper-steak/" class="${currentPath.includes('black-pepper') ? 'is-current' : ''}">Black Pepper Steak</a></li>
+              <li><a href="/panda-express-sweet-sour-chicken/" class="${currentPath.includes('sweet-sour') ? 'is-current' : ''}">Sweet & Sour Chicken</a></li>
+              <li><a href="/panda-express-string-bean-chicken/" class="${currentPath.includes('string-bean') ? 'is-current' : ''}">String Bean Chicken</a></li>
+              <li><a href="/panda-express-chow-mein/" class="${currentPath.includes('chow-mein') ? 'is-current' : ''}">Chow Mein</a></li>
+            </ul>
           </li>
           <li>
             <a href="/about-us/" class="nav-link ${currentPath.includes('about') ? 'is-current' : ''}">About Us</a>
@@ -84,6 +93,12 @@ function renderHeader(currentPath = '/') {
         <li><a href="/panda-express-menu/" class="mobile-nav-link ${currentPath.includes('menu') ? 'is-current' : ''}">Panda Express Menu</a></li>
         <li><a href="/panda-express-orange-chicken/" class="mobile-nav-link ${currentPath.includes('orange-chicken') ? 'is-current' : ''}">Orange Chicken Guide</a></li>
         <li><a href="/beijing-beef/" class="mobile-nav-link ${currentPath.includes('beijing-beef') ? 'is-current' : ''}">Beijing Beef Guide</a></li>
+        <li><a href="/panda-express-grilled-teriyaki/" class="mobile-nav-link ${currentPath.includes('grilled-teriyaki') ? 'is-current' : ''}">Grilled Teriyaki Guide</a></li>
+        <li><a href="/panda-express-cream-cheese/" class="mobile-nav-link ${currentPath.includes('cream-cheese') ? 'is-current' : ''}">Cream Cheese Rangoon Guide</a></li>
+        <li><a href="/panda-express-black-pepper-steak/" class="mobile-nav-link ${currentPath.includes('black-pepper') ? 'is-current' : ''}">Black Pepper Steak Guide</a></li>
+        <li><a href="/panda-express-sweet-sour-chicken/" class="mobile-nav-link ${currentPath.includes('sweet-sour') ? 'is-current' : ''}">Sweet & Sour Chicken Guide</a></li>
+        <li><a href="/panda-express-string-bean-chicken/" class="mobile-nav-link ${currentPath.includes('string-bean') ? 'is-current' : ''}">String Bean Chicken Guide</a></li>
+        <li><a href="/panda-express-chow-mein/" class="mobile-nav-link ${currentPath.includes('chow-mein') ? 'is-current' : ''}">Chow Mein Guide</a></li>
         <li><a href="/contact-us/" class="mobile-nav-link ${currentPath.includes('contact') ? 'is-current' : ''}">Contact Us</a></li>
         <li><a href="/about-us/" class="mobile-nav-link ${currentPath.includes('about') ? 'is-current' : ''}">About Us</a></li>
       </ul>
