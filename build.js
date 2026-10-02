@@ -184,7 +184,7 @@ async function build() {
   if (cleanCssResult.errors && cleanCssResult.errors.length) {
     throw new Error('CleanCSS error: ' + cleanCssResult.errors.join(', '));
   }
-  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'css', 'style.min.css'), cleanCssResult.styles, 'utf8');
+  // We will write the fingerprinted file after computing assetHash
   console.log(`  ✓ style.min.css: ${rawCss.length}B -> ${cleanCssResult.styles.length}B (${((1 - cleanCssResult.styles.length / rawCss.length) * 100).toFixed(1)}% savings)`);
 
   // Remove unminified CSS from dist (only serve the .min version)
@@ -206,7 +206,7 @@ async function build() {
   if (!terserResult.code) {
     throw new Error('Terser minification produced empty output');
   }
-  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', 'main.min.js'), terserResult.code, 'utf8');
+  // We will write the fingerprinted file after computing assetHash
   console.log(`  ✓ main.min.js: ${rawJs.length}B -> ${terserResult.code.length}B (${((1 - terserResult.code.length / rawJs.length) * 100).toFixed(1)}% savings)`);
 
   // Remove unminified JS from dist (only serve the .min version)
@@ -222,6 +222,10 @@ async function build() {
     .digest('hex')
     .slice(0, 8);
   console.log(`  ✓ Asset version hash: ${assetHash}`);
+  
+  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'css', `style.${assetHash}.css`), cleanCssResult.styles, 'utf8');
+  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', `main.${assetHash}.js`), terserResult.code, 'utf8');
+  
 
   // 4. Render and Minify HTML Pages (Phase 7a, 7b, 7c)
   console.log('\n📄 Building and minifying HTML pages...');

@@ -168,7 +168,7 @@ ${preloadHero ? `
         fetchpriority="high">` : ''}
 
   <!-- Core Stylesheet (Production Minified with Cache-Bust) -->
-  <link rel="stylesheet" href="/assets/css/style.min.css${vParam}">
+  <link rel="stylesheet" href="/assets/css/style.${assetHash}.css">
 
   <!-- Structured Data JSON-LD (Compact) -->
   <script type="application/ld+json">${JSON.stringify(defaultSchemas)}</script>
@@ -207,7 +207,7 @@ ${preloadHero ? `
   ${renderFooter()}
 
   <!-- Client Script (Deferred for Performance with Cache-Bust) -->
-  <script src="/assets/js/main.min.js${vParam}" defer></script>
+  <script src="/assets/js/main.${assetHash}.js" defer></script>
   ${extraScripts}
   ${adminInjections.bodyEnd || ''}
 </body>

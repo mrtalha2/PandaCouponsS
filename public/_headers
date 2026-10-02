@@ -4,12 +4,15 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-XSS-Protection: 0
   Permissions-Policy: geolocation=(), camera=(), microphone=()
+  Cross-Origin-Opener-Policy: same-origin
+  Content-Security-Policy-Report-Only: default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://formspree.io
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
 
-/assets/css/*
-  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+/assets/css/*.*.css
+  Cache-Control: public, max-age=31536000, immutable
 
-/assets/js/*
-  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+/assets/js/*.*.js
+  Cache-Control: public, max-age=31536000, immutable
 
 /public/fonts/*
   Cache-Control: public, max-age=31536000, immutable
@@ -17,14 +20,20 @@
 /public/images/*
   Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
-/public/*.png
+/assets/css/*.css
   Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+/assets/js/*.js
+  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+
+/public/*.png
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /public/*.ico
-  Cache-Control: no-cache, no-store, must-revalidate
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /public/*.svg
-  Cache-Control: public, max-age=86400, stale-while-revalidate=86400
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
@@ -34,4 +43,3 @@
 
 /admin/*
   X-Robots-Tag: noindex, nofollow, noarchive
-

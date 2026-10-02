@@ -9,6 +9,14 @@ const path = require('path');
 const url = require('url');
 const Busboy = require('busboy');
 const bcrypt = require('bcryptjs');
+const zlib = require('zlib');
+
+process.on('uncaughtException', err => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
 // Admin Modules
 const auth = require('./src/admin/auth');
@@ -220,8 +228,14 @@ function check301Redirects(req, res) {
 }
 
 const server = http.createServer(async (req, res) => {
+  try {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
+
+  if (pathname === '/healthz' && req.method === 'GET') {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    return res.end('200 ok');
+  }
   const clientIp = auth.getClientIp(req);
 
   // Security Headers (sitewide)
@@ -230,6 +244,13 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
   res.setHeader('X-XSS-Protection', '0');
   res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=()');
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Content-Security-Policy-Report-Only', "default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://formspree.io");
+
+  const proto = req.headers['x-forwarded-proto'] || (req.socket && req.socket.encrypted ? 'https' : 'http');
+  if (proto === 'https') {
+    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  }
 
   // Search engine indexation control: explicitly block indexing of admin/preview routes
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/')) {
@@ -754,30 +775,60 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // PUBLIC STATIC SITE SERVING
   // ==========================================
-  let filePath = path.join(DIST_DIR, pathname);
+  if (req.method !== 'GET' && req.method !== 'HEAD') {
+    res.writeHead(405, { 'Allow': 'GET, HEAD', 'Content-Type': 'text/plain' });
+    return res.end('Method Not Allowed');
+  }
 
-  // If path is a directory or ends with /, serve index.html
-  if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory()) {
-    filePath = path.join(filePath, 'index.html');
-  } else if (!path.extname(filePath)) {
-    if (fs.existsSync(path.join(filePath, 'index.html'))) {
-      filePath = path.join(filePath, 'index.html');
-    } else if (fs.existsSync(filePath + '.html')) {
-      filePath = filePath + '.html';
-    }
+  const distRoot = path.resolve(DIST_DIR);
+  let decoded;
+  try {
+    decoded = decodeURIComponent(pathname);
+  } catch (err) {
+    res.writeHead(400); return res.end('Bad request');
+  }
+  if (decoded.includes('\0')) {
+    res.writeHead(400); return res.end('Bad request');
+  }
+
+  // Block segments starting with dot, except the whole name can be .html etc, but block .env, .git, etc.
+  const pathParts = decoded.split('/');
+  if (pathParts.some(p => p.startsWith('.') && p.length > 1)) {
+    res.writeHead(403); return res.end('Forbidden');
+  }
+
+  let filePath = path.resolve(distRoot, '.' + decoded);
+  if (filePath !== distRoot && !filePath.startsWith(distRoot + path.sep)) {
+    res.writeHead(403); return res.end('Forbidden');
   }
 
   // Check public/ directory if not found in dist/
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    const publicPath = path.join(PUBLIC_DIR, pathname.replace(/^\/public\//, ''));
-    if (fs.existsSync(publicPath) && !fs.statSync(publicPath).isDirectory()) {
-      filePath = publicPath;
+    // If it's a directory, maybe index.html
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isDirectory() && fs.existsSync(path.join(filePath, 'index.html'))) {
+      filePath = path.join(filePath, 'index.html');
+    } else if (fs.existsSync(filePath + '.html')) {
+      filePath = filePath + '.html';
+    } else {
+      const publicRoot = path.resolve(PUBLIC_DIR);
+      let pubDecoded = pathname.replace(/^\/public\//, '/');
+      let pubFilePath = path.resolve(publicRoot, '.' + pubDecoded);
+      if (pubFilePath === publicRoot || pubFilePath.startsWith(publicRoot + path.sep)) {
+        if (fs.existsSync(pubFilePath) && !fs.statSync(pubFilePath).isDirectory()) {
+          filePath = pubFilePath;
+        }
+      }
     }
+  }
+
+  // Block data files from being served statically
+  if (filePath.includes(path.sep + 'data' + path.sep) && (filePath.endsWith('.map') || filePath.endsWith('.env') || filePath.endsWith('.json'))) {
+    res.writeHead(403); return res.end('Forbidden');
   }
 
   // 404 handler
   if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-    const notFoundPage = path.join(DIST_DIR, '404.html');
+    const notFoundPage = path.join(distRoot, '404.html');
     if (fs.existsSync(notFoundPage)) {
       res.writeHead(404, { 'Content-Type': 'text/html; charset=utf-8' });
       return res.end(fs.readFileSync(notFoundPage));
@@ -789,15 +840,19 @@ const server = http.createServer(async (req, res) => {
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 
-  // Cache headers
-  // Only fonts are truly immutable (filenames never change in practice).
-  // Images use plain names — must not be immutable or stale caches can't be busted.
+  // Cache headers (S5)
   if (ext === '.woff2') {
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+  } else if (['.css', '.js'].includes(ext)) {
+    // Fingerprinted?
+    const base = path.basename(filePath);
+    if (base.match(/\.[0-9a-f]{8}\.(css|js)$/)) {
+      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    } else {
+      res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=86400');
+    }
   } else if (['.webp', '.avif', '.jpg', '.jpeg', '.png', '.svg', '.ico'].includes(ext)) {
     res.setHeader('Cache-Control', 'public, max-age=604800, stale-while-revalidate=86400');
-  } else if (['.css', '.js'].includes(ext)) {
-    res.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=86400');
   } else if (ext === '.html') {
     res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   } else {
@@ -809,11 +864,46 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(500, { 'Content-Type': 'text/plain' });
       res.end('Server Error: ' + err.code);
     } else {
+      // Compression (S3)
+      const acceptEncoding = req.headers['accept-encoding'] || '';
+      res.setHeader('Vary', 'Accept-Encoding');
+      
+      const compressable = ['text/html; charset=utf-8', 'text/css; charset=utf-8', 'application/javascript; charset=utf-8', 'application/json; charset=utf-8', 'image/svg+xml', 'application/xml', 'text/plain; charset=utf-8'];
+      
+      if (content.length >= 1024 && compressable.includes(contentType)) {
+        if (acceptEncoding.includes('br')) {
+          res.writeHead(200, { 'Content-Type': contentType, 'Content-Encoding': 'br' });
+          return res.end(zlib.brotliCompressSync(content));
+        } else if (acceptEncoding.includes('gzip')) {
+          res.writeHead(200, { 'Content-Type': contentType, 'Content-Encoding': 'gzip' });
+          return res.end(zlib.gzipSync(content));
+        }
+      }
+
       res.writeHead(200, { 'Content-Type': contentType });
-      res.end(content);
+      if (req.method === 'HEAD') {
+        res.end();
+      } else {
+        res.end(content);
+      }
     }
   });
+  } catch (err) {
+    console.error('Top-level request error:', err);
+    if (!res.headersSent) {
+      res.writeHead(500, { 'Content-Type': 'text/plain' });
+      res.end('500 Internal Server Error');
+    }
+  }
 });
+
+server.requestTimeout = 30000;
+server.headersTimeout = 31000;
+server.keepAliveTimeout = 30000;
+
+process.on('SIGTERM', () => { console.log('SIGTERM'); server.close(() => process.exit(0)); });
+process.on('SIGINT', () => { console.log('SIGINT'); server.close(() => process.exit(0)); });
+
 
 server.listen(PORT, () => {
   console.log(`\n======================================================`);
