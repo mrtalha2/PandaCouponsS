@@ -121,7 +121,7 @@ function renderLayout({
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${finalTitle}</title>
   <meta name="description" content="${finalDesc}">
-  <meta name="robots" content="${noindexFlag ? 'noindex, nofollow' : 'index, follow'}">
+  <meta name="robots" content="${noindexFlag ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
   <link rel="canonical" href="${fullCanonicalUrl}">
 
   <!-- Open Graph / Social Media -->
