@@ -6,10 +6,8 @@
 const fs = require('fs');
 const path = require('path');
 const menuData = require('../../data/menu.json');
-const { getDynamicDate } = require('../utils/date');
 
 function renderMenu() {
-  const { currentMonthYear, currentYear } = getDynamicDate();
   let adminContent = {};
   try {
     const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
@@ -26,9 +24,9 @@ function renderMenu() {
   const menuGridBlock = menuBlocks.find(b => b.type === 'menu-grid');
 
   const menuContent = adminContent.menu || {};
-  const badgeText = menuGridBlock?.badgeText || menuContent.badgeText || '🐼 OFFICIAL 2026 PANDA EXPRESS MENU &amp; PRICES';
+  const badgeText = menuGridBlock?.badgeText || menuContent.badgeText || '🐼 OFFICIAL {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
   const heroTitle = menuGridBlock?.heading || menuContent.heroTitle || 'Panda Express Menu with Prices &amp; Pictures';
-  const heroSubtitle = menuGridBlock?.subtext || menuContent.heroSubtitle || 'Explore complete 2026 pricing, per-serving calorie counts, portion options, and high-definition photography for all Bowls, Plates, A La Carte Entrées, Sides, Crafted Refreshers, and Catering Trays.';
+  const heroSubtitle = menuGridBlock?.subtext || menuContent.heroSubtitle || 'Explore complete {{YEAR}} pricing, per-serving calorie counts, portion options, and high-definition photography for all Bowls, Plates, A La Carte Entrées, Sides, Crafted Refreshers, and Catering Trays.';
   const stat1Label = menuGridBlock?.stat1Label || menuContent.stat1Label || 'Wok-Crafted Dishes';
   const stat2Label = menuGridBlock?.stat2Label || menuContent.stat2Label || 'A La Carte Boxes';
   const stat3Label = menuGridBlock?.stat3Label || menuContent.stat3Label || 'Zero Artificial Trans Fat';
@@ -151,7 +149,7 @@ function renderMenu() {
             <span class="hero-stat-desc">${stat3Label}</span>
           </div>
           <div class="hero-stat-box">
-            <span class="hero-stat-val" style="color: #F5B301;">${currentMonthYear}</span>
+            <span class="hero-stat-val" style="color: #F5B301;">{{MONTH_YEAR}}</span>
             <span class="hero-stat-desc">Verified Pricing</span>
           </div>
         </div>
@@ -164,7 +162,7 @@ function renderMenu() {
         <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 0.5rem;">
           <div>
             <span class="kicker-tag kicker-red" style="margin-bottom: 0.35rem;">QUICK MENU BOARD</span>
-            <h2 style="margin: 0; font-size: 1.7rem;">Panda Express Menu Summary (${currentYear})</h2>
+            <h2 style="margin: 0; font-size: 1.7rem;">Panda Express Menu Summary ({{YEAR}})</h2>
           </div>
           <span style="font-size: 0.88rem; color: var(--color-muted-text); font-weight: 600;">Standard corporate store pricing</span>
         </div>
@@ -423,7 +421,7 @@ function renderMenu() {
   `;
 
   return {
-    title: `Panda Express Menu with Prices & Pictures (2026 Updated)`,
+    title: `Panda Express Menu with Prices & Pictures ({{YEAR}} Updated)`,
     description: `Browse the complete Panda Express menu with prices and pictures. See calorie counts, portion sizes, and savings for Bowls, Plates, Entrées, Sides, and Catering.`,
     canonicalPath: '/panda-express-menu/',
     ogImage: '/public/images/og/og-menu.jpg',

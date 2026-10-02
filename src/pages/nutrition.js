@@ -4,11 +4,9 @@
  * Strict Constraint: ZERO Green, ZERO Red. 100% WCAG AAA Readability.
  * Dynamic Year & Month integration.
  */
-const { getDynamicDate } = require('../utils/date');
 const nutritionFull = require('../../data/menu_full.json');
 
 function renderNutrition() {
-  const { currentYear, currentMonthYear } = getDynamicDate();
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -66,8 +64,8 @@ function renderNutrition() {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": `Panda Express Nutrition: Calories, Macros & the Smartest Way to Order in ${currentYear}`,
-    "description": `See verified Panda Express nutrition facts and calories for every dish. Free ${currentYear} data — check yours with our calculator.`,
+    "headline": `Panda Express Nutrition: Calories, Macros & the Smartest Way to Order in {{YEAR}}`,
+    "description": `See verified Panda Express nutrition facts and calories for every dish. Free {{YEAR}} data — check yours with our calculator.`,
     "dateModified": new Date().toISOString(),
     "author": {
       "@type": "Organization",
@@ -92,11 +90,11 @@ function renderNutrition() {
         </nav>
 
         <div class="nutr-badge-pill">
-          <span>Official Nutrition Guide ${currentYear}</span>
+          <span>Official Nutrition Guide {{YEAR}}</span>
         </div>
 
         <h1 class="nutr-hero-title">
-          Panda Express Nutrition: Calories, Macros &amp; the Smartest Way to Order in ${currentYear}
+          Panda Express Nutrition: Calories, Macros &amp; the Smartest Way to Order in {{YEAR}}
         </h1>
 
         <p class="nutr-hero-lead">
@@ -1007,14 +1005,14 @@ function renderNutrition() {
   `;
 
   return {
-    title: `Panda Express Nutrition Guide ${currentYear}: Calories & Macros`,
-    description: `See verified Panda Express nutrition facts and calories for every dish. Free ${currentYear} data — check yours with our calculator.`,
+    title: `Panda Express Nutrition Guide {{YEAR}}: Calories & Macros`,
+    description: `See verified Panda Express nutrition facts and calories for every dish. Free {{YEAR}} data — check yours with our calculator.`,
     canonicalPath: '/panda-express-nutrition/',
     content,
     breadcrumbs,
     schemaJson: [faqSchema, articleSchema],
     ogImage: '/public/images/og/og-nutrition.jpg',
-    ogImageAlt: `Panda Express Nutrition Facts and Calorie Calculator ${currentYear}`
+    ogImageAlt: `Panda Express Nutrition Facts and Calorie Calculator {{YEAR}}`
   };
 }
 

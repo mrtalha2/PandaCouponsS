@@ -7,11 +7,9 @@ const path = require('path');
 const couponsData = require('../../data/coupons.json');
 const faqData = require('../../data/faq.json');
 const config = require('../../data/site.config');
-const { getDynamicDate } = require('../utils/date');
 
 function renderHome() {
-  const { currentMonthYear, currentMonth, currentYear } = getDynamicDate();
-  const lastVerifiedDate = currentMonthYear;
+  const lastVerifiedDate = "{{MONTH_YEAR}}";
   const liveCoupons = (couponsData.coupons || []).filter(c => c.isDraft !== true);
 
   const faqSchema = {
@@ -226,7 +224,7 @@ function renderHome() {
         <a href="#delivery-platforms-section" class="toc-link">🛵 DoorDash, Uber Eats &amp; Grubhub</a>
         <a href="#family-meal-deals" class="toc-link">🥡 Family Meal Cost &amp; Savings Math</a>
         <a href="#rewards-section-heading" class="toc-link">🐼 Panda Rewards vs. Coupon Codes</a>
-        <a href="#other-discounts-heading" class="toc-link">🎖️ Other Ways to Save in 2026</a>
+        <a href="#other-discounts-heading" class="toc-link">🎖️ Other Ways to Save in {{YEAR}}</a>
         <a href="#verification-process-section" class="toc-link">🔍 Our Verification Process</a>
         <a href="#faq-section-heading" class="toc-link">❓ Frequently Asked Questions</a>
         <a href="#cta-final-heading" class="toc-link">📱 Official App</a>
@@ -949,12 +947,12 @@ function renderHome() {
     </div>
   </section>
 
-  <!-- 10. OTHER WAYS TO SAVE AT PANDA EXPRESS IN 2026 -->
+  <!-- 10. OTHER WAYS TO SAVE AT PANDA EXPRESS IN {{YEAR}} -->
   <section id="other-discounts-heading" class="section section-white section-border" aria-labelledby="other-discounts-title">
     <div class="container">
       <div class="section-title-header text-center">
         <span class="kicker-tag kicker-red">SECRET SAVINGS</span>
-        <h2 id="other-discounts-title">Other Ways to Save at Panda Express in 2026</h2>
+        <h2 id="other-discounts-title">Other Ways to Save at Panda Express in {{YEAR}}</h2>
         <p class="section-subtitle-muted">
           Coupon codes aren't the only lever here. These are either consistently available or regularly overlooked by customers who only search for codes:
         </p>
@@ -1100,7 +1098,7 @@ function renderHome() {
 
   return {
     title: `Panda Express Coupon Codes Verified & Working - ${lastVerifiedDate}`,
-    description: `Panda Express coupon code list for ${currentMonth} ${currentYear}, checked and rated by confidence. Free, no signup, no data saved. See what still works.`,
+    description: `Panda Express coupon code list for ${"{{MONTH}}"} {{YEAR}}, checked and rated by confidence. Free, no signup, no data saved. See what still works.`,
     canonicalPath: '/',
     ogImage: '/public/images/og/og-home.jpg',
     ogImageAlt: 'Panda Express Coupon Codes and Deals - Verified Working',

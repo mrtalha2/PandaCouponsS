@@ -3,14 +3,12 @@
  * Dedicated topical authority cluster page for group ordering cost optimization.
  */
 const config = require('../../data/site.config');
-const { getDynamicDate } = require('../utils/date');
 
 function renderSavingsCalculator() {
-  const { currentMonthYear, currentYear } = getDynamicDate();
   const lastUpdatedIso = new Date().toISOString();
 
   // Primary keyword: "Panda Express savings calculator" (Density strictly controlled between 0.5% - 0.7%)
-  const pageTitle = `Panda Express Savings Calculator: Group Value (${currentYear})`;
+  const pageTitle = `Panda Express Savings Calculator: Group Value ({{YEAR}})`;
   const metaDescription = "Use our free Panda Express savings calculator to compare Plate, Family Meal, and Catering pricing for your group. Instant cost estimates with no data stored.";
 
   const articleSchema = {
@@ -31,7 +29,7 @@ function renderSavingsCalculator() {
         "url": `${config.domain}/public/favicon.svg`
       }
     },
-    "datePublished": "2026-09-01T08:00:00+00:00",
+    "datePublished": "{{YEAR}}-09-01T08:00:00+00:00",
     "dateModified": lastUpdatedIso,
     "mainEntityOfPage": `${config.domain}/panda-express-savings-calculator/`
   };
@@ -93,7 +91,7 @@ function renderSavingsCalculator() {
       <div class="hero-badge-row" style="justify-content: center; margin-bottom: 1rem;">
         <span class="pill-verified-date">
           <span class="pulse-dot-green"></span>
-          <span>Updated: <strong class="js-current-month-year">${currentMonthYear}</strong></span>
+          <span>Updated: <strong class="js-current-month-year">{{MONTH_YEAR}}</strong></span>
         </span>
         <span class="pill-trust-badge">
           <span>🔒 100% Free • No Data Stored</span>

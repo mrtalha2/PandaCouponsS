@@ -46,7 +46,7 @@ function render404() {
         <div style="font-size: 2rem; margin-bottom: 0.5rem;">🥢</div>
         <h3 style="font-size: 1.15rem; margin-bottom: 0.35rem;">Official Menu &amp; Prices</h3>
         <p style="font-size: 0.92rem; line-height: 1.5; margin-bottom: 0;">
-          Explore the complete 2026 Panda Express menu with hi-res photos, calorie counts, and current pricing.
+          Explore the complete {{YEAR}} Panda Express menu with hi-res photos, calorie counts, and current pricing.
         </p>
       </a>
 

@@ -5,6 +5,7 @@
  * All pages automatically use these values.
  */
 module.exports = {
+  SITE_TIMEZONE: 'America/Los_Angeles',
   // Site Identity
   siteName: "Panda Express Coupons",
   siteTagline: "Verified Coupon Codes, Menu Prices & Nutrition Guides",

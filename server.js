@@ -905,6 +905,36 @@ process.on('SIGTERM', () => { console.log('SIGTERM'); server.close(() => process
 process.on('SIGINT', () => { console.log('SIGINT'); server.close(() => process.exit(0)); });
 
 
+
+// ==========================================
+// MONTHLY REBUILD SCHEDULER
+// ==========================================
+const { getDynamicDate } = require('./src/utils/date');
+function checkAndRebuild() {
+  const { currentMonthYear } = getDynamicDate();
+  const buildMonthFile = path.join(DIST_DIR, '.build-month');
+  let lastBuildMonth = '';
+  if (fs.existsSync(buildMonthFile)) {
+    lastBuildMonth = fs.readFileSync(buildMonthFile, 'utf8').trim();
+  }
+  
+  if (lastBuildMonth !== currentMonthYear) {
+    console.log(`[Scheduler] Month changed from '${lastBuildMonth}' to '${currentMonthYear}'. Triggering rebuild.`);
+    publisher.runPublish().then(res => {
+      if (res.success) {
+        fs.writeFileSync(buildMonthFile, currentMonthYear, 'utf8');
+        console.log(`[Scheduler] Rebuild successful.`);
+      } else {
+        console.error(`[Scheduler] Rebuild failed.`);
+      }
+    }).catch(err => {
+      console.error(`[Scheduler] Rebuild error:`, err);
+    });
+  }
+}
+setInterval(checkAndRebuild, 3600000); // Check hourly
+setTimeout(checkAndRebuild, 5000); // Check on startup after 5 seconds
+
 server.listen(PORT, () => {
   console.log(`\n======================================================`);
   console.log(`🚀 Panda Express Coupons Server Active`);

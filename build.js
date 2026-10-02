@@ -46,9 +46,24 @@ async function writePage(routePath, pageData, assetHash) {
   }
 
   let fullHtml = renderLayout(pageData);
-  const { currentMonthYear } = require('./src/utils/date').getDynamicDate();
-  const dateRegex = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\s20\d\d\b/g;
-  fullHtml = fullHtml.replace(dateRegex, currentMonthYear);
+  const { currentMonthYear, currentMonth, currentYear } = require('./src/utils/date').getDynamicDate();
+  
+  // Check for literal remaining current/previous-year strings BEFORE replacing tokens
+  const hardcodedPattern = new RegExp(`\\b(January|February|March|April|May|June|July|August|September|October|November|December)\\s(2025|2026)\\b`, 'g');
+  let match;
+  while ((match = hardcodedPattern.exec(fullHtml)) !== null) {
+    console.warn(`  ⚠️  WARNING: Found hardcoded date '${match[0]}' in ${routePath}`);
+  }
+  const yearPattern = /\b(2025|2026)\b/g;
+  while ((match = yearPattern.exec(fullHtml)) !== null) {
+    console.warn(`  ⚠️  WARNING: Found hardcoded year '${match[0]}' in ${routePath}`);
+  }
+
+  // Replace admin templates
+  fullHtml = fullHtml.replace(/{{MONTH_YEAR}}/g, currentMonthYear);
+  fullHtml = fullHtml.replace(/{{MONTH}}/g, currentMonth);
+  fullHtml = fullHtml.replace(/{{YEAR}}/g, currentYear);
+  
   let finalHtml = fullHtml;
 
   try {

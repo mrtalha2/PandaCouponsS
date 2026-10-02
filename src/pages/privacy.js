@@ -2,10 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const config = require('../../data/site.config');
 const { renderBlocks } = require('../admin/block-renderer');
-const { getDynamicDate } = require('../utils/date');
 
 function renderPrivacy() {
-  const { currentMonthYear } = getDynamicDate();
   let adminContent = {};
   try {
     const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
@@ -126,7 +124,7 @@ function renderPrivacy() {
       <div class="dish-hero-kicker">LEGAL &amp; COMPLIANCE</div>
       <h1 class="dish-hero-title">${privacyHeading}</h1>
       <p class="dish-hero-subtitle">
-        Last Revised: ${currentMonthYear} • Our commitment to consumer data protection and privacy.
+        Last Revised: {{MONTH_YEAR}} • Our commitment to consumer data protection and privacy.
       </p>
     </div>
   </section>

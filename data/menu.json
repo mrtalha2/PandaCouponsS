@@ -1,5 +1,5 @@
 {
-  "note": "Prices and calorie counts reflect current 2026 nationwide averages for corporate Panda Express locations. Pricing may vary slightly at airports, universities, theme parks, and third-party delivery platforms.",
+  "note": "Prices and calorie counts reflect current {{YEAR}} nationwide averages for corporate Panda Express locations. Pricing may vary slightly at airports, universities, theme parks, and third-party delivery platforms.",
   "summaryTable": [
     {
       "category": "Bowl",
