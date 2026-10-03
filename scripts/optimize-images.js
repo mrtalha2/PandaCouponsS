@@ -6,9 +6,10 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const IMAGES_DIR = path.join(__dirname, '..', 'public', 'images');
-const OPTIMIZED_DIR = path.join(IMAGES_DIR, 'optimized');
-const MENU_DIR = path.join(IMAGES_DIR, 'menu');
+const SOURCE_DIR = path.join(__dirname, '..', 'assets-src', 'images');
+const PUBLIC_IMAGES_DIR = path.join(__dirname, '..', 'public', 'images');
+const OPTIMIZED_DIR = path.join(PUBLIC_IMAGES_DIR, 'optimized');
+const MENU_DIR = path.join(PUBLIC_IMAGES_DIR, 'menu');
 
 const SOURCE_IMAGES = [
   'hero-wok.jpg',
@@ -37,7 +38,7 @@ async function optimizeImages() {
   const warnings = [];
 
   for (const filename of SOURCE_IMAGES) {
-    const inputPath = path.join(IMAGES_DIR, filename);
+    const inputPath = path.join(SOURCE_DIR, filename);
     if (!fs.existsSync(inputPath)) {
       console.warn(`⚠️ Source image not found: ${filename}`);
       continue;
@@ -81,34 +82,29 @@ async function optimizeImages() {
     }
   }
 
-  // Audit menu/ directory
+  // Generate Menu Variants (300, 600, 900)
   if (fs.existsSync(MENU_DIR)) {
-    console.log('\n🔍 Auditing public/images/menu/ images...');
-    const menuFiles = fs.readdirSync(MENU_DIR).filter(f => f.endsWith('.webp'));
-    let reencodedCount = 0;
-
+    console.log('\n🔍 Generating responsive variants for menu images...');
+    const menuFiles = fs.readdirSync(MENU_DIR).filter(f => f.endsWith('.webp') && !f.match(/-\d{3}\.webp$/));
+    
     for (const file of menuFiles) {
       const filePath = path.join(MENU_DIR, file);
-      const stat = fs.statSync(filePath);
-      if (stat.size > 45 * 1024) {
-        console.log(`   Re-encoding ${file} (${(stat.size / 1024).toFixed(1)} KB > 45 KB)...`);
-        const fileBuffer = fs.readFileSync(filePath);
-        let quality = 75;
-        let buf = null;
-        while (quality >= 40) {
-          buf = await sharp(fileBuffer)
-            .resize({ width: 800, withoutEnlargement: true })
-            .webp({ quality, effort: 6, smartSubsample: true })
-            .toBuffer();
-          if (buf.length <= 45 * 1024) break;
-          quality -= 5;
+      const baseName = path.parse(file).name;
+      const fileBuffer = fs.readFileSync(filePath);
+      
+      const widths = [300, 600, 900];
+      for (const w of widths) {
+        const outName = `${baseName}-${w}.webp`;
+        const outPath = path.join(MENU_DIR, outName);
+        if (!fs.existsSync(outPath)) {
+          await sharp(fileBuffer)
+            .resize({ width: w, withoutEnlargement: true })
+            .webp({ quality: 80, effort: 6 })
+            .toFile(outPath);
+          console.log(`   ✓ Created menu variant ${outName}`);
         }
-        fs.writeFileSync(filePath, buf);
-        console.log(`   ✓ ${file} compressed to ${(buf.length / 1024).toFixed(1)} KB (quality ${quality})`);
-        reencodedCount++;
       }
     }
-    console.log(`   Audited ${menuFiles.length} menu images (${reencodedCount} re-encoded to <= 45 KB).`);
   }
 
   console.log('\n✨ Image optimization complete!');

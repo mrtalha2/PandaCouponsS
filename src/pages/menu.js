@@ -281,8 +281,10 @@ function renderMenu() {
         <p style="max-width: 440px; margin: 0 auto 1.5rem auto;">Try checking your spelling or clear your search query to see the complete Panda Express menu.</p>
         <button type="button" id="btnClearMenuFilters" class="btn btn-hero-primary" style="padding: 0.6rem 1.5rem; font-size: 0.95rem;">Clear filters</button>
       </div>
-      ${menuData.categories.map((cat) => {
-        const theme = getCategoryTheme(cat.id);
+      ${(() => {
+        let globalImgIndex = 0;
+        return menuData.categories.map((cat) => {
+          const theme = getCategoryTheme(cat.id);
         return `
           <section id="${cat.id}" class="menu-section-wrapper menu-category-block ${theme.sectionClass}" data-category-id="${cat.id}">
             <div class="container">
@@ -306,12 +308,21 @@ function renderMenu() {
               <div class="card-grid">
                 ${cat.items.map((item) => {
                   const searchStr = (item.name + ' ' + item.description + ' ' + (item.tags || []).join(' ')).toLowerCase();
+                  const isFirstImage = globalImgIndex === 0;
+                  globalImgIndex++;
+                  const imgBase = item.image.replace('.webp', '');
+                  const loadingAttr = isFirstImage ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
                   return `
                     <article class="menu-item-card ${theme.cardClass}" data-category="${cat.id}" data-search="${searchStr}">
                       <div class="card-img-wrapper">
                         <div class="card-img-scrim"></div>
                         ${item.isPremium ? '<div class="premium-ribbon-gold">⭐ Premium Entrée</div>' : ''}
-                        <img src="${item.image}" alt="${item.name} - Panda Express Menu with Prices &amp; Pictures" width="600" height="400" loading="lazy" decoding="async" class="zoom-on-hover-img">
+                        <img src="${item.image}" 
+                             srcset="${imgBase}-300.webp 300w, ${imgBase}-600.webp 600w, ${imgBase}-900.webp 900w"
+                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                             alt="${item.name} - Panda Express Menu with Prices &amp; Pictures" 
+                             width="600" height="400" 
+                             ${loadingAttr} class="zoom-on-hover-img">
                         <span class="card-cal-badge">${item.calories}</span>
                       </div>
 
@@ -353,7 +364,8 @@ function renderMenu() {
             </div>
           </section>
         `;
-      }).join('')}
+        }).join('');
+      })()}
     </div>
 
     <!-- 5. MONEY-SAVING MENU HACKS (WARM HIGHLIGHT SECTION) -->

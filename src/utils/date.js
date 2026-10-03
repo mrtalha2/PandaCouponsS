@@ -28,7 +28,8 @@ function getDynamicDate() {
     currentMonth,
     currentYear,
     currentMonthYear,
-    yyyymmdd
+    yyyymmdd,
+    timeZone
   };
 }
 function resolveTokens(html) {

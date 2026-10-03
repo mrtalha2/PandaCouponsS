@@ -11,6 +11,7 @@ const crypto = require('crypto');
 const CleanCSS = require('clean-css');
 const { minify: terserMinify } = require('terser');
 const { minify: htmlMinify } = require('html-minifier-terser');
+const { execSync } = require('child_process');
 
 // Load Site Configuration & Data
 const config = require('./data/site.config');
@@ -38,11 +39,30 @@ function ensureDirSync(dirPath) {
   }
 }
 
+const routeSources = {
+  '/': ['src/pages/home.js', 'data/coupons.json'],
+  '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
+  '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition.json'],
+  '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
+  '/about-us/': ['src/pages/about.js'],
+  '/contact-us/': ['src/pages/contact.js'],
+  '/disclaimer/': ['src/pages/disclaimer.js'],
+  '/privacy-policy/': ['src/pages/privacy.js'],
+};
+
 // Helper to write an HTML page
 async function writePage(routePath, pageData, assetHash) {
   pageData.assetHash = assetHash;
   if (routePath === '/') {
     pageData.preloadHero = true;
+  }
+  
+  let files = routeSources[routePath];
+  if (!files && routePath !== '/404.html') {
+    files = ['src/pages/dish.js', 'data/dishes.json'];
+  }
+  if (files) {
+    pageData.dateModified = getLastMod(files);
   }
 
   let fullHtml = renderLayout(pageData);
@@ -108,32 +128,55 @@ function copyDirRecursiveSync(srcDir, destDir) {
   }
 }
 
+function getLastMod(files) {
+  try {
+    const gitLog = execSync(`git log -1 --format=%cI -- ${files.join(' ')}`, { encoding: 'utf8' }).trim();
+    if (gitLog) return gitLog;
+  } catch (e) {
+    // ignore
+  }
+  let maxTime = 0;
+  for (const f of files) {
+    try {
+      const stat = fs.statSync(f);
+      if (stat.mtimeMs > maxTime) maxTime = stat.mtimeMs;
+    } catch (e) {}
+  }
+  if (maxTime === 0) return new Date().toISOString();
+  return new Date(maxTime).toISOString();
+}
+
 // Generate sitemap.xml
 function generateSitemap(routes) {
-  const today = new Date().toISOString().split('T')[0];
-  const pagePriorityMap = {
-    '/': { priority: '1.0', changeFreq: 'daily' },
-    '/panda-express-menu/': { priority: '0.9', changeFreq: 'weekly' },
-    '/panda-express-nutrition/': { priority: '0.9', changeFreq: 'weekly' },
-    '/panda-express-savings-calculator/': { priority: '0.9', changeFreq: 'weekly' },
-    '/panda-express-orange-chicken/': { priority: '0.8', changeFreq: 'weekly' },
-    '/beijing-beef/': { priority: '0.8', changeFreq: 'weekly' },
-    '/about-us/': { priority: '0.5', changeFreq: 'monthly' },
-    '/contact-us/': { priority: '0.5', changeFreq: 'monthly' },
-    '/disclaimer/': { priority: '0.3', changeFreq: 'monthly' },
-    '/privacy-policy/': { priority: '0.3', changeFreq: 'monthly' }
+  const routeSources = {
+    '/': ['src/pages/home.js', 'data/coupons.json'],
+    '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
+    '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition.json'],
+    '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
+    '/about-us/': ['src/pages/about.js'],
+    '/contact-us/': ['src/pages/contact.js'],
+    '/disclaimer/': ['src/pages/disclaimer.js'],
+    '/privacy-policy/': ['src/pages/privacy.js'],
+    // All dishes
   };
 
+  const dishesDataFile = 'data/dishes.json';
+  
   const urlsXml = routes.map((route) => {
-    const configData = pagePriorityMap[route] || { priority: '0.7', changeFreq: 'weekly' };
+    let files = routeSources[route];
+    if (!files && route !== '/404.html') {
+      // Must be a dish page
+      files = ['src/pages/dish.js', dishesDataFile];
+    }
     const cleanUrl = `${config.domain}${route.endsWith('/') ? route : route + '/'}`;
+    if (!files) return '';
+    const lastModStr = getLastMod(files);
+    
     return `  <url>
     <loc>${cleanUrl}</loc>
-    <lastmod>${today}</lastmod>
-    <changefreq>${configData.changeFreq}</changefreq>
-    <priority>${configData.priority}</priority>
+    <lastmod>${lastModStr}</lastmod>
   </url>`;
-  }).join('\n');
+  }).filter(u => u !== '').join('\n');
 
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

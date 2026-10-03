@@ -249,12 +249,14 @@ function initFaqAccordion() {
  */
 function initDynamicDates() {
   const now = new Date();
-  const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
-  ];
-  const currentMonthYear = `${months[now.getMonth()]} ${now.getFullYear()}`;
-  const currentYear = `${now.getFullYear()}`;
+  const tzMeta = document.querySelector('meta[name="site-timezone"]');
+  const timeZone = tzMeta ? tzMeta.getAttribute('content') : 'America/Los_Angeles';
+  
+  const formatterMonth = new Intl.DateTimeFormat('en-US', { timeZone, month: 'long', year: 'numeric' });
+  const formatterYear = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' });
+  
+  const currentMonthYear = formatterMonth.format(now);
+  const currentYear = formatterYear.format(now);
 
   document.querySelectorAll('.js-current-month-year').forEach((el) => {
     el.textContent = currentMonthYear;

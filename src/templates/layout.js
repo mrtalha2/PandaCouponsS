@@ -35,7 +35,8 @@ function renderLayout({
   preloadHero = false,
   assetHash = '',
   suppressBreadcrumbsHtml = false,
-  isNoindex = false
+  isNoindex = false,
+  dateModified = null
 }) {
   const { meta: adminMeta, injections: adminInjections } = getAdminOverrides();
   const metaOverride = adminMeta[canonicalPath];
@@ -64,7 +65,13 @@ function renderLayout({
       "name": config.siteName,
       "url": config.domain,
       "logo": `${config.domain}/public/favicon.svg`,
-      "email": config.contactEmail
+      "email": config.contactEmail,
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": config.contactEmail,
+        "contactType": "customer service"
+      },
+      "sameAs": Object.values(config.socialLinks || {}).filter(url => url && !url.includes('placeholder') && url !== '#')
     }
   ];
 
@@ -82,11 +89,16 @@ function renderLayout({
   }
 
   if (schemaJson) {
-    if (Array.isArray(schemaJson)) {
-      defaultSchemas.push(...schemaJson);
-    } else {
-      defaultSchemas.push(schemaJson);
+    let schemas = Array.isArray(schemaJson) ? schemaJson : [schemaJson];
+    if (dateModified) {
+      schemas = schemas.map(schema => {
+        if (schema['@type'] === 'Article' || schema['@type'] === 'WebPage' || schema['@type'] === 'FAQPage' || schema['@type'] === 'ItemPage') {
+          return { ...schema, dateModified };
+        }
+        return schema;
+      });
     }
+    defaultSchemas.push(...schemas);
   }
 
   // Breadcrumbs HTML for UI
@@ -121,6 +133,7 @@ function renderLayout({
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${finalTitle}</title>
   <meta name="description" content="${finalDesc}">
+  <meta name="site-timezone" content="${require('../utils/date').getDynamicDate().timeZone}">
   <meta name="robots" content="${noindexFlag ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
   <link rel="canonical" href="${fullCanonicalUrl}">
 
