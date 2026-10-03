@@ -177,7 +177,6 @@ function renderMenu() {
                 <th scope="col" style="min-width: 140px;">What's Included</th>
                 <th scope="col" style="min-width: 110px;">Calories Range</th>
                 <th scope="col" style="min-width: 130px;">Best For</th>
-                <th scope="col" style="text-align: right; min-width: 100px;">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -193,11 +192,6 @@ function renderMenu() {
                   <td>${row.included}</td>
                   <td><span class="summary-cal-val" style="font-weight: 700;">${row.calories}</span></td>
                   <td>${row.bestFor}</td>
-                  <td style="text-align: right;">
-                    <a href="#${row.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}" class="btn-order-direct-sm" style="font-size: 0.78rem; white-space: nowrap;">
-                      View Items &darr;
-                    </a>
-                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -228,11 +222,6 @@ function renderMenu() {
                   <span class="meta-label">Best For:</span>
                   <span class="meta-value">${row.bestFor}</span>
                 </div>
-              </div>
-              <div class="summary-card-item-footer">
-                <a href="#${row.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}" class="btn-order-direct-sm" style="width: 100%; justify-content: center;">
-                  View ${row.category} Items &darr;
-                </a>
               </div>
             </div>
           `).join('')}
