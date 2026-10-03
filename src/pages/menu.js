@@ -310,19 +310,18 @@ function renderMenu() {
                   const searchStr = (item.name + ' ' + item.description + ' ' + (item.tags || []).join(' ')).toLowerCase();
                   const isFirstImage = globalImgIndex === 0;
                   globalImgIndex++;
-                  const imgBase = item.image.replace('.webp', '');
+                  const imgBase = item.image.replace(/\.webp$/, '');
+                  const imgFileName = path.basename(item.image, '.webp');
+                  const variant300Path = path.join(__dirname, '../../public/images/menu', `${imgFileName}-300.webp`);
+                  const hasVariants = fs.existsSync(variant300Path);
                   const loadingAttr = isFirstImage ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
+                  const srcsetAttr = hasVariants ? `srcset="${imgBase}-300.webp 300w, ${imgBase}-600.webp 600w, ${imgBase}-900.webp 900w" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" ` : '';
                   return `
                     <article class="menu-item-card ${theme.cardClass}" data-category="${cat.id}" data-search="${searchStr}">
                       <div class="card-img-wrapper">
                         <div class="card-img-scrim"></div>
                         ${item.isPremium ? '<div class="premium-ribbon-gold">⭐ Premium Entrée</div>' : ''}
-                        <img src="${item.image}" 
-                             srcset="${imgBase}-300.webp 300w, ${imgBase}-600.webp 600w, ${imgBase}-900.webp 900w"
-                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                             alt="${item.name} - Panda Express Menu with Prices &amp; Pictures" 
-                             width="600" height="400" 
-                             ${loadingAttr} class="zoom-on-hover-img">
+                        <img src="${item.image}" ${srcsetAttr}alt="${item.name} - Panda Express Menu with Prices &amp; Pictures" width="600" height="400" ${loadingAttr} class="zoom-on-hover-img">
                         <span class="card-cal-badge">${item.calories}</span>
                       </div>
 

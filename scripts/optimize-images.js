@@ -48,6 +48,15 @@ async function optimizeImages() {
     const inputStats = fs.statSync(inputPath);
     console.log(`Processing ${filename} (original: ${(inputStats.size / 1024).toFixed(1)} KB)...`);
 
+    // Generate small JPG fallback (<200KB, max width 1280, quality ~75)
+    const jpgFallbackPath = path.join(PUBLIC_IMAGES_DIR, filename);
+    const jpgBuffer = await sharp(inputPath)
+      .resize({ width: 1280, withoutEnlargement: true })
+      .jpeg({ quality: 75, mozjpeg: true })
+      .toBuffer();
+    fs.writeFileSync(jpgFallbackPath, jpgBuffer);
+    console.log(`   ✓ Small JPG fallback: ${filename} (${(jpgBuffer.length / 1024).toFixed(1)} KB)`);
+
     for (const spec of TARGET_WIDTHS) {
       const outputFilename = `${baseName}-${spec.width}.webp`;
       const outputPath = path.join(OPTIMIZED_DIR, outputFilename);
