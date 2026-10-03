@@ -10,7 +10,7 @@ const tests = [
 ];
 
 async function run() {
-  const server = require('child_process').spawn('node', ['server.js'], { env: { ...process.env, PORT: '4005' }});
+  const server = require('child_process').spawn('node', ['server.js'], { env: { ...process.env, PORT: '4005' }, stdio: 'ignore' });
   
   // Wait for server to start
   await new Promise(r => setTimeout(r, 1000));
@@ -40,10 +40,14 @@ async function run() {
     });
   }
 
-  server.kill();
+  try {
+    server.kill('SIGKILL');
+  } catch (e) {}
 
   if (failed) {
     process.exit(1);
+  } else {
+    process.exit(0);
   }
 }
 

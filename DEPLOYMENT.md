@@ -1,10 +1,22 @@
 # Deployment & Setup Guide — Panda Express Coupons
 
-This guide covers setting up, configuring, and deploying the Panda Express Coupons static site generator and persistent administrative portal.
+This guide covers setting up, configuring, and deploying the Panda Express Coupons server and administrative portal.
 
 ---
 
-## Step 1: Generate Admin Credentials (Required First Step)
+## Step 1: Prerequisites & Dependencies
+
+- **Node.js**: Version 20.x or newer (Node `>=20` engine enforced in `package.json`).
+- **NPM**: Version 9.x or newer.
+
+Install production dependencies using `npm ci`:
+```bash
+npm ci
+```
+
+---
+
+## Step 2: Generate Admin Credentials
 
 Before starting the server or deploying to any host, generate your administrator password hash and session signing secret using the interactive CLI:
 
@@ -12,62 +24,63 @@ Before starting the server or deploying to any host, generate your administrator
 node scripts/generate-admin-hash.js
 ```
 
-The CLI will prompt for your desired administrator username and securely mask your password while typing:
-
-```text
-Enter desired Admin Username [default: admin]: admin
-Enter desired Admin Password (masked): *************
-
-======================================================
-✅ Admin Credentials Generated Successfully!
-======================================================
-
-Paste the following lines into your server environment variables (or .env file):
-
-ADMIN_USER=admin
-ADMIN_PASSWORD_HASH=$2b$12$...
-SESSION_SECRET=...
-======================================================
-```
-
-Alternatively, you can provide parameters non-interactively in automated CI/CD scripts:
+Or non-interactively in automated setup scripts:
 ```bash
 node scripts/generate-admin-hash.js --user admin --pass "YourSecurePassword2026!"
 ```
 
----
-
-## Step 2: Environment Variables Reference
-
-The server strictly verifies all four required environment variables on startup. The process exits with code `1` if any are missing:
-
-| Variable | Description | Required | Example |
-| :--- | :--- | :--- | :--- |
-| `PORT` | Listening HTTP port for the web server | **Yes** | `3000` |
-| `ADMIN_USER` | Administrator login username | **Yes** | `admin` |
-| `ADMIN_PASSWORD_HASH` | 12-round salted bcrypt hash of your admin password | **Yes** | `$2b$12$...` |
-| `SESSION_SECRET` | 64-character random hex string used to sign session cookies | **Yes** | `39d0d9d...` |
-| `NODE_ENV` | Application environment (`development` or `production`) | Optional | `production` |
-
-For local development, copy `.env.example` to `.env` and fill in the values generated in Step 1:
-```bash
-cp .env.example .env
+Paste the resulting output into your `.env` file or hosting environment variables:
+```env
+PORT=3000
+ADMIN_USER=admin
+ADMIN_PASSWORD_HASH=$2b$12$...
+SESSION_SECRET=...
+NODE_ENV=production
 ```
 
 ---
 
-## Step 3: Deployment Options
+## Step 3: Static Compilation & Image Optimization
 
-### Option A: Standard Docker (Host-Agnostic)
+1. **Optimize photography and generate responsive variants**:
+   ```bash
+   npm run optimize-images
+   ```
+   *Generates responsive WebP images in `public/images/optimized/` and `public/images/menu/`, as well as web-optimized JPG fallbacks (<200KB) in `public/images/`.*
 
-The included multi-stage `Dockerfile` works on any Linux host or container runtime (Render, Railway, Fly.io, DigitalOcean, AWS ECS):
+2. **Compile static distribution**:
+   ```bash
+   npm run build
+   ```
+   *Minifies HTML, CSS, JavaScript, stamps the build month to `dist/.build-month`, and generates `sitemap.xml` and `robots.txt`.*
 
-1. **Build the container image**:
+3. **Run the verification test suite**:
+   ```bash
+   npm test
+   ```
+
+---
+
+## Step 4: Monthly Automatic Freshness Architecture
+
+- **Hourly Cron in `server.js`**: An automated background interval checks the system calendar month every hour.
+- **Auto-Rebuild on Rollover**: When the calendar month transitions, the server triggers `build.js` in a subprocess.
+- **Dynamic Client Fallback**: Client-side JavaScript (`assets/js/main.js`) reads `<meta name="site-timezone">` and formats dates using `Intl.DateTimeFormat` so visitors in all timezones see accurate, fresh month and year tokens.
+
+---
+
+## Step 5: Deployment Options
+
+### Option A: Standard Docker Multi-Stage Container (Recommended)
+
+The included `Dockerfile` uses a multi-stage Alpine build running as a non-root `node` user with built-in healthchecks on `/healthz`:
+
+1. **Build container**:
    ```bash
    docker build -t pandacoupons:latest .
    ```
 
-2. **Run the container with persistent volumes**:
+2. **Run container with persistent volumes**:
    ```bash
    docker run -d \
      --name pandacoupons \
@@ -83,50 +96,43 @@ The included multi-stage `Dockerfile` works on any Linux host or container runti
    ```
 
 > [!IMPORTANT]
-> Always mount persistent volumes for `/app/data` and `/app/public/images/uploads` so coupon updates, page content changes, and media uploads survive container restarts.
+> Always mount persistent volumes for `/app/data` and `/app/public/images/uploads` to ensure admin edits, coupon updates, and uploaded images persist across container restarts.
 
 ---
 
-### Option B: Cloud Platforms (Render / Railway / Fly.io)
+### Option B: Cloud Platforms (Render, Railway, Fly.io)
 
 1. Connect your repository to the hosting platform.
-2. Select **Docker** as the environment (or Node.js with Build Command: `npm install && node build.js`, Start Command: `node server.js`).
-3. Under **Environment Variables**, add:
-   - `PORT`: `3000` (or host assigned)
+2. Select **Docker** deployment (or Node.js service with `npm ci && npm run build` and start command `node server.js`).
+3. Set required Environment Variables:
+   - `PORT`: `3000` (or assigned by platform)
    - `ADMIN_USER`: `admin`
    - `ADMIN_PASSWORD_HASH`: `<generated bcrypt hash>`
-   - `SESSION_SECRET`: `<generated session secret>`
+   - `SESSION_SECRET`: `<generated secret>`
    - `NODE_ENV`: `production`
-4. Attach a persistent disk / volume mapped to `/app/data` and `/app/public/images/uploads`.
+4. Attach a persistent volume mounted to `/app/data` and `/app/public/images/uploads`.
 
 ---
 
-### Option C: Bare Metal VPS / Ubuntu / Debian with PM2
+### Option C: Bare Metal VPS (Ubuntu/Debian) with PM2 & Nginx
 
 1. **Clone repository and install dependencies**:
    ```bash
    git clone <repo-url> /var/www/pandacoupons
    cd /var/www/pandacoupons
-   npm install
+   npm ci
+   npm run optimize-images
+   npm run build
    ```
 
-2. **Compile static assets**:
+2. **Start service with PM2**:
    ```bash
-   node build.js
-   ```
-
-3. **Configure environment**:
-   Create `/var/www/pandacoupons/.env` containing your generated credentials.
-
-4. **Launch with PM2**:
-   ```bash
-   npm install -g pm2
    pm2 start server.js --name "pandacoupons"
    pm2 save
    pm2 startup
    ```
 
-5. **Nginx Reverse Proxy Configuration**:
+3. **Nginx Reverse Proxy Configuration**:
    ```nginx
    server {
        server_name pandacoupons.org;
@@ -146,11 +152,8 @@ The included multi-stage `Dockerfile` works on any Linux host or container runti
 
 ---
 
-## Step 4: Security Features & Architecture
+## Step 6: Security & Policy Notes
 
-- **HMAC-Signed Sessions**: Admin sessions use signed `httpOnly`, `SameSite=Strict`, `Secure` (in production) cookies signed with your `SESSION_SECRET`.
-- **Brute-Force Rate Limiting**: If 5 failed login attempts occur from a single IP within 15 minutes, the IP is automatically locked out for 5 minutes.
-- **CSRF Protection**: All mutating admin requests (`POST`, `PUT`, `DELETE`) require a cryptographically unique `X-CSRF-Token` header tied to the authenticated session.
-- **Sanitized Rich-Text**: Public policies and rich-text pages pass through an allowlist-based HTML sanitizer (`sanitize-html`) before saving.
-- **Zero-Downtime Safe Publishing**: The "Rebuild & Publish" button compiles the static site in the background. If a build error occurs, the previous working `dist/` directory is automatically restored without affecting the live public site.
-- **Atomic Backup System**: Before any write to `data/admin/*.json` or `data/coupons.json`, a timestamped backup is saved to `data/admin/backups/` (capped at the 20 most recent versions per file).
+- **Content Security Policy (CSP)**: Served with `Content-Security-Policy-Report-Only` headers to allow inline styling across dynamic coupon components while reporting violations.
+- **Admin Rate Limiting & Sessions**: 5 failed login attempts per 15 minutes trigger a 5-minute lockout. Sessions use `httpOnly`, `SameSite=Strict`, `Secure` cookies with HMAC verification.
+- **Traversal Hardening**: Path normalization strictly blocks encoded, null-byte, and backslash escape sequences.

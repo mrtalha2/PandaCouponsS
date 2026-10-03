@@ -936,8 +936,11 @@ function checkAndRebuild() {
     });
   }
 }
-setInterval(checkAndRebuild, 3600000); // Check hourly
-setTimeout(checkAndRebuild, 5000); // Check on startup after 5 seconds
+const intervalTimer = setInterval(checkAndRebuild, 3600000); // Check hourly
+if (intervalTimer.unref) intervalTimer.unref();
+
+const startupTimer = setTimeout(checkAndRebuild, 5000); // Check on startup after 5 seconds
+if (startupTimer.unref) startupTimer.unref();
 
 server.listen(PORT, () => {
   console.log(`\n======================================================`);

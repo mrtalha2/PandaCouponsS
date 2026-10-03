@@ -3,5 +3,10 @@ npm-debug.log
 .git
 .gitignore
 .env
+.env.*
+dev-tools
+tests
+assets-src
 data/admin/backups
+data/admin/.sessions.json
 scratch

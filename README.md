@@ -1,182 +1,123 @@
-# 🐼 Panda Express Coupons
+# 🐼 Panda Express Coupons & Deals Platform
 
-An ultra-fast, mobile-first, SEO-optimized static website for Panda Express coupons, menu prices, and nutrition calculations.
+A high-performance, mobile-first web platform for verified Panda Express coupons, menu pricing, macro nutrition calculators, and meal combo guides.
 
 > **Legal Disclaimer:** This website is an independent consumer resource and is **not** affiliated with, endorsed by, or sponsored by Panda Express or Panda Restaurant Group, Inc. All trademarks belong to their respective owners.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Architectural Overview
 
-- **Award-Winning Visual Design**: Bold, appetizing food-brand aesthetic with full-bleed high-res food photography, dark wok-textured surfaces, warm cream accents, and custom SVG panda branding.
-- **Ticket-Style Coupon Cards**: Modern perforated coupon cards with radial punch-notches, dashed tear lines, discount badges, and instant one-click copy.
-- **Dual-Mode Interactive Nutrition Explorer**: Combo Meal Builder (Bowl, Plate, Bigger Plate) + full 68-item live menu explorer with macro calculators, allergen search, and FDA nutrition label modal.
-- **Blazing Fast Performance**: Zero runtime frameworks or heavy client libraries. Pure vanilla JavaScript (<10KB gzipped) and optimized CSS delivering instant page transitions and target 95–100 Google Lighthouse scores.
-- **Pure Static Architecture**: 100% database-free and backend-free. Ready to deploy on any free static host (Cloudflare Pages, Vercel, Netlify, or GitHub Pages).
-- **Automatic SEO Automation**: Pre-rendered Schema.org JSON-LD structured data (FAQPage, Organization, BreadcrumbList, WebSite), canonical URLs, Open Graph / Twitter cards, dynamic `sitemap.xml`, and `robots.txt`.
-- **Spam-Protected Contact Link**: Contact email (`helppandacoupons@gmail.com`) is decoded dynamically to protect against naive scraper bots.
+- **Hybrid Architecture**: Fast Node.js server (`server.js`) powering production HTTP routing, security headers, live Brotli/Gzip compression, healthchecks (`/healthz`), dynamic monthly date synchronizations, and an authenticated administrative portal (`/admin`).
+- **Static Site Pre-Compilation**: Fully pre-renders static HTML (`build.js`) using CleanCSS, Terser, Html-Minifier-Terser, and Sharp image optimization pipeline.
+- **Client-Side Freshness**: Dynamic client-side timezone awareness (`assets/js/main.js`) aligned with server rendering, ensuring exact calendar month and year display across global visitor timezones.
+- **Automated Monthly Roll-over**: Background monitor in `server.js` checks the calendar month hourly, triggering zero-downtime rebuilds when a new month begins and stamping `dist/.build-month`.
+- **Security & Headers**: Strict CSP Report-Only configuration, HSTS, X-Content-Type-Options (`nosniff`), X-Frame-Options (`SAMEORIGIN`), Referrer-Policy, Cross-Origin-Resource-Policy (`same-origin`), and hardened path traversal protections.
+- **Structured Data & SEO**: Full Schema.org JSON-LD structured data (`Organization`, `WebSite`, `BreadcrumbList`, `FAQPage`, `ItemPage`, `Article`), canonical URL integrity, dynamic `sitemap.xml` with source-aware `lastmod` dates, and `robots.txt`.
 
 ---
 
-## 📁 Project Structure
+## 📁 Repository Structure
 
 ```text
 PandaCoupons/
-├── package.json               # NPM scripts: "build" and "dev"
-├── build.js                   # Static site generator compiler
-├── server.js                  # Zero-dependency local preview server
-├── test.js                    # Verification test suite
+├── server.js                  # Production Node.js HTTP server & admin router
+├── build.js                   # Compiler & static HTML generator
+├── package.json               # NPM scripts & production dependencies
+├── Dockerfile                 # Multi-stage production container definition
+├── .dockerignore              # Exclusions for container builds
 │
-├── data/                      # 💡 EDIT YOUR DATA HERE (Easy for beginners!)
-│   ├── site.config.js         # Site name, colors, email, domain, and nav links
-│   ├── coupons.json           # 10 starter coupon codes & last verified date
-│   ├── menu.json              # Entrees, sides, meal types, and appetizers
-│   ├── menu_full.json         # Complete 68-item official nutrition & allergen dataset
-│   ├── nutrition.json         # Per-serving macros for calculator
-│   ├── faq.json               # Frequently Asked Questions
-│   └── dishes.json            # Dedicated food page data (Orange Chicken, Beijing Beef)
+├── assets-src/images/         # Original high-resolution source master photography
+├── public/                    # Static runtime assets & optimized web photography
+│   ├── favicon.svg            # Custom panda brand vector logo
+│   └── images/
+│       ├── menu/              # Menu item photography & responsive variants (300/600/900w)
+│       ├── optimized/         # Responsive WebP variants (640/800/1280/1920w)
+│       └── *.jpg              # Web-optimized JPG fallbacks (<200KB each)
 │
-├── assets/                    # Static styling and client scripts
-│   ├── css/style.css          # Modern, responsive stylesheet (Ticket cards, steppers, glassmorphism)
-│   └── js/main.js             # Lean vanilla JS (copy code, mobile nav, calculator, modal)
+├── data/                      # Structured dataset & configuration files
+│   ├── site.config.js         # Site metadata, domains, and branding tokens
+│   ├── coupons.json           # Live coupon codes and verification metadata
+│   ├── menu.json              # Menu categories, dishes, prices, and portion sizes
+│   ├── menu_full.json         # Comprehensive nutrition & allergen dataset
+│   ├── dishes.json            # Dedicated entrée guides (Orange Chicken, Beijing Beef, etc.)
+│   └── admin/                 # Admin configuration & runtime data store
 │
-├── public/                    # Public static files
-│   ├── favicon.svg            # Custom red/black/gold panda logo
-│   └── images/                # High-res royalty-free food photography
-│       ├── hero-wok.jpg       # Sizzling wok stir-fry hero
-│       ├── orange-chicken.jpg # Crispy orange chicken dish photo
-│       ├── beijing-beef.jpg   # Beijing beef dish photo
-│       ├── family-meal.jpg    # Family dinner table spread
-│       ├── takeout-spread.jpg # Takeout spread banner
-│       └── IMAGE_CREDITS.md   # Asset provenance and license docs
+├── assets/                    # Frontend client styling and scripts
+│   ├── css/style.css          # Core responsive stylesheet
+│   └── js/main.js             # Client scripts (copy button, mobile nav, live date sync)
 │
-├── src/                       # Layout and page generators
-│   ├── templates/
-│   │   ├── layout.js          # Shared HTML shell with SEO meta & schema
-│   │   ├── header.js          # Sticky transparent-to-solid header & "Get Codes" CTA
-│   │   └── footer.js          # Dark footer with disclaimer and protected email
-│   └── pages/
-│       ├── home.js            # Home page (10 modern visual sections)
-│       ├── menu.js            # Menu page with photo cards
-│       ├── nutrition.js       # Dual-mode nutrition calculator & explorer
-│       ├── dish.js            # Reusable food dish guide (Orange Chicken, Beijing Beef)
-│       ├── about.js           # About Us page
-│       ├── contact.js         # Contact Us page
-│       ├── disclaimer.js      # Legal disclaimer page
-│       └── privacy.js         # Privacy policy page
+├── src/                       # Page templates and layout generators
+│   ├── templates/layout.js    # Shared HTML layout shell & JSON-LD schemas
+│   ├── templates/header.js    # Header navigation bar & dropdown menu
+│   ├── templates/footer.js    # Footer, legal disclaimers, and contact link
+│   ├── pages/                 # Individual page generator modules
+│   └── utils/date.js          # Unified date token parsing and dynamic time helpers
 │
-└── dist/                      # 📦 Compiled production-ready static site
+├── scripts/                   # Automated verification & build pipelines
+│   ├── optimize-images.js     # Responsive WebP and small JPG generator (Sharp)
+│   ├── verify-headers.js      # Security headers & compression tester
+│   ├── verify-traversal.js    # Path traversal protection test suite
+│   ├── verify-assets.js       # HTML asset link & image existence validator
+│   ├── check-contrast.js      # WCAG 2.1 AA color contrast validator
+│   ├── find-hardcoded-dates.js# Date token linting script
+│   └── validate-jsonld.js     # Schema.org JSON-LD validator
+│
+└── dist/                      # Pre-compiled production static site output
 ```
 
 ---
 
-## 🛠️ Beginner Step-by-Step Guide
+## 🛠️ Local Development & Operations
 
-### 1. Requirements
-Make sure you have [Node.js](https://nodejs.org) installed on your computer (v18 or newer). No extra software is required!
+### 1. Prerequisites
+- **Node.js**: `v20.x` or newer (`>=20` required in `package.json`).
+- **NPM**: `v9.x` or newer.
 
-### 2. Run the Site Locally
-To preview your website in your browser:
+### 2. Installation
+```bash
+npm ci
+```
+
+### 3. Build Static Site
+```bash
+npm run build
+```
+
+### 4. Optimize Images & Generate Responsive Variants
+```bash
+npm run optimize-images
+```
+
+### 5. Run Local Server
 ```bash
 npm run dev
 ```
-Open your browser and navigate to:
-👉 **`http://localhost:3000`**
+Open [http://localhost:3000](http://localhost:3000) to view the live site.
 
 ---
 
-### 3. How to Update Coupon Codes & Verification Date
-All coupon data is stored in one simple file: [`data/coupons.json`](file:///c:/Users/talha/Downloads/PandaCoupons/data/coupons.json).
+## 🧪 Automated Verification Suite
 
-1. Open [`data/coupons.json`](file:///c:/Users/talha/Downloads/PandaCoupons/data/coupons.json).
-2. To update the month/date, edit `"lastVerified"`:
-   ```json
-   "lastVerified": "October 2026"
-   ```
-3. To mark a coupon as active after testing it yourself, change its `"status"` from `"Unverified"` to `"Active"`:
-   ```json
-   {
-     "code": "PANDA20",
-     "discount": "20% off entire order",
-     "bestFor": "Any online order",
-     "minOrder": "None",
-     "status": "Active",
-     "notes": "Verified working on online checkout."
-   }
-   ```
-4. Rebuild the site:
-   ```bash
-   npm run build
-   ```
-
----
-
-### 4. How to Add a New Dish Page
-Want to add a new food guide (e.g. "Kung Pao Chicken" or "Honey Walnut Shrimp")?
-
-1. Open [`data/dishes.json`](file:///c:/Users/talha/Downloads/PandaCoupons/data/dishes.json).
-2. Copy one of the dish objects (like Beijing Beef) and paste it at the end of the array.
-3. Update the `slug`, `name`, `intro`, `nutrition`, `isHealthy`, and `faq` fields.
-4. Run:
-   ```bash
-   npm run build
-   ```
-The compiler will automatically create the new page at `/your-dish-slug/`, add it to the breadcrumbs, and include it in `sitemap.xml`!
-
----
-
-### 5. How to Change Colors or Contact Email
-Open [`data/site.config.js`](file:///c:/Users/talha/Downloads/PandaCoupons/data/site.config.js).
-You can edit the `contactEmail`, `domain`, or any of the named color variables:
-```javascript
-colors: {
-  primaryRed: "#C8102E",
-  primaryRedHover: "#A50D26",
-  black: "#000000",
-  bodyText: "#1A1A1A",
-  white: "#FFFFFF",
-  softBackground: "#F7F5F2",
-  borders: "#E5E5E5"
-}
-```
-
----
-
-### 6. Free 1-Click Deployment
-
-Because this site compiles into clean static HTML in the `./dist` folder, you can host it for free forever:
-
-#### Option A: Cloudflare Pages (Recommended - Fastest Global CDN)
-1. Push your repository to GitHub or GitLab.
-2. Log into the Cloudflare Dashboard and select **Workers & Pages** > **Create application** > **Pages**.
-3. Connect your repository.
-4. Set **Build command**: `npm run build`
-5. Set **Build output directory**: `dist`
-6. Click **Save and Deploy**.
-
-#### Option B: Vercel
-1. Install the Vercel CLI (`npm i -g vercel`) or connect via [vercel.com](https://vercel.com).
-2. Import your Git repository.
-3. Build command: `npm run build`
-4. Output directory: `dist`
-5. Click **Deploy**.
-
-#### Option C: Netlify
-1. Log into [Netlify.com](https://netlify.com) and click **Add new site** > **Import an existing project**.
-2. Set Build command: `npm run build`
-3. Set Publish directory: `dist`
-4. Click **Deploy site**.
-
-#### Option D: GitHub Pages
-1. In your GitHub repository settings, go to **Pages**.
-2. Select **GitHub Actions** as the source.
-3. Use the static HTML workflow to deploy the `./dist` directory on every push.
-
----
-
-## 🧪 Running Verification Tests
-
-Run the built-in automated test suite at any time to verify HTML integrity, SEO meta tags, coupon counts, and nutrition calculations:
+Run all test suites across security, integrity, headers, schemas, assets, and accessibility:
 ```bash
-node test.js
+npm test
 ```
+
+The test runner executes:
+1. `node test.js` — Core template rendering, coupon structures, and page integrity.
+2. `node scripts/verify-traversal.js` — Hardened path traversal security checks.
+3. `node scripts/verify-headers.js` — HTTP response headers, compression (`br`/`gzip`), and CSP headers.
+4. `node scripts/find-hardcoded-dates.js` — Ensures zero hardcoded date strings in templates.
+5. `node scripts/validate-jsonld.js` — Syntax and schema validity of all JSON-LD blocks.
+6. `node scripts/verify-assets.js` — Scans every built page in `dist/` to ensure 100% of local images and assets exist.
+7. `node scripts/check-contrast.js` — Computes WCAG 2.1 AA color contrast ratios (>= 4.5:1).
+
+---
+
+## 🔒 Security Configuration
+
+- **Content Security Policy (CSP)**: Set to `Content-Security-Policy-Report-Only` to monitor inline styles and third-party scripts without breaking rendering.
+- **Admin Authentication**: Protected behind `/admin/login` using bcrypt password hashing and session tokens.
+- **Path Traversal Protection**: Rejects encoded, nested, null-byte, and backslash traversal vectors.
+- **Environment Isolation**: `.env`, `.sessions.json`, and backup archives are strictly ignored from Git and container builds.
