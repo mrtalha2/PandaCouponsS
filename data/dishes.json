@@ -2,24 +2,13 @@
   {
     "slug": "panda-express-orange-chicken",
     "name": "Orange Chicken",
+    "nutritionId": "orange-chicken",
     "metaTitle": "Panda Express Orange Chicken: Calories, Nutrition & Deals",
-    "metaDescription": "Panda Express Orange Chicken guide: 510 calories, 26g protein, full nutrition facts, allergen details, healthy meal pairings, and 20% off coupon code savings.",
+    "metaDescription": "Panda Express Orange Chicken guide: {{cal:orange-chicken}} calories, {{protein:orange-chicken}}g protein, full nutrition facts, allergen details, healthy meal pairings, and 20% off coupon code savings.",
     "intro": "Orange Chicken is universally celebrated as Panda Express's iconic flagship entree. Created by Chef Andy Kao in 1987, this beloved dish pairs bite-sized pieces of crispy wok-fried chicken with a sweet, tangy chili glaze infused with hints of real orange peel, garlic, and ginger. It accounts for tens of millions of pounds of chicken served every year across thousands of locations.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving (approx. 5.7 oz)",
-      "calories": 510,
-      "fat": 23,
-      "saturatedFat": 5,
-      "cholesterol": 80,
-      "sodium": 820,
-      "carbs": 53,
-      "fiber": 1,
-      "sugar": 19,
-      "protein": 26
-    },
     "isHealthy": {
       "headline": "Is Panda Express Orange Chicken Healthy?",
-      "content": "While Orange Chicken provides a substantial 26 grams of lean poultry protein, it is also calorie-dense and higher in carbohydrates and sugars compared to other wok entrees. Because the chicken is battered and deep-fried before being coated in a sweetened glaze, a single serving carries 510 calories and 23g of total fat. It functions best as an occasional savory indulgence rather than an everyday diet staple. However, when thoughtfully paired with nutrient-dense sides, you can comfortably incorporate it into a balanced lifestyle."
+      "content": "While Orange Chicken provides a substantial {{protein:orange-chicken}} grams of lean poultry protein, it is also calorie-dense and higher in carbohydrates and sugars compared to other wok entrees. Because the chicken is battered and deep-fried before being coated in a sweetened glaze, a single serving carries {{cal:orange-chicken}} calories and {{fat:orange-chicken}}g of total fat. It functions best as an occasional savory indulgence rather than an everyday diet staple. However, when thoughtfully paired with nutrient-dense sides, you can comfortably incorporate it into a balanced lifestyle."
     },
     "howToOrderForLess": {
       "headline": "How to Order Orange Chicken for Less",
@@ -33,7 +22,7 @@
     "orderingTips": [
       {
         "title": "Pair with Super Greens or Steamed White Rice",
-        "detail": "Counterbalance the 510 calories and 53g carbs of Orange Chicken by selecting Super Greens (only 90 cal) as your side. This cuts over 400 calories compared to fried rice or chow mein."
+        "detail": "Selecting Super Greens (only {{cal:super-greens}} cal) as your side counterbalances the {{cal:orange-chicken}} calories and {{carbs:orange-chicken}}g carbs of an Orange Chicken entrée. This cuts hundreds of calories compared to fried rice or chow mein."
       },
       {
         "title": "Split a Family Meal Among Friends",
@@ -47,7 +36,7 @@
     "faq": [
       {
         "question": "How many calories are in Panda Express Orange Chicken?",
-        "answer": "A standard serving of Panda Express Orange Chicken contains 510 calories, 23 grams of fat, 53 grams of carbohydrates, and 26 grams of protein."
+        "answer": "A standard serving of Panda Express Orange Chicken contains {{cal:orange-chicken}} calories, {{fat:orange-chicken}} grams of fat, {{carbs:orange-chicken}} grams of carbohydrates, and {{protein:orange-chicken}} grams of protein."
       },
       {
         "question": "Is Panda Express Orange Chicken gluten-free?",
@@ -67,24 +56,13 @@
   {
     "slug": "beijing-beef",
     "name": "Beijing Beef",
+    "nutritionId": "beijing-beef",
     "metaTitle": "Panda Express Beijing Beef: Calories, Nutrition & Deals",
-    "metaDescription": "Panda Express Beijing Beef guide: 480 calories, 14g protein, complete macro breakdown, crispy wok ingredients, healthy pairings, and discount coupon strategies.",
+    "metaDescription": "Panda Express Beijing Beef guide: {{cal:beijing-beef}} calories, {{protein:beijing-beef}}g protein, complete macro breakdown, crispy wok ingredients, healthy pairings, and discount coupon strategies.",
     "intro": "Beijing Beef is one of Panda Express's most popular savory beef specialties. It features tender strips of marinated flank-style beef, lightly crisped on the exterior, and wok-tossed with fresh red bell peppers and sweet yellow onions in a complex sweet-tangy sauce. It offers a punchy alternative to traditional chicken entrees with deep, caramelized flavor notes.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving (approx. 5.6 oz)",
-      "calories": 480,
-      "fat": 27,
-      "saturatedFat": 5,
-      "cholesterol": 40,
-      "sodium": 660,
-      "carbs": 46,
-      "fiber": 1,
-      "sugar": 24,
-      "protein": 14
-    },
     "isHealthy": {
       "headline": "Is Panda Express Beijing Beef Healthy?",
-      "content": "Beijing Beef clocks in at 480 calories and 27 grams of fat per serving, along with 46 grams of carbohydrates (including 24g of sugar). While it provides satisfying red meat flavor and crunchy wok-charred vegetables, it carries more fat and less protein (14g) than poultry alternatives like Grilled Teriyaki Chicken (33g protein) or Black Pepper Chicken. If you are watching sodium or saturated fats, enjoying Beijing Beef as an occasional treat alongside high-fiber vegetables is the healthiest strategy."
+      "content": "Beijing Beef clocks in at {{cal:beijing-beef}} calories and {{fat:beijing-beef}} grams of fat per serving, along with {{carbs:beijing-beef}} grams of carbohydrates (including {{sugar:beijing-beef}}g of sugar). While it provides satisfying red meat flavor and crunchy wok-charred vegetables, it carries more fat and less protein ({{protein:beijing-beef}}g) than poultry alternatives like Grilled Teriyaki Chicken ({{protein:grilled-teriyaki-chicken}}g protein) or Black Pepper Chicken. If you are watching sodium or saturated fats, enjoying Beijing Beef as an occasional treat alongside high-fiber vegetables is the healthiest strategy."
     },
     "howToOrderForLess": {
       "headline": "How to Save Money on Beijing Beef",
@@ -112,7 +90,7 @@
     "faq": [
       {
         "question": "How many calories are in Panda Express Beijing Beef?",
-        "answer": "One standard serving of Beijing Beef contains approximately 480 calories, 27g of total fat, 46g of carbohydrates, and 14g of protein."
+        "answer": "One standard serving of Beijing Beef contains approximately {{cal:beijing-beef}} calories, {{fat:beijing-beef}}g of total fat, {{carbs:beijing-beef}}g of carbohydrates, and {{protein:beijing-beef}}g of protein."
       },
       {
         "question": "Is Beijing Beef spicy?",
@@ -120,7 +98,7 @@
       },
       {
         "question": "What is the difference between Beijing Beef and Broccoli Beef?",
-        "answer": "Beijing Beef is lightly battered, crispy, and tossed with bell peppers and sweet onions in a sweet-tangy glaze (480 cal, 14g protein). Broccoli Beef features unbattered tender beef slices tossed with steamed broccoli florets in a savory ginger soy sauce (150 cal, 9g protein)."
+        "answer": "Beijing Beef is lightly battered, crispy, and tossed with bell peppers and sweet onions in a sweet-tangy glaze ({{cal:beijing-beef}} cal, {{protein:beijing-beef}}g protein). Broccoli Beef features unbattered tender beef slices tossed with steamed broccoli florets in a savory ginger soy sauce ({{cal:broccoli-beef}} cal, {{protein:broccoli-beef}}g protein)."
       }
     ],
     "relatedDish": {
@@ -132,24 +110,13 @@
   {
     "slug": "panda-express-grilled-teriyaki",
     "name": "Grilled Teriyaki Chicken",
+    "nutritionId": "grilled-teriyaki-chicken",
     "metaTitle": "Panda Express Grilled Teriyaki Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express Grilled Teriyaki Chicken guide. 300 calories, 33g protein. See full nutrition facts, healthy pairings, and discount tips.",
+    "metaDescription": "Panda Express Grilled Teriyaki Chicken guide. {{cal:grilled-teriyaki-chicken}} calories, {{protein:grilled-teriyaki-chicken}}g protein. See full nutrition facts, healthy pairings, and discount tips.",
     "intro": "Grilled Teriyaki Chicken is a high-protein, low-calorie entree at Panda Express. It features grilled chicken thighs hand-sliced and served with a sweet and savory teriyaki sauce. You get a smoky flavor from the grill without the heavy batter found in other dishes.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving",
-      "calories": 300,
-      "fat": 13,
-      "saturatedFat": 4,
-      "cholesterol": 115,
-      "sodium": 530,
-      "carbs": 14,
-      "fiber": 0,
-      "sugar": 9,
-      "protein": 33
-    },
     "isHealthy": {
       "headline": "Is Panda Express Grilled Teriyaki Chicken Healthy?",
-      "content": "Grilled Teriyaki Chicken is one of the healthiest entrees on the menu. It packs 33 grams of protein for only 300 calories. Because the chicken is grilled instead of fried, it keeps total fat low. Be aware that the teriyaki sauce adds sugar and sodium. Ask for the sauce on the side if you want to control your sugar intake."
+      "content": "Grilled Teriyaki Chicken is one of the healthiest entrees on the menu. It packs {{protein:grilled-teriyaki-chicken}} grams of protein for only {{cal:grilled-teriyaki-chicken}} calories. Because the chicken is grilled instead of fried, it keeps total fat low. Be aware that the teriyaki sauce adds sugar and sodium. Ask for the sauce on the side if you want to control your sugar intake."
     },
     "howToOrderForLess": {
       "headline": "How to Order Grilled Teriyaki Chicken for Less",
@@ -166,7 +133,7 @@
       },
       {
         "title": "Pair with Super Greens",
-        "detail": "Combine this dish with Super Greens instead of Chow Mein. You create a meal with nearly 40 grams of protein and under 400 calories."
+        "detail": "Combine this dish with Super Greens instead of Chow Mein. You create a meal with {{protein:grilled-teriyaki-chicken}} grams of protein and moderate calories."
       },
       {
         "title": "Check the Grill Area",
@@ -176,7 +143,7 @@
     "faq": [
       {
         "question": "How much protein is in Panda Express Grilled Teriyaki Chicken?",
-        "answer": "A standard serving of Panda Express Grilled Teriyaki Chicken contains 33 grams of protein."
+        "answer": "A standard serving of Panda Express Grilled Teriyaki Chicken contains {{protein:grilled-teriyaki-chicken}} grams of protein and {{cal:grilled-teriyaki-chicken}} calories."
       },
       {
         "question": "Is the Teriyaki Chicken at Panda Express gluten-free?",
@@ -192,24 +159,13 @@
   {
     "slug": "panda-express-cream-cheese",
     "name": "Cream Cheese Rangoon",
+    "nutritionId": "cream-cheese-rangoon",
     "metaTitle": "Panda Express Cream Cheese Rangoon: Calories & Nutrition",
-    "metaDescription": "Panda Express Cream Cheese Rangoon guide. 190 calories per serving. See nutrition facts, ingredients, and how to get them cheaper.",
+    "metaDescription": "Panda Express Cream Cheese Rangoon guide. {{cal:cream-cheese-rangoon}} calories per serving. See nutrition facts, ingredients, and how to get them cheaper.",
     "intro": "Cream Cheese Rangoon is a popular appetizer at Panda Express. It is a wonton wrapper filled with cream cheese and scallions, then deep-fried until crispy. Each order comes with three rangoons and a packet of sweet and sour sauce.",
-    "nutrition": {
-      "servingSize": "3 Rangoons",
-      "calories": 190,
-      "fat": 8,
-      "saturatedFat": 5,
-      "cholesterol": 20,
-      "sodium": 180,
-      "carbs": 24,
-      "fiber": 1,
-      "sugar": 1,
-      "protein": 5
-    },
     "isHealthy": {
       "headline": "Are Panda Express Cream Cheese Rangoons Healthy?",
-      "content": "Cream Cheese Rangoons are a deep-fried appetizer and should be treated as a treat. A three-piece serving has 190 calories and 8 grams of fat. While the calorie count is relatively low, they offer very little nutritional value or protein. Eating them with sweet and sour sauce will also increase your sugar intake."
+      "content": "Cream Cheese Rangoons are a deep-fried appetizer and should be treated as a treat. A three-piece serving has {{cal:cream-cheese-rangoon}} calories and {{fat:cream-cheese-rangoon}} grams of fat. While the calorie count is relatively low, they offer very little nutritional value or protein. Eating them with sweet and sour sauce will also increase your sugar intake."
     },
     "howToOrderForLess": {
       "headline": "How to Save Money on Cream Cheese Rangoons",
@@ -235,7 +191,7 @@
       },
       {
         "question": "How many calories are in Panda Express Cream Cheese Rangoon?",
-        "answer": "A standard order of three Panda Express Cream Cheese Rangoons contains 190 calories."
+        "answer": "A standard order of three Panda Express Cream Cheese Rangoons contains {{cal:cream-cheese-rangoon}} calories."
       }
     ],
     "relatedDish": {
@@ -247,24 +203,13 @@
   {
     "slug": "panda-express-black-pepper-steak",
     "name": "Black Pepper Angus Steak",
+    "nutritionId": "black-pepper-angus-steak",
     "metaTitle": "Panda Express Black Pepper Angus Steak: Nutrition & Tips",
-    "metaDescription": "Panda Express Black Pepper Angus Steak guide. 210 calories, 19g protein. Learn about this premium entree, nutrition facts, and how to save.",
+    "metaDescription": "Panda Express Black Pepper Angus Steak guide. {{cal:black-pepper-angus-steak}} calories, {{protein:black-pepper-angus-steak}}g protein. Learn about this premium entree, nutrition facts, and how to save.",
     "intro": "Black Pepper Angus Steak is a premium wok-seared entree at Panda Express. It features thick slices of Angus steak tossed with baby broccoli, onions, red bell peppers, and mushrooms in a savory black pepper sauce. Because it uses higher-quality beef, it carries a premium upcharge.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving",
-      "calories": 210,
-      "fat": 10,
-      "saturatedFat": 2,
-      "cholesterol": 40,
-      "sodium": 560,
-      "carbs": 13,
-      "fiber": 2,
-      "sugar": 5,
-      "protein": 19
-    },
     "isHealthy": {
       "headline": "Is Black Pepper Angus Steak Healthy?",
-      "content": "Black Pepper Angus Steak is a great healthy choice. It delivers 19 grams of protein for just 210 calories. The dish includes multiple vegetables like broccoli and bell peppers, providing vitamins and fiber. The sodium level is moderate for fast food, but be aware that it costs extra due to the premium ingredients."
+      "content": "Black Pepper Angus Steak is a great healthy choice. It delivers {{protein:black-pepper-angus-steak}} grams of protein for just {{cal:black-pepper-angus-steak}} calories. The dish includes multiple vegetables like broccoli and bell peppers, providing vitamins and fiber. The sodium level is moderate for fast food, but be aware that it costs extra due to the premium ingredients."
     },
     "howToOrderForLess": {
       "headline": "How to Avoid the Premium Upcharge",
@@ -290,7 +235,7 @@
       },
       {
         "question": "How many calories are in Panda Express Black Pepper Angus Steak?",
-        "answer": "A standard serving of Panda Express Black Pepper Angus Steak contains 210 calories and 19 grams of protein."
+        "answer": "A standard serving of Panda Express Black Pepper Angus Steak contains {{cal:black-pepper-angus-steak}} calories and {{protein:black-pepper-angus-steak}} grams of protein."
       }
     ],
     "relatedDish": {
@@ -301,80 +246,58 @@
   },
   {
     "slug": "panda-express-sweet-sour-chicken",
-    "name": "Sweet & Sour Chicken Breast",
-    "metaTitle": "Panda Express Sweet & Sour Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express Sweet and Sour Chicken guide. 300 calories per serving. See nutrition info, allergy warnings, and how to get the best value.",
-    "intro": "Sweet and Sour Chicken Breast features white-meat chicken chunks coated in a light batter and deep-fried. Unlike other entrees, the sweet and sour sauce is served on the side instead of wok-tossed. This keeps the chicken crispy until you are ready to eat.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving",
-      "calories": 300,
-      "fat": 14,
-      "saturatedFat": 2.5,
-      "cholesterol": 40,
-      "sodium": 260,
-      "carbs": 40,
-      "fiber": 1,
-      "sugar": 24,
-      "protein": 10
-    },
+    "name": "SweetFire Chicken Breast",
+    "nutritionId": "sweetfire-chicken",
+    "metaTitle": "Panda Express SweetFire Chicken: Calories & Nutrition",
+    "metaDescription": "Panda Express SweetFire Chicken guide. {{cal:sweetfire-chicken}} calories per serving. See nutrition info, allergy warnings, and how to get the best value.",
+    "intro": "SweetFire Chicken Breast features crispy chicken chunks wok-tossed with red bell peppers, onions, and pineapple in a sweet-spicy chili glaze. It combines savory wok crunch with vibrant sweet notes.",
     "isHealthy": {
-      "headline": "Is Sweet and Sour Chicken Healthy?",
-      "content": "Sweet and Sour Chicken has a high sugar content. While the chicken itself is only 300 calories, dipping it in the provided sauce adds significant sugar and calories. It provides 10 grams of protein, which is lower than dishes like Teriyaki Chicken. Eat this as an occasional treat rather than a post-workout protein source."
+      "headline": "Is SweetFire Chicken Healthy?",
+      "content": "SweetFire Chicken has a sweet glaze. A serving provides {{cal:sweetfire-chicken}} calories and {{fat:sweetfire-chicken}}g fat with {{protein:sweetfire-chicken}} grams of protein. Eat this as an occasional treat rather than a post-workout protein source."
     },
     "howToOrderForLess": {
-      "headline": "How to Order Sweet and Sour Chicken for Less",
+      "headline": "How to Order SweetFire Chicken for Less",
       "tips": [
         "Order online and apply promo codes. Using codes during web checkout guarantees you get 20% off without arguing with a cashier.",
-        "Save the extra sauce. The large sauce cups they provide can be kept in your fridge and used for home-cooked meals later."
+        "Pair with high-protein entrees on a Plate to balance the overall macronutrient distribution."
       ]
     },
     "orderingTips": [
       {
         "title": "Ask for Fresh Chicken",
-        "detail": "Because it isn't tossed in sauce, the chicken can dry out if it sits under the heat lamp too long. Politely ask if they have a fresh batch coming out."
+        "detail": "Because it has a crispy batter, the chicken retains texture best right out of the wok. Politely ask if they have a fresh batch coming out."
       },
       {
         "title": "Mix with Hot Mustard",
-        "detail": "Grab a packet of hot mustard and mix it into the sweet and sour sauce. This cuts the extreme sweetness and adds a sharp, spicy flavor profile."
+        "detail": "Grab a packet of hot mustard and mix it in to cut the sweetness and add a sharp, spicy flavor profile."
       }
     ],
     "faq": [
       {
-        "question": "Does Panda Express Sweet and Sour Chicken come with sauce?",
-        "answer": "Yes. The chicken is served plain in the container, and the sweet and sour sauce is provided in a separate sealed cup on the side."
+        "question": "Does Panda Express SweetFire Chicken come with sauce?",
+        "answer": "Yes. The chicken is tossed in the wok with pineapple, bell peppers, onions, and the signature sweet-spicy chili sauce."
       },
       {
-        "question": "How many calories are in Panda Express Sweet and Sour Chicken?",
-        "answer": "The chicken pieces alone contain roughly 300 calories. Adding the sweet and sour sauce will increase the total calories and sugar significantly."
+        "question": "How many calories are in Panda Express SweetFire Chicken?",
+        "answer": "A standard serving of SweetFire Chicken Breast contains roughly {{cal:sweetfire-chicken}} calories and {{protein:sweetfire-chicken}}g protein."
       }
     ],
     "relatedDish": {
       "name": "Orange Chicken",
       "url": "/panda-express-orange-chicken/",
-      "tagline": "Want the sauce tossed in the wok? See the Orange Chicken nutrition guide."
+      "tagline": "Want the classic citrus glaze? See the Orange Chicken nutrition guide."
     }
   },
   {
     "slug": "panda-express-string-bean-chicken",
     "name": "String Bean Chicken Breast",
+    "nutritionId": "string-bean-chicken",
     "metaTitle": "Panda Express String Bean Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express String Bean Chicken Breast guide. 210 calories, 12g protein. Discover why this is one of the healthiest wok entrees.",
+    "metaDescription": "Panda Express String Bean Chicken Breast guide. {{cal:string-bean-chicken}} calories, {{protein:string-bean-chicken}}g protein. Discover why this is one of the healthiest wok entrees.",
     "intro": "String Bean Chicken Breast is a light, wok-tossed dish. It combines sliced white-meat chicken breast, fresh string beans, and onions in a mild ginger soy sauce. It is a favorite for people looking for a vegetable-heavy, low-calorie meal.",
-    "nutrition": {
-      "servingSize": "1 Entree Serving",
-      "calories": 210,
-      "fat": 12,
-      "saturatedFat": 2,
-      "cholesterol": 25,
-      "sodium": 590,
-      "carbs": 13,
-      "fiber": 2,
-      "sugar": 5,
-      "protein": 12
-    },
     "isHealthy": {
       "headline": "Is String Bean Chicken Breast Healthy?",
-      "content": "Yes. String Bean Chicken Breast is an excellent healthy choice. At only 210 calories and 12 grams of fat, it fits easily into most diets. It provides 12 grams of protein and uses unbattered chicken. The string beans add dietary fiber, making this dish both filling and nutritious."
+      "content": "Yes. String Bean Chicken Breast is an excellent healthy choice. At only {{cal:string-bean-chicken}} calories and {{fat:string-bean-chicken}} grams of fat, it fits easily into most diets. It provides {{protein:string-bean-chicken}} grams of protein and uses unbattered chicken. The string beans add dietary fiber, making this dish both filling and nutritious."
     },
     "howToOrderForLess": {
       "headline": "How to Save on String Bean Chicken",
@@ -396,7 +319,7 @@
     "faq": [
       {
         "question": "How many calories are in Panda Express String Bean Chicken Breast?",
-        "answer": "A standard serving of Panda Express String Bean Chicken Breast contains 210 calories."
+        "answer": "A standard serving of Panda Express String Bean Chicken Breast contains {{cal:string-bean-chicken}} calories and {{protein:string-bean-chicken}}g protein."
       },
       {
         "question": "Is Panda Express String Bean Chicken Breast spicy?",
@@ -412,24 +335,13 @@
   {
     "slug": "panda-express-chow-mein",
     "name": "Chow Mein",
+    "nutritionId": "chow-mein",
     "metaTitle": "Panda Express Chow Mein: Calories, Nutrition & Tips",
-    "metaDescription": "Panda Express Chow Mein guide. 510 calories per serving. See nutrition facts, ingredients, and how to order smart.",
+    "metaDescription": "Panda Express Chow Mein guide. {{cal:chow-mein}} calories per serving. See nutrition facts, ingredients, and how to order smart.",
     "intro": "Chow Mein is the most popular side dish at Panda Express. It consists of wheat noodles tossed in a wok with shredded cabbage, celery, and onions. The noodles are cooked in oil and soy sauce, giving them a distinct savory flavor and slightly chewy texture.",
-    "nutrition": {
-      "servingSize": "1 Side Serving",
-      "calories": 510,
-      "fat": 20,
-      "saturatedFat": 3.5,
-      "cholesterol": 0,
-      "sodium": 860,
-      "carbs": 74,
-      "fiber": 6,
-      "sugar": 9,
-      "protein": 13
-    },
     "isHealthy": {
       "headline": "Is Panda Express Chow Mein Healthy?",
-      "content": "Chow Mein is a heavy carbohydrate source and is not considered a healthy diet staple. A standard serving contains 510 calories and 74 grams of carbs. It is cooked in a significant amount of oil, resulting in 20 grams of fat. If you want a healthier side, choose Super Greens instead."
+      "content": "Chow Mein is a heavy carbohydrate source. A standard serving contains {{cal:chow-mein}} calories and {{carbs:chow-mein}} grams of carbs. It is cooked in oil, resulting in {{fat:chow-mein}} grams of fat. If you want a lighter side, choose Super Greens ({{cal:super-greens}} cal) instead."
     },
     "howToOrderForLess": {
       "headline": "How to Get the Best Value from Chow Mein",
@@ -451,7 +363,7 @@
     "faq": [
       {
         "question": "How many calories are in Panda Express Chow Mein?",
-        "answer": "A standard serving of Panda Express Chow Mein contains 510 calories and 74 grams of carbohydrates."
+        "answer": "A standard serving of Panda Express Chow Mein contains {{cal:chow-mein}} calories and {{carbs:chow-mein}} grams of carbohydrates."
       },
       {
         "question": "Is Panda Express Chow Mein vegan?",

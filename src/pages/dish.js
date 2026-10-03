@@ -3,6 +3,8 @@ const path = require('path');
 
 const config = require('../../data/site.config');
 
+const nutritionMaster = require('../../data/nutrition-master.json');
+
 function renderDish(dishData) {
   let adminContent = {};
   try {
@@ -25,6 +27,19 @@ function renderDish(dishData) {
   const dishTitle = dishGuideBlock?.title || dishOverrides.title || dishData.name;
   const dishSubtitle = dishGuideBlock?.subtitle || dishOverrides.subtitle || 'Calories, complete nutrition facts, health evaluation, and smart coupon ordering hacks.';
   const dishIntro = dishGuideBlock?.intro || dishOverrides.intro || dishData.intro;
+
+  const nutritionItem = (nutritionMaster.items || []).find(i => i.id === dishData.nutritionId || i.id === dishData.slug) || {
+    calories: 0,
+    totalFat: 0,
+    saturatedFat: 0,
+    cholesterol: 0,
+    sodium: 0,
+    totalCarbs: 0,
+    dietaryFiber: 0,
+    sugars: 0,
+    protein: 0,
+    servingSize: '1 Serving'
+  };
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -58,16 +73,16 @@ function renderDish(dishData) {
     "image": `${config.domain}${dishPhoto}`,
     "nutrition": {
       "@type": "NutritionInformation",
-      "servingSize": dishData.nutrition.servingSize,
-      "calories": `${dishData.nutrition.calories} calories`,
-      "proteinContent": `${dishData.nutrition.protein}g`,
-      "fatContent": `${dishData.nutrition.fat}g`,
-      "saturatedFatContent": `${dishData.nutrition.saturatedFat}g`,
-      "carbohydrateContent": `${dishData.nutrition.carbs}g`,
-      "fiberContent": `${dishData.nutrition.fiber}g`,
-      "sugarContent": `${dishData.nutrition.sugar}g`,
-      "sodiumContent": `${dishData.nutrition.sodium}mg`,
-      "cholesterolContent": `${dishData.nutrition.cholesterol}mg`
+      "servingSize": `${nutritionItem.servingSize} oz`,
+      "calories": `${nutritionItem.calories} calories`,
+      "proteinContent": `${nutritionItem.protein}g`,
+      "fatContent": `${nutritionItem.totalFat}g`,
+      "saturatedFatContent": `${nutritionItem.saturatedFat}g`,
+      "carbohydrateContent": `${nutritionItem.totalCarbs}g`,
+      "fiberContent": `${nutritionItem.dietaryFiber}g`,
+      "sugarContent": `${nutritionItem.sugars}g`,
+      "sodiumContent": `${nutritionItem.sodium}mg`,
+      "cholesterolContent": `${nutritionItem.cholesterol}mg`
     }
   };
 
@@ -165,50 +180,50 @@ function renderDish(dishData) {
       <aside class="dish-sidebar-col">
         <div class="nutrition-panel" aria-label="Nutrition Facts for ${dishData.name}">
           <div class="nutrition-panel-title">Nutrition Facts</div>
-          <div class="nutrition-serving">${dishData.nutrition.servingSize}</div>
+          <div class="nutrition-serving">${nutritionItem.servingSize ? (typeof nutritionItem.servingSize === 'number' ? `Serving Size: ${nutritionItem.servingSize} oz` : nutritionItem.servingSize) : '1 Serving'}</div>
           
           <div class="nutrition-calories-row">
             <div>
               <div style="font-size: 0.85rem; font-weight: 700;">Amount Per Serving</div>
               <div style="font-size: 1.4rem; font-weight: 900;">Calories</div>
             </div>
-            <div class="nutrition-cal-number">${dishData.nutrition.calories}</div>
+            <div class="nutrition-cal-number">${nutritionItem.calories}</div>
           </div>
 
           <div class="nutrition-row bold">
-            <span>Total Fat ${dishData.nutrition.fat}g</span>
-            <span>${Math.round((dishData.nutrition.fat / 78) * 100)}%</span>
+            <span>Total Fat ${nutritionItem.totalFat}g</span>
+            <span>${Math.round((nutritionItem.totalFat / 78) * 100)}%</span>
           </div>
           <div class="nutrition-row indent">
-            <span>Saturated Fat ${dishData.nutrition.saturatedFat}g</span>
-            <span>${Math.round((dishData.nutrition.saturatedFat / 20) * 100)}%</span>
+            <span>Saturated Fat ${nutritionItem.saturatedFat}g</span>
+            <span>${Math.round((nutritionItem.saturatedFat / 20) * 100)}%</span>
           </div>
           <div class="nutrition-row bold">
-            <span>Cholesterol ${dishData.nutrition.cholesterol}mg</span>
-            <span>${Math.round((dishData.nutrition.cholesterol / 300) * 100)}%</span>
+            <span>Cholesterol ${nutritionItem.cholesterol}mg</span>
+            <span>${Math.round((nutritionItem.cholesterol / 300) * 100)}%</span>
           </div>
           <div class="nutrition-row bold">
-            <span>Sodium ${dishData.nutrition.sodium}mg</span>
-            <span>${Math.round((dishData.nutrition.sodium / 2300) * 100)}%</span>
+            <span>Sodium ${nutritionItem.sodium}mg</span>
+            <span>${Math.round((nutritionItem.sodium / 2300) * 100)}%</span>
           </div>
           <div class="nutrition-row bold">
-            <span>Total Carbohydrate ${dishData.nutrition.carbs}g</span>
-            <span>${Math.round((dishData.nutrition.carbs / 275) * 100)}%</span>
+            <span>Total Carbohydrate ${nutritionItem.totalCarbs}g</span>
+            <span>${Math.round((nutritionItem.totalCarbs / 275) * 100)}%</span>
           </div>
           <div class="nutrition-row indent">
-            <span>Dietary Fiber ${dishData.nutrition.fiber}g</span>
-            <span>${Math.round((dishData.nutrition.fiber / 28) * 100)}%</span>
+            <span>Dietary Fiber ${nutritionItem.dietaryFiber}g</span>
+            <span>${Math.round((nutritionItem.dietaryFiber / 28) * 100)}%</span>
           </div>
           <div class="nutrition-row indent">
-            <span>Total Sugars ${dishData.nutrition.sugar}g</span>
+            <span>Total Sugars ${nutritionItem.sugars}g</span>
             <span>-</span>
           </div>
           <div class="nutrition-row bold" style="border-bottom: 4px solid #000000; padding-top: 0.4rem; padding-bottom: 0.4rem;">
-            <span>Protein ${dishData.nutrition.protein}g</span>
-            <span>${Math.round((dishData.nutrition.protein / 50) * 100)}%</span>
+            <span>Protein ${nutritionItem.protein}g</span>
+            <span>${Math.round((nutritionItem.protein / 50) * 100)}%</span>
           </div>
-          <div class="nutrition-panel-footnote">
-            * The % Daily Value (DV) tells you how much a nutrient in a serving of food contributes to a daily diet of 2,000 calories.
+          <div class="nutrition-panel-footnote" style="margin-top: 0.75rem; font-size: 0.78rem; color: #4B5563; line-height: 1.45;">
+            * Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.
           </div>
         </div>
       </aside>

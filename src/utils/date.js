@@ -58,6 +58,19 @@ function getDynamicDate(date = new Date()) {
   };
 }
 
+let nutritionMasterCache = null;
+function getNutritionMaster() {
+  if (!nutritionMasterCache) {
+    const path = require('path');
+    const fs = require('fs');
+    const p = path.join(__dirname, '../../data/nutrition-master.json');
+    if (fs.existsSync(p)) {
+      nutritionMasterCache = JSON.parse(fs.readFileSync(p, 'utf8'));
+    }
+  }
+  return nutritionMasterCache;
+}
+
 function resolveTokens(html, date = new Date()) {
   const { currentMonthYear, currentMonth, currentYear } = getDynamicDate(date);
   let result = html;
@@ -65,6 +78,33 @@ function resolveTokens(html, date = new Date()) {
     result = result.replace(/{{MONTH_YEAR}}/g, currentMonthYear);
     result = result.replace(/{{MONTH}}/g, currentMonth);
     result = result.replace(/{{YEAR}}/g, currentYear);
+
+    const master = getNutritionMaster();
+    if (master && master.items) {
+      result = result.replace(/{{(cal|calories|fat|totalFat|satfat|saturatedFat|carbs|totalCarbs|protein|sodium|sugar|sugars|fiber|dietaryFiber|cholesterol|serving):([a-z0-9-]+)}}/g, (match, field, id) => {
+        const item = master.items.find(i => i.id === id);
+        if (!item) return match;
+        switch (field) {
+          case 'cal':
+          case 'calories': return item.calories;
+          case 'fat':
+          case 'totalFat': return item.totalFat;
+          case 'satfat':
+          case 'saturatedFat': return item.saturatedFat;
+          case 'carbs':
+          case 'totalCarbs': return item.totalCarbs;
+          case 'protein': return item.protein;
+          case 'sodium': return item.sodium;
+          case 'sugar':
+          case 'sugars': return item.sugars;
+          case 'fiber':
+          case 'dietaryFiber': return item.dietaryFiber;
+          case 'cholesterol': return item.cholesterol;
+          case 'serving': return item.servingSize;
+          default: return match;
+        }
+      });
+    }
   }
   return result;
 }

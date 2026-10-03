@@ -42,7 +42,7 @@ function ensureDirSync(dirPath) {
 const routeSources = {
   '/': ['src/pages/home.js', 'data/coupons.json'],
   '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
-  '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition.json'],
+  '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition-master.json'],
   '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
   '/about-us/': ['src/pages/about.js'],
   '/contact-us/': ['src/pages/contact.js'],
@@ -151,7 +151,7 @@ function generateSitemap(routes) {
   const routeSources = {
     '/': ['src/pages/home.js', 'data/coupons.json'],
     '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
-    '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition.json'],
+    '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition-master.json'],
     '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
     '/about-us/': ['src/pages/about.js'],
     '/contact-us/': ['src/pages/contact.js'],

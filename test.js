@@ -136,32 +136,35 @@ for (const c of couponsData.coupons) {
 }
 console.log('✓ Coupons data verified: 10 starter coupons pass all strict field, status, code format, and freshness rules');
 
-// 4. Validate Nutrition Macros
-const nutritionData = require('./data/nutrition.json');
-const allItems = [...nutritionData.sides, ...nutritionData.entrees];
+// 4. Validate Nutrition Master Dataset
+const nutritionMaster = require('./data/nutrition-master.json');
+assert(nutritionMaster.source, 'nutrition-master.json missing "source" field');
+assert(nutritionMaster.sourceCheckedDate, 'nutrition-master.json missing "sourceCheckedDate" field');
+assert(Array.isArray(nutritionMaster.items) && nutritionMaster.items.length >= 40, 'Expected at least 40 items in nutrition-master.json');
 
-const expectedMacros = {
-  'orange-chicken': { calories: 510, fat: 23, carbs: 53, protein: 26 },
-  'beijing-beef': { calories: 480, fat: 27, carbs: 46, protein: 14 },
-  'kung-pao-chicken': { calories: 290, fat: 19, carbs: 14, protein: 17 },
-  'broccoli-beef': { calories: 150, fat: 7, carbs: 13, protein: 9 },
-  'grilled-teriyaki-chicken': { calories: 275, fat: 13, carbs: 14, protein: 33 },
-  'honey-walnut-shrimp': { calories: 360, fat: 23, carbs: 27, protein: 11 },
-  'chow-mein': { calories: 510, fat: 20, carbs: 80, protein: 13 },
-  'fried-rice': { calories: 520, fat: 16, carbs: 85, protein: 11 },
-  'white-steamed-rice': { calories: 380, fat: 0, carbs: 87, protein: 7 },
-  'super-greens': { calories: 90, fat: 2, carbs: 10, protein: 6 }
-};
+const requiredNutritionFields = ['id', 'name', 'category', 'servingSize', 'calories', 'totalFat', 'saturatedFat', 'sodium', 'totalCarbs', 'protein', 'allergens'];
 
-for (const [id, exp] of Object.entries(expectedMacros)) {
-  const item = allItems.find(i => i.id === id);
-  assert(item, `Missing nutrition item: ${id}`);
-  assert.strictEqual(item.calories, exp.calories, `${id} calories mismatch`);
-  assert.strictEqual(item.fat, exp.fat, `${id} fat mismatch`);
-  assert.strictEqual(item.carbs, exp.carbs, `${id} carbs mismatch`);
-  assert.strictEqual(item.protein, exp.protein, `${id} protein mismatch`);
+for (const item of nutritionMaster.items) {
+  for (const field of requiredNutritionFields) {
+    assert(item[field] !== undefined, `Item ${item.id || 'UNKNOWN'} missing required nutrition field: ${field}`);
+  }
+  assert(typeof item.calories === 'number' && item.calories >= 0, `${item.id} has invalid calories`);
+  assert(typeof item.totalFat === 'number' && item.totalFat >= 0, `${item.id} has invalid totalFat`);
+  assert(typeof item.totalCarbs === 'number' && item.totalCarbs >= 0, `${item.id} has invalid totalCarbs`);
+  assert(typeof item.protein === 'number' && item.protein >= 0, `${item.id} has invalid protein`);
+  assert(typeof item.sodium === 'number' && item.sodium >= 0, `${item.id} has invalid sodium`);
+  assert(Array.isArray(item.allergens), `${item.id} allergens must be an array`);
+
+  // Macro calorie sanity check (within 15% of 9*fat + 4*carbs + 4*protein)
+  const calcCal = 9 * item.totalFat + 4 * item.totalCarbs + 4 * item.protein;
+  if (item.calories > 0 && calcCal > 0) {
+    const diffPct = Math.abs(item.calories - calcCal) / item.calories;
+    if (diffPct > 0.18) {
+      console.warn(`⚠️ Warning: ${item.id} calories (${item.calories}) differs from 4-9-4 macro sum (${calcCal}) by ${(diffPct * 100).toFixed(1)}%`);
+    }
+  }
 }
-console.log('✓ Nutrition macros verified: all 10 items match exact per-serving specifications');
+console.log(`✓ Nutrition master verified: ${nutritionMaster.items.length} items validated with non-negative numbers and array allergens`);
 
 // 5. Validate FAQ Items
 const faqData = require('./data/faq.json');

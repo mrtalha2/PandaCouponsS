@@ -142,7 +142,7 @@
         {
           "name": "The Original Orange Chicken",
           "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
-          "calories": "510 Cal",
+          "calories": "490 Cal",
           "description": "Crispy chicken bites wok-tossed in a sweet, spicy, and tangy chili-citrus glaze. The world-famous classic.",
           "image": "/public/images/menu/orange-chicken.webp",
           "isPremium": false,
@@ -155,7 +155,7 @@
         {
           "name": "Beijing Beef",
           "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
-          "calories": "480 Cal",
+          "calories": "470 Cal",
           "description": "Crispy beef strips tossed with fresh bell peppers and sweet white onions in a tangy, savory glaze.",
           "image": "/public/images/menu/beijing-beef-1.webp",
           "isPremium": false,
@@ -193,7 +193,7 @@
         {
           "name": "Kung Pao Chicken",
           "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
-          "calories": "320 Cal",
+          "calories": "290 Cal",
           "description": "Sichuan-inspired chicken with crunchy peanuts, fresh zucchini, red bell peppers, and whole chili peppers.",
           "image": "/public/images/menu/kung-pao-chicken-1.webp",
           "isPremium": false,
@@ -205,7 +205,7 @@
         {
           "name": "Honey Sesame Chicken Breast",
           "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
-          "calories": "340 Cal",
+          "calories": "420 Cal",
           "description": "Crispy chicken breast strips tossed with tender string beans, yellow bell peppers, and toasted sesame seeds.",
           "image": "/public/images/menu/chicken-breast-honey-sesame-chicken.webp",
           "isPremium": false,
@@ -217,7 +217,7 @@
         {
           "name": "Grilled Teriyaki Chicken",
           "price": "Sm $5.40 | Med $9.50 | Lg $13.60",
-          "calories": "275 Cal",
+          "calories": "300 Cal",
           "description": "Marinated grilled chicken thighs hand-sliced with sweet teriyaki glaze on the side. Packed with 33g protein!",
           "image": "/public/images/menu/chicken-grilledteriyakichicken.webp",
           "isPremium": false,
@@ -285,7 +285,7 @@
         {
           "name": "Chow Mein",
           "price": "Med $4.40 | Lg $5.60",
-          "calories": "510 Cal",
+          "calories": "600 Cal",
           "description": "Wheat noodles stir-fried in the wok with shredded cabbage, fresh celery, and sweet yellow onions.",
           "image": "/public/images/menu/chow-mein.webp",
           "tags": [
@@ -296,7 +296,7 @@
         {
           "name": "Fried Rice",
           "price": "Med $4.40 | Lg $5.60",
-          "calories": "520 Cal",
+          "calories": "620 Cal",
           "description": "Steamed jasmine rice wok-fried with scrambled eggs, fresh green peas, diced carrots, and scallions.",
           "image": "/public/images/menu/fried-rice.webp",
           "tags": [
@@ -307,7 +307,7 @@
         {
           "name": "White Steamed Rice",
           "price": "Med $4.40 | Lg $5.60",
-          "calories": "380 Cal",
+          "calories": "520 Cal",
           "description": "Fluffy, perfectly steamed premium jasmine rice. Zero fat, clean carbohydrate base.",
           "image": "/public/images/menu/white-steamed-rice.webp",
           "tags": [
@@ -318,7 +318,7 @@
         {
           "name": "Super Greens",
           "price": "Med $4.40 | Lg $5.60",
-          "calories": "90 Cal",
+          "calories": "130 Cal",
           "description": "A nutritious medley of tender broccoli florets, kale, and green cabbage steamed to crisp perfection.",
           "image": "/public/images/menu/super-green.webp",
           "tags": [
@@ -349,7 +349,7 @@
         {
           "name": "Veggie Spring Roll",
           "price": "$2.10+",
-          "calories": "150 Cal",
+          "calories": "160 Cal",
           "description": "Thin, crispy rice wrapper filled with shredded cabbage, carrots, green beans, and water chestnuts.",
           "image": "/public/images/menu/veggie-spring-roll.webp",
           "tags": [
@@ -412,7 +412,7 @@
         {
           "name": "Pomegranate Pineapple Lemonade",
           "price": "$3.60+",
-          "calories": "240 Cal",
+          "calories": "220 Cal",
           "description": "Tart and tangy signature lemonade blended with deep ruby pomegranate and sweet pineapple nectar.",
           "image": "/public/images/menu/pomegranate-pineapple-flavored-lemonade.webp",
           "tags": [
@@ -463,7 +463,7 @@
         {
           "name": "Minute Maid Lemonade",
           "price": "Sm $2.30 | Med $2.50 | Lg $2.70",
-          "calories": "150 Cal",
+          "calories": "220 Cal",
           "description": "Sweet, tangy lemonade made with real lemon juice for a thirst-quenching citrus burst.",
           "image": "/public/images/menu/lemonade.webp",
           "tags": [
@@ -526,7 +526,7 @@
         {
           "name": "Orange Chicken Panda Cub Meal™",
           "price": "$7.80",
-          "calories": "510 Cal",
+          "calories": "490 Cal",
           "description": "Kid-sized portion of crispy Orange Chicken with choice of side, apple crisps, and water or juice.",
           "image": "/public/images/menu/orange-chicken-panda-cub-meal-cub-meal.webp",
           "tags": [
@@ -537,7 +537,7 @@
         {
           "name": "Grilled Teriyaki Chicken Cub Meal",
           "price": "$7.80",
-          "calories": "330 Cal",
+          "calories": "300 Cal",
           "description": "Tender grilled chicken slices served with teriyaki sauce, junior side, fruit snack, and kid drink.",
           "image": "/public/images/menu/grilled-teriyaki-chicken-panda-cub-meal.webp",
           "tags": [
@@ -548,7 +548,7 @@
         {
           "name": "Broccoli Beef Panda Cub Meal™",
           "price": "$7.80",
-          "calories": "250 Cal",
+          "calories": "150 Cal",
           "description": "Tender beef and fresh broccoli with kid-sized rice or noodles, healthy fruit, and drink.",
           "image": "/public/images/menu/broccoli-beef-panda-cub-meal-cub-meal.webp",
           "tags": [
@@ -600,23 +600,23 @@
         {
           "name": "Bold and Flavorful Plate",
           "price": "$11.50+",
-          "calories": "450 Cal | 45g Protein",
-          "description": "Super Greens paired with Kung Pao Chicken and Broccoli Beef. Big wok flavors with under 450 calories.",
+          "calories": "440–570 Cal | 45g Protein",
+          "description": "Super Greens paired with wok favorites like Kung Pao Chicken and Broccoli Beef. Bold wok flavor combination with high protein.",
           "image": "/public/images/menu/balanced-protein-plates.webp",
           "tags": [
-            "Under 450 Cal",
+            "High Protein",
             "Spicy Kick"
           ]
         },
         {
           "name": "Power Packed Plate",
           "price": "$11.50+",
-          "calories": "280 Cal | 43g Protein",
-          "description": "Double Super Greens side with single Grilled Teriyaki Chicken (no sauce). Ultra-low carb, ketogenic gold standard.",
+          "calories": "300–430 Cal | 36–49g Protein",
+          "description": "Super Greens side paired with sliced Grilled Teriyaki Chicken. Ultra-low carb, high-protein powerhouse.",
           "image": "/public/images/menu/build-your-own-plate.webp",
           "tags": [
-            "280 Cal",
-            "Keto Friendly"
+            "High Protein",
+            "Low Carb"
           ]
         }
       ]

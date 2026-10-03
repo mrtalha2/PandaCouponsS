@@ -4,7 +4,8 @@
  * Strict Constraint: ZERO Green, ZERO Red. 100% WCAG AAA Readability.
  * Dynamic Year & Month integration.
  */
-const nutritionFull = require('../../data/menu_full.json');
+const nutritionMaster = require('../../data/nutrition-master.json');
+const nutritionFull = nutritionMaster.items;
 
 function renderNutrition() {
 
@@ -16,7 +17,7 @@ function renderNutrition() {
   const faqs = [
     {
       q: "How many calories are in Panda Express Orange Chicken?",
-      a: "A standard 5.92 oz serving of Orange Chicken has 510 calories, 24 grams of fat, and 20 grams of sugar, according to Panda Express's official nutrition data."
+      a: "A standard serving of Orange Chicken has {{cal:orange-chicken}} calories, {{fat:orange-chicken}} grams of fat, and {{sugar:orange-chicken}} grams of sugar, according to Panda Express's official nutrition data."
     },
     {
       q: "Is Panda Express healthy?",
@@ -24,7 +25,7 @@ function renderNutrition() {
     },
     {
       q: "What is the healthiest thing to order at Panda Express?",
-      a: "Grilled Teriyaki Chicken paired with Super Greens is the strongest combination on the menu: 405 calories combined, with 39 grams of protein and under 600mg of sodium."
+      a: "Grilled Teriyaki Chicken ({{cal:grilled-teriyaki-chicken}} cal) paired with Super Greens ({{cal:super-greens}} cal) is one of the strongest combinations on the menu: {{protein:grilled-teriyaki-chicken}}g protein and low saturated fat."
     },
     {
       q: "Does Panda Express use peanut oil?",
@@ -489,15 +490,15 @@ function renderNutrition() {
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Chow Mein</span>
-                <span class="nutr-item-meta">600 cal | 1,000mg sod</span>
+                <span class="nutr-item-meta">{{cal:chow-mein}} cal | {{sodium:chow-mein}}mg sod</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Fried Rice</span>
-                <span class="nutr-item-meta">620 cal | 1,000mg sod</span>
+                <span class="nutr-item-meta">{{cal:fried-rice}} cal | {{sodium:fried-rice}}mg sod</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Sides swing harder than any other category. Super Greens sits at 130 calories, while Fried Rice more than quadruples that at 620. The difference isn't really the rice or the greens — it's the oil, egg, and soy sauce used in frying. White Steamed Rice lands at 520 calories with zero sodium, making it the cleanest carb option if sodium is your concern rather than calories.
+              Sides swing harder than any other category. Super Greens sits at {{cal:super-greens}} calories, while Fried Rice reaches {{cal:fried-rice}}. The difference isn't really the rice or the greens — it's the oil, egg, and seasoning used in wok preparation. White Steamed Rice lands at {{cal:white-steamed-rice}} calories with zero sodium, making it the cleanest carb option if sodium is your concern.
             </p>
           </div>
 
@@ -505,28 +506,28 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Entrées</h3>
-              <span class="nutr-table-val">275–510 cal</span>
+              <span class="nutr-table-val">{{cal:string-bean-chicken}}–{{cal:orange-chicken}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Grilled Teriyaki Chicken</span>
-                <span class="nutr-item-meta">275 cal | 33g P</span>
+                <span class="nutr-item-meta">{{cal:grilled-teriyaki-chicken}} cal | {{protein:grilled-teriyaki-chicken}}g P</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Black Pepper Chicken</span>
-                <span class="nutr-item-meta">280 cal | 1,130mg sod</span>
+                <span class="nutr-item-meta">{{cal:black-pepper-chicken}} cal | {{sodium:black-pepper-chicken}}mg sod</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Kung Pao Chicken</span>
-                <span class="nutr-item-meta">320 cal | 1,050mg sod</span>
+                <span class="nutr-item-meta">{{cal:kung-pao-chicken}} cal | {{sodium:kung-pao-chicken}}mg sod</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">The Original Orange Chicken</span>
-                <span class="nutr-item-meta">510 cal | 16g P</span>
+                <span class="nutr-item-meta">{{cal:orange-chicken}} cal | {{protein:orange-chicken}}g P</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Grilled Teriyaki Chicken is the standout here: 275 calories and 33 grams of protein, the best protein-to-calorie ratio on the entire menu. Orange Chicken, the chain's best-known dish, runs 510 calories with 16 grams of protein, 20 grams of sugar, and 850mg of sodium — batter and glaze account for most of that gap. Kung Pao Chicken (320 cal, 1,050mg sodium) and Black Pepper Chicken (280 cal, 1,130mg sodium) are both moderate on calories but carry some of the highest sodium counts in the category.
+              Grilled Teriyaki Chicken is the standout here: {{cal:grilled-teriyaki-chicken}} calories and {{protein:grilled-teriyaki-chicken}} grams of protein, the highest protein count on the wok menu. Orange Chicken, the chain's best-known dish, runs {{cal:orange-chicken}} calories with {{protein:orange-chicken}} grams of protein and {{sugar:orange-chicken}} grams of sugar — batter and glaze account for most of that gap. Kung Pao Chicken ({{cal:kung-pao-chicken}} cal, {{sodium:kung-pao-chicken}}mg sodium) and Black Pepper Chicken ({{cal:black-pepper-chicken}} cal, {{sodium:black-pepper-chicken}}mg sodium) offer moderate calories with savory seasonings.
             </p>
           </div>
 
@@ -534,24 +535,24 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Breast</h3>
-              <span class="nutr-table-val">210–360 cal</span>
+              <span class="nutr-table-val">{{cal:string-bean-chicken}}–{{cal:sweetfire-chicken}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
                 <span class="nutr-item-name">String Bean Chicken Breast</span>
-                <span class="nutr-item-meta">210 cal | 12g P</span>
+                <span class="nutr-item-meta">{{cal:string-bean-chicken}} cal | {{protein:string-bean-chicken}}g P</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Honey Sesame Chicken Breast</span>
-                <span class="nutr-item-meta">340 cal | Sweet Glaze</span>
+                <span class="nutr-item-meta">{{cal:honey-sesame-chicken}} cal | Sweet Glaze</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">SweetFire Chicken Breast</span>
-                <span class="nutr-item-meta">360 cal | Crisp Glaze</span>
+                <span class="nutr-item-meta">{{cal:sweetfire-chicken}} cal | Crisp Glaze</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              This line trades a little flavor intensity for leaner numbers. String Bean Chicken Breast comes in at 210 calories with 12 grams of protein and real fiber from the vegetables. SweetFire Chicken Breast (360 cal) and Honey Sesame Chicken Breast (340 cal) lean sweeter and carry more sugar per serving.
+              This line trades a little batter for leaner numbers. String Bean Chicken Breast comes in at {{cal:string-bean-chicken}} calories with {{protein:string-bean-chicken}} grams of protein and dietary fiber from fresh string beans. SweetFire Chicken Breast ({{cal:sweetfire-chicken}} cal) and Honey Sesame Chicken Breast ({{cal:honey-sesame-chicken}} cal) lean sweeter with delicious glazes.
             </p>
           </div>
 
@@ -559,20 +560,20 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Beef</h3>
-              <span class="nutr-table-val">150–470 cal</span>
+              <span class="nutr-table-val">{{cal:broccoli-beef}}–{{cal:beijing-beef}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Broccoli Beef</span>
-                <span class="nutr-item-meta">150 cal | 15g P</span>
+                <span class="nutr-item-meta">{{cal:broccoli-beef}} cal | {{protein:broccoli-beef}}g P</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Beijing Beef</span>
-                <span class="nutr-item-meta">470 cal | 27g F</span>
+                <span class="nutr-item-meta">{{cal:beijing-beef}} cal | {{fat:beijing-beef}}g F</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Broccoli Beef is the lightest entrée on the whole menu at 150 calories with 15 grams of protein — a genuinely strong pick regardless of your goal. Beijing Beef, by contrast, is battered and fried, landing at 470 calories with 27 grams of fat.
+              Broccoli Beef is the lightest entrée on the menu at {{cal:broccoli-beef}} calories with {{protein:broccoli-beef}} grams of protein — a strong pick for lower-calorie dining. Beijing Beef is battered and crispy, landing at {{cal:beijing-beef}} calories with {{fat:beijing-beef}} grams of fat.
             </p>
           </div>
 
@@ -580,20 +581,20 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Seafood</h3>
-              <span class="nutr-table-val">200–430 cal</span>
+              <span class="nutr-table-val">{{cal:kung-pao-shrimp}}–{{cal:honey-walnut-shrimp}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Steamed Ginger Fish</span>
-                <span class="nutr-item-meta">200 cal | 1,990mg sod</span>
+                <span class="nutr-item-name">Kung Pao Shrimp</span>
+                <span class="nutr-item-meta">{{cal:kung-pao-shrimp}} cal | {{protein:kung-pao-shrimp}}g P</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Honey Walnut Shrimp</span>
-                <span class="nutr-item-meta">430 cal | Sweet Glaze</span>
+                <span class="nutr-item-meta">{{cal:honey-walnut-shrimp}} cal | Sweet Glaze</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Honey Walnut Shrimp (430 cal) is sweet-glazed and fried, similar in profile to Orange Chicken. Steamed Ginger Fish is worth flagging specifically: at only 200 calories it looks light, but it carries 1,990mg of sodium — the highest sodium count of any single entrée on the menu, nearly the FDA's full daily recommended sodium limit in one dish.
+              Honey Walnut Shrimp ({{cal:honey-walnut-shrimp}} cal) features tempura shrimp tossed in honey sauce with candied walnuts. Kung Pao Shrimp ({{cal:kung-pao-shrimp}} cal, {{protein:kung-pao-shrimp}}g protein) provides a savory, spicy seafood alternative wok-tossed with peanuts and chili peppers.
             </p>
           </div>
 
@@ -601,45 +602,47 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Vegetables &amp; Tofu</h3>
-              <span class="nutr-table-val">90–340 cal</span>
+              <span class="nutr-table-val">{{cal:super-greens}}–{{cal:eggplant-tofu}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Super Greens (Entrée Portion)</span>
-                <span class="nutr-item-meta">90 cal | 6g P | 5g Fib</span>
+                <span class="nutr-item-name">Super Greens (Side Portion)</span>
+                <span class="nutr-item-meta">{{cal:super-greens}} cal | {{protein:super-greens}}g P</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Eggplant Tofu</span>
-                <span class="nutr-item-meta">340 cal | Prep Oil</span>
+                <span class="nutr-item-meta">{{cal:eggplant-tofu}} cal | {{protein:eggplant-tofu}}g P</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Super Greens as a standalone entrée is 90 calories with 6 grams of protein and 5 grams of fiber, making it one of the few genuinely low-everything options. Eggplant Tofu, despite sounding light, runs 340 calories because of the oil used in preparation.
+              Super Greens ({{cal:super-greens}} cal) delivers a blend of steamed broccoli, kale, and cabbage with {{fiber:super-greens}}g of dietary fiber. Eggplant Tofu ({{cal:eggplant-tofu}} cal, {{protein:eggplant-tofu}}g protein) pairs tofu and eggplant in sweet-spicy ginger garlic sauce.
             </p>
-          </div>
-
           <!-- 7. Appetizers -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Appetizers</h3>
-              <span class="nutr-table-val">160–240 cal</span>
+              <span class="nutr-table-val">{{cal:apple-pie-roll}}–{{cal:chicken-egg-roll}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Chicken Potstickers (3 pcs)</span>
-                <span class="nutr-item-meta">160 cal</span>
+                <span class="nutr-item-name">Chicken Potstickers</span>
+                <span class="nutr-item-meta">{{cal:chicken-potsticker}} cal | {{protein:chicken-potsticker}}g P</span>
               </li>
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Chicken Egg Rolls (1 roll)</span>
-                <span class="nutr-item-meta">200 cal</span>
+                <span class="nutr-item-name">Chicken Egg Roll</span>
+                <span class="nutr-item-meta">{{cal:chicken-egg-roll}} cal | {{fat:chicken-egg-roll}}g F</span>
               </li>
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Vegetable Spring Rolls (2 rolls)</span>
-                <span class="nutr-item-meta">240 cal</span>
+                <span class="nutr-item-name">Veggie Spring Roll</span>
+                <span class="nutr-item-meta">{{cal:veggie-spring-roll}} cal | {{carbs:veggie-spring-roll}}g C</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Cream Cheese Rangoon</span>
+                <span class="nutr-item-meta">{{cal:cream-cheese-rangoon}} cal | {{fat:cream-cheese-rangoon}}g F</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Vegetable Spring Rolls (2 rolls, 240 cal) and Chicken Egg Rolls (1 roll, 200 cal) add up fast for their size. Chicken Potstickers (3 pcs, 160 cal) are the lightest appetizer option.
+              Veggie Spring Rolls ({{cal:veggie-spring-roll}} cal) and Chicken Egg Rolls ({{cal:chicken-egg-roll}} cal) offer crispy flavor. Cream Cheese Rangoons ({{cal:cream-cheese-rangoon}} cal) provide sweet cream cheese in wonton wrappers.
             </p>
           </div>
 
@@ -647,20 +650,24 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Soup</h3>
-              <span class="nutr-table-val">120–170 cal</span>
+              <span class="nutr-table-val">{{cal:egg-drop-soup}}–{{cal:wonton-soup}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Hot &amp; Sour Soup (Cup)</span>
-                <span class="nutr-item-meta">120 cal</span>
+                <span class="nutr-item-name">Egg Drop Soup</span>
+                <span class="nutr-item-meta">{{cal:egg-drop-soup}} cal | {{sodium:egg-drop-soup}}mg sod</span>
               </li>
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Hot &amp; Sour Soup (Bowl)</span>
-                <span class="nutr-item-meta">170 cal | 1,260mg sod</span>
+                <span class="nutr-item-name">Hot &amp; Sour Soup</span>
+                <span class="nutr-item-meta">{{cal:hot-and-sour-soup}} cal | {{sodium:hot-and-sour-soup}}mg sod</span>
+              </li>
+              <li class="nutr-item-row">
+                <span class="nutr-item-name">Wonton Soup</span>
+                <span class="nutr-item-meta">{{cal:wonton-soup}} cal | {{sodium:wonton-soup}}mg sod</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Hot &amp; Sour Soup looks harmless calorie-wise (120–170 cal) but is one of the saltiest items on the menu — the bowl size alone carries 1,260mg of sodium.
+              Hot &amp; Sour Soup ({{cal:hot-and-sour-soup}} cal) carries {{sodium:hot-and-sour-soup}}mg of sodium. Egg Drop Soup ({{cal:egg-drop-soup}} cal) is a lighter option with {{protein:egg-drop-soup}}g protein.
             </p>
           </div>
 
@@ -668,51 +675,57 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Sauces</h3>
-              <span class="nutr-table-val">5–70 cal</span>
+              <span class="nutr-table-val">{{cal:chili-sauce}}–{{cal:sweet-and-sour-sauce}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
-                <span class="nutr-item-name">Soy Sauce (1 packet)</span>
-                <span class="nutr-item-meta">5 cal | 375mg sod</span>
+                <span class="nutr-item-name">Chili Sauce</span>
+                <span class="nutr-item-meta">{{cal:chili-sauce}} cal | {{sodium:chili-sauce}}mg sod</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Sweet &amp; Sour Sauce</span>
-                <span class="nutr-item-meta">70 cal | 115mg sod</span>
+                <span class="nutr-item-meta">{{cal:sweet-and-sour-sauce}} cal | {{sugar:sweet-and-sour-sauce}}g sugar</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Teriyaki Sauce</span>
-                <span class="nutr-item-meta">70 cal | 380mg sod</span>
+                <span class="nutr-item-meta">{{cal:teriyaki-sauce}} cal | {{sodium:teriyaki-sauce}}mg sod</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              A single packet of Soy Sauce adds only 5 calories but 375mg of sodium. Teriyaki Sauce (70 cal, 380mg sodium) and Sweet &amp; Sour Sauce (70 cal, 115mg sodium) both add meaningful sugar if you're tracking that closely.
+              Sauces add extra flavor. Sweet &amp; Sour Sauce adds {{cal:sweet-and-sour-sauce}} calories and {{sugar:sweet-and-sour-sauce}}g sugar per cup, while Teriyaki Sauce adds {{cal:teriyaki-sauce}} calories.
             </p>
           </div>
+        </div>
 
           <!-- 10. Cub Meals (Kids) -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Cub Meals (Kids)</h3>
-              <span class="nutr-table-val">&lt; 600 cal</span>
+              <span class="nutr-table-val">Under 600 cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Grilled Teriyaki Cub Meal</span>
-                <span class="nutr-item-meta">400 cal | 28g P</span>
+                <span class="nutr-item-meta">Balanced Protein</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Orange Chicken Cub Meal</span>
-                <span class="nutr-item-meta">380 cal</span>
+                <span class="nutr-item-meta">Kid Favorite</span>
               </li>
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Broccoli Beef Cub Meal</span>
-                <span class="nutr-item-meta">&lt; 450 cal</span>
+                <span class="nutr-item-meta">Lean Beef &amp; Veggies</span>
               </li>
             </ul>
             <p class="nutr-item-desc">
-              Panda Express designed its Cub Meals around USDA dietary guidance for children. Each one stays under 600 calories and includes a vegetable side and fruit serving. The Grilled Teriyaki Chicken Cub Meal is the standout at 400 calories with 28 grams of protein.
+              Panda Express designed its Cub Meals around balanced nutrition for children. Each one includes a junior entrée, junior side, and fruit.
             </p>
           </div>
+        </div>
+
+        <div style="margin-top: 2rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.88rem; color: #9CA3AF;">
+          ℹ️ Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.
+        </div>
 
         </div>
       </section>
@@ -723,12 +736,12 @@ function renderNutrition() {
           Orange Chicken Nutrition — The Deep Dive
         </h2>
         <p class="nutr-paragraph">
-          A single serving of Orange Chicken (5.92 oz) contains 510 calories, 24 grams of fat, 53 grams of carbohydrate, 20 grams of sugar, and 16 grams of protein, with 850mg of sodium. These are the figures from Panda Express's own disclosure sheet — if you've seen different numbers elsewhere (490, or 380), those usually reflect a different portion size like the Cub Meal version (380 cal) rather than an inconsistency in the dish itself.
+          A single serving of Orange Chicken ({{serving:orange-chicken}} oz) contains {{cal:orange-chicken}} calories, {{fat:orange-chicken}} grams of fat, {{carbs:orange-chicken}} grams of carbohydrate, {{sugar:orange-chicken}} grams of sugar, and {{protein:orange-chicken}} grams of protein, with {{sodium:orange-chicken}}mg of sodium. These figures reflect Panda Express's official nutrition guide disclosure.
         </p>
 
         <h3 class="nutr-sub-title">Why Orange Chicken Is the Highest-Calorie Chicken Entrée</h3>
         <p class="nutr-paragraph">
-          The chicken is battered and deep-fried first, then coated in a sugar-based glaze. Both steps add calories independently: the batter absorbs oil during frying, and the glaze adds nearly all 20 grams of sugar on top of that. Neither step is unusual for fast food — it's just compounding on a dish that's already fried.
+          The chicken is battered and deep-fried first, then coated in a sugar-based glaze. Both steps add calories independently: the batter absorbs oil during frying, and the glaze adds nearly all {{sugar:orange-chicken}} grams of sugar on top of that. Neither step is unusual for fast food — it's just compounding on a dish that's already fried.
         </p>
 
         <h3 class="nutr-sub-title">Orange Chicken vs. Grilled Teriyaki Chicken</h3>
@@ -747,34 +760,34 @@ function renderNutrition() {
             <tbody>
               <tr>
                 <td><strong style="color: #FFFFFF;">Calories</strong></td>
-                <td><span class="nutr-table-accent">510 kcal</span></td>
-                <td><span class="nutr-table-val">275 kcal</span></td>
-                <td>-235 kcal (46% fewer calories)</td>
+                <td><span class="nutr-table-accent">{{cal:orange-chicken}} kcal</span></td>
+                <td><span class="nutr-table-val">{{cal:grilled-teriyaki-chicken}} kcal</span></td>
+                <td>-190 kcal (39% fewer calories)</td>
               </tr>
               <tr>
                 <td><strong style="color: #FFFFFF;">Protein</strong></td>
-                <td>16g</td>
-                <td><span class="nutr-table-val">33g</span></td>
-                <td>+17g (+106% more protein)</td>
+                <td>{{protein:orange-chicken}}g</td>
+                <td><span class="nutr-table-val">{{protein:grilled-teriyaki-chicken}}g</span></td>
+                <td>+11g (+44% more protein)</td>
               </tr>
               <tr>
                 <td><strong style="color: #FFFFFF;">Sodium</strong></td>
-                <td>850mg</td>
-                <td><span class="nutr-table-val">470mg</span></td>
-                <td>-380mg (45% less sodium)</td>
+                <td>{{sodium:orange-chicken}}mg</td>
+                <td><span class="nutr-table-val">{{sodium:grilled-teriyaki-chicken}}mg</span></td>
+                <td>-290mg (35% less sodium)</td>
               </tr>
               <tr>
                 <td><strong style="color: #FFFFFF;">Sugar</strong></td>
-                <td>20g</td>
-                <td><span class="nutr-table-val">9g</span></td>
-                <td>-11g (55% less sugar)</td>
+                <td>{{sugar:orange-chicken}}g</td>
+                <td><span class="nutr-table-val">{{sugar:grilled-teriyaki-chicken}}g</span></td>
+                <td>-20g (67% less sugar)</td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <p class="nutr-paragraph">
-          Grilled Teriyaki Chicken delivers roughly double the protein at about half the calories and sugar. If you're optimizing for protein-per-calorie specifically, it isn't close — Grilled Teriyaki Chicken gives you 0.12g of protein per calorie, compared to 0.03g for Orange Chicken.
+          Grilled Teriyaki Chicken delivers roughly double the protein-per-calorie ratio compared to Orange Chicken with significantly less sugar and fat.
         </p>
       </section>
 
@@ -832,7 +845,7 @@ function renderNutrition() {
         <div class="nutr-callout-card">
           <h3>The #1 Nutritional Swap on the Menu</h3>
           <p>
-            Swapping Fried Rice for Super Greens in a Bowl saves about 490 calories and 630mg of sodium in one change — the single biggest impact swap available anywhere on the menu.
+            Swapping a side of Fried Rice ({{cal:fried-rice}} cal) for Super Greens ({{cal:super-greens}} cal) in a Bowl saves about 490 calories and 630mg of sodium in one change — the single biggest impact swap available anywhere on the menu.
           </p>
         </div>
       </section>
@@ -862,19 +875,19 @@ function renderNutrition() {
           <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
             <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For Fewer Calories</h4>
             <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
-              Choose Super Greens over Fried Rice or Chow Mein (saves ~490 cal), pick a Bowl over a Plate, and ask for sauce on the side rather than mixed in.
+              Choose Super Greens ({{cal:super-greens}} cal) instead of starch sides like Fried Rice ({{cal:fried-rice}} cal) or Chow Mein ({{cal:chow-mein}} cal) to cut nearly 500 calories per meal. Pick a Bowl over a Plate, and ask for sauce on the side.
             </p>
           </div>
           <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
             <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For More Protein</h4>
             <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
-              Grilled Teriyaki Chicken (33g protein, 275 cal) and Teriyaki Chicken (41g protein, 340 cal) are the two highest-protein entrées on the menu by a wide margin.
+              Grilled Teriyaki Chicken ({{protein:grilled-teriyaki-chicken}}g protein, {{cal:grilled-teriyaki-chicken}} cal) is the highest-protein entrée on the menu.
             </p>
           </div>
           <div class="nutr-stat-box" style="text-align: left; padding: 1.5rem;">
             <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-top: 0; margin-bottom: 0.5rem;">For Less Sodium</h4>
             <p style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
-              Watch Steamed Ginger Fish (1,990mg) and Hot &amp; Sour Soup Bowl (1,260mg) specifically — these two items carry more sodium than most full meals elsewhere on the menu. Grilled Teriyaki Chicken (470mg) and Broccoli Beef (520mg) are the lowest-sodium entrées.
+              Watch high-sodium specialty items specifically. Grilled Teriyaki Chicken ({{sodium:grilled-teriyaki-chicken}}mg) and Broccoli Beef ({{sodium:broccoli-beef}}mg) are among the lower-sodium entrée options.
             </p>
           </div>
         </div>
@@ -918,30 +931,30 @@ function renderNutrition() {
 
         <div>
           <div class="nutr-combo-card">
-            <span class="nutr-combo-formula">Grilled Teriyaki Chicken + Super Greens &rarr; 275 + 130</span>
-            <span class="nutr-combo-badge">405 calories</span>
+            <span class="nutr-combo-formula">Grilled Teriyaki Chicken + Super Greens &rarr; {{cal:grilled-teriyaki-chicken}} + {{cal:super-greens}}</span>
+            <span class="nutr-combo-badge">430 calories</span>
           </div>
           <div style="font-size: 0.85rem; color: #9CA3AF; margin-top: -0.5rem; margin-bottom: 1rem; padding-left: 0.5rem;">
             * Lightest realistic combo on the menu
           </div>
 
           <div class="nutr-combo-card">
-            <span class="nutr-combo-formula">Broccoli Beef + White Steamed Rice &rarr; 150 + 520</span>
+            <span class="nutr-combo-formula">Broccoli Beef + White Steamed Rice &rarr; {{cal:broccoli-beef}} + {{cal:white-steamed-rice}}</span>
             <span class="nutr-combo-badge">670 calories</span>
           </div>
 
           <div class="nutr-combo-card">
-            <span class="nutr-combo-formula">Orange Chicken + Chow Mein &rarr; 510 + 600</span>
-            <span class="nutr-combo-badge">1,110 calories</span>
-          </div>
-
-          <div class="nutr-combo-card">
-            <span class="nutr-combo-formula">Beijing Beef + Fried Rice &rarr; 470 + 620</span>
+            <span class="nutr-combo-formula">Orange Chicken + Chow Mein &rarr; {{cal:orange-chicken}} + {{cal:chow-mein}}</span>
             <span class="nutr-combo-badge">1,090 calories</span>
           </div>
 
           <div class="nutr-combo-card">
-            <span class="nutr-combo-formula">Honey Walnut Shrimp + Chow Mein &rarr; 430 + 600</span>
+            <span class="nutr-combo-formula">Beijing Beef + Fried Rice &rarr; {{cal:beijing-beef}} + {{cal:fried-rice}}</span>
+            <span class="nutr-combo-badge">1,100 calories</span>
+          </div>
+
+          <div class="nutr-combo-card">
+            <span class="nutr-combo-formula">Honey Walnut Shrimp + Chow Mein &rarr; {{cal:honey-walnut-shrimp}} + {{cal:chow-mein}}</span>
             <span class="nutr-combo-badge">1,030 calories</span>
           </div>
         </div>
