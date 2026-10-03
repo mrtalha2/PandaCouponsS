@@ -173,10 +173,8 @@ ${noindexFlag ? '' : `  <link rel="canonical" href="${fullCanonicalUrl}">\n`}${c
   <link rel="manifest" href="/public/site.webmanifest">
   <meta name="theme-color" content="#C8102E">
 
-  <!-- Preload Critical Self-Hosted Fonts -->
+  <!-- Preload Critical Self-Hosted Font (400 weight only) -->
   <link rel="preload" href="/public/fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/public/fonts/plus-jakarta-sans-700.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/public/fonts/plus-jakarta-sans-900.woff2" as="font" type="font/woff2" crossorigin>
 ${preloadHero ? `
   <!-- Preload Homepage Hero Image (LCP critical path) -->
   <link rel="preload" as="image"

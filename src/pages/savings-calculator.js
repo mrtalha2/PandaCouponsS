@@ -302,8 +302,9 @@ function renderSavingsCalculator() {
         To ensure total consistency across our site, the calculator relies on standardized menu baseline ranges compiled directly from Panda Express corporate price sheets:
       </p>
 
-      <div class="table-responsive" style="margin-bottom: 2rem;">
+      <div class="table-responsive table-container" role="region" tabindex="0" aria-label="Group order pricing and per-person cost comparison" style="margin-bottom: 2rem;">
         <table class="coupon-table delivery-comparison-table">
+          <caption class="visually-hidden">Panda Express Group Order Size Baseline Cost and Savings Comparison Table</caption>
           <thead>
             <tr>
               <th scope="col">Order Type</th>

@@ -47,10 +47,10 @@ function renderHeader(currentPath = '/') {
             <a href="/panda-express-nutrition/" class="nav-link ${currentPath.includes('nutrition') ? 'is-current' : ''}">Nutrition</a>
           </li>
           <li class="nav-dropdown">
-            <button type="button" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">
-              Food Guides <span class="dropdown-arrow">▼</span>
+            <button type="button" class="dropdown-toggle" id="foodGuidesDropdownBtn" aria-haspopup="true" aria-expanded="false" aria-controls="foodGuidesDropdownMenu">
+              Food Guides <span class="dropdown-arrow" aria-hidden="true">▼</span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" id="foodGuidesDropdownMenu" aria-labelledby="foodGuidesDropdownBtn">
               <li><a href="/panda-express-orange-chicken/" class="${currentPath.includes('orange-chicken') ? 'is-current' : ''}">Orange Chicken</a></li>
               <li><a href="/beijing-beef/" class="${currentPath.includes('beijing-beef') ? 'is-current' : ''}">Beijing Beef</a></li>
               <li><a href="/panda-express-grilled-teriyaki/" class="${currentPath.includes('grilled-teriyaki') ? 'is-current' : ''}">Grilled Teriyaki</a></li>
@@ -67,14 +67,14 @@ function renderHeader(currentPath = '/') {
           <!-- Red Pill CTA Button -->
           <li>
             <a href="/#coupon-section" class="nav-cta-pill" aria-label="Jump directly to coupon codes">
-              <span>🎟️ Get Codes</span>
+              <span><span aria-hidden="true">🎟️</span> Get Codes</span>
             </a>
           </li>
         </ul>
       </nav>
 
       <!-- Mobile Hamburger Toggle -->
-      <button type="button" class="mobile-nav-toggle" aria-label="Toggle mobile menu" aria-expanded="false" aria-controls="mobile-nav-menu">
+      <button type="button" class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Toggle mobile navigation menu" aria-expanded="false" aria-controls="mobile-nav-menu">
         <span aria-hidden="true">☰</span>
       </button>
     </div>
@@ -83,12 +83,12 @@ function renderHeader(currentPath = '/') {
     <div id="mobile-nav-menu" class="mobile-nav-drawer" role="dialog" aria-modal="true" aria-label="Mobile Navigation Menu">
       <div class="mobile-nav-drawer-header">
         <span class="mobile-nav-drawer-title">Navigation Menu</span>
-        <button type="button" id="mobileNavCloseBtn" class="mobile-nav-close-btn" aria-label="Close navigation menu">✕</button>
+        <button type="button" id="mobileNavCloseBtn" class="mobile-nav-close-btn" aria-label="Close navigation menu"><span aria-hidden="true">✕</span></button>
       </div>
       <ul class="mobile-nav-list">
         <li><a href="/" class="mobile-nav-link ${currentPath === '/' ? 'is-current' : ''}">Home</a></li>
-        <li><a href="/#coupon-section" class="mobile-nav-link mobile-nav-cta">🎟️ Get Today's Coupon Codes</a></li>
-        <li><a href="/panda-express-savings-calculator/" class="mobile-nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}">🧮 Savings Calculator</a></li>
+        <li><a href="/#coupon-section" class="mobile-nav-link mobile-nav-cta"><span aria-hidden="true">🎟️</span> Get Today's Coupon Codes</a></li>
+        <li><a href="/panda-express-savings-calculator/" class="mobile-nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}"><span aria-hidden="true">🧮</span> Savings Calculator</a></li>
         <li><a href="/panda-express-nutrition/" class="mobile-nav-link ${currentPath.includes('nutrition') ? 'is-current' : ''}">Nutrition Calculator</a></li>
         <li><a href="/panda-express-menu/" class="mobile-nav-link ${currentPath.includes('menu') ? 'is-current' : ''}">Panda Express Menu</a></li>
         <li><a href="/panda-express-orange-chicken/" class="mobile-nav-link ${currentPath.includes('orange-chicken') ? 'is-current' : ''}">Orange Chicken Guide</a></li>

@@ -16,6 +16,7 @@ const testSuites = [
   { name: 'JSON-LD Schema & Canonical Verification', script: 'scripts/validate-jsonld.js' },
   { name: 'Asset Integrity Verification', script: 'scripts/verify-assets.js' },
   { name: 'WCAG Color Contrast Audit', script: 'scripts/check-contrast.js' },
+  { name: 'Accessibility & Table Semantics Audit', script: 'scripts/verify-a11y.js' },
   { name: 'Forbidden Email Absence Guard', script: 'scripts/verify-no-forbidden-email.js' }
 ];
 

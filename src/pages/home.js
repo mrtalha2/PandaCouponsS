@@ -429,8 +429,9 @@ function renderHome() {
       </div>
 
       <!-- Accessible Table View (Hidden by default, toggleable) -->
-      <div class="table-responsive coupon-table-toggle-wrapper" id="couponTableWrapper" style="display: none;">
+      <div class="table-responsive coupon-table-toggle-wrapper table-container" id="couponTableWrapper" role="region" tabindex="0" aria-label="Coupon codes directory table" style="display: none;">
         <table class="coupon-table" id="couponTableMain">
+          <caption class="visually-hidden">Panda Express Verified Promo Codes and Coupons Directory</caption>
           <thead>
             <tr>
               <th scope="col">Status</th>
@@ -703,8 +704,9 @@ function renderHome() {
         Ordering directly through Panda Express is almost always cheaper once delivery fees and service charges are factored in.
       </p>
 
-      <div class="table-responsive">
+      <div class="table-responsive table-container" role="region" tabindex="0" aria-label="Direct ordering versus delivery app pricing comparison">
         <table class="coupon-table delivery-comparison-table">
+          <caption class="visually-hidden">Direct App Ordering versus Third-Party Delivery Cost Breakdown</caption>
           <thead>
             <tr>
               <th scope="col">Order Method</th>
@@ -748,7 +750,7 @@ function renderHome() {
       </div>
 
       <div class="takeaway-callout-box">
-        <strong class="takeaway-title">💡 Best Value Takeaway:</strong>
+        <strong class="takeaway-title"><span aria-hidden="true">💡</span> Best Value Takeaway:</strong>
         <span class="takeaway-text">If saving money is the priority, ordering pickup directly through the app with a Panda Express coupon code and earning Rewards points at the same time beats any delivery platform discount in most cases.</span>
       </div>
     </div>
@@ -782,8 +784,9 @@ function renderHome() {
             Here's the honest math. A Family Meal without a code typically runs <strong>$45–$55</strong>. Ordering the same amount of food as individual plates costs closer to <strong>$70–$80</strong>. Apply a working code like <code>FAMILY10</code> and you're feeding five people for roughly <strong>$35–$45 — about $7–$9 per person</strong>.
           </p>
 
-          <div class="table-responsive" style="margin: 0;">
+          <div class="table-responsive table-container" role="region" tabindex="0" aria-label="Family meal cost comparison table" style="margin: 0;">
             <table class="coupon-table table-dark-mode">
+              <caption class="visually-hidden">Family Meal Group Cost and Portion Comparison Table</caption>
               <thead>
                 <tr>
                   <th scope="col">Order Type</th>

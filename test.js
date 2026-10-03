@@ -103,9 +103,9 @@ for (const relPath of allHtmlFiles) {
   assert(jsMatch, `${relPath} missing valid main.js link`);
   assert(fs.existsSync(path.join(DIST_DIR, jsMatch[1])), `Referenced JS file ${jsMatch[1]} missing from dist/`);
 
-  // Check Self-Hosted Font Preloads
+  // Check Self-Hosted Font Preload (400 weight only)
   assert(content.includes('plus-jakarta-sans-400.woff2'), `${relPath} missing font preload for 400`);
-  assert(content.includes('plus-jakarta-sans-700.woff2'), `${relPath} missing font preload for 700`);
+  assert(!content.includes('rel="preload" href="/public/fonts/plus-jakarta-sans-700.woff2"'), `${relPath} must not preload 700 font`);
 
   // Check Schema JSON-LD
   assert(content.includes('application/ld+json'), `${relPath} missing schema JSON-LD`);

@@ -347,8 +347,9 @@ function renderNutrition() {
             </div>
 
             <!-- Explorer Table -->
-            <div class="nutr-table-wrap" style="margin-top: 1rem;">
+            <div class="nutr-table-wrap table-container" role="region" tabindex="0" aria-label="Interactive Panda Express Nutrition Explorer Table" style="margin-top: 1rem;">
               <table id="calcNutritionTable" class="nutr-table" aria-label="Interactive Panda Express Nutrition Explorer">
+                <caption class="visually-hidden">Complete Panda Express Entrée and Side Dish Nutrition Facts, Calories, and Macronutrients Table</caption>
                 <thead>
                   <tr>
                     <th scope="col" style="position: sticky; left: 0; z-index: 6; min-width: 170px;">Dish Name</th>
@@ -429,8 +430,9 @@ function renderNutrition() {
         </p>
 
         <!-- Meal Sizes Table -->
-        <div class="nutr-table-wrap">
+        <div class="nutr-table-wrap table-container" role="region" tabindex="0" aria-label="Panda Express Meal Sizes Caloric Comparison">
           <table class="nutr-table" aria-label="Panda Express Meal Sizes Caloric Comparison">
+            <caption class="visually-hidden">Panda Express Meal Formats and Calorie Ranges Comparison</caption>
             <thead>
               <tr>
                 <th scope="col">Meal Format</th>
@@ -754,8 +756,9 @@ function renderNutrition() {
         <h3 class="nutr-sub-title">Orange Chicken vs. Grilled Teriyaki Chicken</h3>
 
         <!-- Comparison Table: Orange Chicken vs Grilled Teriyaki -->
-        <div class="nutr-table-wrap">
+        <div class="nutr-table-wrap table-container" role="region" tabindex="0" aria-label="Orange Chicken vs Grilled Teriyaki Chicken Nutrition Comparison">
           <table class="nutr-table" aria-label="Orange Chicken vs Grilled Teriyaki Chicken Nutrition Comparison">
+            <caption class="visually-hidden">Nutritional Comparison between Orange Chicken and Grilled Teriyaki Chicken</caption>
             <thead>
               <tr>
                 <th scope="col">Nutritional Metric</th>
@@ -805,8 +808,9 @@ function renderNutrition() {
         </h2>
 
         <!-- Sides Table -->
-        <div class="nutr-table-wrap">
+        <div class="nutr-table-wrap table-container" role="region" tabindex="0" aria-label="Panda Express Sides Comparison">
           <table class="nutr-table" aria-label="Panda Express Sides Comparison">
+            <caption class="visually-hidden">Comparison of Panda Express Sides Nutritional Profiles and Calorie Counts</caption>
             <thead>
               <tr>
                 <th scope="col">Base Side</th>

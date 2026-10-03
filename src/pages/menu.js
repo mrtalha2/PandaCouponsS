@@ -168,8 +168,9 @@ function renderMenu() {
         </div>
 
         <!-- Desktop Table View (>= 769px) -->
-        <div class="table-responsive menu-summary-table-desktop" style="margin: 0; border: 1px solid #EAE3D6; border-radius: 12px; max-width: 100%; box-sizing: border-box;">
+        <div class="table-responsive menu-summary-table-desktop table-container" role="region" tabindex="0" aria-label="Panda Express Menu Summary Table" style="margin: 0; border: 1px solid #EAE3D6; border-radius: 12px; max-width: 100%; box-sizing: border-box;">
           <table class="menu-summary-table" summary="Summary of Panda Express menu categories, items included, calorie ranges, starting prices, and best use cases.">
+            <caption class="visually-hidden">Panda Express Complete Menu Category Summary and Pricing Overview</caption>
             <thead>
               <tr>
                 <th scope="col" style="min-width: 130px;">Menu Category</th>

@@ -308,13 +308,36 @@ function initNutritionSystem() {
   let selectedSide = 'chow-mein';
   let selectedEntrees = ['orange-chicken', 'beijing-beef'];
 
+  function loadCart() {
+    try {
+      const stored = localStorage.getItem('panda-meal-cart');
+      if (!stored) return [];
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed)) {
+        return parsed.filter(item => item && typeof item === 'object' && typeof item.id === 'string' && typeof item.quantity === 'number');
+      }
+      return [];
+    } catch (e) {
+      console.warn('Could not read cart from localStorage:', e);
+      return [];
+    }
+  }
+
+  function saveCart() {
+    try {
+      localStorage.setItem('panda-meal-cart', JSON.stringify(cartItems));
+    } catch (e) {
+      console.warn('Could not write cart to localStorage:', e);
+    }
+  }
+
   // Explorer State
   let searchQuery = '';
   let activeCategory = 'All Items';
   let allergensToAvoid = [];
   let sortField = 'calories';
   let sortOrder = 'desc';
-  let cartItems = JSON.parse(localStorage.getItem('panda-meal-cart') || '[]');
+  let cartItems = loadCart();
 
   // Hydrate cart from share link (?meal=orange-chicken:1,chow-mein:1)
   try {
@@ -333,7 +356,7 @@ function initNutritionSystem() {
       });
       if (parsedItems.length > 0) {
         cartItems = parsedItems;
-        localStorage.setItem('panda-meal-cart', JSON.stringify(cartItems));
+        saveCart();
       }
     }
   } catch (err) {
