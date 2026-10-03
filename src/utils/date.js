@@ -4,25 +4,58 @@
  * Always operates in SITE_TIMEZONE (America/Los_Angeles) using Intl.DateTimeFormat.
  */
 
-const SITE_TIMEZONE = 'America/Los_Angeles';
+let SITE_TIMEZONE = 'America/Los_Angeles';
+try {
+  const siteConfig = require('../../data/site.config');
+  if (siteConfig && siteConfig.SITE_TIMEZONE) {
+    SITE_TIMEZONE = siteConfig.SITE_TIMEZONE;
+  }
+} catch (e) {}
 
-function getCurrentMonth(date = new Date()) {
-  return new Intl.DateTimeFormat('en-US', { timeZone: SITE_TIMEZONE, month: 'long' }).format(date);
+function getSiteDateParts(now = new Date(), timeZone = SITE_TIMEZONE) {
+  const d = (typeof now === 'string' || typeof now === 'number') ? new Date(now) : (now || new Date());
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    hourCycle: 'h23'
+  });
+  const parts = formatter.formatToParts(d);
+  const year = parts.find(p => p.type === 'year').value;
+  const month = parts.find(p => p.type === 'month').value;
+  const day = parts.find(p => p.type === 'day').value;
+  const hour = parts.find(p => p.type === 'hour').value;
+  const monthLong = new Intl.DateTimeFormat('en-US', { timeZone, month: 'long' }).format(d);
+  const monthYearLabel = `${monthLong} ${year}`;
+
+  return {
+    year,
+    month,
+    day,
+    hour,
+    monthYearLabel
+  };
 }
 
-function getCurrentYear(date = new Date()) {
-  return new Intl.DateTimeFormat('en-US', { timeZone: SITE_TIMEZONE, year: 'numeric' }).format(date);
+function getCurrentMonth(date = new Date(), timeZone = SITE_TIMEZONE) {
+  return new Intl.DateTimeFormat('en-US', { timeZone, month: 'long' }).format(date);
 }
 
-function getCurrentMonthYear(date = new Date()) {
-  const m = getCurrentMonth(date);
-  const y = getCurrentYear(date);
+function getCurrentYear(date = new Date(), timeZone = SITE_TIMEZONE) {
+  return new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' }).format(date);
+}
+
+function getCurrentMonthYear(date = new Date(), timeZone = SITE_TIMEZONE) {
+  const m = getCurrentMonth(date, timeZone);
+  const y = getCurrentYear(date, timeZone);
   return `${m} ${y}`;
 }
 
-function getIsoMonth(date = new Date()) {
+function getIsoMonth(date = new Date(), timeZone = SITE_TIMEZONE) {
   const parts = new Intl.DateTimeFormat('en-US', {
-    timeZone: SITE_TIMEZONE,
+    timeZone,
     year: 'numeric',
     month: '2-digit'
   }).formatToParts(date);
@@ -31,13 +64,13 @@ function getIsoMonth(date = new Date()) {
   return `${y}-${m}`;
 }
 
-function getDynamicDate(date = new Date()) {
-  const currentMonth = getCurrentMonth(date);
-  const currentYear = getCurrentYear(date);
+function getDynamicDate(date = new Date(), timeZone = SITE_TIMEZONE) {
+  const currentMonth = getCurrentMonth(date, timeZone);
+  const currentYear = getCurrentYear(date, timeZone);
   const currentMonthYear = `${currentMonth} ${currentYear}`;
 
   const formatterDate = new Intl.DateTimeFormat('en-US', {
-    timeZone: SITE_TIMEZONE,
+    timeZone,
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
@@ -54,7 +87,7 @@ function getDynamicDate(date = new Date()) {
     currentYear,
     currentMonthYear,
     yyyymmdd,
-    timeZone: SITE_TIMEZONE
+    timeZone
   };
 }
 
@@ -111,6 +144,7 @@ function resolveTokens(html, date = new Date()) {
 
 module.exports = {
   SITE_TIMEZONE,
+  getSiteDateParts,
   getCurrentMonth,
   getCurrentYear,
   getCurrentMonthYear,

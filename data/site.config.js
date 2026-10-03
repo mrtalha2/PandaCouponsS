@@ -5,6 +5,7 @@
  * All pages automatically use these values.
  */
 module.exports = {
+  // TODO(owner): choose the zone whose midnight should flip the month (America/Los_Angeles for US, Asia/Karachi for Pakistan)
   SITE_TIMEZONE: 'America/Los_Angeles',
   // Site Identity
   siteName: "Panda Express Coupons",
