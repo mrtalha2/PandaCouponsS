@@ -24,9 +24,9 @@ function renderMenu() {
   const menuGridBlock = menuBlocks.find(b => b.type === 'menu-grid');
 
   const menuContent = adminContent.menu || {};
-  const badgeText = menuGridBlock?.badgeText || menuContent.badgeText || '🐼 OFFICIAL {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
+  const badgeText = menuGridBlock?.badgeText || menuContent.badgeText || '🐼 {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
   const heroTitle = menuGridBlock?.heading || menuContent.heroTitle || 'Panda Express Menu with Prices &amp; Pictures';
-  const heroSubtitle = menuGridBlock?.subtext || menuContent.heroSubtitle || 'Explore complete {{YEAR}} pricing, per-serving calorie counts, portion options, and high-definition photography for all Bowls, Plates, A La Carte Entrées, Sides, Crafted Refreshers, and Catering Trays.';
+  const heroSubtitle = menuGridBlock?.subtext || menuContent.heroSubtitle || 'Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Explore pricing, per-serving calorie counts, portion options, and dish details for Bowls, Plates, Entrées, and Sides.';
   const stat1Label = menuGridBlock?.stat1Label || menuContent.stat1Label || 'Wok-Crafted Dishes';
   const stat2Label = menuGridBlock?.stat2Label || menuContent.stat2Label || 'A La Carte Boxes';
   const stat3Label = menuGridBlock?.stat3Label || menuContent.stat3Label || 'Zero Artificial Trans Fat';
@@ -237,6 +237,7 @@ function renderMenu() {
             </div>
           `).join('')}
         </div>
+        <p style="font-size: 0.85rem; color: #78716C; margin-top: 0.85rem; margin-bottom: 0;">* Prices are typical and vary by location; checked {{MONTH_YEAR}}.</p>
       </div>
     </div>
 

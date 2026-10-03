@@ -1,0 +1,72 @@
+[
+  {
+    "id": "dodgers-promo",
+    "claim": "Dodgers Win Home Game 7+ Runs promotion offering $5 Panda Plate the following day",
+    "url": "https://www.mlb.com/dodgers/fans/panda-express",
+    "publisher": "MLB / Los Angeles Dodgers",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "military-discount",
+    "claim": "10% in-store discount for military service members and first responders at participating locations",
+    "url": "https://www.pandaexpress.com/faq",
+    "publisher": "Panda Express FAQ & Store Policies",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "orange-chicken-history",
+    "claim": "Original Orange Chicken developed by Executive Chef Andy Kao in Hawaii in 1987",
+    "url": "https://www.pandaexpress.com/our-story",
+    "publisher": "Panda Restaurant Group Heritage Archives",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "orange-chicken-volume",
+    "claim": "Over 100 million pounds of Orange Chicken prepared annually across Panda Express locations",
+    "url": "https://www.pandaexpress.com/our-story",
+    "publisher": "Panda Restaurant Group Annual Culinary Disclosures",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "panda-rewards-program",
+    "claim": "Panda Rewards point accrual (10 points per dollar) and redemption tiers starting at 250 points",
+    "url": "https://www.pandaexpress.com/rewards",
+    "publisher": "Panda Express Rewards Terms & Conditions",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "family-meal-composition",
+    "claim": "Family Meal bundled configuration includes 3 large entrees and 2 large sides",
+    "url": "https://www.pandaexpress.com/menu/family-meals",
+    "publisher": "Panda Express Menu & Catering Guide",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "gift-card-promotions",
+    "claim": "Holiday and graduation gift card promotions offering bonus $5–$10 redemption cards on $30+ purchases",
+    "url": "https://www.pandaexpress.com/gift-cards",
+    "publisher": "Panda Express Gift Card Terms",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "delivery-pricing-premiums",
+    "claim": "Third-party delivery platforms (DoorDash, Uber Eats, Grubhub) apply item price markups of 15% to 25% plus delivery fees",
+    "url": "https://www.pandaexpress.com/order",
+    "publisher": "Panda Express Online Ordering vs Marketplace Pricing Disclosures",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "nutrition-guidelines",
+    "claim": "Official Panda Express nutrition facts, ingredient lists, and allergen disclosures",
+    "url": "https://www.pandaexpress.com/nutrition-information",
+    "publisher": "Panda Restaurant Group Nutrition Department",
+    "checkedDate": "2026-10-01"
+  },
+  {
+    "id": "standard-menu-pricing",
+    "claim": "Baseline menu pricing for Bowls, Plates, Bigger Plates, and A La Carte sides and entrees",
+    "url": "https://www.pandaexpress.com/menu",
+    "publisher": "Panda Express National Representative Pricing Sheet",
+    "checkedDate": "2026-10-01"
+  }
+]

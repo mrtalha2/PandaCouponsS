@@ -128,7 +128,7 @@ function renderHome() {
 
       <div class="hero-lead-box">
         <p class="hero-subtitle">
-          Most coupon lists are copied from each other and expired. Every code here is tagged verified, reported, or likely expired, so you know before you order.
+          Reviewed <span class="js-current-month-year">${lastVerifiedDate}</span> by the Panda Coupons Editorial Team • Most coupon lists are copied from each other and expired. Every code here is tagged with honest confidence levels so you know before you order.
         </p>
       </div>
 

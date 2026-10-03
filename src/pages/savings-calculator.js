@@ -18,12 +18,12 @@ function renderSavingsCalculator() {
     "description": metaDescription,
     "author": {
       "@type": "Organization",
-      "name": config.siteName,
+      "name": "Panda Coupons Editorial Team",
       "url": config.domain
     },
     "publisher": {
       "@type": "Organization",
-      "name": config.siteName,
+      "name": "Panda Coupons Editorial Team",
       "logo": {
         "@type": "ImageObject",
         "url": `${config.domain}/public/favicon.svg`
@@ -102,7 +102,7 @@ function renderSavingsCalculator() {
         Panda Express Savings Calculator
       </h1>
       <p class="subtitle-light subpage-main-desc" style="max-width: 680px; margin-left: auto; margin-right: auto;">
-        Find the cheapest way to feed your group — compare Plates, Family Meals &amp; Catering instantly.
+        Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Compare Plates, Family Meals &amp; Catering options instantly.
       </p>
     </div>
   </section>
@@ -276,6 +276,7 @@ function renderSavingsCalculator() {
         <div class="calc-order-callout">
           Ready to order? <a href="/#coupon-section">Check today's verified Panda Express coupon codes →</a>
         </div>
+        <p style="font-size: 0.85rem; color: #64748B; margin-top: 0.75rem; margin-bottom: 0; text-align: center;">* Prices are typical and vary by location; checked {{MONTH_YEAR}}.</p>
 
       </div><!-- /calc-main-card -->
     </div>

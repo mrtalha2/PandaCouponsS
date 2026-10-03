@@ -65,6 +65,24 @@ function renderDish(dishData) {
     }))
   };
 
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": `Panda Express ${dishTitle}: Calories, Nutrition & Smart Ordering Guide`,
+    "description": dishData.metaDescription || dishSubtitle,
+    "dateModified": new Date().toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "Panda Coupons Editorial Team",
+      "url": config.domain
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Panda Coupons Editorial Team",
+      "url": config.domain
+    }
+  };
+
   const menuItemSchema = {
     "@context": "https://schema.org",
     "@type": "MenuItem",
@@ -94,7 +112,7 @@ function renderDish(dishData) {
       <div class="dish-hero-kicker">WOK SPECIALTY GUIDE</div>
       <h1 class="dish-hero-title">${dishTitle}</h1>
       <p class="dish-hero-subtitle">
-        ${dishSubtitle}
+        Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • ${dishSubtitle}
       </p>
       <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
         <a href="/#coupon-section" class="btn btn-hero-primary">
@@ -284,7 +302,7 @@ function renderDish(dishData) {
     canonicalPath: `/${dishData.slug}/`,
     content,
     breadcrumbs,
-    schemaJson: [menuItemSchema, faqSchema]
+    schemaJson: [menuItemSchema, faqSchema, articleSchema]
   };
 }
 

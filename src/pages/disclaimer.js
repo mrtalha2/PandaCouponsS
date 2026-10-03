@@ -32,12 +32,12 @@ function renderDisclaimer() {
       <h3 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h3>
       <ul style="margin-bottom: 0; padding-left: 1.25rem;">
         <li><a href="#independence">1. Independent Status</a></li>
-        <li><a href="#trademarks">2. Ownership of Trademarks</a></li>
-        <li><a href="#volatility">3. Coupon &amp; Pricing Volatility</a></li>
-        <li><a href="#nutrition">4. Nutrition &amp; Allergen Disclaimers</a></li>
-        <li><a href="#affiliate">5. Advertising &amp; Affiliate Disclosure</a></li>
+        <li><a href="#trademarks">2. Ownership of Trademarks &amp; Fair Use</a></li>
+        <li><a href="#funding">3. How This Site Is Funded</a></li>
+        <li><a href="#volatility">4. Coupon Accuracy &amp; Offer Expiration</a></li>
+        <li><a href="#nutrition">5. Nutrition &amp; Allergen Disclaimers</a></li>
         <li><a href="#liability">6. Limitation of Liability</a></li>
-        <li><a href="#contact">7. Removal Requests &amp; Inquiries</a></li>
+        <li><a href="#contact">7. Corrections &amp; Editorial Inquiries</a></li>
       </ul>
     </div>
 
@@ -45,61 +45,64 @@ function renderDisclaimer() {
       <section id="independence" class="section-border" style="padding: 1.75rem 0;">
         <h2>1. Independent Website Disclaimer</h2>
         <p>
-          <strong>Panda Express Coupons</strong> (accessible at ${config.domain}) is an autonomous, privately-maintained consumer information resource. This website is <strong>NOT</strong> owned, operated, endorsed, authorized, or sponsored by Panda Express, Panda Restaurant Group, Inc., or any of their corporate affiliates, subsidiaries, parent entities, or authorized franchise partners.
+          <strong>Panda Express Coupons</strong> (accessible at ${config.domain}) is an autonomous consumer information guide maintained by the Panda Coupons Editorial Team. This website is <strong>NOT</strong> owned, operated, authorized, endorsed, or sponsored by Panda Express, Panda Restaurant Group, Inc., or any of their parent corporations, subsidiaries, or franchise entities.
         </p>
       </section>
 
       <section id="trademarks" class="section-border" style="padding: 1.75rem 0;">
-        <h2>2. Ownership of Trademarks &amp; Trade Names</h2>
+        <h2>2. Ownership of Trademarks &amp; Fair Use</h2>
         <p>
-          "Panda Express", "Orange Chicken", "Beijing Beef", "Panda Rewards", and all associated trade names, culinary item titles, brand emblems, and logos are registered trademarks or service marks owned solely by Panda Restaurant Group, Inc.
+          "Panda Express", "Orange Chicken", "Beijing Beef", "Panda Rewards", and all related brand names, emblems, and logos are registered trademarks or service marks owned solely by Panda Restaurant Group, Inc.
         </p>
         <p>
-          The nominative use of these corporate brand names and menu terminology throughout this website serves purely descriptive, educational, and editorial objectives under established Fair Use legal doctrines. Neither this website nor its publishers assert any ownership rights, proprietary claims, or intellectual property rights regarding these trademarks.
+          These trademarks and proprietary names are used on this site strictly to identify and accurately describe the restaurant brand, menu items, and publicly shared discount offers under nominative fair use legal doctrines. We assert no proprietary claim or affiliation with Panda Restaurant Group, Inc.
+        </p>
+      </section>
+
+      <section id="funding" class="section-border" style="padding: 1.75rem 0;">
+        <h2>3. How This Site Is Funded</h2>
+        <p>
+          <strong>This site currently carries no ads and no affiliate links.</strong>
+        </p>
+        <p>
+          All coupon listings, nutrition calculations, and money-saving guides are provided purely for public consumer benefit with zero sponsored placement, paid ranking, or commission compensation. If our funding model ever changes in the future, we will place prominent, transparent disclosures at the top of every page containing sponsored or affiliate links.
         </p>
       </section>
 
       <section id="volatility" class="section-border" style="padding: 1.75rem 0;">
-        <h2>3. Coupon Codes, Promotional Offers &amp; Pricing Volatility</h2>
+        <h2>4. Coupon Accuracy &amp; Offer Expiration</h2>
         <p>
-          All promotional codes, digital vouchers, discounts, and percentage-off offers documented on this platform are provided on an "as-is" and "as-available" informational basis. Fast-casual restaurant promotions, pricing, and campaign terms are subject to change, regional revocation, or sudden expiration without notice at the discretion of restaurant management.
+          Promotional codes, digital coupons, and discount terms are aggregated from public deal reports and verified where feasible, but fast-casual promotions change frequently. Codes may be location-limited, require minimum purchases, or expire without advance notice.
         </p>
         <p>
-          While our editorial staff takes diligent measures to test and tag codes regularly, we cannot guarantee that any specific promotional code will function at your local store, on any third-party app, or at any specific date or time. Always review your shopping cart subtotal prior to finalizing financial payment on official vendor channels.
+          Always verify the applied discount in your digital shopping cart or at the cash register before completing your payment. We do not operate a live technical data feed from Panda Express restaurants.
         </p>
       </section>
 
       <section id="nutrition" class="section-border" style="padding: 1.75rem 0;">
-        <h2>4. Nutrition Information &amp; Allergen Disclaimers</h2>
+        <h2>5. Nutrition Information &amp; Allergen Disclaimers</h2>
         <p>
-          Calorie counts, macro breakdowns (protein, carbohydrates, fat), and portion sizes displayed within our articles and interactive Nutrition Calculator represent rounded industry approximations based on publicly disseminated nutritional data. Individual restaurant cooking methods, serving ladle variance, ingredient substitutions, and local preparation variations may alter actual nutritional profiles.
+          Calorie counts, macro metrics, and allergen indicators reflect standard published baseline recipes from the official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Because dishes are prepared in small wok batches, actual nutritional values vary by location, scooping portion size, and culinary preparation.
         </p>
         <p>
-          Individuals with severe food allergies, celiac disease, diabetes, or specialized medical dietary constraints should never rely on third-party estimates and should consult official restaurant allergen charts or registered healthcare specialists.
-        </p>
-      </section>
-
-      <section id="affiliate" class="section-border" style="padding: 1.75rem 0;">
-        <h2>5. Advertising &amp; Affiliate Disclosure</h2>
-        <p>
-          To offset server hosting and editorial maintenance expenses, this website may display digital display advertisements or incorporate contextual affiliate links. If you click on an affiliate referral link and complete a transaction, we may earn a modest commission at zero additional expense to you.
+          This content does not constitute medical or nutritional advice. If you have severe food allergies, celiac disease, or specific dietary requirements, always verify ingredients with restaurant personnel directly before ordering.
         </p>
       </section>
 
       <section id="liability" class="section-border" style="padding: 1.75rem 0;">
         <h2>6. Limitation of Liability &amp; Use at Your Own Risk</h2>
         <p>
-          Your utilization of this website and reliance on any content, vouchers, or nutritional estimates provided herein occurs strictly at your sole risk. Under no legal circumstances shall the owners, developers, or content contributors of this site be held accountable for direct, indirect, incidental, or consequential damages resulting from the use or inability to use this platform.
+          Your utilization of this website and reliance on any content, vouchers, or nutritional estimates provided herein occurs strictly at your sole risk. Under no circumstances shall the authors, editors, or publishers of this site be liable for direct, indirect, or consequential damages resulting from website use.
         </p>
       </section>
 
       <section id="contact" class="section-border" style="padding: 1.75rem 0;">
-        <h2>7. Inquiries, Corrections &amp; Content Removal Requests</h2>
+        <h2>7. Corrections &amp; Editorial Inquiries</h2>
         <p>
-          If you are an intellectual property holder or authorized brand representative and hold concerns regarding any reference or content published on this website, please direct formal correspondence to our designated contact inbox. We address all legitimate removal and modification requests promptly:
+          If you identify an expired coupon, an outdated price, or an inaccurate nutrition number, please send a note to our editorial inbox. We review reports and apply corrections promptly:
         </p>
         <p>
-          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 800; color: #C8102E;">
+          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 700; color: #C8102E;">
             ${config.contactEmail}
           </a>
         </p>
@@ -122,7 +125,7 @@ function renderDisclaimer() {
       <div class="dish-hero-kicker">EDITORIAL &amp; LEGAL DISCLAIMER</div>
       <h1 class="dish-hero-title">${disclaimerHeading}</h1>
       <p class="dish-hero-subtitle">
-        Independent publishing statement, trademark acknowledgments, and terms of service.
+        Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Independent publishing statement and terms.
       </p>
     </div>
   </section>
@@ -134,7 +137,7 @@ function renderDisclaimer() {
 
   return {
     title: `Disclaimer & Trademark Statement – Panda Express Coupons`,
-    description: `Official independent disclaimer for Panda Express Coupons. Review our trademark notices, terms of use, affiliate policies, and non-affiliation statements.`,
+    description: `Independent disclaimer for Panda Express Coupons. Review our trademark notices, terms of use, funding model, and non-affiliation statements.`,
     canonicalPath: '/disclaimer/',
     content,
     breadcrumbs

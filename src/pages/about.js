@@ -42,12 +42,12 @@ function renderAbout() {
         <div>
           <h3 class="callout-h" style="margin-top: 0;">Our Editorial Promise</h3>
           <p class="callout-p" style="margin-bottom: 0;">
-            Provide a clean, lightning-fast, and trustworthy resource where Panda Express diners can check verified deals, understand loyalty point math, calculate accurate meal nutrition, and actually save money at checkout.
+            Provide a clean, fast, and trustworthy resource where Panda Express diners can check deal confidence levels, understand loyalty point math, review accurate meal nutrition from official guides, and save money at checkout.
           </p>
         </div>
       </div>
 
-      <!-- Real Culinary Kitchen Photography (Phase 6b) -->
+      <!-- Kitchen Photography -->
       <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.12);">
         <picture>
           <source type="image/webp" 
@@ -100,16 +100,27 @@ function renderAbout() {
       </div>
     </section>
 
+    <!-- Editorial Policy & Corrections -->
+    <section class="section-border" style="padding: 2.5rem 0;">
+      <h2>Editorial Policy &amp; Corrections</h2>
+      <p style="font-size: 1.05rem; line-height: 1.75;">
+        Our editorial team selects featured coupon codes, pricing breakdowns, and nutritional tables based on public availability and consumer utility. We do not accept payment for coupon placement or favorable dish rankings.
+      </p>
+      <p style="font-size: 1.05rem; line-height: 1.75;">
+        <strong>How Readers Report Errors:</strong> If you find an expired code, an altered restaurant price, or a discrepancy in nutritional figures, email us at <a href="mailto:${config.contactEmail}" style="font-weight: 700; color: #C8102E;">${config.contactEmail}</a>. Our team investigates every submission and applies corrections promptly to maintain data accuracy.
+      </p>
+    </section>
+
     <!-- Editorial Team & Author -->
     <section class="section-border" style="padding: 2.5rem 0;">
       <h2>Who We Are</h2>
       <div class="author-profile-card">
         <div class="author-avatar">🐼</div>
         <div>
-          <h3 style="margin-top: 0; margin-bottom: 0.25rem;">PandaCoupons Editorial Desk</h3>
-          <p style="font-size: 0.9rem; font-weight: 700; color: #C8102E; margin-bottom: 0.5rem;">Lead Editorial Team &amp; Fast-Casual Dining Analysts</p>
+          <h3 style="margin-top: 0; margin-bottom: 0.25rem;">Panda Coupons Editorial Team</h3>
+          <p style="font-size: 0.9rem; font-weight: 700; color: #C8102E; margin-bottom: 0.5rem;">Independent Food &amp; Dining Research Group</p>
           <p style="font-size: 0.95rem; margin-bottom: 0;">
-            Our independent research group tests and catalogs verified restaurant savings, loyalty rewards economics, and authentic nutrition metrics to give everyday diners an honest, ad-clutter-free resource.
+            Our independent research group catalogs verified restaurant savings, loyalty rewards economics, and authentic nutrition metrics from official guides to give diners a clean, transparent resource.
           </p>
         </div>
       </div>
@@ -150,7 +161,7 @@ function renderAbout() {
       <div class="dish-hero-kicker">INDEPENDENT CONSUMER RESOURCE</div>
       <h1 class="dish-hero-title">${aboutHeading}</h1>
       <p class="dish-hero-subtitle">
-        Our mission: eliminating expired coupon frustration and giving diners honest, tested savings.
+        Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Eliminating coupon fatigue with honest, tested savings.
       </p>
     </div>
   </section>

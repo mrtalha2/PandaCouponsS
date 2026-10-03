@@ -4,6 +4,7 @@
  * Strict Constraint: ZERO Green, ZERO Red. 100% WCAG AAA Readability.
  * Dynamic Year & Month integration.
  */
+const config = require('../../data/site.config');
 const nutritionMaster = require('../../data/nutrition-master.json');
 const nutritionFull = nutritionMaster.items;
 
@@ -70,7 +71,13 @@ function renderNutrition() {
     "dateModified": new Date().toISOString(),
     "author": {
       "@type": "Organization",
-      "name": "PandaCoupons Editorial Team"
+      "name": "Panda Coupons Editorial Team",
+      "url": config.domain
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Panda Coupons Editorial Team",
+      "url": config.domain
     }
   };
 
@@ -91,7 +98,7 @@ function renderNutrition() {
         </nav>
 
         <div class="nutr-badge-pill">
-          <span>Official Nutrition Guide {{YEAR}}</span>
+          <span>Nutrition Guide {{YEAR}}</span>
         </div>
 
         <h1 class="nutr-hero-title">
@@ -99,7 +106,7 @@ function renderNutrition() {
         </h1>
 
         <p class="nutr-hero-lead">
-          Panda Express nutrition varies more than almost any fast-food menu, because meals are built à la carte instead of sold as fixed combos. A Bowl alone can run anywhere from 280 to 1,130 calories depending on what you pick, and a Plate stretches from 430 to 1,640. That range is exactly why guessing doesn't work here — the numbers below come straight from Panda Express's own nutrition disclosures, so you can build your plate with real information instead of estimates.
+          Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Panda Express nutrition varies more than almost any fast-food menu, because meals are built à la carte instead of sold as fixed combos. A Bowl alone can run anywhere from 280 to 1,130 calories depending on what you pick, and a Plate stretches from 430 to 1,640. The numbers below come straight from official Panda Express nutrition disclosures.
         </p>
 
         <!-- Optimized Responsive Hero Image -->
