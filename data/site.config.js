@@ -12,17 +12,13 @@ module.exports = {
   domain: "https://pandacoupons.org",
   contactEmail: "helppandacoupons@gmail.com",
   get currentYear() {
-    return new Date().getFullYear();
+    return require('../src/utils/date').getCurrentYear();
   },
   get currentMonth() {
-    const monthNames = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    return monthNames[new Date().getMonth()];
+    return require('../src/utils/date').getCurrentMonth();
   },
   get currentMonthYear() {
-    return `${this.currentMonth} ${this.currentYear}`;
+    return require('../src/utils/date').getCurrentMonthYear();
   },
 
   // Branding & Colors

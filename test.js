@@ -103,10 +103,38 @@ console.log(`\n✓ All ${htmlFiles.length} HTML pages passed strict SEO and sema
 // 3. Validate Coupons Data
 const couponsData = require('./data/coupons.json');
 assert.strictEqual(couponsData.coupons.length, 10, 'Expected 10 starter coupons');
-const validStatuses = ['Active', 'Check app', 'Check App', 'Unverified', 'Expired'];
-const allValid = couponsData.coupons.every(c => validStatuses.includes(c.status));
-assert(allValid, 'All starter coupons must have a valid status (Active, Check app, or Unverified)');
-console.log('✓ Coupons data verified: 10 starter coupons present with verified active statuses');
+const validStatuses = ['Active', 'Check App', 'Unconfirmed', 'Expired'];
+const requiredFields = ['code', 'discount', 'bestFor', 'minOrder', 'status', 'confidence', 'notes', 'category', 'expiry', 'isDraft', 'lastChecked'];
+const seenCodes = new Set();
+const { yyyymmdd } = require('./src/utils/date').getDynamicDate();
+
+for (const c of couponsData.coupons) {
+  // Required fields check
+  for (const field of requiredFields) {
+    assert(c[field] !== undefined && c[field] !== null && c[field] !== '', `Coupon ${c.code || 'UNKNOWN'} missing required field: ${field}`);
+  }
+
+  // Valid status check
+  assert(validStatuses.includes(c.status), `Coupon ${c.code} has invalid status: ${c.status}`);
+
+  // No "test" in notes
+  assert(!/\btest\b/i.test(c.notes), `Coupon ${c.code} contains "test" in notes: "${c.notes}"`);
+
+  // Code format [A-Z0-9]{3,20}
+  assert(/^[A-Z0-9]{3,20}$/.test(c.code), `Coupon code "${c.code}" does not match [A-Z0-9]{3,20}`);
+
+  // Duplicate code check
+  assert(!seenCodes.has(c.code), `Duplicate coupon code found: ${c.code}`);
+  seenCodes.add(c.code);
+
+  // Active status with past expiry check
+  if (c.status === 'Active' && c.expiry !== 'Ongoing') {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(c.expiry)) {
+      assert(c.expiry >= yyyymmdd, `Coupon ${c.code} is marked Active but has a past expiry date (${c.expiry} < ${yyyymmdd})`);
+    }
+  }
+}
+console.log('✓ Coupons data verified: 10 starter coupons pass all strict field, status, code format, and freshness rules');
 
 // 4. Validate Nutrition Macros
 const nutritionData = require('./data/nutrition.json');

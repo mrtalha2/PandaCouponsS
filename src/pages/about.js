@@ -70,8 +70,8 @@ function renderAbout() {
     <!-- How We Check Codes -->
     <section class="section-border" style="padding: 2.5rem 0;">
       <h2>How We Check &amp; Verify Codes</h2>
-      <p>
-        We treat coupon testing with scientific discipline. Here is our exact verification procedure:
+      <p style="font-size: 1.05rem; line-height: 1.75;">
+        We collect codes from Panda Express's own app and website and from public deal reports, try them where possible, and label each by how sure we are. Codes change often and vary by location, so confirm the discount in your cart before paying. We do not have a live feed from Panda Express.
       </p>
       
       <div class="stepper-timeline" style="margin-top: 1.5rem;">
@@ -79,22 +79,22 @@ function renderAbout() {
         <div class="stepper-step">
           <div class="stepper-circle">1</div>
           <div class="stepper-card">
-            <h3>Manual Checkout Testing</h3>
-            <p>We open pandaexpress.com and the mobile app, add qualifying entrees, and manually apply each code.</p>
+            <h3>Deal Collection &amp; App Tracking</h3>
+            <p>We monitor Panda Express digital channels and community deal reports to catch new promotional campaigns.</p>
           </div>
         </div>
         <div class="stepper-step">
           <div class="stepper-circle">2</div>
           <div class="stepper-card">
-            <h3>Transparent Status Tagging</h3>
-            <p>Codes are labeled Active, Check App, or Unverified. We never make up fake verification dates.</p>
+            <h3>Honest Confidence Rating</h3>
+            <p>Codes are labeled Active, Check App, Unconfirmed, or Expired so you know the reliability before ordering.</p>
           </div>
         </div>
         <div class="stepper-step">
           <div class="stepper-circle">3</div>
           <div class="stepper-card">
-            <h3>Pruning Defunct Codes</h3>
-            <p>Once an offer concludes nationwide, we promptly flag it as Expired or remove it from rotation.</p>
+            <h3>Continuous Date Tracking</h3>
+            <p>We record exact checked dates and promptly retire expired seasonal promotions like Mother's Day deals.</p>
           </div>
         </div>
       </div>
@@ -162,7 +162,7 @@ function renderAbout() {
 
   return {
     title: `About Us – Panda Express Coupons Editorial Mission`,
-    description: `Learn about Panda Express Coupons, our independent editorial team, our rigorous manual code verification process, and our commitment to clean, honest savings.`,
+    description: `Learn about Panda Express Coupons, our independent editorial team, how we check codes, and our commitment to clean, honest savings.`,
     canonicalPath: '/about-us/',
     content,
     breadcrumbs

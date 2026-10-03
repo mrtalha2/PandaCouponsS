@@ -1,18 +1,18 @@
 {
-  "lastVerified": "September 2026",
   "footnote": "Codes rotate and may deactivate regionally without notice. Always confirm the discount appears in your cart before completing payment.",
   "coupons": [
     {
       "code": "PANDA20",
       "discount": "20% Off Entire Order",
       "bestFor": "Online orders",
-      "minOrder": "None",
+      "minOrder": "$10+",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Test edit verified",
+      "notes": "Applies 20% discount on standard digital orders at checkout via app or website.",
       "category": "Online Deals",
       "expiry": "Ongoing",
-      "isDraft": false
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "FAMILY10",
@@ -21,85 +21,115 @@
       "minOrder": "Family Meal",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Feeds 4–5 people. Applies at digital checkout.",
-      "category": "Family Meals",
+      "notes": "Feeds 4–5 people with 3 large entrees and 2 large sides. Applies at digital checkout.",
+      "category": "Family Deals",
       "expiry": "Ongoing",
-      "isDraft": false
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "ACK",
-      "discount": "$3 off",
+      "discount": "$3 Off Order",
       "bestFor": "Solo lunch",
       "minOrder": "$5+",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Great for single bowls or plates meeting the $5 minimum."
+      "notes": "Valid for single bowls or plates meeting the $5 minimum at participating stores.",
+      "category": "Online Deals",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "EATFIVE",
-      "discount": "$5 off",
+      "discount": "$5 Off $25+",
       "bestFor": "Medium orders",
       "minOrder": "$25+",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Requires at least $25 pre-tax cart total before applying."
+      "notes": "Requires at least $25 pre-tax cart total before applying online or in-app.",
+      "category": "Online Deals",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "EGGROLL",
-      "discount": "Free egg roll",
+      "discount": "Free Egg Roll",
       "bestFor": "Any online order",
       "minOrder": "None",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Adds a complimentary Chicken Egg Roll or Veggie Spring Roll."
+      "notes": "Adds a complimentary Chicken Egg Roll or Veggie Spring Roll to digital cart.",
+      "category": "Free Items",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "FREEDRINK",
-      "discount": "Free soft drink",
+      "discount": "Free Medium Soft Drink",
       "bestFor": "Any online order",
       "minOrder": "Online only",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Redeemable for a 22oz fountain drink on digital orders."
+      "notes": "Redeemable for a 22oz fountain beverage on digital orders at participating locations.",
+      "category": "Free Items",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "BOGO",
-      "discount": "Free bowl",
-      "bestFor": "Chili Crisp Shrimp order",
-      "minOrder": "Item purchase required",
-      "status": "Check App",
+      "discount": "Buy One Bowl Get One Free",
+      "bestFor": "Two-person lunch",
+      "minOrder": "1 Bowl ($8.30+)",
+      "status": "Unconfirmed",
       "confidence": "Reported, Unconfirmed",
-      "notes": "Buy one featured entree, get a second bowl complimentary.",
+      "notes": "Reported buy-one-get-one bowl promo; regional participation unconfirmed across all stores.",
       "category": "Online Deals",
       "expiry": "Ongoing",
-      "isDraft": false
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "FEAST",
       "discount": "$30 Family Meal",
-      "bestFor": "Feeds 5 people",
-      "minOrder": "Family Meal",
-      "status": "Check App",
+      "bestFor": "Feeds 4–5 people",
+      "minOrder": "Family Meal ($35+)",
+      "status": "Unconfirmed",
       "confidence": "Reported, Unconfirmed",
-      "notes": "Promotional flat-rate Family Meal deal for up to 5 people."
+      "notes": "Flat-rate $30 Family Meal promotional pricing; limited regional availability reported by users.",
+      "category": "Family Deals",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "SAVE6",
-      "discount": "6% off",
+      "discount": "6% Off Order",
       "bestFor": "Any order",
       "minOrder": "None",
       "status": "Active",
       "confidence": "Multiple Recent Sources",
-      "notes": "Site-wide discount valid on standard online cart items."
+      "notes": "Site-wide percentage discount valid on standard digital orders at checkout.",
+      "category": "Online Deals",
+      "expiry": "Ongoing",
+      "isDraft": false,
+      "lastChecked": "2026-10-01"
     },
     {
       "code": "THANKSMOM",
-      "discount": "30% off or $30 Family Meal",
-      "bestFor": "Limited time",
-      "minOrder": "Varies",
-      "status": "Check App",
+      "discount": "$30 Family Meal or 30% Off",
+      "bestFor": "Mother's Day promo",
+      "minOrder": "Family Meal",
+      "status": "Expired",
       "confidence": "Reported, Unconfirmed",
-      "notes": "Promotional campaign offer; verify in app before placing order."
+      "notes": "Limited-time Mother's Day promotional campaign offer; expired.",
+      "category": "Family Deals",
+      "expiry": "2026-05-15",
+      "isDraft": false,
+      "lastChecked": "2026-05-15"
     }
   ],
   "familyMealCodes": [
@@ -111,7 +141,7 @@
     {
       "code": "FEAST",
       "offer": "$30 Family Meal",
-      "details": "Feeds 5 people, promotional flat-rate Family Meal deal"
+      "details": "Feeds 4–5 people, promotional flat-rate Family Meal deal"
     },
     {
       "code": "THANKSMOM",

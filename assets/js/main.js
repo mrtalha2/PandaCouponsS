@@ -268,23 +268,27 @@ function initFaqAccordion() {
  * 5. Dynamic Month & Year
  */
 function initDynamicDates() {
-  const now = new Date();
-  const tzMeta = document.querySelector('meta[name="site-timezone"]');
-  const timeZone = tzMeta ? tzMeta.getAttribute('content') : 'America/Los_Angeles';
-  
-  const formatterMonth = new Intl.DateTimeFormat('en-US', { timeZone, month: 'long', year: 'numeric' });
-  const formatterYear = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' });
-  
-  const currentMonthYear = formatterMonth.format(now);
-  const currentYear = formatterYear.format(now);
+  try {
+    const now = new Date();
+    const tzMeta = document.querySelector('meta[name="site-timezone"]');
+    const timeZone = tzMeta ? tzMeta.getAttribute('content') : 'America/Los_Angeles';
+    
+    const formatterMonth = new Intl.DateTimeFormat('en-US', { timeZone, month: 'long', year: 'numeric' });
+    const formatterYear = new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' });
+    
+    const currentMonthYear = formatterMonth.format(now);
+    const currentYear = formatterYear.format(now);
 
-  document.querySelectorAll('.js-current-month-year').forEach((el) => {
-    el.textContent = currentMonthYear;
-  });
+    document.querySelectorAll('.js-current-month-year').forEach((el) => {
+      el.textContent = currentMonthYear;
+    });
 
-  document.querySelectorAll('.js-current-year').forEach((el) => {
-    el.textContent = currentYear;
-  });
+    document.querySelectorAll('.js-current-year').forEach((el) => {
+      el.textContent = currentYear;
+    });
+  } catch (err) {
+    // Keep server-rendered text if Intl or DOM manipulation fails
+  }
 }
 
 /**

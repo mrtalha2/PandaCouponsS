@@ -25,6 +25,37 @@ function renderHome() {
     }))
   };
 
+  function isCouponExpired(coupon) {
+    if (coupon.status === 'Expired') return true;
+    if (coupon.expiry && coupon.expiry !== 'Ongoing' && /^\d{4}-\d{2}-\d{2}$/.test(coupon.expiry)) {
+      const { yyyymmdd } = require('../utils/date').getDynamicDate();
+      if (coupon.expiry < yyyymmdd) return true;
+    }
+    return false;
+  }
+
+  function getEffectiveStatus(coupon) {
+    if (isCouponExpired(coupon)) return 'Expired';
+    return coupon.status;
+  }
+
+  function getCouponLabel(coupon) {
+    if (isCouponExpired(coupon)) return 'Expired';
+    const isoMonth = require('../utils/date').getIsoMonth();
+    const isCurrentMonth = coupon.lastChecked && coupon.lastChecked.startsWith(isoMonth);
+    const mentionsSource = /app|website|pandaexpress\.com|source|checkout/i.test(coupon.notes || '');
+    if (coupon.status === 'Active' && isCurrentMonth && mentionsSource && coupon.confidence === 'Verified') {
+      return 'Verified';
+    }
+    if (coupon.confidence === 'Multiple Recent Sources' || coupon.status === 'Active') {
+      return 'Reported working';
+    }
+    if (coupon.confidence === 'Reported, Unconfirmed' || coupon.status === 'Check App' || coupon.status === 'Unconfirmed') {
+      return 'Unconfirmed';
+    }
+    return coupon.status || 'Unconfirmed';
+  }
+
   // Helper for status badge class
   function getStatusClass(status) {
     const s = (status || '').toLowerCase().replace(/\s+/g, '-');
@@ -36,21 +67,23 @@ function renderHome() {
 
   // Calculate metrics from coupons data
   const totalCodesCount = liveCoupons.length;
-  const activeCount = liveCoupons.filter(c => c.status === 'Active').length;
+  const activeCount = liveCoupons.filter(c => getEffectiveStatus(c) === 'Active').length;
 
   // Extract top 2 active codes from the table for the hero header cards
-  const heroActiveCoupons = liveCoupons.filter(c => c.status === 'Active');
+  const heroActiveCoupons = liveCoupons.filter(c => getEffectiveStatus(c) === 'Active');
   const heroCoupon1 = heroActiveCoupons[0] || {
     code: 'PANDA20',
     discount: '20% Off Entire Order',
     bestFor: 'Online orders',
-    minOrder: 'None'
+    minOrder: '$10+',
+    lastChecked: '2026-10-01'
   };
   const heroCoupon2 = heroActiveCoupons[1] || {
     code: 'FAMILY10',
     discount: '$10 Off Family Meal',
     bestFor: 'Family orders',
-    minOrder: 'Family Meal'
+    minOrder: 'Family Meal',
+    lastChecked: '2026-10-01'
   };
 
   const content = `
@@ -106,7 +139,7 @@ function renderHome() {
           <div class="hero-card-header-row">
             <div class="hero-coupon-status">
               <span class="hero-coupon-dot"></span>
-              <span>Verified active</span>
+              <span>${getCouponLabel(heroCoupon1)}</span>
             </div>
             <span class="hero-deal-pill pill-flame">🔥 Top Pick</span>
           </div>
@@ -119,7 +152,7 @@ function renderHome() {
             </button>
           </div>
           <div class="hero-coupon-footer">
-            <div class="hero-coupon-terms">${heroCoupon1.bestFor || 'Online orders'} &bull; ${heroCoupon1.minOrder && heroCoupon1.minOrder.toLowerCase() !== 'none' ? 'Min. ' + heroCoupon1.minOrder : 'No minimum'}</div>
+            <div class="hero-coupon-terms">${heroCoupon1.bestFor || 'Online orders'} &bull; ${heroCoupon1.minOrder && heroCoupon1.minOrder.toLowerCase() !== 'none' ? 'Min. ' + heroCoupon1.minOrder : 'No minimum'} &bull; Checked ${heroCoupon1.lastChecked || '{{MONTH_YEAR}}'}</div>
             <a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer" class="hero-redeem-hint" aria-label="Apply code ${heroCoupon1.code} on Panda Express">Apply at pandaexpress.com ↗</a>
           </div>
         </div>
@@ -129,7 +162,7 @@ function renderHome() {
           <div class="hero-card-header-row">
             <div class="hero-coupon-status">
               <span class="hero-coupon-dot"></span>
-              <span>Verified active</span>
+              <span>${getCouponLabel(heroCoupon2)}</span>
             </div>
             <span class="hero-deal-pill pill-group">🥡 Best for Groups</span>
           </div>
@@ -142,7 +175,7 @@ function renderHome() {
             </button>
           </div>
           <div class="hero-coupon-footer">
-            <div class="hero-coupon-terms">${heroCoupon2.bestFor || 'Family orders'} &bull; ${heroCoupon2.minOrder && heroCoupon2.minOrder.toLowerCase() !== 'none' ? heroCoupon2.minOrder : 'App &amp; web'}</div>
+            <div class="hero-coupon-terms">${heroCoupon2.bestFor || 'Family orders'} &bull; ${heroCoupon2.minOrder && heroCoupon2.minOrder.toLowerCase() !== 'none' ? heroCoupon2.minOrder : 'App &amp; web'} &bull; Checked ${heroCoupon2.lastChecked || '{{MONTH_YEAR}}'}</div>
             <a href="https://www.pandaexpress.com" target="_blank" rel="noopener noreferrer" class="hero-redeem-hint" aria-label="Apply code ${heroCoupon2.code} on Panda Express">Apply at pandaexpress.com ↗</a>
           </div>
         </div>
@@ -201,7 +234,7 @@ function renderHome() {
       </div>
       <div class="stat-dock-divider"></div>
       <div class="stat-dock-item">
-        <div class="stat-dock-num" style="color: #F5B301;">Official App &amp; Web</div>
+        <div class="stat-dock-num" style="color: #F5B301;">Panda Express App &amp; Web</div>
         <div class="stat-dock-label">Direct Channel Only</div>
       </div>
     </div>
@@ -227,7 +260,7 @@ function renderHome() {
         <a href="#other-discounts-heading" class="toc-link">🎖️ Other Ways to Save in {{YEAR}}</a>
         <a href="#verification-process-section" class="toc-link">🔍 Our Verification Process</a>
         <a href="#faq-section-heading" class="toc-link">❓ Frequently Asked Questions</a>
-        <a href="#cta-final-heading" class="toc-link">📱 Official App</a>
+        <a href="#cta-final-heading" class="toc-link">📱 Panda Express App</a>
       </nav>
     </details>
 
@@ -245,7 +278,7 @@ function renderHome() {
         <a href="#other-discounts-heading" class="toc-pill">🎖️ Secret Savings</a>
         <a href="#verification-process-section" class="toc-pill">🔍 Verification</a>
         <a href="#faq-section-heading" class="toc-pill">❓ FAQ</a>
-        <a href="#cta-final-heading" class="toc-pill">📱 Official App</a>
+        <a href="#cta-final-heading" class="toc-pill">📱 Panda Express App</a>
       </div>
     </nav>
   </div>
@@ -299,6 +332,9 @@ function renderHome() {
         <p class="subtitle-light" style="max-width: 860px; margin-left: auto; margin-right: auto;">
           Before you copy any code from this table or anywhere else, understand this: <strong>no coupon site — including this one — can guarantee a code works at the exact moment you check out</strong>. Codes rotate, deactivate after one use, or get switched off regionally without notice. What we can do is tell you how much corroboration each code has, so you're not wasting time on something that's been dead for months.
         </p>
+        <p class="coupon-table-lead-note" style="color: #94A3B8; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0;">
+          Codes below come from public reports and may be location-limited.
+        </p>
       </div>
 
       <!-- Security Callout -->
@@ -350,20 +386,22 @@ function renderHome() {
           else if (c.discount.toLowerCase().includes('family') || c.bestFor.toLowerCase().includes('group')) category = 'family';
           else if (c.discount.toLowerCase().includes('free')) category = 'free';
 
-          const confidenceLabel = c.confidence || (c.status === 'Active' ? 'Multiple Recent Sources' : 'Reported, Unconfirmed');
+          const effectiveStatus = getEffectiveStatus(c);
+          const label = getCouponLabel(c);
 
           return `
-            <article class="ticket-card" data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${c.status}">
+            <article class="ticket-card" data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${effectiveStatus}">
               <div class="ticket-top">
                 <div class="ticket-status-row">
-                  <span class="status-badge ${getStatusClass(c.status)}">${c.status}</span>
+                  <span class="status-badge ${getStatusClass(effectiveStatus)}">${effectiveStatus}</span>
                   <span class="ticket-min-badge">${c.minOrder === 'None' ? 'No Min Order' : 'Min: ' + c.minOrder}</span>
                 </div>
                 <div class="ticket-discount">${c.discount}</div>
                 <div class="ticket-bestfor">Best for: <strong>${c.bestFor}</strong></div>
                 <p class="ticket-notes">${c.notes}</p>
-                <div class="ticket-confidence" style="font-size: 0.78rem; color: #94A3B8; margin-top: 0.5rem; display: flex; align-items: center; gap: 0.35rem;">
-                  <span>Confidence:</span> <strong style="color: ${c.status === 'Active' ? '#86EFAC' : '#FDE047'};">${confidenceLabel}</strong>
+                <div class="ticket-confidence" style="font-size: 0.78rem; color: #94A3B8; margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.35rem;">
+                  <div><span>Status:</span> <strong style="color: ${effectiveStatus === 'Active' ? '#86EFAC' : (effectiveStatus === 'Expired' ? '#FCA5A5' : '#FDE047')};">${label}</strong></div>
+                  <span style="font-size: 0.75rem; color: #64748B;">Checked ${c.lastChecked}</span>
                 </div>
               </div>
 
@@ -396,6 +434,7 @@ function renderHome() {
           <thead>
             <tr>
               <th scope="col">Status</th>
+              <th scope="col">Checked</th>
               <th scope="col">Min Order</th>
               <th scope="col">Offer</th>
               <th scope="col">Best For</th>
@@ -411,9 +450,12 @@ function renderHome() {
               else if (c.discount.toLowerCase().includes('family') || c.bestFor.toLowerCase().includes('group')) category = 'family';
               else if (c.discount.toLowerCase().includes('free')) category = 'free';
 
+              const effectiveStatus = getEffectiveStatus(c);
+
               return `
-              <tr data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${c.status}">
-                <td><span class="status-badge ${getStatusClass(c.status)}">${c.status}</span></td>
+              <tr data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${effectiveStatus}">
+                <td><span class="status-badge ${getStatusClass(effectiveStatus)}">${effectiveStatus}</span></td>
+                <td><span style="font-size: 0.8rem; color: #94A3B8;">${c.lastChecked}</span></td>
                 <td><strong>${c.minOrder === 'None' ? 'No Min Order' : c.minOrder}</strong></td>
                 <td><span class="discount-highlight">${c.discount}</span></td>
                 <td>${c.bestFor}</td>
@@ -1012,7 +1054,7 @@ function renderHome() {
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
           <h3 style="font-size: 1.2rem; color: var(--color-body-text); margin-top: 0;">How We Check Codes</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); line-height: 1.6; margin-bottom: 0;">
-            Each code listed on this page is checked against multiple independent sources — coupon aggregators, deal forums, and reported user activity — before it's assigned a confidence level. We do not have a live, automated feed from Panda Express, and no third-party site does either, since Panda Express doesn't publish a public coupon API. That's exactly why the confidence system exists instead of a flat "verified" badge: it tells you how much corroboration a code has, not a guarantee that it will work the moment you check out.
+            We collect codes from Panda Express's own app and website and from public deal reports, try them where possible, and label each by how sure we are. Codes change often and vary by location, so confirm the discount in your cart before paying. We do not have a live feed from Panda Express.
           </p>
         </div>
 
@@ -1026,7 +1068,7 @@ function renderHome() {
 
           <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--color-muted-text); margin-bottom: 0.35rem;">Where We Look</h4>
           <p style="font-size: 0.88rem; color: var(--color-muted-text); margin-bottom: 0;">
-            Official Panda Express channels (<code>pandaexpress.com</code> and the Rewards signup page), independent deal communities where codes are first reported, and cross-referencing dates to catch codes that have quietly gone stale.
+            Panda Express digital channels (<code>pandaexpress.com</code> and the Rewards signup page), deal communities where codes are first reported, and cross-referencing dates to catch stale codes.
           </p>
         </div>
       </div>
