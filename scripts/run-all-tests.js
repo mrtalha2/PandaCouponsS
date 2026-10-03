@@ -17,6 +17,7 @@ const testSuites = [
   { name: 'Asset Integrity Verification', script: 'scripts/verify-assets.js' },
   { name: 'WCAG Color Contrast Audit', script: 'scripts/check-contrast.js' },
   { name: 'Accessibility & Table Semantics Audit', script: 'scripts/verify-a11y.js' },
+  { name: 'Site Remediation & Integration Verification', script: 'scripts/verify-site-remediation.js' },
   { name: 'Forbidden Email Absence Guard', script: 'scripts/verify-no-forbidden-email.js' }
 ];
 

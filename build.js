@@ -245,7 +245,9 @@ async function build() {
   console.log(`  ✓ Asset version hash: ${assetHash}`);
   
   fs.writeFileSync(path.join(DIST_DIR, 'assets', 'css', `style.${assetHash}.css`), cleanCssResult.styles, 'utf8');
+  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'css', 'style.min.css'), cleanCssResult.styles, 'utf8');
   fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', `main.${assetHash}.js`), terserResult.code, 'utf8');
+  fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', 'main.min.js'), terserResult.code, 'utf8');
   
 
   // 4. Render and Minify HTML Pages (Phase 7a, 7b, 7c)
