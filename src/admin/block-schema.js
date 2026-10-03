@@ -164,7 +164,7 @@ function createDefaultBlock(type, pageSlug = 'home') {
         locked: true,
         title: 'Contact Our Editorial Team',
         subtitle: 'Have feedback, spotted an unlisted coupon code, or found a broken deal? We reply within 2–3 business days.',
-        supportEmail: 'help [at] pandacoupons.org'
+        supportEmail: 'helppandacoupons@gmail.com'
       };
     default:
       return { id, type: 'paragraph', content: '' };

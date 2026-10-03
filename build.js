@@ -208,10 +208,6 @@ async function build() {
   const startTime = Date.now();
   console.log(`\n🚀 Starting static build for ${config.siteName}...`);
 
-  if (!config.formEndpoint || config.formEndpoint.includes('placeholder')) {
-    console.warn('\n⚠️  BUILD WARNING: config.formEndpoint contains "placeholder"!\n    Contact form submissions will be discarded until a real Formspree ID is set in data/site.config.js.\n');
-  }
-
   // 1. Clean or create dist
   ensureDirSync(DIST_DIR);
 

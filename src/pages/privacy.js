@@ -101,8 +101,8 @@ function renderPrivacy() {
           If you have questions, privacy concerns, or data erasure requests concerning this Privacy Policy, our designated privacy representative can be reached at:
         </p>
         <p>
-          ✉️ <a href="#" class="protected-email" data-show-text="true" style="font-weight: 800; color: #C8102E;">
-            help [at] pandacoupons.org
+          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 800; color: #C8102E;">
+            ${config.contactEmail}
           </a>
         </p>
       </section>

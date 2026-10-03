@@ -596,7 +596,7 @@ function renderVisualEditor({ activePage = 'home', blocks = [], publishState }) 
             newBlock.locked = true;
             newBlock.title = 'Contact Our Editorial Team';
             newBlock.subtitle = 'Have feedback or new codes?';
-            newBlock.supportEmail = 'help [at] pandacoupons.org';
+            newBlock.supportEmail = 'helppandacoupons@gmail.com';
             break;
         }
 

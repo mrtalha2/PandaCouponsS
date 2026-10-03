@@ -1,33 +1,32 @@
-const fs = require('fs');
-const path = require('path');
 const config = require('../../data/site.config');
 
 function renderContact() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const contactBlocks = pageBlocks.contact || [];
-  const contactFormBlock = contactBlocks.find(b => b.type === 'contact-form');
-  const contactContent = adminContent.contact || {};
-
-  const heroTitle = contactFormBlock?.title || contactContent.heading || 'Contact Our Editorial Team';
-  const heroSubtitle = contactFormBlock?.subtitle || contactContent.subtitle || 'Have feedback, spotted an unlisted coupon code, or found a broken deal? We reply within 2–3 business days.';
-  const boxTitle = contactFormBlock?.boxTitle || 'Direct Support Email';
-  const boxDesc = contactFormBlock?.boxDesc || 'For direct assistance, media inquiries, or legal notifications, send an email to our editorial desk:';
-  const supportEmail = contactFormBlock?.supportEmail || contactContent.supportEmail || 'helppandacoupons@gmail.com';
-
   const breadcrumbs = [
     { label: "Home", url: "/" },
     { label: "Contact Us", url: "/contact-us/" }
+  ];
+
+  const quickLinks = [
+    {
+      title: "🚨 Report a broken or expired coupon code",
+      subject: "Report Broken or Expired Coupon Code",
+      body: "Coupon Code:\nWhat error appeared:\nDate attempted:\nOrder type (App / Web / In-Store):\n"
+    },
+    {
+      title: "🎉 Submit a new working promo code",
+      subject: "Submit a New Working Promo Code",
+      body: "Coupon Code:\nWhere you found it:\nWhat it gives (discount):\nMinimum order requirement (if any):\n"
+    },
+    {
+      title: "🥗 Nutrition data correction",
+      subject: "Nutrition Data Correction Request",
+      body: "Item name:\nWhich page:\nThe number you believe is right:\nSource link:\n"
+    },
+    {
+      title: "⚖️ Trademark or legal inquiry",
+      subject: "Trademark or Legal Inquiry",
+      body: "Inquiry / Request Details:\n"
+    }
   ];
 
   const content = `
@@ -35,80 +34,71 @@ function renderContact() {
     <div class="subpage-banner-mask"></div>
     <div class="container relative-z">
       <div class="dish-hero-kicker">GET IN TOUCH</div>
-      <h1 class="dish-hero-title">${heroTitle}</h1>
+      <h1 class="dish-hero-title">Contact Us</h1>
       <p class="dish-hero-subtitle">
-        ${heroSubtitle}
+        Have feedback, spotted an unlisted coupon code, or found an issue? We read every message and reply as soon as we can.
       </p>
     </div>
   </section>
 
   <div class="container" style="padding-top: 3rem; padding-bottom: 4rem; max-width: 860px;">
-    <div style="display: grid; grid-template-columns: 1fr; gap: 2rem;">
-      <!-- Direct Email Box -->
-      <div class="contact-info-card">
-        <h2 style="font-size: 1.35rem; margin-top: 0;">${boxTitle}</h2>
-        <p style="font-size: 0.98rem; margin-bottom: 1rem;">
-          ${boxDesc}
-        </p>
-        <p style="margin-bottom: 0;">
-          ✉️ <a href="mailto:${supportEmail}" style="font-size: 1.15rem; font-weight: 800; color: #C8102E;">
-            ${supportEmail}
-          </a>
-        </p>
+    <div class="contact-info-card" style="margin-bottom: 2.5rem; text-align: center; padding: 2.5rem 2rem;">
+      <h2 style="font-size: 1.6rem; margin-top: 0; margin-bottom: 0.75rem;">Direct Email Contact</h2>
+      <p style="font-size: 1.05rem; margin-bottom: 1.75rem; color: #D1D5DB; max-width: 600px; margin-left: auto; margin-right: auto;">
+        Our team handles all inquiries directly via email. Click below to compose a message or copy our address to your clipboard:
+      </p>
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 1rem;">
+        <a href="mailto:${config.contactEmail}" class="btn" style="font-size: 1.1rem; padding: 0.9rem 1.75rem;">
+          ✉️ Email Us: ${config.contactEmail}
+        </a>
+        <button type="button" class="btn btn-outline btn-copy-email" data-email="${config.contactEmail}" aria-label="Copy email address to clipboard" style="font-size: 1.05rem; padding: 0.85rem 1.5rem;">
+          📋 Copy Email
+        </button>
       </div>
+    </div>
 
-      <!-- Form Box -->
-      <div class="contact-form-card">
-        <h2 style="font-size: 1.4rem; margin-top: 0; margin-bottom: 0.5rem;">Send Us a Message</h2>
-        <p class="section-subtitle-muted" style="font-size: 0.92rem; margin-bottom: 1.75rem;">
-          Fill out the form below and our team will get back to you shortly.
-        </p>
-
-        <form action="${config.formEndpoint}" method="POST" id="contact-form">
-          <!-- Honeypot spam protection -->
-          <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
-
-          <div class="form-group">
-            <label for="contact-topic" class="form-label">Subject / Purpose</label>
-            <select id="contact-topic" name="topic" class="form-select" required>
-              <option value="broken-code">🚨 Report a Broken or Expired Coupon Code</option>
-              <option value="new-code">🎉 Submit a New Working Promo Code</option>
-              <option value="nutrition-correction">🥗 Nutrition Data Correction</option>
-              <option value="general-inquiry" selected>💬 General Feedback or Question</option>
-              <option value="legal-trademark">⚖️ Trademark or Legal Inquiry</option>
-            </select>
-          </div>
-
-          <div class="form-group">
-            <label for="contact-name" class="form-label">Your Name</label>
-            <input type="text" id="contact-name" name="name" class="form-input" placeholder="e.g. Alex Smith" required>
-          </div>
-
-          <div class="form-group">
-            <label for="contact-email" class="form-label">Your Email Address</label>
-            <input type="email" id="contact-email" name="email" class="form-input" placeholder="alex@example.com" required>
-          </div>
-
-          <div class="form-group">
-            <label for="contact-message" class="form-label">Message Details</label>
-            <textarea id="contact-message" name="message" rows="5" class="form-textarea" placeholder="Please provide specific details..." required></textarea>
-          </div>
-
-          <!-- Live Form Status Announcement Region -->
-          <div id="contactFormStatus" class="form-status-region" aria-live="polite" style="margin-bottom: 1rem;"></div>
-
-          <button type="submit" class="btn" style="width: 100%; font-size: 1.05rem; padding: 0.9rem;">
-            Send Message &rarr;
-          </button>
-        </form>
+    <!-- Quick-link mailto actions -->
+    <div class="quick-inquiry-section" style="margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.35rem; margin-bottom: 1rem;">Common Inquiries &amp; Quick Email Templates</h2>
+      <p style="font-size: 0.95rem; color: #D1D5DB; margin-bottom: 1.25rem;">
+        Select an inquiry category below to open a pre-formatted email draft in your email client:
+      </p>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+        ${quickLinks.map(link => {
+          const mailtoUrl = `mailto:${config.contactEmail}?subject=${encodeURIComponent(link.subject)}&body=${encodeURIComponent(link.body)}`;
+          return `
+            <a href="${mailtoUrl}" class="quick-link-card" style="display: block; padding: 1.25rem 1.5rem; background: #18181B; border: 1px solid #27272A; border-radius: 12px; text-decoration: none; transition: border-color 0.2s ease;">
+              <div style="font-weight: 700; font-size: 1.05rem; color: #FFFFFF; margin-bottom: 0.25rem;">${link.title}</div>
+              <div style="font-size: 0.88rem; color: #9CA3AF;">Click to open pre-filled email draft &rarr;</div>
+            </a>
+          `;
+        }).join('')}
       </div>
+    </div>
+
+    <!-- What to include in your email -->
+    <div class="contact-guidelines-card" style="background: #140E0C; border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1.75rem 2rem; margin-bottom: 2.5rem;">
+      <h2 style="font-size: 1.25rem; margin-top: 0; margin-bottom: 0.75rem; color: #FFFFFF;">What to Include in Your Email</h2>
+      <ul style="color: #D1D5DB; font-size: 0.95rem; line-height: 1.7; padding-left: 1.25rem; margin-bottom: 0;">
+        <li><strong>For promo codes:</strong> The exact code string, where you found it, and any order minimums.</li>
+        <li><strong>For broken deals:</strong> The code, the error message returned, and your ordering channel (App, Web, or Store).</li>
+        <li><strong>For nutrition questions:</strong> The specific menu item name and a link to the official Panda Express nutrition guide.</li>
+      </ul>
+    </div>
+
+    <!-- Independence Statement -->
+    <div style="margin-top: 2rem;">
+      <p class="statement-callout-box" style="padding: 1.25rem; font-size: 0.92rem; border-radius: 8px; color: #9CA3AF; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08);">
+        ${config.independenceDisclaimer} All trademarks, registered logos, and menu dish names featured or referenced on this website remain the sole intellectual property of their respective trademark proprietors.
+      </p>
     </div>
   </div>
   `;
 
   return {
     title: `Contact Us – Panda Express Coupons Support & Inquiries`,
-    description: `Contact the editorial desk at Panda Express Coupons. Submit new promo codes, report broken discounts, ask nutrition questions, and get quick email responses.`,
+    description: `Contact the editorial desk at Panda Express Coupons via email at ${config.contactEmail}. Submit new promo codes, report broken discounts, and ask nutrition questions.`,
     canonicalPath: '/contact-us/',
     content,
     breadcrumbs

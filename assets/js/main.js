@@ -15,7 +15,6 @@ function debounce(fn, delay = 180) {
 
 document.addEventListener('DOMContentLoaded', () => {
   // Critical interactive systems
-  initEmailDecoders();
   initCopyButtons();
   initHeroCopyButtons();
   initMobileNav();
@@ -36,27 +35,48 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /**
- * 1. Email Scraper Protection
- */
-function initEmailDecoders() {
-  const emailElements = document.querySelectorAll('.protected-email');
-  const user = 'help';
-  const domain = 'pandacoupons.org';
-  const fullEmail = `${user}@${domain}`;
-
-  emailElements.forEach((el) => {
-    el.setAttribute('href', `mailto:${fullEmail}`);
-    if (el.dataset.showText === 'true' || !el.textContent.trim()) {
-      el.textContent = fullEmail;
-    }
-  });
-}
-
-/**
- * 2. Coupon Code Clipboard Copying (Event Delegation)
+ * 2. Coupon Code & Email Clipboard Copying (Event Delegation)
  */
 function initCopyButtons() {
   document.addEventListener('click', async (e) => {
+    const copyEmailBtn = e.target.closest('.btn-copy-email');
+    if (copyEmailBtn) {
+      const email = copyEmailBtn.getAttribute('data-email') || 'helppandacoupons@gmail.com';
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(email);
+        } else {
+          const textArea = document.createElement('textarea');
+          textArea.value = email;
+          textArea.style.position = 'fixed';
+          textArea.style.left = '-999999px';
+          document.body.appendChild(textArea);
+          textArea.focus();
+          textArea.select();
+          document.execCommand('copy');
+          textArea.remove();
+        }
+
+        const originalHtml = copyEmailBtn.innerHTML;
+        copyEmailBtn.classList.add('is-copied');
+        copyEmailBtn.innerHTML = '<span>✓ Copied!</span>';
+
+        const announcer = document.getElementById('a11yClipboardAnnouncer');
+        if (announcer) {
+          announcer.textContent = `Email address copied to clipboard!`;
+          setTimeout(() => { announcer.textContent = ''; }, 3000);
+        }
+
+        setTimeout(() => {
+          copyEmailBtn.classList.remove('is-copied');
+          copyEmailBtn.innerHTML = originalHtml;
+        }, 2200);
+      } catch (err) {
+        console.error('Failed to copy email:', err);
+      }
+      return;
+    }
+
     const btn = e.target.closest('.btn-copy');
     if (!btn) return;
 

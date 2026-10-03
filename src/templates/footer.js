@@ -16,10 +16,10 @@ function renderFooter() {
             Your independent guide to verified promo codes, family meal discounts, official rewards hacks, and live nutrition tracking for Panda Express orders.
           </p>
           <div style="font-size: 0.88rem;">
-            <strong>Official Support:</strong><br>
+            <strong>Contact:</strong><br>
             <!-- Support Email -->
-            <a href="mailto:helppandacoupons@gmail.com" style="color: #F87171; text-decoration: underline;">
-              helppandacoupons@gmail.com
+            <a href="mailto:${config.contactEmail}" class="footer-contact-link">
+              ${config.contactEmail}
             </a>
           </div>
           

@@ -99,8 +99,8 @@ function renderDisclaimer() {
           If you are an intellectual property holder or authorized brand representative and hold concerns regarding any reference or content published on this website, please direct formal correspondence to our designated contact inbox. We address all legitimate removal and modification requests promptly:
         </p>
         <p>
-          ✉️ <a href="#" class="protected-email" data-show-text="true" style="font-weight: 800; color: #C8102E;">
-            help [at] pandacoupons.org
+          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 800; color: #C8102E;">
+            ${config.contactEmail}
           </a>
         </p>
       </section>

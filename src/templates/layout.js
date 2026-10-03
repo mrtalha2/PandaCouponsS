@@ -61,7 +61,7 @@ function renderLayout({
     "contactPoint": {
       "@type": "ContactPoint",
       "email": config.contactEmail,
-      "contactType": "customer service"
+      "contactType": "customer support"
     }
   };
   if (sameAsList.length > 0) {

@@ -2324,6 +2324,11 @@ details.faq-item[open] .faq-chevron {
   border-top: 3px solid var(--color-primary);
 }
 
+.footer-contact-link {
+  color: #F87171;
+  text-decoration: underline;
+}
+
 .footer-top {
   display: grid;
   grid-template-columns: 1fr;

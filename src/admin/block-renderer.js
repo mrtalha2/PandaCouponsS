@@ -524,7 +524,7 @@ function renderBlock(block, context = {}, isEditor = false) {
           <div class="contact-info-card" style="background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 1.5rem; margin-bottom: 2rem;">
             <h2 class="${isEditor ? 'block-editable' : ''}" style="font-size: 1.25rem; margin-top: 0; color: #0F172A;" ${isEditor ? `contenteditable="true" data-field="boxTitle" data-block-id="${id}"` : ''}>${block.boxTitle || 'Direct Support Email'}</h2>
             <p class="${isEditor ? 'block-editable' : ''}" style="color: #475569; font-size: 0.95rem; margin-bottom: 0.5rem;" ${isEditor ? `contenteditable="true" data-field="boxDesc" data-block-id="${id}"` : ''}>${block.boxDesc || 'For direct assistance, media inquiries, or updates:'}</p>
-            <p style="margin-bottom: 0;">✉️ <strong class="${isEditor ? 'block-editable' : ''}" style="color: #C8102E; font-size: 1.1rem;" ${isEditor ? `contenteditable="true" data-field="supportEmail" data-block-id="${id}"` : ''}>${block.supportEmail || 'help [at] pandacoupons.org'}</strong></p>
+            <p style="margin-bottom: 0;">✉️ <strong class="${isEditor ? 'block-editable' : ''}" style="color: #C8102E; font-size: 1.1rem;" ${isEditor ? `contenteditable="true" data-field="supportEmail" data-block-id="${id}"` : ''}>${block.supportEmail || 'helppandacoupons@gmail.com'}</strong></p>
           </div>
         </div>
       `;

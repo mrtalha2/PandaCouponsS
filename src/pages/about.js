@@ -129,8 +129,8 @@ function renderAbout() {
       <p style="max-width: 600px; margin: 0 auto 1.25rem auto;">
         We welcome submissions from fellow diners! If you discover a fresh regional promo code or notice that an existing code has ceased functioning, reach out to our editorial desk:
       </p>
-      <a href="mailto:helppandacoupons@gmail.com" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-        ✉️ helppandacoupons@gmail.com
+      <a href="mailto:${config.contactEmail}" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+        ✉️ ${config.contactEmail}
       </a>
     </div>
   `;

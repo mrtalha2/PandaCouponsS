@@ -80,8 +80,23 @@ for (const relPath of htmlFiles) {
   assert(content.includes('Panda Express Coupons is an independent website and is not affiliated with'), 
     `${relPath} is missing required independence disclaimer`);
 
-  // Check Protected Email
-  assert(content.includes('help [at] pandacoupons.org') || content.includes('help@pandacoupons.org'), `${relPath} is missing protected email reference`);
+  // Check Contact Email (single source of truth: helppandacoupons@gmail.com)
+  assert(content.includes('helppandacoupons@gmail.com'), `${relPath} is missing helppandacoupons@gmail.com`);
+
+  // Check no formspree or placeholder endpoints
+  assert(!content.toLowerCase().includes('formspree'), `${relPath} contains unexpected formspree reference`);
+  assert(!content.includes('https://formspree.io'), `${relPath} contains formspree URL`);
+
+  // Check Contact page has no form
+  if (relPath === 'contact-us/index.html') {
+    assert(!content.includes('<form'), 'contact-us page must not contain a <form> tag');
+  }
+
+  // Check that NO other email exists in the built page
+  const emailMatches = content.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g) || [];
+  for (const email of emailMatches) {
+    assert.strictEqual(email.toLowerCase(), 'helppandacoupons@gmail.com', `Forbidden or unknown email "${email}" found in ${relPath}`);
+  }
 }
 console.log(`\n✓ All ${htmlFiles.length} HTML pages passed strict SEO and semantic checks!`);
 

@@ -10,10 +10,7 @@ module.exports = {
   siteName: "Panda Express Coupons",
   siteTagline: "Verified Coupon Codes, Menu Prices & Nutrition Guides",
   domain: "https://pandacoupons.org",
-  // Note: domain mailbox (help@pandacoupons.org) must be provisioned on mail server
-  contactEmail: "help@pandacoupons.org",
-  // TODO: replace with real Formspree form ID
-  formEndpoint: "https://formspree.io/f/placeholder",
+  contactEmail: "helppandacoupons@gmail.com",
   get currentYear() {
     return new Date().getFullYear();
   },
