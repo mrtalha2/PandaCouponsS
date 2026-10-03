@@ -1,12 +1,69 @@
-name: Monthly Rebuild
+name: Monthly Rebuild & Deploy
+
 on:
   schedule:
-    - cron: '5 8 1 * *'
+    # Run hourly at minute 7 on days 1 and 28-31 to capture midnight on the 1st across any timezone and DST
+    - cron: '7 * 1,28-31 * *'
   workflow_dispatch:
+    inputs:
+      force:
+        description: 'Force rebuild and deploy (bypasses month-gate)'
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: monthly-rebuild
+  cancel-in-progress: false
+
+permissions:
+  contents: read
 
 jobs:
-  rebuild:
-    name: Monthly Rebuild & Verify
+  gate:
+    name: Check Month Gate
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.check.outputs.deploy }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Run month gate check
+        id: check
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://pandacoupons.org/' }}
+          FORCE_DEPLOY: ${{ inputs.force }}
+        run: |
+          if [ "$FORCE_DEPLOY" = "true" ]; then
+            echo "Force deploy requested via workflow_dispatch. Bypassing gate."
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          set +e
+          node scripts/month-gate.js
+          EXIT_CODE=$?
+          set -e
+
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          elif [ $EXIT_CODE -eq 10 ]; then
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "Gate script failed with unexpected exit code $EXIT_CODE" >&2
+            exit $EXIT_CODE
+          fi
+
+  build-deploy:
+    name: Build & Deploy
+    needs: gate
+    if: needs.gate.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -26,3 +83,109 @@ jobs:
 
       - name: Run verification test suite
         run: npm test
+
+      - name: Trigger Host Deploy Hook
+        env:
+          DEPLOY_HOOK_URL: ${{ secrets.DEPLOY_HOOK_URL }}
+        run: |
+          if [ -z "$DEPLOY_HOOK_URL" ]; then
+            echo "::error::TODO(owner): create a deploy hook in your host and save it as the GitHub secret DEPLOY_HOOK_URL"
+            exit 1
+          fi
+
+          echo "::add-mask::$DEPLOY_HOOK_URL"
+          echo "Calling deployment hook..."
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$DEPLOY_HOOK_URL")
+          echo "Deploy hook HTTP response status: $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" -lt 200 ] || [ "$HTTP_STATUS" -ge 300 ]; then
+            echo "::error::Deploy hook failed with HTTP status $HTTP_STATUS"
+            exit 1
+          fi
+
+      # Option B (Commented): For hosts without webhook support (rebuild on push)
+      # - name: Trigger Deploy via Empty Commit (Option B)
+      #   uses: actions/checkout@v4
+      #   with:
+      #     persist-credentials: true
+      # - name: Push Empty Commit
+      #   run: |
+      #     LABEL=$(node -e "console.log(require('./src/utils/date').getSiteDateParts().monthYearLabel)")
+      #     git config user.name "github-actions[bot]"
+      #     git config user.email "github-actions[bot]@users.noreply.github.com"
+      #     git commit --allow-empty -m "chore: monthly rebuild $LABEL"
+      #     git push
+
+  verify-live:
+    name: Verify Live Site Month
+    needs: build-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Poll live site until month reflects update
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://pandacoupons.org/' }}
+        run: |
+          node -e "
+          const { getSiteDateParts } = require('./src/utils/date');
+          const https = require('https');
+          const http = require('http');
+
+          const expectedLabel = getSiteDateParts().monthYearLabel;
+          const siteUrl = process.env.SITE_URL || 'https://pandacoupons.org/';
+          console.log('Polling ' + siteUrl + ' for expected month label: \"' + expectedLabel + '\"...');
+
+          function fetchTitle(urlStr) {
+            return new Promise((resolve, reject) => {
+              const u = new URL(urlStr);
+              const client = u.protocol === 'http:' ? http : https;
+              const req = client.get(u, {
+                headers: {
+                  'Cache-Control': 'no-cache',
+                  'User-Agent': 'PandaCoupons-VerifyLive/1.0'
+                },
+                timeout: 10000
+              }, res => {
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => {
+                  const m = data.match(/<title[^>]*>([^<]*)<\/title>/i);
+                  resolve(m ? m[1].trim() : '');
+                });
+              });
+              req.on('timeout', () => { req.destroy(); reject(new Error('Timeout')); });
+              req.on('error', reject);
+            });
+          }
+
+          async function poll() {
+            const maxAttempts = 30; // 30 attempts * 30s interval = 15 minutes
+            for (let i = 1; i <= maxAttempts; i++) {
+              console.log('Attempt ' + i + '/' + maxAttempts + ': Checking live title...');
+              try {
+                const title = await fetchTitle(siteUrl);
+                console.log('  Live title: \"' + title + '\"');
+                if (title && title.includes(expectedLabel)) {
+                  console.log('🎉 Verification SUCCESS: Live site title contains \"' + expectedLabel + '\"!');
+                  process.exit(0);
+                }
+              } catch (err) {
+                console.warn('  Attempt ' + i + ' fetch warning: ' + err.message);
+              }
+              if (i < maxAttempts) {
+                await new Promise(r => setTimeout(r, 30000));
+              }
+            }
+            console.error('❌ Verification FAILED: Live site did not update to \"' + expectedLabel + '\" within 15 minutes.');
+            process.exit(1);
+          }
+
+          poll();
+          "
