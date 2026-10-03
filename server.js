@@ -332,10 +332,67 @@ const server = http.createServer((req, res) => {
   serve404(req, res);
 });
 
+// Optional Auto-Rebuild Scheduler (Self-Hosted Fallback when AUTO_REBUILD=1)
+if (process.env.AUTO_REBUILD === '1') {
+  const { execSync } = require('child_process');
+  const { getSiteDateParts } = require('./src/utils/date');
+  let isRebuilding = false;
+
+  function performAutoRebuild() {
+    if (isRebuilding) return;
+    try {
+      const buildMonthFile = path.join(DIST_DIR, '.build-month');
+      const currentBuildMonth = fs.existsSync(buildMonthFile) ? fs.readFileSync(buildMonthFile, 'utf8').trim() : '';
+      const { monthYearLabel } = getSiteDateParts();
+
+      if (currentBuildMonth !== monthYearLabel) {
+        isRebuilding = true;
+        console.log(`[Auto-Rebuild] Month changed ("${currentBuildMonth}" -> "${monthYearLabel}"). Rebuilding static site...`);
+        
+        // Backup dist before rebuild in case of failure
+        const backupDir = path.join(__dirname, 'dist.bak');
+        try {
+          if (fs.existsSync(DIST_DIR)) {
+            fs.cpSync(DIST_DIR, backupDir, { recursive: true });
+          }
+          execSync('node build.js', { cwd: __dirname, stdio: 'pipe' });
+          if (fs.existsSync(backupDir)) {
+            fs.rmSync(backupDir, { recursive: true, force: true });
+          }
+          console.log(`[Auto-Rebuild] Rebuild complete successfully for ${monthYearLabel}.`);
+        } catch (buildErr) {
+          console.error('[Auto-Rebuild] Build error, restoring previous dist backup:', buildErr.message);
+          if (fs.existsSync(backupDir)) {
+            if (fs.existsSync(DIST_DIR)) fs.rmSync(DIST_DIR, { recursive: true, force: true });
+            fs.cpSync(backupDir, DIST_DIR, { recursive: true });
+            fs.rmSync(backupDir, { recursive: true, force: true });
+          }
+        } finally {
+          isRebuilding = false;
+        }
+      }
+    } catch (err) {
+      isRebuilding = false;
+      console.error('[Auto-Rebuild] Unexpected error during check:', err.message);
+    }
+  }
+
+  // Initial check on server start
+  performAutoRebuild();
+
+  // Check every 10 minutes (600,000 ms)
+  const rebuildInterval = setInterval(performAutoRebuild, 10 * 60 * 1000);
+  rebuildInterval.unref();
+}
+
 server.listen(PORT, () => {
   console.log(`\n🚀 Panda Express Coupons static server running at http://localhost:${PORT}/`);
   console.log(`   - Environment: ${process.env.NODE_ENV || 'production'}`);
   console.log(`   - Static directory: ${DIST_DIR}`);
+  if (process.env.AUTO_REBUILD === '1') {
+    console.log(`   - Auto-rebuild: ENABLED (checks every 10m on month change)`);
+  }
 });
 
 module.exports = server;
+
