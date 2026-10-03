@@ -25,8 +25,7 @@ const requiredFiles = [
   'privacy-policy/index.html',
   'sitemap.xml',
   'robots.txt',
-  'assets/css/style.min.css',
-  'assets/js/main.min.js',
+
   'public/fonts/plus-jakarta-sans-400.woff2',
   'public/fonts/plus-jakarta-sans-700.woff2',
   'public/fonts/plus-jakarta-sans-900.woff2',
@@ -62,9 +61,13 @@ for (const relPath of htmlFiles) {
   // Check Meta Description
   assert(content.includes('<meta name="description"'), `${relPath} is missing meta description`);
 
-  // Check Stylesheet & JS (supports both standard and production minified links)
-  assert(content.includes('/assets/css/style.css') || content.includes('/assets/css/style.min.css'), `${relPath} missing stylesheet link`);
-  assert(content.includes('/assets/js/main.js') || content.includes('/assets/js/main.min.js'), `${relPath} missing main.js link`);
+  const cssMatch = content.match(/href="(\/assets\/css\/style(\.[a-f0-9]{8})?(\.min)?\.css)"/);
+  assert(cssMatch, `${relPath} missing valid stylesheet link`);
+  assert(fs.existsSync(path.join(DIST_DIR, cssMatch[1])), `Referenced CSS file ${cssMatch[1]} missing from dist/`);
+
+  const jsMatch = content.match(/src="(\/assets\/js\/main(\.[a-f0-9]{8})?(\.min)?\.js)"/);
+  assert(jsMatch, `${relPath} missing valid main.js link`);
+  assert(fs.existsSync(path.join(DIST_DIR, jsMatch[1])), `Referenced JS file ${jsMatch[1]} missing from dist/`);
 
   // Check Self-Hosted Font Preloads
   assert(content.includes('plus-jakarta-sans-400.woff2'), `${relPath} missing font preload for 400`);

@@ -909,8 +909,10 @@ process.on('SIGINT', () => { console.log('SIGINT'); server.close(() => process.e
 // ==========================================
 // MONTHLY REBUILD SCHEDULER
 // ==========================================
-const { getDynamicDate } = require('./src/utils/date');
+let isRebuilding = false;
+
 function checkAndRebuild() {
+  if (isRebuilding) return;
   const { currentMonthYear } = getDynamicDate();
   const buildMonthFile = path.join(DIST_DIR, '.build-month');
   let lastBuildMonth = '';
@@ -919,15 +921,17 @@ function checkAndRebuild() {
   }
   
   if (lastBuildMonth !== currentMonthYear) {
+    isRebuilding = true;
     console.log(`[Scheduler] Month changed from '${lastBuildMonth}' to '${currentMonthYear}'. Triggering rebuild.`);
     publisher.runPublish().then(res => {
+      isRebuilding = false;
       if (res.success) {
-        fs.writeFileSync(buildMonthFile, currentMonthYear, 'utf8');
         console.log(`[Scheduler] Rebuild successful.`);
       } else {
         console.error(`[Scheduler] Rebuild failed.`);
       }
     }).catch(err => {
+      isRebuilding = false;
       console.error(`[Scheduler] Rebuild error:`, err);
     });
   }

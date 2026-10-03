@@ -908,7 +908,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border-radius: var(--radius-md);
   background: #FFFFFF !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-  
+  box-sizing: border-box;
 }
 
 .family-deals-card .table-responsive {
@@ -1966,7 +1966,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border-radius: 4px;
   color: #000000 !important;
   font-family: var(--font-primary), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  
+  box-sizing: border-box;
 }
 
 @media (min-width: 480px) {
@@ -2933,8 +2933,15 @@ details.faq-item[open] .faq-chevron {
     display: none;
   }
   .btn-hero-secondary {
-    padding: 0.75rem 1rem !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0.5rem 0 !important;
+    text-decoration: underline !important;
     font-size: 0.95rem !important;
+    color: #F3F4F6 !important;
   }
   .hero-trust-points {
     gap: 0.4rem 1rem;
@@ -3271,7 +3278,7 @@ details.faq-item[open] .faq-chevron {
   overflow: visible;
   min-width: 0;
   max-width: 100%;
-  
+  box-sizing: border-box;
 }
 
 .ticket-card:hover {
@@ -4090,7 +4097,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
   min-width: 0;
   max-width: 100%;
-  
+  box-sizing: border-box;
 }
 
 @media (min-width: 641px) {
@@ -5349,7 +5356,7 @@ th.sortable,
 #calcClearSearch,
 #couponClearSearch {
   min-height: 44px;
-  
+  box-sizing: border-box;
 }
 
 .mobile-nav-toggle {
@@ -7382,7 +7389,7 @@ th.sortable {
   background: #111827;
   color: #FFFFFF;
   transition: all 0.2s ease;
-  
+  box-sizing: border-box;
 }
 
 .explorer-search-input:focus {

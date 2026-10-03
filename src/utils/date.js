@@ -31,7 +31,18 @@ function getDynamicDate() {
     yyyymmdd
   };
 }
+function resolveTokens(html) {
+  const { currentMonthYear, currentMonth, currentYear } = getDynamicDate();
+  let result = html;
+  if (result && typeof result === 'string') {
+    result = result.replace(/{{MONTH_YEAR}}/g, currentMonthYear);
+    result = result.replace(/{{MONTH}}/g, currentMonth);
+    result = result.replace(/{{YEAR}}/g, currentYear);
+  }
+  return result;
+}
 
 module.exports = {
-  getDynamicDate
+  getDynamicDate,
+  resolveTokens
 };

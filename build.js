@@ -46,23 +46,8 @@ async function writePage(routePath, pageData, assetHash) {
   }
 
   let fullHtml = renderLayout(pageData);
-  const { currentMonthYear, currentMonth, currentYear } = require('./src/utils/date').getDynamicDate();
-  
-  // Check for literal remaining current/previous-year strings BEFORE replacing tokens
-  const hardcodedPattern = new RegExp(`\\b(January|February|March|April|May|June|July|August|September|October|November|December)\\s(2025|2026)\\b`, 'g');
-  let match;
-  while ((match = hardcodedPattern.exec(fullHtml)) !== null) {
-    console.warn(`  ⚠️  WARNING: Found hardcoded date '${match[0]}' in ${routePath}`);
-  }
-  const yearPattern = /\b(2025|2026)\b/g;
-  while ((match = yearPattern.exec(fullHtml)) !== null) {
-    console.warn(`  ⚠️  WARNING: Found hardcoded year '${match[0]}' in ${routePath}`);
-  }
-
-  // Replace admin templates
-  fullHtml = fullHtml.replace(/{{MONTH_YEAR}}/g, currentMonthYear);
-  fullHtml = fullHtml.replace(/{{MONTH}}/g, currentMonth);
-  fullHtml = fullHtml.replace(/{{YEAR}}/g, currentYear);
+  const { resolveTokens } = require('./src/utils/date');
+  fullHtml = resolveTokens(fullHtml);
   
   let finalHtml = fullHtml;
 
@@ -189,7 +174,11 @@ async function build() {
 
   // 2. Copy Assets & Public Resources first so unminified base exists
   console.log('\n📦 Copying assets & public resources...');
-  copyDirRecursiveSync(path.join(__dirname, 'assets'), path.join(DIST_DIR, 'assets'));
+  const distAssets = path.join(DIST_DIR, 'assets');
+  if (fs.existsSync(distAssets)) {
+    fs.rmSync(distAssets, { recursive: true, force: true });
+  }
+  copyDirRecursiveSync(path.join(__dirname, 'assets'), distAssets);
   copyDirRecursiveSync(path.join(__dirname, 'public'), path.join(DIST_DIR, 'public'));
 
   // 3. Asset Minification & Content Hashing (CleanCSS & Terser)
@@ -333,6 +322,9 @@ async function build() {
   console.log('\n🗺️ Generating SEO files...');
   generateSitemap(routes);
   generateRobots();
+
+  const { currentMonthYear } = require('./src/utils/date').getDynamicDate();
+  fs.writeFileSync(path.join(DIST_DIR, '.build-month'), currentMonthYear, 'utf8');
 
   const totalTime = Date.now() - startTime;
   console.log(`\n✨ Build completed successfully in ${totalTime}ms! Output folder: ./dist/\n`);

@@ -35,6 +35,9 @@ function renderHeader(currentPath = '/') {
       <nav class="nav-desktop" aria-label="Main Navigation">
         <ul class="nav-list">
           <li>
+            <a href="/" class="nav-link ${currentPath === '/' ? 'is-current' : ''}">Home</a>
+          </li>
+          <li>
             <a href="/panda-express-savings-calculator/" class="nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}">Savings Calculator</a>
           </li>
           <li>
@@ -83,6 +86,7 @@ function renderHeader(currentPath = '/') {
         <button type="button" id="mobileNavCloseBtn" class="mobile-nav-close-btn" aria-label="Close navigation menu">✕</button>
       </div>
       <ul class="mobile-nav-list">
+        <li><a href="/" class="mobile-nav-link ${currentPath === '/' ? 'is-current' : ''}">Home</a></li>
         <li><a href="/#coupon-section" class="mobile-nav-link mobile-nav-cta">🎟️ Get Today's Coupon Codes</a></li>
         <li><a href="/panda-express-savings-calculator/" class="mobile-nav-link ${currentPath.includes('savings-calculator') ? 'is-current' : ''}">🧮 Savings Calculator</a></li>
         <li><a href="/panda-express-nutrition/" class="mobile-nav-link ${currentPath.includes('nutrition') ? 'is-current' : ''}">Nutrition Calculator</a></li>
