@@ -213,14 +213,73 @@ function parseUrlEncodedBody(req) {
   });
 }
 
+const { securityHeaders } = require('./headers.config');
+
+const globalRateLimitMap = new Map();
+function checkGlobalRateLimit(ip) {
+  const now = Date.now();
+  let record = globalRateLimitMap.get(ip);
+  if (!record || now > record.resetTime) {
+    record = { count: 1, resetTime: now + 60000 };
+    globalRateLimitMap.set(ip, record);
+    return true;
+  }
+  record.count++;
+  if (record.count > 300) {
+    return false;
+  }
+  return true;
+}
+
+const validPageSlugs = new Set([
+  '/about-us',
+  '/contact-us',
+  '/disclaimer',
+  '/privacy-policy',
+  '/panda-express-menu',
+  '/panda-express-nutrition',
+  '/panda-express-savings-calculator',
+  '/panda-express-orange-chicken',
+  '/beijing-beef',
+  '/panda-express-grilled-teriyaki',
+  '/panda-express-cream-cheese',
+  '/panda-express-black-pepper-steak',
+  '/panda-express-sweet-sour-chicken',
+  '/panda-express-string-bean-chicken',
+  '/panda-express-chow-mein'
+]);
+
 // Redirect checking
 function check301Redirects(req, res) {
-  const redirects = dataManager.readData('redirects.json', []);
   const reqPath = req.url.split('?')[0];
+  const queryStr = req.url.includes('?') ? '?' + req.url.split('?')[1] : '';
 
+  // Canonical homepage redirect: /index.html -> /
+  if (reqPath === '/index.html') {
+    res.writeHead(301, { 'Location': '/' + queryStr, 'Cache-Control': 'public, max-age=3600' });
+    res.end();
+    return true;
+  }
+
+  // Canonical subdirectory index.html redirect: /page/index.html -> /page/
+  if (reqPath.endsWith('/index.html')) {
+    const canonical = reqPath.slice(0, -10) + queryStr;
+    res.writeHead(301, { 'Location': canonical, 'Cache-Control': 'public, max-age=3600' });
+    res.end();
+    return true;
+  }
+
+  // Trailing slash redirect for valid page slugs: /about-us -> /about-us/
+  if (validPageSlugs.has(reqPath)) {
+    res.writeHead(301, { 'Location': reqPath + '/' + queryStr, 'Cache-Control': 'public, max-age=3600' });
+    res.end();
+    return true;
+  }
+
+  const redirects = dataManager.readData('redirects.json', []);
   const matched = redirects.find(r => r.from === reqPath || r.from === reqPath + '/');
   if (matched) {
-    res.writeHead(301, { 'Location': matched.to, 'Cache-Control': 'public, max-age=3600' });
+    res.writeHead(301, { 'Location': matched.to + queryStr, 'Cache-Control': 'public, max-age=3600' });
     res.end();
     return true;
   }
@@ -229,36 +288,86 @@ function check301Redirects(req, res) {
 
 const server = http.createServer(async (req, res) => {
   try {
-  const parsedUrl = url.parse(req.url, true);
-  const pathname = parsedUrl.pathname;
+    // 0. URI decode and null byte validation
+    if (req.url && (req.url.includes('%00') || req.url.includes('\0'))) {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      return res.end('400 Bad Request');
+    }
+    try {
+      decodeURIComponent(req.url);
+    } catch (e) {
+      res.writeHead(400, { 'Content-Type': 'text/plain' });
+      return res.end('400 Bad Request');
+    }
 
-  if (pathname === '/healthz' && req.method === 'GET') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    return res.end('200 ok');
-  }
-  const clientIp = auth.getClientIp(req);
+    // 1. URL Length Guard
+    if (req.url && req.url.length > 2048) {
+      res.writeHead(414, { 'Content-Type': 'text/plain' });
+      return res.end('414 URI Too Long');
+    }
 
-  // Security Headers (sitewide)
-  res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
-  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.setHeader('X-XSS-Protection', '0');
-  res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=()');
-  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-  res.setHeader('Content-Security-Policy-Report-Only', "default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'");
+    // 2. HTTP Method Restrictions
+    if (!['GET', 'HEAD', 'POST', 'PUT', 'DELETE'].includes(req.method)) {
+      res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, HEAD, POST' });
+      return res.end('405 Method Not Allowed');
+    }
 
-  const proto = req.headers['x-forwarded-proto'] || (req.socket && req.socket.encrypted ? 'https' : 'http');
-  if (proto === 'https') {
-    res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
-  }
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
 
-  // Search engine indexation control: explicitly block indexing of admin/preview routes
-  if (pathname.startsWith('/admin') || pathname.startsWith('/api/')) {
-    res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
-  }
+    // 3. Healthcheck Endpoint
+    if (pathname === '/healthz') {
+      if (req.method !== 'GET' && req.method !== 'HEAD') {
+        res.writeHead(405, { 'Content-Type': 'text/plain', 'Allow': 'GET, HEAD' });
+        return res.end('405 Method Not Allowed');
+      }
+      res.writeHead(200, {
+        'Content-Type': 'text/plain',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate'
+      });
+      return res.end('200 ok');
+    }
 
-  // 1. Check 301 redirects first
-  if (check301Redirects(req, res)) return;
+    const clientIp = auth.getClientIp(req);
+
+    // 4. Rate Limiter for dynamic / non-static requests (300 req/min/IP)
+    if (!pathname.startsWith('/public/') && !pathname.startsWith('/assets/')) {
+      if (!checkGlobalRateLimit(clientIp)) {
+        res.writeHead(429, {
+          'Content-Type': 'text/plain',
+          'Retry-After': '60'
+        });
+        return res.end('429 Too Many Requests');
+      }
+    }
+
+    // 5. Block sensitive/internal files under /public/ or root (.md, .map, dotfiles)
+    if (pathname.includes('/.') || pathname.endsWith('.md') || pathname.endsWith('.map')) {
+      res.writeHead(404, { 'Content-Type': 'text/plain' });
+      return res.end('404 Not Found');
+    }
+
+    // 6. Security Headers (sitewide from headers.config.js)
+    for (const [headerKey, headerVal] of Object.entries(securityHeaders)) {
+      if (headerKey === 'X-Frame-Options' && pathname.startsWith('/admin')) {
+        res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+      } else {
+        res.setHeader(headerKey, headerVal);
+      }
+    }
+
+    const proto = req.headers['x-forwarded-proto'] || (req.socket && req.socket.encrypted ? 'https' : 'http');
+    if (proto === 'https') {
+      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+
+    // Search engine indexation control: explicitly block indexing of admin/preview routes
+    if (pathname.startsWith('/admin') || pathname.startsWith('/api/')) {
+      res.setHeader('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    }
+
+    // 7. Check 301 redirects
+    if (check301Redirects(req, res)) return;
 
   // ==========================================
   // AUTHENTICATION ROUTES
