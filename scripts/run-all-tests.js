@@ -8,6 +8,7 @@ const testSuites = [
   { name: 'Core Verification & SEO Tests', script: 'test.js' },
   { name: 'Nutrition Consistency Verification', script: 'scripts/verify-nutrition-consistency.js' },
   { name: 'Current Month / Timezone Verification', script: 'scripts/verify-current-month.js' },
+  { name: 'Month Gate Decision Matrix & Date Sync', script: 'scripts/verify-month-gate.js' },
   { name: 'Path Traversal & Directory Protection', script: 'scripts/verify-traversal.js' },
   { name: 'Security Headers Consistency', script: 'scripts/verify-headers.js' },
   { name: '301 Redirects & Status Codes', script: 'scripts/verify-redirects.js' },
