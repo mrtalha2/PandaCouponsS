@@ -47,6 +47,27 @@ function renderLayout({
   const noindexFlag = (metaOverride && metaOverride.noindex) || isNoindex || canonicalPath === '/404.html';
   
   // Default Organization & Website Schema
+  const sameAsList = (config.socialLinks || [])
+    .map(l => l && l.url)
+    .filter(u => typeof u === 'string' && !/^https?:\/\/(www\.)?[a-z]+\.com\/?$/i.test(u));
+
+  const orgSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": config.siteName,
+    "url": config.domain,
+    "logo": `${config.domain}/public/favicon.svg`,
+    "email": config.contactEmail,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": config.contactEmail,
+      "contactType": "customer service"
+    }
+  };
+  if (sameAsList.length > 0) {
+    orgSchema.sameAs = sameAsList;
+  }
+
   const defaultSchemas = [
     {
       "@context": "https://schema.org",
@@ -59,20 +80,7 @@ function renderLayout({
         "query-input": "required name=search_term_string"
       }
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": config.siteName,
-      "url": config.domain,
-      "logo": `${config.domain}/public/favicon.svg`,
-      "email": config.contactEmail,
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "email": config.contactEmail,
-        "contactType": "customer service"
-      },
-      "sameAs": Object.values(config.socialLinks || {}).filter(url => url && !url.includes('placeholder') && url !== '#')
-    }
+    orgSchema
   ];
 
   if (breadcrumbs && breadcrumbs.length > 0) {
