@@ -21,3 +21,7 @@ npm-debug.log*
 data/admin/*
 !data/admin/.gitkeep
 data/admin/backups/
+
+# Release archives
+*.zip
+release-*.zip

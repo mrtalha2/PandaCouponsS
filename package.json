@@ -8,7 +8,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "test": "node scripts/run-all-tests.js",
-    "release": "zip -r release-pandacoupons.zip . -x \".env\" \".git/*\" \".DS_Store\" \"*/.DS_Store\" \"__MACOSX/*\" \"node_modules/*\" \"data/admin/.sessions.json\" \"data/admin/backups/*\" \"assets-src/*\"",
+    "release": "zip -q -r release-pandacoupons.zip . -x '*.git*' '*node_modules*' '*.env*' '*.DS_Store*' '*__MACOSX*' '*data/admin/.sessions.json*' '*data/admin/backups/*' '*assets-src/*' '*release-pandacoupons.zip*'",
     "verify": "node scripts/verify-site-remediation.js",
     "optimize-images": "node scripts/optimize-images.js",
     "generate-og": "node scripts/generate-og-images.js"
