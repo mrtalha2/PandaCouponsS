@@ -298,8 +298,8 @@ function renderMenu() {
                   globalImgIndex++;
                   const imgBase = item.image.replace(/\.webp$/, '');
                   const imgFileName = path.basename(item.image, '.webp');
-                  const variant300Path = path.join(__dirname, '../../public/images/menu', `${imgFileName}-300.webp`);
-                  const hasVariants = fs.existsSync(variant300Path);
+                  const menuFiles = fs.readdirSync(path.join(__dirname, '../../public/images/menu'));
+                  const hasVariants = menuFiles.includes(`${imgFileName}-300.webp`);
                   const loadingAttr = isFirstImage ? 'loading="eager" fetchpriority="high"' : 'loading="lazy" decoding="async"';
                   const srcsetAttr = hasVariants ? `srcset="${imgBase}-300.webp 300w, ${imgBase}-600.webp 600w, ${imgBase}-900.webp 900w" sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" ` : '';
                   return `

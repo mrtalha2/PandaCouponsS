@@ -17,6 +17,7 @@ const testSuites = [
   { name: 'Hardcoded Dates Scanner', script: 'scripts/find-hardcoded-dates.js' },
   { name: 'JSON-LD Schema & Canonical Verification', script: 'scripts/validate-jsonld.js' },
   { name: 'Asset Integrity Verification', script: 'scripts/verify-assets.js' },
+  { name: 'Exact-Case Asset & Path Verification', script: 'scripts/verify-case-exact.js' },
   { name: 'WCAG Color Contrast Audit', script: 'scripts/check-contrast.js' },
   { name: 'Accessibility & Table Semantics Audit', script: 'scripts/verify-a11y.js' },
   { name: 'Site Remediation & Integration Verification', script: 'scripts/verify-site-remediation.js' },

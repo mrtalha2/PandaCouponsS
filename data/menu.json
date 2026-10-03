@@ -528,7 +528,7 @@
           "price": "$7.80",
           "calories": "490 Cal",
           "description": "Kid-sized portion of crispy Orange Chicken with choice of side, apple crisps, and water or juice.",
-          "image": "/public/images/menu/orange-chicken-panda-cub-meal-cub-meal.webp",
+          "image": "/public/images/menu/Orange-Chicken-Panda-Cub-Meal-cub-meal.webp",
           "tags": [
             "Kids Choice",
             "Complete Meal"
@@ -550,7 +550,7 @@
           "price": "$7.80",
           "calories": "150 Cal",
           "description": "Tender beef and fresh broccoli with kid-sized rice or noodles, healthy fruit, and drink.",
-          "image": "/public/images/menu/broccoli-beef-panda-cub-meal-cub-meal.webp",
+          "image": "/public/images/menu/Broccoli-Beef-Panda-Cub-Meal-cub-meal.webp",
           "tags": [
             "Veggies & Beef",
             "250 Cal"
@@ -561,7 +561,7 @@
           "price": "$7.80",
           "calories": "300–740 Cal",
           "description": "Mix and match any junior entrée with chow mein, fried rice, or super greens for a custom kids box.",
-          "image": "/public/images/menu/build-your-own-panda-cub-meal-cub-meal.webp",
+          "image": "/public/images/menu/Build-Your-Own-Panda-Cub-Meal-cub-meal.webp",
           "tags": [
             "Custom Box",
             "Balanced"

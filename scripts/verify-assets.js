@@ -1,19 +1,15 @@
 /**
  * Asset Reference Verification Script
  * Scans built HTML files in dist/ for all local asset references (img src, srcset, link href, script src, meta images)
- * and verifies that every referenced file exists in dist/.
+ * and verifies that every referenced file exists in dist/ with EXACT letter-case.
+ * 
+ * Uses exact directory tree set membership instead of fs.existsSync to guarantee
+ * cross-platform case sensitivity on Windows, macOS, and Linux.
  */
 const fs = require('fs');
 const path = require('path');
 
 const DIST_DIR = path.join(__dirname, '..', 'dist');
-
-// Known missing base images at baseline (tracked for owner decision)
-const ALLOWLIST = new Set([
-  'public/images/menu/broccoli-beef-panda-cub-meal-cub-meal.webp',
-  'public/images/menu/build-your-own-panda-cub-meal-cub-meal.webp',
-  'public/images/menu/orange-chicken-panda-cub-meal-cub-meal.webp'
-]);
 
 function getAllHtmlFiles(dir, files = []) {
   if (!fs.existsSync(dir)) return files;
@@ -29,14 +25,34 @@ function getAllHtmlFiles(dir, files = []) {
   return files;
 }
 
+function buildExactDiskFileSet(rootDir) {
+  const fileSet = new Set();
+  function walk(currentDir) {
+    if (!fs.existsSync(currentDir)) return;
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(currentDir, entry.name);
+      const relPath = path.relative(rootDir, fullPath).split(path.sep).join('/');
+      if (entry.isDirectory()) {
+        walk(fullPath);
+      } else if (entry.isFile()) {
+        fileSet.add(relPath);
+      }
+    }
+  }
+  walk(rootDir);
+  return fileSet;
+}
+
 function verifyAssets() {
-  console.log('🔍 Verifying asset references in built dist/ HTML files...');
+  console.log('🔍 Verifying asset references in built dist/ HTML files (strict exact-case check)...');
 
   if (!fs.existsSync(DIST_DIR)) {
     console.error('❌ dist/ directory does not exist. Run "node build.js" first.');
     process.exit(1);
   }
 
+  const exactDiskFiles = buildExactDiskFileSet(DIST_DIR);
   const htmlFiles = getAllHtmlFiles(DIST_DIR);
   if (htmlFiles.length === 0) {
     console.error('❌ No HTML files found in dist/.');
@@ -103,13 +119,8 @@ function verifyAssets() {
       // Normalize leading slash to relative from dist root
       const relPath = cleanPath.replace(/^\//, '');
 
-      // Check allowlist
-      if (ALLOWLIST.has(relPath)) {
-        continue;
-      }
-
-      const absoluteTarget = path.join(DIST_DIR, relPath);
-      if (!fs.existsSync(absoluteTarget)) {
+      // Strict exact-case set lookup (NO allowlist)
+      if (!exactDiskFiles.has(relPath)) {
         missingAssets.push({
           page: relativeHtml,
           reference: rawUrl,
@@ -124,16 +135,19 @@ function verifyAssets() {
   if (missingAssets.length > 0) {
     console.error(`\n❌ Found ${missingAssets.length} broken/missing asset references in dist/:`);
     missingAssets.forEach(item => {
-      console.error(`  - Page: ${item.page} -> Missing: ${item.reference} (looked for ${item.expectedPath})`);
+      console.error(`  - Page: ${item.page} -> Missing: ${item.reference} (looked for exact path "${item.expectedPath}")`);
     });
     process.exit(1);
   }
 
-  console.log('✅ All asset references verified successfully! Zero broken asset links.');
+  console.log('✅ All asset references verified successfully! Zero broken asset links (exact-case verified).');
 }
 
 if (require.main === module) {
   verifyAssets();
 }
 
-module.exports = verifyAssets;
+module.exports = {
+  verifyAssets,
+  buildExactDiskFileSet
+};
