@@ -30,7 +30,7 @@ function scanDir(dir) {
 }
 
 let failed = false;
-if (scanDir(path.join(__dirname, '../data/admin'))) failed = true;
+if (scanDir(path.join(__dirname, '../data'))) failed = true;
 if (scanDir(path.join(__dirname, '../src/pages'))) failed = true;
 if (scanDir(path.join(__dirname, '../src/templates'))) failed = true;
 

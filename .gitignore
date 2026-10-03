@@ -17,11 +17,6 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Admin runtime data and backups
-data/admin/*
-!data/admin/.gitkeep
-data/admin/backups/
-
 # Release archives
 *.zip
 release-*.zip

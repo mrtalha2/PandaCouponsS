@@ -1,25 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 const config = require('../../data/site.config');
-const { renderBlocks } = require('../admin/block-renderer');
 
 function renderDisclaimer() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const disclaimerBlocks = pageBlocks.disclaimer;
-  const disclaimerContent = adminContent.disclaimer || {};
-  const h1Block = (disclaimerBlocks || []).find(b => b.type === 'heading' && b.level === 1);
-  const disclaimerHeading = h1Block?.content || disclaimerContent.heading || 'Website Disclaimer &amp; Trademarks';
+  const disclaimerHeading = 'Website Disclaimer &amp; Trademarks';
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -29,7 +11,7 @@ function renderDisclaimer() {
   const defaultBody = `
     <!-- Table of Contents -->
     <div class="legal-toc-card">
-      <h3 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h3>
+      <h2 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h2>
       <ul style="margin-bottom: 0; padding-left: 1.25rem;">
         <li><a href="#independence">1. Independent Status</a></li>
         <li><a href="#trademarks">2. Ownership of Trademarks &amp; Fair Use</a></li>
@@ -110,13 +92,7 @@ function renderDisclaimer() {
     </div>
   `;
 
-  let bodyContent = defaultBody;
-  if (disclaimerBlocks && disclaimerBlocks.length > 0) {
-    const nonH1Blocks = disclaimerBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
-    bodyContent = renderBlocks(nonH1Blocks, {});
-  } else if (disclaimerContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${disclaimerContent.bodyHtml}</div>`;
-  }
+  const bodyContent = defaultBody;
 
   const content = `
   <section class="subpage-photo-banner">

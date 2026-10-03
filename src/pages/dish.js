@@ -1,32 +1,11 @@
-const fs = require('fs');
-const path = require('path');
-
 const config = require('../../data/site.config');
-
 const nutritionMaster = require('../../data/nutrition-master.json');
 
 function renderDish(dishData) {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
   const isOrangeChicken = dishData.slug.includes('orange-chicken');
-  const pageKey = isOrangeChicken ? 'orange-chicken' : (dishData.slug.includes('beijing-beef') ? 'beijing-beef' : dishData.slug);
-  const dishBlocks = pageBlocks[pageKey] || [];
-  const dishGuideBlock = dishBlocks.find(b => b.type === 'dish-guide');
-  const dishOverrides = adminContent[pageKey] || {};
-
-  const dishTitle = dishGuideBlock?.title || dishOverrides.title || dishData.name;
-  const dishSubtitle = dishGuideBlock?.subtitle || dishOverrides.subtitle || 'Calories, complete nutrition facts, health evaluation, and smart coupon ordering hacks.';
-  const dishIntro = dishGuideBlock?.intro || dishOverrides.intro || dishData.intro;
+  const dishTitle = dishData.name;
+  const dishSubtitle = 'Calories, complete nutrition facts, health evaluation, and smart coupon ordering hacks.';
+  const dishIntro = dishData.intro;
 
   const nutritionItem = (nutritionMaster.items || []).find(i => i.id === dishData.nutritionId || i.id === dishData.slug) || {
     calories: 0,

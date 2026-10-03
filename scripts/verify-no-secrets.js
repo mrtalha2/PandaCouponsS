@@ -4,11 +4,11 @@ console.log('🔍 Checking that no secret or session files are tracked in git...
 
 try {
   const trackedFiles = execSync('git ls-files', { encoding: 'utf8' }).split('\n');
-  const forbidden = ['.env', 'data/admin/.sessions.json', 'data/admin/backups/'];
+  const forbidden = ['.env', '.env.local', '.env.production'];
   
   let found = [];
   for (const file of trackedFiles) {
-    if (file.trim() === '.env' || file.trim() === 'data/admin/.sessions.json' || file.startsWith('data/admin/backups/')) {
+    if (file.trim().startsWith('.env') && file.trim() !== '.env.example') {
       found.push(file.trim());
     }
   }

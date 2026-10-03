@@ -8,28 +8,12 @@ const path = require('path');
 const menuData = require('../../data/menu.json');
 
 function renderMenu() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const menuBlocks = pageBlocks.menu || [];
-  const menuGridBlock = menuBlocks.find(b => b.type === 'menu-grid');
-
-  const menuContent = adminContent.menu || {};
-  const badgeText = menuGridBlock?.badgeText || menuContent.badgeText || '🐼 {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
-  const heroTitle = menuGridBlock?.heading || menuContent.heroTitle || 'Panda Express Menu with Prices &amp; Pictures';
-  const heroSubtitle = menuGridBlock?.subtext || menuContent.heroSubtitle || 'Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Explore pricing, per-serving calorie counts, portion options, and dish details for Bowls, Plates, Entrées, and Sides.';
-  const stat1Label = menuGridBlock?.stat1Label || menuContent.stat1Label || 'Wok-Crafted Dishes';
-  const stat2Label = menuGridBlock?.stat2Label || menuContent.stat2Label || 'A La Carte Boxes';
-  const stat3Label = menuGridBlock?.stat3Label || menuContent.stat3Label || 'Zero Artificial Trans Fat';
+  const badgeText = '🐼 {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
+  const heroTitle = 'Panda Express Menu with Prices &amp; Pictures';
+  const heroSubtitle = 'Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Explore pricing, per-serving calorie counts, portion options, and dish details for Bowls, Plates, Entrées, and Sides.';
+  const stat1Label = 'Wok-Crafted Dishes';
+  const stat2Label = 'A La Carte Boxes';
+  const stat3Label = 'Zero Artificial Trans Fat';
 
   const breadcrumbs = [
     { label: "Home", url: "/" },

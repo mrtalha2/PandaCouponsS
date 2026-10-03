@@ -1,25 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 const config = require('../../data/site.config');
-const { renderBlocks } = require('../admin/block-renderer');
 
 function renderAbout() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const aboutBlocks = pageBlocks.about;
-  const aboutContent = adminContent.about || {};
-  const h1Block = (aboutBlocks || []).find(b => b.type === 'heading' && b.level === 1);
-  const aboutHeading = h1Block?.content || aboutContent.heading || 'About Panda Express Coupons';
+  const aboutHeading = 'About Panda Express Coupons';
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -146,13 +128,7 @@ function renderAbout() {
     </div>
   `;
 
-  let bodyContent = defaultBody;
-  if (aboutBlocks && aboutBlocks.length > 0) {
-    const nonH1Blocks = aboutBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
-    bodyContent = renderBlocks(nonH1Blocks, {});
-  } else if (aboutContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${aboutContent.bodyHtml}</div>`;
-  }
+  const bodyContent = defaultBody;
 
   const content = `
   <section class="subpage-photo-banner">

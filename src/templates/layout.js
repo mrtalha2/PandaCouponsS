@@ -1,26 +1,6 @@
-/**
- * Main Layout Template
- * High-performance HTML shell with complete SEO metadata and Schema.org JSON-LD
- */
-const fs = require('fs');
-const path = require('path');
 const config = require('../../data/site.config');
 const renderHeader = require('./header');
 const renderFooter = require('./footer');
-
-function getAdminOverrides() {
-  let meta = {};
-  let injections = { head: '', bodyStart: '', bodyEnd: '' };
-  try {
-    const metaPath = path.join(__dirname, '../../data/admin/page-meta.json');
-    if (fs.existsSync(metaPath)) meta = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
-  } catch (e) {}
-  try {
-    const injPath = path.join(__dirname, '../../data/admin/site-injections.json');
-    if (fs.existsSync(injPath)) injections = JSON.parse(fs.readFileSync(injPath, 'utf8'));
-  } catch (e) {}
-  return { meta, injections };
-}
 
 function renderLayout({
   title,
@@ -38,13 +18,11 @@ function renderLayout({
   isNoindex = false,
   dateModified = null
 }) {
-  const { meta: adminMeta, injections: adminInjections } = getAdminOverrides();
-  const metaOverride = adminMeta[canonicalPath];
-  const finalTitle = (metaOverride && metaOverride.title) || title;
-  const finalDesc = (metaOverride && metaOverride.description) || description;
-  const finalOgImage = (metaOverride && metaOverride.ogImage) || ogImage;
-  const fullCanonicalUrl = (metaOverride && metaOverride.canonical) || `${config.domain}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
-  const noindexFlag = (metaOverride && metaOverride.noindex) || isNoindex || canonicalPath === '/404.html';
+  const finalTitle = title;
+  const finalDesc = description;
+  const finalOgImage = ogImage;
+  const fullCanonicalUrl = `${config.domain}${canonicalPath.startsWith('/') ? canonicalPath : '/' + canonicalPath}`;
+  const noindexFlag = isNoindex || canonicalPath === '/404.html';
   
   // Default Organization & Website Schema
   const sameAsList = (config.socialLinks || [])
@@ -190,10 +168,8 @@ ${preloadHero ? `
 
   <!-- Structured Data JSON-LD (Compact) -->
   <script type="application/ld+json">${JSON.stringify(defaultSchemas)}</script>
-  ${adminInjections.head || ''}
 </head>
 <body>
-  ${adminInjections.bodyStart || ''}
   <!-- Inline SVG Icon Sprite (Phase 6a Reusable Icons) -->
   <svg xmlns="http://www.w3.org/2000/svg" style="display:none;" aria-hidden="true">
     <symbol id="icon-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></symbol>
@@ -227,7 +203,6 @@ ${preloadHero ? `
   <!-- Client Script (Deferred for Performance with Cache-Bust) -->
   <script src="/assets/js/main.${assetHash}.js" defer></script>
   ${extraScripts}
-  ${adminInjections.bodyEnd || ''}
 </body>
 </html>`;
 }

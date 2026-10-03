@@ -1,25 +1,7 @@
-const fs = require('fs');
-const path = require('path');
 const config = require('../../data/site.config');
-const { renderBlocks } = require('../admin/block-renderer');
 
 function renderPrivacy() {
-  let adminContent = {};
-  try {
-    const contentPath = path.join(__dirname, '../../data/admin/page-content.json');
-    if (fs.existsSync(contentPath)) adminContent = JSON.parse(fs.readFileSync(contentPath, 'utf8'));
-  } catch (e) {}
-
-  let pageBlocks = {};
-  try {
-    const blocksPath = path.join(__dirname, '../../data/admin/page-blocks.json');
-    if (fs.existsSync(blocksPath)) pageBlocks = JSON.parse(fs.readFileSync(blocksPath, 'utf8'));
-  } catch (e) {}
-
-  const privacyBlocks = pageBlocks.privacy;
-  const privacyContent = adminContent.privacy || {};
-  const h1Block = (privacyBlocks || []).find(b => b.type === 'heading' && b.level === 1);
-  const privacyHeading = h1Block?.content || privacyContent.heading || 'Privacy Policy';
+  const privacyHeading = 'Privacy Policy';
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -29,7 +11,7 @@ function renderPrivacy() {
   const defaultBody = `
     <!-- Table of Contents -->
     <div class="legal-toc-card">
-      <h3 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h3>
+      <h2 style="margin-top: 0; font-size: 1.1rem;">Table of Contents</h2>
       <ul style="margin-bottom: 0; padding-left: 1.25rem;">
         <li><a href="#who-we-are">1. Who We Are &amp; Contact Information</a></li>
         <li><a href="#data-collection">2. What Information We Collect</a></li>
@@ -132,13 +114,7 @@ function renderPrivacy() {
     </div>
   `;
 
-  let bodyContent = defaultBody;
-  if (privacyBlocks && privacyBlocks.length > 0) {
-    const nonH1Blocks = privacyBlocks.filter(b => !(b.type === 'heading' && b.level === 1));
-    bodyContent = renderBlocks(nonH1Blocks, {});
-  } else if (privacyContent.bodyHtml) {
-    bodyContent = `<div class="rich-text-content" style="font-size: 1.05rem; line-height: 1.8;">${privacyContent.bodyHtml}</div>`;
-  }
+  const bodyContent = defaultBody;
 
   const content = `
   <section class="subpage-photo-banner">

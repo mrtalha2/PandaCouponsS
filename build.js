@@ -169,9 +169,6 @@ function generateRobots() {
   const robotsTxt = `# Robots.txt for ${config.siteName}
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /admin/preview/
-Disallow: /api/
 Disallow: /*?meal=
 
 # Sitemap
