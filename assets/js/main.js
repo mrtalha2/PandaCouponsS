@@ -1357,6 +1357,18 @@ function initMenuSearchAndFilter() {
         applyFilters();
       });
     }
+
+    // Read ?q= from URL on load
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryParam = urlParams.get('q');
+      if (queryParam) {
+        searchQuery = queryParam;
+        searchInput.value = queryParam;
+        if (clearBtn) clearBtn.style.display = 'flex';
+        applyFilters();
+      }
+    } catch (e) {}
   }
 }
 

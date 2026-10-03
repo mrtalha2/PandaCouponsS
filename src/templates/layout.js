@@ -143,8 +143,7 @@ function renderLayout({
   <meta name="description" content="${finalDesc}">
   <meta name="site-timezone" content="${require('../utils/date').getDynamicDate().timeZone}">
   <meta name="robots" content="${noindexFlag ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
-  <link rel="canonical" href="${fullCanonicalUrl}">
-
+${noindexFlag ? '' : `  <link rel="canonical" href="${fullCanonicalUrl}">\n`}${config.googleSiteVerification ? `  <meta name="google-site-verification" content="${config.googleSiteVerification}">\n` : ''}${config.bingSiteVerification ? `  <meta name="msvalidate.01" content="${config.bingSiteVerification}">\n` : ''}
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="${fullCanonicalUrl}">
@@ -152,7 +151,7 @@ function renderLayout({
   <meta property="og:description" content="${finalDesc}">
   <meta property="og:site_name" content="${config.siteName}">
   <meta property="og:locale" content="en_US">
-  <meta property="article:modified_time" content="${new Date().toISOString()}">
+  <meta property="article:modified_time" content="${dateModified || new Date().toISOString()}">
   <meta property="og:image" content="${config.domain}${finalOgImage.startsWith('/') ? finalOgImage : '/' + finalOgImage}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">

@@ -1025,8 +1025,8 @@ function renderNutrition() {
   `;
 
   return {
-    title: `Panda Express Nutrition Guide {{YEAR}}: Calories & Macros`,
-    description: `See verified Panda Express nutrition facts and calories for every dish. Free {{YEAR}} data — check yours with our calculator.`,
+    title: `Panda Express Nutrition Facts & Calories: {{YEAR}} Guide`,
+    description: `Complete Panda Express nutrition guide for {{YEAR}}: full calorie counts, macros, sodium levels, allergen disclosures, and interactive meal nutrition calculator.`,
     canonicalPath: '/panda-express-nutrition/',
     content,
     breadcrumbs,

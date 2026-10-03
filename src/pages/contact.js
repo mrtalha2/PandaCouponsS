@@ -98,7 +98,7 @@ function renderContact() {
 
   return {
     title: `Contact Us – Panda Express Coupons Support & Inquiries`,
-    description: `Contact the editorial desk at Panda Express Coupons via email at ${config.contactEmail}. Submit new promo codes, report broken discounts, and ask nutrition questions.`,
+    description: `Contact the Panda Express Coupons editorial desk at ${config.contactEmail}. Submit working promo codes, report expired deals, or request menu data updates.`,
     canonicalPath: '/contact-us/',
     content,
     breadcrumbs

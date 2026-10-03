@@ -433,8 +433,8 @@ function renderMenu() {
   `;
 
   return {
-    title: `Panda Express Menu with Prices & Pictures ({{YEAR}} Updated)`,
-    description: `Browse the complete Panda Express menu with prices and pictures. See calorie counts, portion sizes, and savings for Bowls, Plates, Entrées, Sides, and Catering.`,
+    title: `Panda Express Menu & Prices: {{YEAR}} Calories & Bowls`,
+    description: `Explore the complete {{YEAR}} Panda Express menu with prices, calories, and high-definition food photos for Bowls, Plates, Entrees, Sides, and Catering Trays.`,
     canonicalPath: '/panda-express-menu/',
     ogImage: '/public/images/og/og-menu.jpg',
     ogImageAlt: 'Panda Express Menu with Prices and Pictures',

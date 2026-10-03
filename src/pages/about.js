@@ -173,7 +173,7 @@ function renderAbout() {
 
   return {
     title: `About Us – Panda Express Coupons Editorial Mission`,
-    description: `Learn about Panda Express Coupons, our independent editorial team, how we check codes, and our commitment to clean, honest savings.`,
+    description: `Learn about Panda Express Coupons, our independent editorial team, how we check promo codes, our sourcing standards, and our honest dining mission.`,
     canonicalPath: '/about-us/',
     content,
     breadcrumbs

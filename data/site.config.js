@@ -11,6 +11,8 @@ module.exports = {
   siteTagline: "Verified Coupon Codes, Menu Prices & Nutrition Guides",
   domain: "https://pandacoupons.org",
   contactEmail: "helppandacoupons@gmail.com",
+  googleSiteVerification: "",
+  bingSiteVerification: "",
   get currentYear() {
     return require('../src/utils/date').getCurrentYear();
   },

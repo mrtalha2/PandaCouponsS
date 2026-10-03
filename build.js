@@ -39,16 +39,19 @@ function ensureDirSync(dirPath) {
   }
 }
 
-const routeSources = {
-  '/': ['src/pages/home.js', 'data/coupons.json'],
-  '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
-  '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition-master.json'],
-  '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
-  '/about-us/': ['src/pages/about.js'],
-  '/contact-us/': ['src/pages/contact.js'],
-  '/disclaimer/': ['src/pages/disclaimer.js'],
-  '/privacy-policy/': ['src/pages/privacy.js'],
-};
+const LASTMOD_CACHE_FILE = path.join(__dirname, 'data', '.lastmod-cache.json');
+let lastmodCache = {};
+try {
+  if (fs.existsSync(LASTMOD_CACHE_FILE)) {
+    lastmodCache = JSON.parse(fs.readFileSync(LASTMOD_CACHE_FILE, 'utf8'));
+  }
+} catch (e) {
+  lastmodCache = {};
+}
+
+function saveLastmodCache() {
+  fs.writeFileSync(LASTMOD_CACHE_FILE, JSON.stringify(lastmodCache, null, 2) + '\n', 'utf8');
+}
 
 // Helper to write an HTML page
 async function writePage(routePath, pageData, assetHash) {
@@ -56,15 +59,26 @@ async function writePage(routePath, pageData, assetHash) {
   if (routePath === '/') {
     pageData.preloadHero = true;
   }
-  
-  let files = routeSources[routePath];
-  if (!files && routePath !== '/404.html') {
-    files = ['src/pages/dish.js', 'data/dishes.json'];
-  }
-  if (files) {
-    pageData.dateModified = getLastMod(files);
+
+  // Pre-render layout to compute content hash
+  let rawHtml = renderLayout(pageData);
+  const contentForHash = rawHtml
+    .replace(/{{MONTH_YEAR}}|{{MONTH}}|{{YEAR}}/g, '')
+    .replace(new RegExp(assetHash || 'ASSET_HASH', 'g'), '');
+  const contentHash = crypto.createHash('sha256').update(contentForHash).digest('hex');
+
+  const nowIso = new Date().toISOString();
+  let entry = lastmodCache[routePath];
+  if (!entry || entry.hash !== contentHash) {
+    entry = {
+      path: routePath,
+      hash: contentHash,
+      lastmod: nowIso
+    };
+    lastmodCache[routePath] = entry;
   }
 
+  pageData.dateModified = entry.lastmod;
   let fullHtml = renderLayout(pageData);
   const { resolveTokens } = require('./src/utils/date');
   fullHtml = resolveTokens(fullHtml);
@@ -128,49 +142,12 @@ function copyDirRecursiveSync(srcDir, destDir) {
   }
 }
 
-function getLastMod(files) {
-  try {
-    const gitLog = execSync(`git log -1 --format=%cI -- ${files.join(' ')}`, { encoding: 'utf8' }).trim();
-    if (gitLog) return gitLog;
-  } catch (e) {
-    // ignore
-  }
-  let maxTime = 0;
-  for (const f of files) {
-    try {
-      const stat = fs.statSync(f);
-      if (stat.mtimeMs > maxTime) maxTime = stat.mtimeMs;
-    } catch (e) {}
-  }
-  if (maxTime === 0) return new Date().toISOString();
-  return new Date(maxTime).toISOString();
-}
-
 // Generate sitemap.xml
 function generateSitemap(routes) {
-  const routeSources = {
-    '/': ['src/pages/home.js', 'data/coupons.json'],
-    '/panda-express-menu/': ['src/pages/menu.js', 'data/menu.json'],
-    '/panda-express-nutrition/': ['src/pages/nutrition.js', 'data/nutrition-master.json'],
-    '/panda-express-savings-calculator/': ['src/pages/savings-calculator.js', 'data/menu.json'],
-    '/about-us/': ['src/pages/about.js'],
-    '/contact-us/': ['src/pages/contact.js'],
-    '/disclaimer/': ['src/pages/disclaimer.js'],
-    '/privacy-policy/': ['src/pages/privacy.js'],
-    // All dishes
-  };
-
-  const dishesDataFile = 'data/dishes.json';
-  
   const urlsXml = routes.map((route) => {
-    let files = routeSources[route];
-    if (!files && route !== '/404.html') {
-      // Must be a dish page
-      files = ['src/pages/dish.js', dishesDataFile];
-    }
+    if (route === '/404.html') return '';
     const cleanUrl = `${config.domain}${route.endsWith('/') ? route : route + '/'}`;
-    if (!files) return '';
-    const lastModStr = getLastMod(files);
+    const lastModStr = lastmodCache[route] ? lastmodCache[route].lastmod : new Date().toISOString();
     
     return `  <url>
     <loc>${cleanUrl}</loc>
@@ -184,7 +161,7 @@ ${urlsXml}
 </urlset>`;
 
   fs.writeFileSync(path.join(DIST_DIR, 'sitemap.xml'), sitemapXml, 'utf8');
-  console.log(`  ✓ Generated sitemap.xml with ${routes.length} URLs`);
+  console.log(`  ✓ Generated sitemap.xml with ${routes.filter(r => r !== '/404.html').length} URLs`);
 }
 
 // Generate robots.txt
@@ -195,6 +172,7 @@ Allow: /
 Disallow: /admin/
 Disallow: /admin/preview/
 Disallow: /api/
+Disallow: /*?meal=
 
 # Sitemap
 Sitemap: ${config.domain}/sitemap.xml
@@ -361,7 +339,7 @@ async function build() {
   console.log('\n🗺️ Generating SEO files...');
   generateSitemap(routes);
   generateRobots();
-
+  saveLastmodCache();
   const { currentMonthYear } = require('./src/utils/date').getDynamicDate();
   fs.writeFileSync(path.join(DIST_DIR, '.build-month'), currentMonthYear, 'utf8');
 

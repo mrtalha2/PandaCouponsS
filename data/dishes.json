@@ -47,18 +47,29 @@
         "answer": "Yes. General percentage-off discounts like PANDA20 (20% off) and meal bundle codes like FAMILY10 apply to orders containing Orange Chicken when placed through the Panda Express website or mobile app."
       }
     ],
-    "relatedDish": {
-      "name": "Beijing Beef",
-      "url": "/beijing-beef/",
-      "tagline": "Prefer tender wok-seared beef with bell peppers and onions? Check out our complete Beijing Beef guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Beijing Beef",
+        "url": "/beijing-beef/",
+        "tagline": "Tender crispy beef wok-tossed with fresh red bell peppers and sweet onions.",
+        "image": "/public/images/beijing-beef.jpg",
+        "webp": "/public/images/optimized/beijing-beef-800.webp"
+      },
+      {
+        "name": "Grilled Teriyaki Chicken",
+        "url": "/panda-express-grilled-teriyaki/",
+        "tagline": "High-protein grilled chicken thighs served with sweet teriyaki glaze on the side.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      }
+    ]
   },
   {
     "slug": "beijing-beef",
     "name": "Beijing Beef",
     "nutritionId": "beijing-beef",
     "metaTitle": "Panda Express Beijing Beef: Calories, Nutrition & Deals",
-    "metaDescription": "Panda Express Beijing Beef nutrition guide: {{cal:beijing-beef}} calories, {{protein:beijing-beef}}g protein, ingredient breakdown, healthy pairings, and verified coupon savings.",
+    "metaDescription": "Panda Express Beijing Beef nutrition guide: {{cal:beijing-beef}} calories, {{protein:beijing-beef}}g protein, wok ingredient breakdown, healthy vegetable pairings, and verified coupon savings.",
     "intro": "Beijing Beef is a wok-seared beef specialty at Panda Express. It features strips of marinated flank-style beef, lightly crisped on the exterior, and tossed with fresh red bell peppers and sweet yellow onions in a sweet-tangy sauce. It offers a punchy alternative to traditional chicken entrees with deep, caramelized flavor notes.",
     "isHealthy": {
       "headline": "Is Panda Express Beijing Beef Healthy?",
@@ -101,18 +112,29 @@
         "answer": "Beijing Beef is lightly battered, crispy, and tossed with bell peppers and sweet onions in a sweet-tangy glaze ({{cal:beijing-beef}} cal, {{protein:beijing-beef}}g protein). Broccoli Beef features unbattered tender beef slices tossed with steamed broccoli florets in a savory ginger soy sauce ({{cal:broccoli-beef}} cal, {{protein:broccoli-beef}}g protein)."
       }
     ],
-    "relatedDish": {
-      "name": "Orange Chicken",
-      "url": "/panda-express-orange-chicken/",
-      "tagline": "Craving the famous sweet citrus classic? View our complete Orange Chicken nutritional and savings guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "The signature crispy chicken classic tossed in sweet and tangy citrus glaze.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "Black Pepper Angus Steak",
+        "url": "/panda-express-black-pepper-steak/",
+        "tagline": "Tender Angus steak wok-seared with baby broccoli, onions, and mushrooms.",
+        "image": "/public/images/beijing-beef.jpg",
+        "webp": "/public/images/optimized/beijing-beef-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-grilled-teriyaki",
     "name": "Grilled Teriyaki Chicken",
     "nutritionId": "grilled-teriyaki-chicken",
     "metaTitle": "Panda Express Grilled Teriyaki Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express Grilled Teriyaki Chicken guide: {{cal:grilled-teriyaki-chicken}} calories, {{protein:grilled-teriyaki-chicken}}g protein, complete nutrition facts, low-calorie sides, and ordering hacks.",
+    "metaDescription": "Panda Express Grilled Teriyaki Chicken guide: {{cal:grilled-teriyaki-chicken}} calories, {{protein:grilled-teriyaki-chicken}}g protein, full nutrition facts, healthy low-calorie side pairings, and smart ordering hacks.",
     "intro": "Grilled Teriyaki Chicken is the primary lean protein anchor on the Panda Express menu. Prepared on a flat-top grill rather than in a deep fryer, it features boneless chicken thighs sliced into tender strips and served alongside a traditional sweetened soy glaze.",
     "isHealthy": {
       "headline": "Is Panda Express Grilled Teriyaki Chicken Healthy?",
@@ -150,18 +172,29 @@
         "answer": "No. The chicken marinade and the teriyaki sauce both contain soy sauce brewed with wheat."
       }
     ],
-    "relatedDish": {
-      "name": "String Bean Chicken",
-      "url": "/panda-express-string-bean-chicken/",
-      "tagline": "Looking for another healthy option? Check out the String Bean Chicken guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "String Bean Chicken Breast",
+        "url": "/panda-express-string-bean-chicken/",
+        "tagline": "Tender chicken breast slices and crisp green beans in a mild ginger soy sauce.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "Panda Express flagship citrus-glazed crispy chicken classic.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-cream-cheese",
     "name": "Cream Cheese Rangoon",
     "nutritionId": "cream-cheese-rangoon",
     "metaTitle": "Panda Express Cream Cheese Rangoon: Calories & Nutrition",
-    "metaDescription": "Panda Express Cream Cheese Rangoon guide: {{cal:cream-cheese-rangoon}} calories, {{fat:cream-cheese-rangoon}}g fat, allergen info, ingredient facts, and smart appetizer rewards savings.",
+    "metaDescription": "Panda Express Cream Cheese Rangoon guide: {{cal:cream-cheese-rangoon}} calories, {{fat:cream-cheese-rangoon}}g fat, allergen disclosures, recipe ingredient facts, and smart appetizer rewards savings.",
     "intro": "Cream Cheese Rangoon is Panda Express's signature crispy appetizer. Each order contains three hand-folded wonton wrappers stuffed with seasoned cream cheese and scallions, deep-fried to a golden crisp and served with sweet and sour sauce.",
     "isHealthy": {
       "headline": "Are Panda Express Cream Cheese Rangoons Healthy?",
@@ -194,18 +227,29 @@
         "answer": "A standard order of three Panda Express Cream Cheese Rangoons contains {{cal:cream-cheese-rangoon}} calories."
       }
     ],
-    "relatedDish": {
-      "name": "Orange Chicken",
-      "url": "/panda-express-orange-chicken/",
-      "tagline": "Need a classic entree to go with your appetizer? Read our Orange Chicken guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "Pair your crispy appetizer with Panda Express signature Orange Chicken.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "Chow Mein",
+        "url": "/panda-express-chow-mein/",
+        "tagline": "Stir-fried wheat noodles with shredded cabbage, celery, and savory onions.",
+        "image": "/public/images/beijing-beef.jpg",
+        "webp": "/public/images/optimized/beijing-beef-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-black-pepper-steak",
     "name": "Black Pepper Angus Steak",
     "nutritionId": "black-pepper-angus-steak",
     "metaTitle": "Panda Express Black Pepper Angus Steak: Nutrition & Tips",
-    "metaDescription": "Panda Express Black Pepper Angus Steak guide: {{cal:black-pepper-angus-steak}} calories, {{protein:black-pepper-angus-steak}}g protein, premium nutrition facts, and value ordering tips.",
+    "metaDescription": "Panda Express Black Pepper Angus Steak guide: {{cal:black-pepper-angus-steak}} calories, {{protein:black-pepper-angus-steak}}g protein, premium nutrition facts, wok vegetable mix, and value ordering hacks.",
     "intro": "Black Pepper Angus Steak is a wok-seared beef dish featuring Angus steak strips tossed with fresh baby broccoli, diced onions, red bell peppers, and mushrooms in a savory black pepper garlic sauce.",
     "isHealthy": {
       "headline": "Is Black Pepper Angus Steak Healthy?",
@@ -238,18 +282,29 @@
         "answer": "A standard serving of Panda Express Black Pepper Angus Steak contains {{cal:black-pepper-angus-steak}} calories and {{protein:black-pepper-angus-steak}} grams of protein."
       }
     ],
-    "relatedDish": {
-      "name": "Beijing Beef",
-      "url": "/beijing-beef/",
-      "tagline": "Want a sweeter, crispy beef option? Read our Beijing Beef guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Beijing Beef",
+        "url": "/beijing-beef/",
+        "tagline": "Crispy flank beef strips with red bell peppers and sweet tangy glaze.",
+        "image": "/public/images/beijing-beef.jpg",
+        "webp": "/public/images/optimized/beijing-beef-800.webp"
+      },
+      {
+        "name": "Grilled Teriyaki Chicken",
+        "url": "/panda-express-grilled-teriyaki/",
+        "tagline": "Lean grilled chicken thighs delivering maximum protein with low calories.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-sweet-sour-chicken",
     "name": "SweetFire Chicken Breast",
     "nutritionId": "sweetfire-chicken",
     "metaTitle": "Panda Express SweetFire Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express SweetFire Chicken Breast guide: {{cal:sweetfire-chicken}} calories, {{protein:sweetfire-chicken}}g protein, nutrition details, ingredients, and verified discounts.",
+    "metaDescription": "Panda Express SweetFire Chicken Breast guide: {{cal:sweetfire-chicken}} calories, {{protein:sweetfire-chicken}}g protein, nutrition details, pineapple ingredients, and verified online meal discounts.",
     "intro": "SweetFire Chicken Breast combines crispy chicken breast pieces, red bell peppers, sliced yellow onions, and pineapple chunks wok-tossed in a sweet chili glaze.",
     "isHealthy": {
       "headline": "Is SweetFire Chicken Healthy?",
@@ -282,18 +337,29 @@
         "answer": "A standard serving of SweetFire Chicken Breast contains {{cal:sweetfire-chicken}} calories and {{protein:sweetfire-chicken}}g protein."
       }
     ],
-    "relatedDish": {
-      "name": "Orange Chicken",
-      "url": "/panda-express-orange-chicken/",
-      "tagline": "Want the classic citrus glaze? See the Orange Chicken nutrition guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "Classic wok-tossed dark-meat chicken in signature sweet orange glaze.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "String Bean Chicken Breast",
+        "url": "/panda-express-string-bean-chicken/",
+        "tagline": "Light chicken breast with fresh green beans in savory ginger soy sauce.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-string-bean-chicken",
     "name": "String Bean Chicken Breast",
     "nutritionId": "string-bean-chicken",
     "metaTitle": "Panda Express String Bean Chicken: Calories & Nutrition",
-    "metaDescription": "Panda Express String Bean Chicken Breast guide: {{cal:string-bean-chicken}} calories, {{protein:string-bean-chicken}}g protein, Wok Smart nutrition, and healthy meal pairings.",
+    "metaDescription": "Panda Express String Bean Chicken Breast guide: {{cal:string-bean-chicken}} calories, {{protein:string-bean-chicken}}g protein, Wok Smart nutrition facts, healthy vegetable pairings, and deal savings.",
     "intro": "String Bean Chicken Breast is a Wok Smart entrée made with sliced chicken breast, fresh cut string beans, and yellow onions tossed in a ginger soy sauce.",
     "isHealthy": {
       "headline": "Is String Bean Chicken Breast Healthy?",
@@ -326,18 +392,29 @@
         "answer": "No. The dish uses a mild ginger soy sauce without chili peppers."
       }
     ],
-    "relatedDish": {
-      "name": "Grilled Teriyaki Chicken",
-      "url": "/panda-express-grilled-teriyaki/",
-      "tagline": "Need more protein? View our Grilled Teriyaki Chicken guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Grilled Teriyaki Chicken",
+        "url": "/panda-express-grilled-teriyaki/",
+        "tagline": "Tender grilled chicken strips with rich teriyaki dipping sauce.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "Panda Express worldwide bestseller with sweet citrus kick.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      }
+    ]
   },
   {
     "slug": "panda-express-chow-mein",
     "name": "Chow Mein",
     "nutritionId": "chow-mein",
     "metaTitle": "Panda Express Chow Mein: Calories, Nutrition & Tips",
-    "metaDescription": "Panda Express Chow Mein side guide: {{cal:chow-mein}} calories, {{carbs:chow-mein}}g carbohydrates, nutritional facts, half-and-half side tips, and group meal value math.",
+    "metaDescription": "Panda Express Chow Mein side guide: {{cal:chow-mein}} calories, {{carbs:chow-mein}}g carbohydrates, nutritional facts, half-and-half side tips, allergen info, and group meal value math.",
     "intro": "Chow Mein is Panda Express's primary noodle side dish. Made with wheat noodles stir-fried in oil with shredded cabbage, sliced celery, and onions, it offers a savory flavor profile with chewy noodle texture.",
     "isHealthy": {
       "headline": "Is Panda Express Chow Mein Healthy?",
@@ -370,10 +447,21 @@
         "answer": "Yes. Chow Mein contains wheat noodles, cabbage, celery, and onions with vegetable seasoning, though it is prepared in shared kitchen equipment."
       }
     ],
-    "relatedDish": {
-      "name": "Orange Chicken",
-      "url": "/panda-express-orange-chicken/",
-      "tagline": "Pair your noodles with a classic. Read the Orange Chicken guide."
-    }
+    "relatedDishes": [
+      {
+        "name": "Orange Chicken",
+        "url": "/panda-express-orange-chicken/",
+        "tagline": "The signature entrée companion for a classic Bowl or 2-entree Plate.",
+        "image": "/public/images/orange-chicken.jpg",
+        "webp": "/public/images/optimized/orange-chicken-800.webp"
+      },
+      {
+        "name": "Beijing Beef",
+        "url": "/beijing-beef/",
+        "tagline": "Crispy stir-fried beef with bell peppers to pair with noodle sides.",
+        "image": "/public/images/beijing-beef.jpg",
+        "webp": "/public/images/optimized/beijing-beef-800.webp"
+      }
+    ]
   }
 ]

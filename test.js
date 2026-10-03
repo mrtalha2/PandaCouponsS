@@ -45,21 +45,55 @@ for (const relPath of requiredFiles) {
 }
 
 // 2. Validate HTML Files
-const htmlFiles = requiredFiles.filter(f => f.endsWith('.html'));
-for (const relPath of htmlFiles) {
+function getAllHtmlFiles(dir, list = []) {
+  for (const item of fs.readdirSync(dir)) {
+    const full = path.join(dir, item);
+    if (fs.statSync(full).isDirectory()) {
+      getAllHtmlFiles(full, list);
+    } else if (item.endsWith('.html')) {
+      list.push(path.relative(DIST_DIR, full));
+    }
+  }
+  return list;
+}
+
+const allHtmlFiles = getAllHtmlFiles(DIST_DIR);
+const seenTitles = new Map();
+const seenDescriptions = new Map();
+
+for (const relPath of allHtmlFiles) {
   const content = fs.readFileSync(path.join(DIST_DIR, relPath), 'utf8');
 
   // Check Doctype
   assert(content.includes('<!DOCTYPE html>'), `${relPath} is missing <!DOCTYPE html>`);
 
   // Check Title
-  assert(content.includes('<title>'), `${relPath} is missing <title>`);
-
-  // Check Canonical
-  assert(content.includes('<link rel="canonical"'), `${relPath} is missing canonical URL`);
+  const titleMatch = content.match(/<title>([^<]+)<\/title>/);
+  assert(titleMatch, `${relPath} is missing <title>`);
+  const pageTitle = titleMatch[1].trim();
+  assert(pageTitle.length >= 50 && pageTitle.length <= 60, 
+    `${relPath} title length (${pageTitle.length}) out of 50-60 bounds: "${pageTitle}"`);
+  assert(!seenTitles.has(pageTitle), 
+    `Duplicate title across pages: "${pageTitle}" found in ${relPath} and ${seenTitles.get(pageTitle)}`);
+  seenTitles.set(pageTitle, relPath);
 
   // Check Meta Description
-  assert(content.includes('<meta name="description"'), `${relPath} is missing meta description`);
+  const descMatch = content.match(/<meta\s+name="description"\s+content="([^"]+)"/);
+  assert(descMatch, `${relPath} is missing meta description`);
+  const pageDesc = descMatch[1].trim();
+  assert(pageDesc.length >= 140 && pageDesc.length <= 160, 
+    `${relPath} description length (${pageDesc.length}) out of 140-160 bounds: "${pageDesc}"`);
+  assert(!seenDescriptions.has(pageDesc), 
+    `Duplicate description across pages: "${pageDesc}" found in ${relPath} and ${seenDescriptions.get(pageDesc)}`);
+  seenDescriptions.set(pageDesc, relPath);
+
+  // Check Canonical (only on indexable pages)
+  if (relPath === '404.html') {
+    assert(!content.includes('<link rel="canonical"'), `404.html must NOT have a canonical tag`);
+    assert(content.includes('noindex'), `404.html must have noindex`);
+  } else {
+    assert(content.includes('<link rel="canonical"'), `${relPath} is missing canonical URL`);
+  }
 
   const cssMatch = content.match(/href="(\/assets\/css\/style(\.[a-f0-9]{8})?(\.min)?\.css)"/);
   assert(cssMatch, `${relPath} missing valid stylesheet link`);
@@ -98,7 +132,7 @@ for (const relPath of htmlFiles) {
     assert.strictEqual(email.toLowerCase(), 'helppandacoupons@gmail.com', `Forbidden or unknown email "${email}" found in ${relPath}`);
   }
 }
-console.log(`\n✓ All ${htmlFiles.length} HTML pages passed strict SEO and semantic checks!`);
+console.log(`\n✓ All ${allHtmlFiles.length} HTML pages passed strict SEO (50-60 title, 140-160 desc, unique) and semantic checks!`);
 
 // 3. Validate Coupons Data
 const couponsData = require('./data/coupons.json');

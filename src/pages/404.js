@@ -81,7 +81,7 @@ function render404() {
   `;
 
   return {
-    title: `Page Not Found (404) – Panda Express Coupons`,
+    title: `Page Not Found (404) – Panda Express Coupons Directory`,
     description: `The page you requested could not be found. Explore verified Panda Express coupon codes, full menu prices, and the interactive meal nutrition calculator.`,
     canonicalPath: '/404.html',
     isNoindex: true,

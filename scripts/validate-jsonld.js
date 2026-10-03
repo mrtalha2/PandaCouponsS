@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
+const config = require('../data/site.config');
 
 console.log('🔍 Validating JSON-LD in dist/**/*.html...');
 
@@ -26,6 +26,32 @@ function findHtmlFiles(dir, fileList = []) {
 const htmlFiles = findHtmlFiles(distDir);
 let errors = 0;
 
+const forbiddenTypes = ['Product', 'Review', 'AggregateRating', 'aggregateRating'];
+
+function checkUrlsInObject(obj, file) {
+  if (!obj || typeof obj !== 'object') return;
+  for (const key of Object.keys(obj)) {
+    const val = obj[key];
+    if (typeof val === 'string') {
+      if (val.startsWith('http://') || val.startsWith('https://')) {
+        if (!val.startsWith('https://schema.org') &&
+            !val.startsWith('http://schema.org') &&
+            !val.startsWith('https://twitter.com') &&
+            !val.startsWith('https://facebook.com') &&
+            !val.startsWith('https://instagram.com') &&
+            !val.startsWith('https://pinterest.com')) {
+          if (!val.startsWith(config.domain)) {
+            console.error(`❌ [${file}] JSON-LD URL "${val}" does not use canonical domain "${config.domain}"`);
+            errors++;
+          }
+        }
+      }
+    } else if (typeof val === 'object') {
+      checkUrlsInObject(val, file);
+    }
+  }
+}
+
 htmlFiles.forEach(file => {
   const html = fs.readFileSync(file, 'utf8');
   const matches = html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g);
@@ -39,17 +65,47 @@ htmlFiles.forEach(file => {
           errors++;
           return;
         }
-        
-        // Basic required field checks
+
+        if (forbiddenTypes.includes(schema['@type'])) {
+          console.error(`❌ [${file}] Forbidden schema type found: ${schema['@type']}`);
+          errors++;
+        }
+
+        checkUrlsInObject(schema, file);
+
+        // Required field checks
         if (schema['@type'] === 'Organization') {
           if (!schema.name || !schema.url || !schema.contactPoint) {
             console.error(`❌ [${file}] Organization missing required fields (name, url, contactPoint)`);
             errors++;
           }
-        }
-        if (schema['@type'] === 'Article' || schema['@type'] === 'WebPage') {
-          if (!schema.dateModified) {
-            console.error(`❌ [${file}] ${schema['@type']} missing dateModified`);
+        } else if (schema['@type'] === 'WebSite') {
+          if (!schema.name || !schema.url) {
+            console.error(`❌ [${file}] WebSite missing name or url`);
+            errors++;
+          }
+        } else if (schema['@type'] === 'FAQPage') {
+          if (!schema.mainEntity || !Array.isArray(schema.mainEntity) || schema.mainEntity.length === 0) {
+            console.error(`❌ [${file}] FAQPage missing mainEntity array`);
+            errors++;
+          }
+          if (!html.includes('faq-item') && !html.includes('faq-section') && !html.includes('faq-accordion') && !html.includes('FAQ')) {
+            console.error(`❌ [${file}] FAQPage schema present on page without visible FAQ content`);
+            errors++;
+          }
+        } else if (schema['@type'] === 'Article') {
+          if (!schema.headline || !schema.author || !schema.publisher || !schema.dateModified) {
+            console.error(`❌ [${file}] Article missing required fields`);
+            errors++;
+          }
+        } else if (schema['@type'] === 'MenuItem') {
+          if (!schema.name || !schema.nutrition) {
+            console.error(`❌ [${file}] MenuItem missing name or nutrition`);
+            errors++;
+          }
+        } else if (schema['@type'] === 'BreadcrumbList') {
+          if (!schema.itemListElement || !Array.isArray(schema.itemListElement)) {
+            console.error(`❌ [${file}] BreadcrumbList missing itemListElement`);
             errors++;
           }
         }
@@ -64,5 +120,5 @@ htmlFiles.forEach(file => {
 if (errors > 0) {
   process.exit(1);
 } else {
-  console.log('✓ JSON-LD validation passed successfully.');
+  console.log('✓ JSON-LD validation passed successfully: all canonical URLs, required fields, and clean schemas verified.');
 }

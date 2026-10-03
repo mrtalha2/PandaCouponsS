@@ -14,33 +14,54 @@ const redirectTests = [
   { from: '/about-us/index.html', expectedStatus: 301, expectedLocation: '/about-us/' }
 ];
 
-async function run() {
-  console.log('🔍 Verifying 301 redirect rules and 404/405 status codes...');
+async function getTargetPort() {
+  const is3000Active = await new Promise((resolve) => {
+    const req = http.get('http://localhost:3000/healthz', (res) => {
+      res.resume();
+      resolve(true);
+    });
+    req.on('error', () => resolve(false));
+    req.setTimeout(300, () => { req.destroy(); resolve(false); });
+  });
+  if (is3000Active) return { port: 3000, server: null };
 
   const server = require('child_process').spawn('node', ['server.js'], { 
     env: { ...process.env, PORT: '4006' },
-    stdio: ['ignore', 'pipe', 'pipe']
+    stdio: 'ignore'
   });
 
   await new Promise((resolve) => {
-    let started = false;
-    server.stdout.on('data', (d) => {
-      if (!started && d.toString().includes('listening on port')) {
-        started = true;
+    let checkCount = 0;
+    const interval = setInterval(() => {
+      checkCount++;
+      const req = http.get('http://localhost:4006/healthz', (res) => {
+        res.resume();
+        clearInterval(interval);
         resolve();
-      }
-    });
-    setTimeout(() => {
-      if (!started) resolve();
-    }, 1200);
+      });
+      req.on('error', () => {
+        if (checkCount > 20) {
+          clearInterval(interval);
+          resolve();
+        }
+      });
+      req.setTimeout(200, () => req.destroy());
+    }, 100);
   });
+
+  return { port: 4006, server };
+}
+
+async function run() {
+  console.log('🔍 Verifying 301 redirect rules and 404/405 status codes...');
+  const { port, server } = await getTargetPort();
 
   let failed = false;
 
   // Test 301 Redirects
   for (const test of redirectTests) {
     await new Promise((resolve) => {
-      const req = http.get(`http://localhost:4006${test.from}`, { headers: { 'Host': 'localhost:4006' } }, (res) => {
+      const req = http.get(`http://localhost:${port}${test.from}`, { headers: { 'Host': `localhost:${port}` } }, (res) => {
         if (res.statusCode !== test.expectedStatus) {
           console.error(`❌ REDIRECT FAIL: ${test.from} returned status ${res.statusCode}, expected ${test.expectedStatus}`);
           failed = true;
@@ -67,7 +88,7 @@ async function run() {
 
   // Test 404 on nonexistent route
   await new Promise((resolve) => {
-    const req = http.get('http://localhost:4006/non-existent-page-test-xyz', (res) => {
+    const req = http.get(`http://localhost:${port}/non-existent-page-test-xyz`, (res) => {
       if (res.statusCode !== 404) {
         console.error(`❌ 404 FAIL: non-existent page returned ${res.statusCode}, expected 404`);
         failed = true;
@@ -88,7 +109,7 @@ async function run() {
   await new Promise((resolve) => {
     const req = http.request({
       hostname: 'localhost',
-      port: 4006,
+      port: port,
       path: '/about-us/',
       method: 'TRACE'
     }, (res) => {
@@ -109,9 +130,11 @@ async function run() {
     req.end();
   });
 
-  try {
-    server.kill('SIGKILL');
-  } catch (e) {}
+  if (server) {
+    try {
+      server.kill('SIGKILL');
+    } catch (e) {}
+  }
 
   if (failed) {
     console.error('\n❌ Redirect verification FAILED.\n');

@@ -252,24 +252,31 @@ function renderDish(dishData) {
       <div class="section-title-header text-center">
         <span class="kicker-tag kicker-red">EXPLORE MORE</span>
         <h2>Looking for Other Panda Express Classics?</h2>
+        <p style="max-width: 650px; margin: 0.5rem auto 1.5rem auto; font-size: 1rem;">
+          Compare nutritional values, discover coupon savings, or explore our complete <a href="/panda-express-menu/" style="font-weight: 700; color: #C8102E;">Panda Express Menu</a> and interactive <a href="/panda-express-nutrition/" style="font-weight: 700; color: #C8102E;">Nutrition Calculator</a>.
+        </p>
       </div>
 
-      <div style="max-width: 600px; margin: 0 auto;">
-        <article class="menu-food-card" style="display: flex; flex-direction: column;">
-          <div class="card-img-wrapper" style="height: 240px; overflow: hidden; border-radius: 12px 12px 0 0;">
-            <picture>
-              <source type="image/webp" srcset="${relatedWebp800}">
-              <img src="${relatedPhoto}" alt="Panda Express ${dishData.relatedDish.name}" width="600" height="400" loading="lazy" decoding="async" class="zoom-on-hover-img" style="width:100%;height:100%;object-fit:cover;">
-            </picture>
-          </div>
-          <div class="menu-card" style="padding: 1.5rem; border-top: none; border-radius: 0 0 12px 12px;">
-            <h3 style="margin-top:0;">${dishData.relatedDish.name}</h3>
-            <p style="font-size: 0.95rem;">${dishData.relatedDish.tagline}</p>
-            <a href="${dishData.relatedDish.url}" class="btn" style="width: 100%; justify-content: center;">
-              Read Full ${dishData.relatedDish.name} Guide &rarr;
-            </a>
-          </div>
-        </article>
+      <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; max-width: 860px; margin: 0 auto;">
+        ${(dishData.relatedDishes || [dishData.relatedDish]).map(rel => `
+          <article class="menu-food-card" style="display: flex; flex-direction: column;">
+            <div class="card-img-wrapper" style="height: 200px; overflow: hidden; border-radius: 12px 12px 0 0;">
+              <picture>
+                <source type="image/webp" srcset="${rel.webp || relatedWebp800}">
+                <img src="${rel.image || relatedPhoto}" alt="Panda Express ${rel.name}" width="600" height="400" loading="lazy" decoding="async" class="zoom-on-hover-img" style="width:100%;height:100%;object-fit:cover;">
+              </picture>
+            </div>
+            <div class="menu-card" style="padding: 1.25rem; border-top: none; border-radius: 0 0 12px 12px; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between;">
+              <div>
+                <h3 style="margin-top:0; font-size: 1.2rem;">${rel.name}</h3>
+                <p style="font-size: 0.95rem; line-height: 1.5; margin-bottom: 1rem;">${rel.tagline}</p>
+              </div>
+              <a href="${rel.url}" class="btn" style="width: 100%; justify-content: center;">
+                Read ${rel.name} Guide &rarr;
+              </a>
+            </div>
+          </article>
+        `).join('')}
       </div>
     </section>
 
@@ -300,6 +307,8 @@ function renderDish(dishData) {
     title: dishData.metaTitle,
     description: dishData.metaDescription,
     canonicalPath: `/${dishData.slug}/`,
+    ogImage: dishPhoto,
+    ogImageAlt: `Panda Express ${dishData.name} - Calories and Nutrition Guide`,
     content,
     breadcrumbs,
     schemaJson: [menuItemSchema, faqSchema, articleSchema]
