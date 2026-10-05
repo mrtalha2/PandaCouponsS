@@ -680,14 +680,14 @@ function renderHome() {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: var(--color-body-text); margin-top: 0; font-weight: 700;">Why In-App Codes Don't Transfer to Delivery Platforms</h3>
+          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">Why In-App Codes Don't Transfer to Delivery Platforms</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); line-height: 1.6; margin-bottom: 0;">
             Codes entered on <code>pandaexpress.com</code> or the Panda Express app are processed by Panda Express directly. DoorDash, Uber Eats, and Grubhub run entirely separate checkout systems. A promo box on one platform has no connection to the other. Pasting a Panda Express code into a DoorDash cart will simply return an error — the code isn't recognized because it was never meant to work there.
           </p>
         </div>
 
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: var(--color-body-text); margin-top: 0; font-weight: 700;">Where Delivery-Specific Promos Actually Live</h3>
+          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">Where Delivery-Specific Promos Actually Live</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); margin-bottom: 0.5rem;">Each delivery platform manages its own restaurant promotions, and they change independently of anything Panda Express runs directly:</p>
           <ul style="font-size: 0.9rem; color: var(--color-muted-text); padding-left: 1.25rem; margin-bottom: 0.5rem;">
             <li><strong>DoorDash</strong> — check the "Deals" or "Offers" tab within the app; Panda Express periodically appears in platform-wide promotions.</li>
@@ -1055,14 +1055,14 @@ function renderHome() {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: var(--color-body-text); margin-top: 0;">How We Check Codes</h3>
+          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">How We Check Codes</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); line-height: 1.6; margin-bottom: 0;">
             We collect codes from Panda Express's own app and website and from public deal reports, try them where possible, and label each by how sure we are. Codes change often and vary by location, so confirm the discount in your cart before paying. We do not have a live feed from Panda Express.
           </p>
         </div>
 
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: var(--color-body-text); margin-top: 0;">What Each Confidence Level Means</h3>
+          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">What Each Confidence Level Means</h3>
           <ul style="font-size: 0.92rem; color: var(--color-muted-text); padding-left: 1.25rem; margin-bottom: 1rem;">
             <li style="margin-bottom: 0.5rem;"><strong>Multiple Recent Sources:</strong> The code appears consistently across several independent sources within the last 30 days.</li>
             <li style="margin-bottom: 0.5rem;"><strong>Reported, Unconfirmed:</strong> The code appears on coupon sites, but we found no recent independent confirmation it's still active.</li>

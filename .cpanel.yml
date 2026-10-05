@@ -1,5 +1,4 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/codfisit/public_html/
-    - /bin/cp -R dist/* $DEPLOYPATH
+    - /bin/cp -a dist/. /home/codfisit/public_html/
