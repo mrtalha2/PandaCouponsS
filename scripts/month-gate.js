@@ -23,7 +23,7 @@ function parseArgs(args) {
   const options = {
     now: new Date(),
     zone: SITE_TIMEZONE,
-    siteUrl: process.env.SITE_URL || 'https://pandacoupons.org/',
+    siteUrl: process.env.SITE_URL || 'https://pandaxpresscoupon.com/',
     liveTitle: null,
     mockFetchFail: false
   };

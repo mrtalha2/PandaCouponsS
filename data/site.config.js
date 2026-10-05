@@ -10,9 +10,9 @@ module.exports = {
   // Site Identity
   siteName: "Panda Express Coupons",
   siteTagline: "Verified Coupon Codes, Menu Prices & Nutrition Guides",
-  domain: "https://pandacoupons.org",
+  domain: "https://pandaxpresscoupon.com",
   contactEmail: "helppandacoupons@gmail.com",
-  googleSiteVerification: "",
+  googleSiteVerification: "LMdPthx2chXMoxahyRU6_1zxbgXem_wGmaFHrfMO49A",
   bingSiteVerification: "",
   get currentYear() {
     return require('../src/utils/date').getCurrentYear();

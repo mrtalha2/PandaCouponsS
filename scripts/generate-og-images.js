@@ -109,7 +109,7 @@ function createSvgOverlay(kicker, title, subtitle) {
       <g transform="translate(90, 480)">
         <rect width="280" height="46" rx="23" fill="#C8102E"/>
         <text x="140" y="29" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="17" font-weight="800" fill="#FFFFFF" text-anchor="middle">
-          pandacoupons.org ↗
+          pandaxpresscoupon.com ↗
         </text>
       </g>
       <text x="390" y="510" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="16" font-weight="500" fill="#9CA3AF">

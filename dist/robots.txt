@@ -4,4 +4,4 @@ Allow: /
 Disallow: /*?meal=
 
 # Sitemap
-Sitemap: https://pandacoupons.org/sitemap.xml
+Sitemap: https://pandaxpresscoupon.com/sitemap.xml
