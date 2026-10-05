@@ -313,30 +313,30 @@ function renderMenu() {
 
                       <div class="menu-card-body">
                         <div style="margin-bottom: 0.5rem;">
-                          <h3 class="card-title" style="font-size: 1.2rem; font-weight: 850; line-height: 1.3; margin: 0;">${item.name}</h3>
+                          <h3 class="card-title" style="font-size: 1.2rem; font-weight: 850; line-height: 1.3; margin: 0; color: #FFFFFF !important;">${item.name}</h3>
                         </div>
 
                         <div style="margin-bottom: 0.75rem;">
-                          <span class="card-price-tag">${item.price}</span>
+                          <span class="card-price-tag" style="font-weight: 800; color: #F87171 !important;">${item.price}</span>
                         </div>
 
-                        <p class="card-desc" style="font-size: 0.92rem; line-height: 1.55; margin-bottom: 0.65rem;">
+                        <p class="card-desc" style="font-size: 0.92rem; line-height: 1.55; margin-bottom: 0.65rem; color: #CBD5E1 !important;">
                           ${item.description}
                         </p>
 
                         ${item.tags && item.tags.length > 0 ? `
                           <div class="item-tags-row">
-                            ${item.tags.map(tag => `<span class="item-tag-pill">${tag}</span>`).join('')}
+                            ${item.tags.map(tag => `<span class="item-tag-pill" style="color: #E2E8F0 !important;">${tag}</span>`).join('')}
                           </div>
                         ` : ''}
 
                         <div class="menu-card-footer">
                           ${item.guideUrl ? `
-                            <a href="${item.guideUrl}" style="font-size: 0.85rem; color: #C8102E; font-weight: 800; text-decoration: none;">
+                            <a href="${item.guideUrl}" style="font-size: 0.85rem; color: #FBBF24 !important; font-weight: 800; text-decoration: none;">
                               Read Food Guide &rarr;
                             </a>
                           ` : `
-                            <a href="/panda-express-nutrition/" class="menu-card-nutrition-link" style="font-size: 0.85rem; font-weight: 700; text-decoration: none;">
+                            <a href="/panda-express-nutrition/" class="menu-card-nutrition-link" style="font-size: 0.85rem; font-weight: 700; text-decoration: none; color: #FBBF24 !important;">
                             Nutrition Facts &rarr;
                           </a>
                           `}
