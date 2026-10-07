@@ -147,7 +147,8 @@ function generateSitemap(routes) {
   const urlsXml = routes.map((route) => {
     if (route === '/404.html') return '';
     const cleanUrl = `${config.domain}${route.endsWith('/') ? route : route + '/'}`;
-    const lastModStr = lastmodCache[route] ? lastmodCache[route].lastmod : new Date().toISOString();
+    const rawLastMod = lastmodCache[route] ? lastmodCache[route].lastmod : new Date().toISOString();
+    const lastModStr = rawLastMod.split('T')[0];
     
     return `  <url>
     <loc>${cleanUrl}</loc>
