@@ -84,7 +84,7 @@ The site is configured to automatically rebuild and deploy on the 1st of every m
 - **Node Version**: `20.x` (or `>=20`)
 - **Site Time Zone**: Defined by `SITE_TIMEZONE` in `data/site.config.js` (default: `America/Los_Angeles`).
 - **GitHub Secret `DEPLOY_HOOK_URL`**: Set this secret in repository settings (`Settings > Secrets and variables > Actions > New repository secret`) with the webhook trigger URL from your static host (e.g. Netlify Build Hook, Vercel Deploy Hook, Cloudflare Pages Deploy Hook).
-- **GitHub Variable `SITE_URL`**: Set this variable (`Settings > Secrets and variables > Actions > Variables`) to the live site address (e.g. `https://pandacoupons.org/`).
+- **GitHub Variable `SITE_URL`**: Set this variable (`Settings > Secrets and variables > Actions > Variables`) to the live site address (e.g. `https://pandaxpresscoupon.com/`).
 - **Manual Trigger / Fail-Safe**: If the 1st passes without an update or if you need an immediate redeploy, go to **Actions > Monthly Rebuild & Deploy > Run workflow**, check **force**, and click **Run workflow**.
 
 ---

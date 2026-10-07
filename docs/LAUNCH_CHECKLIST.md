@@ -26,7 +26,7 @@
 ### 1. SEO & Canonical Architecture (Score: 100/100)
 - **Title Tags:** Strictly calibrated to 50–60 characters across all 17 HTML pages. No generic titles, 100% unique per route.
 - **Meta Descriptions:** Strictly calibrated to 140–160 characters across all 17 HTML pages. Actionable, compelling, and free of truncation.
-- **Canonical URLs:** Strict trailing slash normalization across all pages (`https://pandacoupons.org/.../`).
+- **Canonical URLs:** Strict trailing slash normalization across all pages (`https://pandaxpresscoupon.com/.../`).
 - **301 Redirects:** Server enforces 301 permanent redirects from naked paths (`/about-us` → `/about-us/`) and `.html` paths (`/index.html` → `/`).
 - **Structured Data (JSON-LD):** Verified schemas (`WebSite`, `Organization`, `FAQPage`, `Article`, `BreadcrumbList`) rendered with Organization author byline.
 - **Sitemap & Robots.txt:** Clean XML sitemap with 16 canonical indexable URLs and hash-based lastmod timestamps; `robots.txt` disallowing dynamic state query params (`/*?meal=`) and admin routes.

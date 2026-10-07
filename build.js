@@ -290,13 +290,14 @@ async function build() {
   // Build 404 page
   await writePage('/404.html', render404(), assetHash);
 
-  // 5. Copy root favicon and headers files
+  // 5. Copy root favicon, headers, and htaccess files
   const rootCopies = [
     { src: 'public/favicon.svg', dest: 'dist/favicon.svg' },
     { src: 'public/favicon.ico', dest: 'dist/favicon.ico' },
     { src: 'public/apple-touch-icon.png', dest: 'dist/apple-touch-icon.png' },
     { src: 'public/site.webmanifest', dest: 'dist/site.webmanifest' },
-    { src: 'public/_headers', dest: 'dist/_headers' }
+    { src: 'public/_headers', dest: 'dist/_headers' },
+    { src: 'public/.htaccess', dest: 'dist/.htaccess' }
   ];
 
   rootCopies.forEach(({ src, dest }) => {

@@ -235,7 +235,7 @@ $ grep -o 'srcset="[^"]*"' dist/panda-express-menu/index.html | wc -l
 ## 📌 Needs Owner Action (Do Not Implement in Repository)
 
 1. **Deploy Hook Setup**: Create a Build/Deploy Hook in your static host (e.g. Vercel Deploy Hook, Netlify Build Hook, Cloudflare Pages Deploy Hook, Render Deploy Hook) and save it as the GitHub repository secret `DEPLOY_HOOK_URL` in `Settings > Secrets and variables > Actions > Secrets`.
-2. **Live Domain Variable**: Set the GitHub repository variable `SITE_URL` in `Settings > Secrets and variables > Actions > Variables` to your live domain (e.g. `https://pandacoupons.org/`).
+2. **Live Domain Variable**: Set the GitHub repository variable `SITE_URL` in `Settings > Secrets and variables > Actions > Variables` to your live domain (e.g. `https://pandaxpresscoupon.com/`).
 3. **Time Zone Decision**: Choose your desired time zone in `data/site.config.js` (`SITE_TIMEZONE`). Use `'America/Los_Angeles'` for US midnight or `'Asia/Karachi'` for Pakistan midnight.
 4. **GitHub Actions Health**: Ensure GitHub Actions is enabled on the repository. Scheduled workflows execute on the default branch (`main`).
 5. **Cross-Platform Case Sensitivity**: Keep in mind that macOS and Windows disguise letter-case discrepancies. Always rely on the CI / Linux test runner to verify that all assets match exact filesystem case.

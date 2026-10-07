@@ -10,7 +10,7 @@
  * CLI Options:
  *   --now <ISO_DATE>        Override current timestamp
  *   --zone <TIMEZONE>       Override site timezone (default: SITE_TIMEZONE from site.config.js)
- *   --site-url <URL>        Override live site URL (default: env.SITE_URL or https://pandacoupons.org/)
+ *   --site-url <URL>        Override live site URL (default: env.SITE_URL or https://pandaxpresscoupon.com/)
  *   --live-title "<TITLE>"  Mock live page <title> (bypasses network fetch)
  *   --mock-fetch-fail       Simulate network error when fetching live site
  */

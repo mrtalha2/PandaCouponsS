@@ -1,0 +1,165 @@
+# ==============================================================================
+# Panda Express Coupons - Production Apache / LiteSpeed Configuration (.htaccess)
+# ==============================================================================
+
+# Enable Rewrite Engine
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # ----------------------------------------------------------------------
+  # 1. Single-Hop Canonical Redirects (HTTPS + non-www)
+  # Combines protocol and host normalization into a single 301 redirect
+  # ----------------------------------------------------------------------
+
+  # Case A: Host starts with www. (redirects http://www. or https://www. -> https://non-www in 1 hop)
+  RewriteCond %{HTTP_HOST} ^www\.pandaxpresscoupon\.com$ [NC]
+  RewriteRule ^(.*)$ https://pandaxpresscoupon.com/$1 [L,R=301]
+
+  # Case B: Insecure HTTP protocol on non-www (redirects http://non-www -> https://non-www in 1 hop)
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https [NC]
+  RewriteCond %{HTTP_HOST} ^pandaxpresscoupon\.com$ [NC]
+  RewriteRule ^(.*)$ https://pandaxpresscoupon.com/$1 [L,R=301]
+
+  # ----------------------------------------------------------------------
+  # 2. Clean URLs & Trailing Slash Normalization (Single Hop)
+  # ----------------------------------------------------------------------
+
+  # Direct /index.html requests to root /
+  RewriteRule ^index\.html$ / [R=301,L]
+
+  # Direct /<path>/index.html to /<path>/
+  RewriteRule ^(.*)/index\.html$ /$1/ [R=301,L]
+
+  # Ensure directory paths have a trailing slash (301)
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ https://pandaxpresscoupon.com/$1/ [R=301,L]
+
+  # Clean URLs: If requesting /foo/ and /foo/index.html exists, serve it
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.*)/$ $1/index.html [L]
+
+  # Clean URLs: If requesting /foo and /foo/index.html exists, redirect to /foo/ (trailing slash)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+  RewriteRule ^(.*)$ https://pandaxpresscoupon.com/$1/ [R=301,L]
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 3. Custom Error Document (404 Page)
+# ----------------------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# ----------------------------------------------------------------------
+# 4. Gzip & Brotli Compression (mod_deflate / mod_brotli)
+# ----------------------------------------------------------------------
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html
+  AddOutputFilterByType DEFLATE text/css
+  AddOutputFilterByType DEFLATE text/javascript
+  AddOutputFilterByType DEFLATE application/javascript
+  AddOutputFilterByType DEFLATE application/x-javascript
+  AddOutputFilterByType DEFLATE application/json
+  AddOutputFilterByType DEFLATE application/xml
+  AddOutputFilterByType DEFLATE text/xml
+  AddOutputFilterByType DEFLATE text/plain
+  AddOutputFilterByType DEFLATE image/svg+xml
+  AddOutputFilterByType DEFLATE font/woff2
+  AddOutputFilterByType DEFLATE font/woff
+  AddOutputFilterByType DEFLATE font/ttf
+</IfModule>
+
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css application/javascript application/x-javascript application/json image/svg+xml font/woff2
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 5. Browser Caching & Expiration Headers (mod_expires)
+# ----------------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 month"
+
+  # HTML & Dynamic Content - Revalidate immediately
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType application/json "access plus 0 seconds"
+  ExpiresByType application/xml "access plus 0 seconds"
+  ExpiresByType text/xml "access plus 0 seconds"
+
+  # Immutable / Versioned Assets - 1 Year Cache
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType application/x-javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType font/woff "access plus 1 year"
+  ExpiresByType font/ttf "access plus 1 year"
+
+  # Media & Images - 1 Year Cache
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/gif "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 6. HTTP Headers: Security, Keep-Alive, & Cache-Control (mod_headers)
+# ----------------------------------------------------------------------
+<IfModule mod_headers.c>
+  # Enable Persistent TCP Connections (Keep-Alive)
+  Header set Connection "keep-alive"
+
+  # Security Headers
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "DENY"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set X-XSS-Protection "0"
+  Header set Permissions-Policy "geolocation=(), camera=(), microphone=()"
+  Header set Cross-Origin-Opener-Policy "same-origin"
+  Header set Cross-Origin-Resource-Policy "same-origin"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header set Content-Security-Policy "default-src 'self'; img-src 'self' data:; font-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
+
+  # Explicit Cache-Control Directives
+  # Versioned / Fingerprinted CSS & JS + Web Fonts -> Immutable 1 Year
+  <FilesMatch "\.(woff2|woff|ttf)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <FilesMatch "\.[0-9a-f]{8}\.(css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # Images & Static Graphics
+  <FilesMatch "\.(webp|avif|jpg|jpeg|png|gif|svg|ico)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  # HTML pages - Require validation
+  <FilesMatch "\.(html|htm)$">
+    Header set Cache-Control "public, max-age=0, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ----------------------------------------------------------------------
+# 7. MIME Types
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+  AddType text/html .html
+  AddType text/css .css
+  AddType application/javascript .js
+  AddType image/svg+xml .svg .svgz
+  AddType image/webp .webp
+  AddType image/avif .avif
+  AddType font/woff2 .woff2
+  AddType font/woff .woff
+  AddType font/ttf .ttf
+  AddType application/manifest+json .webmanifest
+  AddType application/xml .xml
+</IfModule>

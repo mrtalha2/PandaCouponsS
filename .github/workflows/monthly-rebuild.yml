@@ -37,7 +37,7 @@ jobs:
       - name: Run month gate check
         id: check
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://pandacoupons.org/' }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://pandaxpresscoupon.com/' }}
           FORCE_DEPLOY: ${{ inputs.force }}
         run: |
           if [ "$FORCE_DEPLOY" = "true" ]; then
@@ -131,7 +131,7 @@ jobs:
 
       - name: Poll live site until month reflects update
         env:
-          SITE_URL: ${{ vars.SITE_URL || 'https://pandacoupons.org/' }}
+          SITE_URL: ${{ vars.SITE_URL || 'https://pandaxpresscoupon.com/' }}
         run: |
           node -e "
           const { getSiteDateParts } = require('./src/utils/date');
@@ -139,7 +139,7 @@ jobs:
           const http = require('http');
 
           const expectedLabel = getSiteDateParts().monthYearLabel;
-          const siteUrl = process.env.SITE_URL || 'https://pandacoupons.org/';
+          const siteUrl = process.env.SITE_URL || 'https://pandaxpresscoupon.com/';
           console.log('Polling ' + siteUrl + ' for expected month label: \"' + expectedLabel + '\"...');
 
           function fetchTitle(urlStr) {

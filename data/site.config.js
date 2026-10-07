@@ -4,13 +4,19 @@
  * Edit your site details, colors, social links, and domain here.
  * All pages automatically use these values.
  */
+const SITE_URL = (process.env.SITE_URL || "https://pandaxpresscoupon.com").replace(/\/+$/, '');
+
 module.exports = {
+  // Central URL Constant
+  SITE_URL,
+  domain: SITE_URL,
+  siteUrl: SITE_URL,
+
   // TODO(owner): choose the zone whose midnight should flip the month (America/Los_Angeles for US, Asia/Karachi for Pakistan)
   SITE_TIMEZONE: 'America/Los_Angeles',
   // Site Identity
   siteName: "Panda Express Coupons",
   siteTagline: "Verified Coupon Codes, Menu Prices & Nutrition Guides",
-  domain: "https://pandaxpresscoupon.com",
   contactEmail: "helppandacoupons@gmail.com",
   googleSiteVerification: "LMdPthx2chXMoxahyRU6_1zxbgXem_wGmaFHrfMO49A",
   bingSiteVerification: "",
