@@ -480,15 +480,14 @@ function renderNutrition() {
           Detailed breakdown of all official menu departments. Review exact calories, sodium, and macronutrient trends before customizing your plate:
         </p>
 
-        <div class="nutr-category-grid">
-
-          <!-- 1. Sides -->
-          <div class="nutr-category-card">
+        <!-- Row 0 (full-width): Sides featured card above the 3x3 grid -->
+        <div style="margin-bottom: 24px;">
+          <div class="nutr-category-card" style="background: linear-gradient(135deg, #111827 0%, #0f1f35 100%); border-color: rgba(56,189,248,0.2);">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Sides</h3>
               <span class="nutr-cat-badge">130–620 cal</span>
             </div>
-            <ul class="nutr-item-list">
+            <ul class="nutr-item-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 1.5rem;">
               <li class="nutr-item-row">
                 <span class="nutr-item-name">Super Greens</span>
                 <span class="nutr-item-meta">130 cal</span>
@@ -510,8 +509,14 @@ function renderNutrition() {
               Sides swing harder than any other category. Super Greens sits at {{cal:super-greens}} calories, while Fried Rice reaches {{cal:fried-rice}}. The difference isn't really the rice or the greens — it's the oil, egg, and seasoning used in wok preparation. White Steamed Rice lands at {{cal:white-steamed-rice}} calories with zero sodium, making it the cleanest carb option if sodium is your concern.
             </p>
           </div>
+        </div>
 
-          <!-- 2. Chicken Entrées -->
+        <!-- 3×3 Grid: Row 1 — Chicken | Chicken Breast | Beef -->
+        <!-- Row 2 — Seafood | Vegetables & Tofu | Appetizers -->
+        <!-- Row 3 — Soup | Sauces | Cub Meals -->
+        <div class="nutr-category-grid">
+
+          <!-- Row 1, Col 1: Chicken Entrées -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Entrées</h3>
@@ -540,7 +545,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 3. Chicken Breast -->
+          <!-- Row 1, Col 2: Chicken Breast -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Breast</h3>
@@ -565,7 +570,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 4. Beef -->
+          <!-- Row 1, Col 3: Beef -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Beef</h3>
@@ -586,7 +591,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 5. Seafood -->
+          <!-- Row 2, Col 1: Seafood -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Seafood</h3>
@@ -607,7 +612,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 6. Vegetables & Tofu -->
+          <!-- Row 2, Col 2: Vegetables & Tofu -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Vegetables &amp; Tofu</h3>
@@ -628,7 +633,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 7. Appetizers -->
+          <!-- Row 2, Col 3: Appetizers -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Appetizers</h3>
@@ -657,7 +662,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 8. Soup -->
+          <!-- Row 3, Col 1: Soup -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Soup</h3>
@@ -682,7 +687,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 9. Sauces -->
+          <!-- Row 3, Col 2: Sauces -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Sauces</h3>
@@ -707,7 +712,7 @@ function renderNutrition() {
             </p>
           </div>
 
-          <!-- 10. Cub Meals (Kids) -->
+          <!-- Row 3, Col 3: Cub Meals (Kids) -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Cub Meals (Kids)</h3>
@@ -734,9 +739,8 @@ function renderNutrition() {
 
         </div>
 
-        <div style="margin-top: 2rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.88rem; color: #9CA3AF;">
-          ℹ️ Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.
-        </div>
+        <div class="nutr-source-note">
+          ℹ️ Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.</div>
       </section>
 
       <!-- SECTION: Orange Chicken Deep Dive -->
