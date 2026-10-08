@@ -486,7 +486,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Sides</h3>
-              <span class="nutr-table-val">130–620 cal</span>
+              <span class="nutr-cat-badge">130–620 cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -515,7 +515,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Entrées</h3>
-              <span class="nutr-table-val">{{cal:string-bean-chicken}}–{{cal:orange-chicken}} cal</span>
+              <span class="nutr-cat-badge">{{cal:string-bean-chicken}}–{{cal:orange-chicken}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -544,7 +544,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Chicken Breast</h3>
-              <span class="nutr-table-val">{{cal:string-bean-chicken}}–{{cal:sweetfire-chicken}} cal</span>
+              <span class="nutr-cat-badge">{{cal:string-bean-chicken}}–{{cal:sweetfire-chicken}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -569,7 +569,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Beef</h3>
-              <span class="nutr-table-val">{{cal:broccoli-beef}}–{{cal:beijing-beef}} cal</span>
+              <span class="nutr-cat-badge">{{cal:broccoli-beef}}–{{cal:beijing-beef}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -590,7 +590,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Seafood</h3>
-              <span class="nutr-table-val">{{cal:kung-pao-shrimp}}–{{cal:honey-walnut-shrimp}} cal</span>
+              <span class="nutr-cat-badge">{{cal:kung-pao-shrimp}}–{{cal:honey-walnut-shrimp}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -611,7 +611,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Vegetables &amp; Tofu</h3>
-              <span class="nutr-table-val">{{cal:super-greens}}–{{cal:eggplant-tofu}} cal</span>
+              <span class="nutr-cat-badge">{{cal:super-greens}}–{{cal:eggplant-tofu}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -626,11 +626,13 @@ function renderNutrition() {
             <p class="nutr-item-desc">
               Super Greens ({{cal:super-greens}} cal) delivers a blend of steamed broccoli, kale, and cabbage with {{fiber:super-greens}}g of dietary fiber. Eggplant Tofu ({{cal:eggplant-tofu}} cal, {{protein:eggplant-tofu}}g protein) pairs tofu and eggplant in sweet-spicy ginger garlic sauce.
             </p>
+          </div>
+
           <!-- 7. Appetizers -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Appetizers</h3>
-              <span class="nutr-table-val">{{cal:apple-pie-roll}}–{{cal:chicken-egg-roll}} cal</span>
+              <span class="nutr-cat-badge">{{cal:apple-pie-roll}}–{{cal:chicken-egg-roll}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -659,7 +661,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Soup</h3>
-              <span class="nutr-table-val">{{cal:egg-drop-soup}}–{{cal:wonton-soup}} cal</span>
+              <span class="nutr-cat-badge">{{cal:egg-drop-soup}}–{{cal:wonton-soup}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -684,7 +686,7 @@ function renderNutrition() {
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Sauces</h3>
-              <span class="nutr-table-val">{{cal:chili-sauce}}–{{cal:sweet-and-sour-sauce}} cal</span>
+              <span class="nutr-cat-badge">{{cal:chili-sauce}}–{{cal:sweet-and-sour-sauce}} cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -704,13 +706,12 @@ function renderNutrition() {
               Sauces add extra flavor. Sweet &amp; Sour Sauce adds {{cal:sweet-and-sour-sauce}} calories and {{sugar:sweet-and-sour-sauce}}g sugar per cup, while Teriyaki Sauce adds {{cal:teriyaki-sauce}} calories.
             </p>
           </div>
-        </div>
 
           <!-- 10. Cub Meals (Kids) -->
           <div class="nutr-category-card">
             <div class="nutr-cat-header">
               <h3 class="nutr-cat-title">Cub Meals (Kids)</h3>
-              <span class="nutr-table-val">Under 600 cal</span>
+              <span class="nutr-cat-badge">Under 600 cal</span>
             </div>
             <ul class="nutr-item-list">
               <li class="nutr-item-row">
@@ -730,12 +731,11 @@ function renderNutrition() {
               Panda Express designed its Cub Meals around balanced nutrition for children. Each one includes a junior entrée, junior side, and fruit.
             </p>
           </div>
+
         </div>
 
         <div style="margin-top: 2rem; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 1rem 1.25rem; font-size: 0.88rem; color: #9CA3AF;">
           ℹ️ Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.
-        </div>
-
         </div>
       </section>
 

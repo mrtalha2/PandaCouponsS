@@ -6798,40 +6798,57 @@ th.sortable {
 /* Category Grid */
 .nutr-category-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
   gap: 1.5rem;
   margin: 2rem 0;
 }
 
 .nutr-category-card {
   background: #111827;
-  border: 1px solid #1F2937;
-  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
 }
 
 .nutr-category-card:hover {
-  border-color: #38BDF8;
-  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.45);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(56, 189, 248, 0.08);
 }
 
 .nutr-cat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #1F2937;
-  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 0.85rem;
   margin-bottom: 1rem;
+  gap: 0.5rem;
 }
 
 .nutr-cat-title {
   color: #FFFFFF;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.nutr-cat-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-radius: 9999px;
+  padding: 0.2rem 0.65rem;
+  white-space: nowrap;
 }
 
 .nutr-item-list {
@@ -6840,16 +6857,17 @@ th.sortable {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .nutr-item-row {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  font-size: 0.93rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px dashed rgba(255, 255, 255, 0.07);
+  align-items: center;
+  font-size: 0.92rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+  gap: 0.75rem;
 }
 
 .nutr-item-name {
@@ -6860,15 +6878,20 @@ th.sortable {
 .nutr-item-meta {
   color: #38BDF8;
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   white-space: nowrap;
+  background: rgba(56, 189, 248, 0.08);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
 }
 
 .nutr-item-desc {
-  font-size: 0.88rem;
+  font-size: 0.875rem;
   color: #9CA3AF;
-  line-height: 1.55;
-  margin-top: 0.85rem;
+  line-height: 1.6;
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Combo Formula Cards */
