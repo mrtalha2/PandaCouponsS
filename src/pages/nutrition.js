@@ -152,7 +152,7 @@ function renderNutrition() {
     </header>
 
     <!-- MAIN BODY CONTENT -->
-    <main class="nutr-main-container">
+    <div class="nutr-main-container">
 
       <!-- SECTION: Interactive Nutrition Calculator Widget -->
       <section id="calculator-section" class="nutr-section" aria-labelledby="calc-heading">
@@ -1019,7 +1019,7 @@ function renderNutrition() {
         </div>
       </div>
 
-    </main>
+    </div>
 
     <script>
       window.PANDA_MENU_ITEMS = ${JSON.stringify(nutritionFull)};
