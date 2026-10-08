@@ -66,8 +66,8 @@ function renderNutrition() {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": `Panda Express Nutrition: Calories, Macros & the Smartest Way to Order in {{YEAR}}`,
-    "description": `See verified Panda Express nutrition facts and calories for every dish. Free {{YEAR}} data — check yours with our calculator.`,
+    "headline": `Panda Express Nutrition Calculator: Calories, Macros & Facts`,
+    "description": `Stop guessing your Panda Express calories! Free calculator instantly shows calories, macros, sodium & allergens for every dish. Build your meal.`,
     "dateModified": new Date().toISOString(),
     "author": {
       "@type": "Organization",
@@ -1029,8 +1029,8 @@ function renderNutrition() {
   `;
 
   return {
-    title: `Panda Express Nutrition Facts & Calories: {{YEAR}} Guide`,
-    description: `Complete Panda Express nutrition guide for {{YEAR}}: full calorie counts, macros, sodium levels, allergen disclosures, and interactive meal nutrition calculator.`,
+    title: `Panda Express Nutrition Calculator: Calories, Macros & Facts`,
+    description: `Stop guessing your Panda Express calories! Free calculator instantly shows calories, macros, sodium & allergens for every dish. Build your meal.`,
     canonicalPath: '/panda-express-nutrition/',
     content,
     breadcrumbs,
