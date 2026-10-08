@@ -173,17 +173,17 @@ function renderNutrition() {
           <!-- Mode Tabs -->
           <div class="calc-mode-switcher-wrap">
             <div class="calc-mode-switcher" role="tablist" aria-label="Calculator Modes">
-              <button type="button" class="calc-mode-btn is-active" data-mode="combo" role="tab" aria-selected="true">
+              <button type="button" class="calc-mode-btn" data-mode="combo" role="tab" aria-selected="false">
                 <span aria-hidden="true">🍱</span> Combo Meal Builder
               </button>
-              <button type="button" class="calc-mode-btn" data-mode="explorer" role="tab" aria-selected="false">
+              <button type="button" class="calc-mode-btn is-active" data-mode="explorer" role="tab" aria-selected="true">
                 <span aria-hidden="true">🔍</span> Full Nutrition Explorer
               </button>
             </div>
           </div>
 
           <!-- VIEW 1: COMBO MEAL BUILDER -->
-          <div id="view-combo-builder" class="calc-view-panel">
+          <div id="view-combo-builder" class="calc-view-panel" style="display: none;">
             
             <!-- Step 1: Choose Meal Type -->
             <div class="calc-builder-step">
@@ -276,7 +276,7 @@ function renderNutrition() {
           </div>
 
           <!-- VIEW 2: EXPLORER & FULL MEAL CALCULATOR -->
-          <div id="view-explorer" class="calc-view-panel" style="display: none;">
+          <div id="view-explorer" class="calc-view-panel">
             
             <!-- Explorer Toolbar -->
             <div class="explorer-toolbar">

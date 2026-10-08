@@ -303,7 +303,7 @@ function initNutritionSystem() {
   const menuData = window.PANDA_MENU_ITEMS || [];
 
   // State
-  let currentMode = 'combo'; // 'combo' | 'explorer'
+  let currentMode = 'explorer'; // 'combo' | 'explorer'
   let activeComboMeal = 'plate'; // 'bowl' | 'plate' | 'bigger_plate'
   let selectedSide = 'chow-mein';
   let selectedEntrees = ['orange-chicken', 'beijing-beef'];
@@ -366,21 +366,51 @@ function initNutritionSystem() {
   const comboView = document.getElementById('view-combo-builder');
   const explorerView = document.getElementById('view-explorer');
 
+  function switchMode(mode) {
+    currentMode = mode;
+    modeBtns.forEach((b) => {
+      const isActive = b.dataset.mode === mode;
+      b.classList.toggle('is-active', isActive);
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+    });
+
+    if (mode === 'combo') {
+      if (comboView) comboView.style.display = 'block';
+      if (explorerView) explorerView.style.display = 'none';
+    } else {
+      if (comboView) comboView.style.display = 'none';
+      if (explorerView) explorerView.style.display = 'block';
+      renderExplorerTable();
+      checkTableScrollHint();
+    }
+  }
+
   modeBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-      modeBtns.forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      currentMode = btn.dataset.mode;
-
-      if (currentMode === 'combo') {
-        if (comboView) comboView.style.display = 'block';
-        if (explorerView) explorerView.style.display = 'none';
-      } else {
-        if (comboView) comboView.style.display = 'none';
-        if (explorerView) explorerView.style.display = 'block';
-        renderExplorerTable();
-      }
+      switchMode(btn.dataset.mode);
     });
+  });
+
+  // Support URL hash (#combo or #explorer) or query parameter (?tab=combo or ?tab=explorer)
+  try {
+    const hash = window.location.hash.toLowerCase();
+    const tabParam = new URLSearchParams(window.location.search).get('tab');
+    if (hash === '#combo' || hash === '#combo-builder' || hash === '#view-combo-builder' || tabParam === 'combo') {
+      switchMode('combo');
+    }
+  } catch (err) {
+    // ignore
+  }
+
+  window.addEventListener('hashchange', () => {
+    try {
+      const hash = window.location.hash.toLowerCase();
+      if (hash === '#combo' || hash === '#combo-builder' || hash === '#view-combo-builder') {
+        switchMode('combo');
+      } else if (hash === '#explorer' || hash === '#view-explorer' || hash === '#nutrition-table') {
+        switchMode('explorer');
+      }
+    } catch (e) {}
   });
 
   /* -------------------------------------------------------------
