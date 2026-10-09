@@ -9,6 +9,7 @@ const ROOT_DIR = path.join(__dirname, '..');
 
 // Construct forbidden patterns from fragments so this script does not flag itself
 const FORBIDDEN_FRAGMENTS = [
+  ['pandacoupons', '.', 'org'].join(''),
   ['help', '@', 'pandacoupons.org'].join(''),
   ['help', ' [at] ', 'pandacoupons.org'].join(''),
   ['help', '(at)', 'pandacoupons'].join(''),
@@ -17,8 +18,7 @@ const FORBIDDEN_FRAGMENTS = [
 
 const IGNORED_DIRS = new Set([
   'node_modules',
-  '.git',
-  'dist'
+  '.git'
 ]);
 
 function scanDirectory(dir, issues = []) {
