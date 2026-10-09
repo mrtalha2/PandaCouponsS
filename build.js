@@ -170,7 +170,6 @@ function generateRobots() {
   const robotsTxt = `# Robots.txt for ${config.siteName}
 User-agent: *
 Allow: /
-Disallow: /*?meal=
 
 # Sitemap
 Sitemap: ${config.domain}/sitemap.xml

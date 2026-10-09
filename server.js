@@ -113,7 +113,13 @@ const STATIC_301_REDIRECTS = {
   '/panda-express-nutrition/index.html': '/panda-express-nutrition/',
   '/panda-express-savings-calculator/index.html': '/panda-express-savings-calculator/',
   '/panda-express-orange-chicken/index.html': '/panda-express-orange-chicken/',
-  '/beijing-beef/index.html': '/beijing-beef/'
+  '/beijing-beef/index.html': '/beijing-beef/',
+  '/panda-express-grilled-teriyaki/index.html': '/panda-express-grilled-teriyaki/',
+  '/panda-express-cream-cheese/index.html': '/panda-express-cream-cheese/',
+  '/panda-express-black-pepper-steak/index.html': '/panda-express-black-pepper-steak/',
+  '/panda-express-sweet-sour-chicken/index.html': '/panda-express-sweet-sour-chicken/',
+  '/panda-express-string-bean-chicken/index.html': '/panda-express-string-bean-chicken/',
+  '/panda-express-chow-mein/index.html': '/panda-express-chow-mein/'
 };
 
 // Security Headers Helper
@@ -267,18 +273,6 @@ const server = http.createServer((req, res) => {
 
   const pathname = parsedUrl.pathname || '/';
 
-  // 1-Hop Canonical HTTPS & non-www host redirect
-  const host = (req.headers.host || '').toLowerCase().split(':')[0];
-  const proto = req.headers['x-forwarded-proto'] || '';
-  if (host.startsWith('www.') || (proto === 'http' && host.includes('pandaxpresscoupon.com'))) {
-    setSecurityHeaders(res);
-    res.statusCode = 301;
-    res.setHeader('Location', `https://pandaxpresscoupon.com${req.url}`);
-    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-    res.end();
-    return;
-  }
-
   // Health check endpoint
   if (pathname === '/healthz') {
     setSecurityHeaders(res);
@@ -289,28 +283,41 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  // 301 Permanent Redirects
+  // Resolve normalized canonical path
+  let canonicalPath = pathname;
   if (STATIC_301_REDIRECTS[pathname]) {
+    canonicalPath = STATIC_301_REDIRECTS[pathname];
+  } else if (!pathname.endsWith('/') && !path.extname(pathname)) {
+    const candidateDir = path.join(DIST_DIR, pathname);
+    if (fs.existsSync(candidateDir) && fs.statSync(candidateDir).isDirectory()) {
+      canonicalPath = pathname + '/';
+    }
+  }
+
+  // 1-Hop Canonical HTTPS & non-www host + path redirect
+  const host = (req.headers.host || '').toLowerCase().split(':')[0];
+  const proto = req.headers['x-forwarded-proto'] || '';
+  const isExternalOrWww = host.startsWith('www.') || (proto === 'http' && host.includes('pandaxpresscoupon.com'));
+
+  if (isExternalOrWww) {
+    const search = parsedUrl.search || '';
     setSecurityHeaders(res);
     res.statusCode = 301;
-    res.setHeader('Location', STATIC_301_REDIRECTS[pathname]);
+    res.setHeader('Location', `https://pandaxpresscoupon.com${canonicalPath}${search}`);
     res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
     res.end();
     return;
   }
 
-  // Trailing slash redirect for directory paths
-  if (!pathname.endsWith('/') && !path.extname(pathname)) {
-    const candidateDir = path.join(DIST_DIR, pathname);
-    if (fs.existsSync(candidateDir) && fs.statSync(candidateDir).isDirectory()) {
-      setSecurityHeaders(res);
-      res.statusCode = 301;
-      const search = parsedUrl.search || '';
-      res.setHeader('Location', pathname + '/' + search);
-      res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
-      res.end();
-      return;
-    }
+  // Same-origin 301 redirect if path is not canonical
+  if (canonicalPath !== pathname) {
+    const search = parsedUrl.search || '';
+    setSecurityHeaders(res);
+    res.statusCode = 301;
+    res.setHeader('Location', `${canonicalPath}${search}`);
+    res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+    res.end();
+    return;
   }
 
   // Decode URI component safely

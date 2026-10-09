@@ -1,7 +1,6 @@
 # Robots.txt for Panda Express Coupons
 User-agent: *
 Allow: /
-Disallow: /*?meal=
 
 # Sitemap
 Sitemap: https://pandaxpresscoupon.com/sitemap.xml

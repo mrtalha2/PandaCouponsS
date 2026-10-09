@@ -1142,11 +1142,11 @@ function renderHome() {
   `;
 
   return {
-    title: `Panda Express Coupon Code: Active Deals & Promos (20% Off)`,
-    description: `Verified Panda Express coupon codes: 20% off, free entrées, $10 family meals & app-only offers. Check which deals are active and skip expired promos.`,
+    title: `Panda Express Coupon Codes: Latest Reported Deals & Promos`,
+    description: `Reported Panda Express promo codes with clear status labels: 20% off, Family Meal deals, free egg roll & more. See what's active, unconfirmed or expired.`,
     canonicalPath: '/',
     ogImage: '/public/images/og/og-home.jpg',
-    ogImageAlt: 'Panda Express Coupon Codes and Deals - Verified Working',
+    ogImageAlt: 'Panda Express coupon codes and deals',
     content,
     schemaJson: faqSchema
   };
