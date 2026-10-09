@@ -99,7 +99,7 @@ function renderAbout() {
       <div class="author-profile-card">
         <div class="author-avatar">🐼</div>
         <div>
-          <h3 style="margin-top: 0; margin-bottom: 0.25rem;">Panda Coupons Editorial Team</h3>
+          <h3 style="margin-top: 0; margin-bottom: 0.25rem;">Editorial Team</h3>
           <p style="font-size: 0.9rem; font-weight: 700; color: #C8102E; margin-bottom: 0.5rem;">Independent Food &amp; Dining Research Group</p>
           <p style="font-size: 0.95rem; margin-bottom: 0;">
             Our independent research group catalogs verified restaurant savings, loyalty rewards economics, and authentic nutrition metrics from official guides to give diners a clean, transparent resource.
@@ -137,7 +137,7 @@ function renderAbout() {
       <div class="dish-hero-kicker">INDEPENDENT CONSUMER RESOURCE</div>
       <h1 class="dish-hero-title">${aboutHeading}</h1>
       <p class="dish-hero-subtitle">
-        Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Eliminating coupon fatigue with honest, tested savings.
+        Reviewed {{MONTH_YEAR}} by the Editorial Team • Eliminating coupon fatigue with honest, tested savings.
       </p>
     </div>
   </section>

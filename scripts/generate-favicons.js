@@ -93,7 +93,7 @@ async function generate() {
   // 8. Web App Manifest
   const manifest = {
     name: "Panda Express Coupons",
-    short_name: "PandaCoupons",
+    short_name: "Panda Express",
     icons: [
       { src: "/public/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
       { src: "/public/android-chrome-512x512.png", sizes: "512x512", type: "image/png" }

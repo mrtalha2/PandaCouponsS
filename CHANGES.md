@@ -1,4 +1,4 @@
-# PandaCoupons Remediation & Hardening Report
+# Panda Express Coupons Remediation & Hardening Report
 
 This report documents all fixes, enhancements, and verification results across Rounds 1, 2, 3, and Round 4 (Monthly Automated Rebuild, Deploy Pipeline & Exact-Case Asset Remediation).
 

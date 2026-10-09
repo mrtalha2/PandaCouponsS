@@ -20,7 +20,7 @@ A high-performance, mobile-first web platform for verified Panda Express coupons
 ## 📁 Repository Structure
 
 ```text
-PandaCoupons/
+PandaExpressCoupons/
 ├── server.js                  # Production Node.js HTTP server & admin router
 ├── build.js                   # Compiler & static HTML generator
 ├── package.json               # NPM scripts & production dependencies

@@ -1,4 +1,4 @@
-# PandaCoupons Production Launch Checklist & Comprehensive Audit Report
+# Panda Express Coupons Production Launch Checklist & Comprehensive Audit Report
 
 **Target Score:** 95+/100 across all 8 audit categories  
 **Achieved Score:** 99/100 Composite Score  
@@ -69,5 +69,5 @@
 
 ### 8. Launch Readiness & Operations (Score: 100/100)
 - **Unified Test Runner:** `npm test` executes all 14 test suites in 1.4 seconds with zero errors.
-- **Production Package:** `npm run release` generates clean `release-pandacoupons.zip` with dev artifacts, secrets, and node_modules excluded.
+- **Production Package:** `npm run release` generates clean `release-site.zip` with dev artifacts, secrets, and node_modules excluded.
 - **Protected Admin:** Zero changes made to protected `src/admin/` routes and data structures.

@@ -60,17 +60,17 @@ npm ci
 
 1. **Build container**:
    ```bash
-   docker build -t pandacoupons:latest .
+   docker build -t pandaxpresscoupon:latest .
    ```
 
 2. **Run container**:
    ```bash
    docker run -d \
-     --name pandacoupons \
+     --name pandaxpresscoupon \
      -p 3000:3000 \
      -e PORT=3000 \
      -e NODE_ENV=production \
-     pandacoupons:latest
+     pandaxpresscoupon:latest
    ```
 
 ---
@@ -92,5 +92,5 @@ The site is configured to automatically rebuild and deploy on the 1st of every m
 ## Step 6: Health Check & Monitoring
 
 - **Health Check Endpoint**: `GET /healthz` returns `{"status":"ok","timestamp":"..."}` with `200 OK`.
-- **Release Packaging**: `npm run release` packages the clean repository into `release-pandacoupons.zip`.
+- **Release Packaging**: `npm run release` packages the clean repository into `release-site.zip`.
 

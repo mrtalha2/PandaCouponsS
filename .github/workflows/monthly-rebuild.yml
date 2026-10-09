@@ -149,7 +149,7 @@ jobs:
               const req = client.get(u, {
                 headers: {
                   'Cache-Control': 'no-cache',
-                  'User-Agent': 'PandaCoupons-VerifyLive/1.0'
+                  'User-Agent': 'PandaExpress-VerifyLive/1.0'
                 },
                 timeout: 10000
               }, res => {

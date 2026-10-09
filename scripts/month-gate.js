@@ -54,7 +54,7 @@ function fetchLiveTitle(targetUrl, timeoutMs = 15000) {
       const req = client.get(urlObj, {
         headers: {
           'Cache-Control': 'no-cache',
-          'User-Agent': 'PandaCoupons-MonthGate/1.0'
+          'User-Agent': 'PandaExpress-MonthGate/1.0'
         },
         timeout: timeoutMs
       }, (res) => {
