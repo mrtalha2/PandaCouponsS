@@ -34,7 +34,7 @@ function renderDisclaimer() {
       <section id="trademarks" class="section-border" style="padding: 1.75rem 0;">
         <h2>2. Ownership of Trademarks &amp; Fair Use</h2>
         <p>
-          "Panda Express", "Orange Chicken", "Beijing Beef", "Panda Rewards", and all related brand names, emblems, and logos are registered trademarks or service marks owned solely by Panda Restaurant Group, Inc.
+          "Panda Express", "Orange Chicken", "Beijing Beef", "Panda Rewards", "Panda Cub Meal™", and all related brand names, emblems, and logos are registered trademarks or service marks owned solely by Panda Restaurant Group, Inc.
         </p>
         <p>
           These trademarks and proprietary names are used on this site strictly to identify and accurately describe the restaurant brand, menu items, and publicly shared discount offers under nominative fair use legal doctrines. We assert no proprietary claim or affiliation with Panda Restaurant Group, Inc.

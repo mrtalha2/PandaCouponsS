@@ -4,18 +4,9 @@ const fs = require('fs');
 const path = require('path');
 
 async function getTargetPort() {
-  const is3000Active = await new Promise((resolve) => {
-    const req = http.get('http://localhost:3000/healthz', (res) => {
-      res.resume();
-      resolve(true);
-    });
-    req.on('error', () => resolve(false));
-    req.setTimeout(300, () => { req.destroy(); resolve(false); });
-  });
-  if (is3000Active) return { port: 3000, server: null };
-
+  const TEST_PORT = 4006;
   const server = require('child_process').spawn('node', ['server.js'], { 
-    env: { ...process.env, PORT: '4006' },
+    env: { ...process.env, PORT: String(TEST_PORT) },
     stdio: 'ignore'
   });
 
@@ -66,16 +57,18 @@ async function verify() {
   assert(homeRes.body.includes('plus-jakarta-sans-400.woff2'), 'Must preload 400 woff2 font');
   
   // TOC Elements
-  assert(homeRes.body.includes('id="homeTocDesktop"'), 'Home page must contain desktop TOC');
-  assert(homeRes.body.includes('id="homeTocMobile"'), 'Home page must contain mobile TOC');
+  assert(homeRes.body.includes('id="homeTocDesktop"'), 'Home page must contain responsive TOC');
   
   const tocTargets = [
+    '#how-codes-work',
     '#coupon-section',
     '#howto-section-heading',
     '#why-fail-heading',
+    '#delivery-platforms-section',
     '#family-meal-deals',
     '#rewards-section-heading',
     '#other-discounts-heading',
+    '#verification-process-section',
     '#faq-section-heading',
     '#cta-final-heading'
   ];
@@ -83,7 +76,7 @@ async function verify() {
     assert(homeRes.body.includes(`href="${target}"`), `TOC must link to ${target}`);
     assert(homeRes.body.includes(`id="${target.replace('#', '')}"`), `Section ${target} must exist on home page`);
   }
-  console.log('  ✓ Home page font preloads, TOC (desktop & mobile), and all 8 anchor targets verified');
+  console.log('  ✓ Home page font preloads, responsive TOC, and all 11 anchor targets verified');
   passed++;
 
   // 2. Verify Nutrition Page

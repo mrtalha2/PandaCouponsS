@@ -235,7 +235,7 @@
           "isPremium": false,
           "tags": [
             "Only 150 Cal",
-            "Keto Friendly"
+            "High Protein"
           ]
         },
         {
@@ -322,7 +322,7 @@
           "description": "A nutritious medley of tender broccoli florets, kale, and green cabbage steamed to crisp perfection.",
           "image": "/public/images/menu/super-green.webp",
           "tags": [
-            "Only 90 Cal",
+            "130 Cal",
             "High Fiber",
             "Vegan"
           ]
@@ -542,7 +542,7 @@
           "image": "/public/images/menu/grilled-teriyaki-chicken-panda-cub-meal.webp",
           "tags": [
             "High Protein Kids",
-            "330 Cal"
+            "300 Cal"
           ]
         },
         {
@@ -553,7 +553,7 @@
           "image": "/public/images/menu/Broccoli-Beef-Panda-Cub-Meal-cub-meal.webp",
           "tags": [
             "Veggies & Beef",
-            "250 Cal"
+            "150 Cal"
           ]
         },
         {
@@ -572,7 +572,7 @@
     {
       "id": "protein-plates",
       "name": "Balanced Protein & Fitness Plates",
-      "description": "Nutritionist-approved macro configurations designed for athletic performance, clean eating, and high-protein targets.",
+      "description": "Macro configurations designed for athletic performance, clean eating, and high-protein targets.",
       "badge": "HEALTH & MACROS",
       "items": [
         {

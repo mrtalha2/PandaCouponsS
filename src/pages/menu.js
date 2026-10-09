@@ -11,9 +11,9 @@ function renderMenu() {
   const badgeText = '🐼 {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
   const heroTitle = 'Panda Express Menu with Prices &amp; Pictures';
   const heroSubtitle = 'Reviewed {{MONTH_YEAR}} by the Panda Coupons Editorial Team • Explore pricing, per-serving calorie counts, portion options, and dish details for Bowls, Plates, Entrées, and Sides.';
-  const stat1Label = 'Wok-Crafted Dishes';
+  const stat1Label = 'Menu Items';
   const stat2Label = 'A La Carte Boxes';
-  const stat3Label = 'Zero Artificial Trans Fat';
+  const stat3Label = 'Direct Online Pricing';
 
   const breadcrumbs = [
     { label: "Home", url: "/" },
@@ -133,8 +133,8 @@ function renderMenu() {
             <span class="hero-stat-desc">${stat3Label}</span>
           </div>
           <div class="hero-stat-box">
-            <span class="hero-stat-val" style="color: #F5B301;">{{MONTH_YEAR}}</span>
-            <span class="hero-stat-desc">Verified Pricing</span>
+            <span class="hero-stat-val" style="color: #F5B301;">2026-10-01</span>
+            <span class="hero-stat-desc">Prices Checked &bull; Vary by Location</span>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@ function renderMenu() {
     <!-- 4. ATMOSPHERIC ALTERNATING SECTIONS -->
     <div id="menuCardsContainer">
       <!-- Menu Empty State -->
-      <div id="menuEmptyState" class="menu-empty-state is-hidden container" style="text-align: center; padding: 4rem 1.5rem; border: 2px dashed #CBD5E1; border-radius: 20px; margin: 2rem auto; max-width: 680px;">
+      <div id="menuEmptyState" class="menu-empty-state is-hidden container" hidden style="text-align: center; padding: 4rem 1.5rem; border: 2px dashed #CBD5E1; border-radius: 20px; margin: 2rem auto; max-width: 680px;">
         <div style="font-size: 2.75rem; margin-bottom: 0.75rem;">🥢</div>
         <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem;">No menu items match your search</h3>
         <p style="max-width: 440px; margin: 0 auto 1.5rem auto;">Try checking your spelling or clear your search query to see the complete Panda Express menu.</p>
@@ -371,21 +371,21 @@ function renderMenu() {
             <div class="discount-card-badge gold-badge">PORTION HACK</div>
             <div class="discount-icon">⚖️</div>
             <h3>Order Half &amp; Half Sides</h3>
-            <p>You never have to choose just Chow Mein or Fried Rice! Ask the server for <strong>half Chow Mein and half Fried Rice</strong> (or half Super Greens) for zero extra fee. You get double the variety and often slightly more food volume.</p>
+            <p>You can typically request half and half sides (e.g. half Chow Mein and half Super Greens) for split variety. Ask your location, as policies vary by store.</p>
           </div>
 
           <div class="discount-feature-card highlight-gold-border">
             <div class="discount-card-badge gold-badge">VALUE KING</div>
             <div class="discount-icon">🍱</div>
             <h3>Bigger Plate is the Lowest Cost Per Entrée</h3>
-            <p>A Bigger Plate costs only ~$2.00 more than a regular Plate, but gives you a full 3rd entrée. Whether you're splitting with a friend or packing leftovers for tomorrow, the Bigger Plate yields the highest food-per-dollar ratio.</p>
+            <p>A Bigger Plate costs only ~$2.00 more than a regular Plate, but adds a 3rd entrée box. Whether splitting or saving leftovers, it delivers the highest food-per-dollar ratio.</p>
           </div>
 
           <div class="discount-feature-card">
-            <div class="discount-card-badge">FREE FLAVOR</div>
+            <div class="discount-card-badge">SAUCE OPTIONS</div>
             <div class="discount-icon">🥣</div>
-            <h3>Free Extra Teriyaki &amp; Chili Sauce</h3>
-            <p>Panda Express offers Sweet &amp; Sour sauce, Hot Mustard, and Soy Sauce packets completely free. You can also request a complimentary cup of warm Teriyaki glaze on the side with any order!</p>
+            <h3>Sauce Requests at Counter</h3>
+            <p>Panda Express offers Sweet &amp; Sour, Hot Mustard, and Soy Sauce packets upon request. Some locations provide side cups of warm Teriyaki glaze; ask your location, as policies vary.</p>
           </div>
         </div>
       </div>
@@ -399,11 +399,11 @@ function renderMenu() {
           Ready to Order? Grab a 20% Off Code First
         </h2>
         <p style="color: #E2E8F0; max-width: 650px; margin: 0 auto 2.25rem auto; font-size: 1.12rem; line-height: 1.65; font-weight: 500;">
-          Check our verified coupon database for today's active coupon codes, or calculate your meal's exact calories, protein, and fat.
+          Check our reported coupon database for today's active coupon codes, or calculate your meal's exact calories, protein, and fat.
         </p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
           <a href="/#coupon-section" class="btn btn-hero-primary" style="font-size: 1.05rem; padding: 0.9rem 1.8rem;">
-            <span>🎟️ Copy Today's Working Codes</span>
+            <span>🎟️ Latest Reported Codes</span>
           </a>
           <a href="/panda-express-savings-calculator/" class="btn btn-hero-secondary" style="font-size: 1.05rem; padding: 0.9rem 1.8rem;">
             <span>🧮 Group Savings Calculator</span>

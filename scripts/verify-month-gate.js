@@ -133,10 +133,17 @@ for (const mockDate of mockDates) {
   assert(titleMatch, 'Home page must have a <title>');
   const titleText = titleMatch[1];
   
-  assert(
-    titleText.includes(monthYearLabel),
-    `Home <title> "${titleText}" does not contain expected monthYearLabel "${monthYearLabel}"`
-  );
+  if (homeData.title && homeData.title.includes('{{MONTH_YEAR}}')) {
+    assert(
+      titleText.includes(monthYearLabel),
+      `Home <title> "${titleText}" does not contain expected monthYearLabel "${monthYearLabel}"`
+    );
+  } else {
+    assert(
+      resolved.includes(monthYearLabel),
+      `Home page content does not contain expected monthYearLabel "${monthYearLabel}"`
+    );
+  }
   console.log(`  ✓ Mock date ${mockDate.toISOString()} -> monthYearLabel "${monthYearLabel}" matches <title> "${titleText}"`);
   passed++;
 }

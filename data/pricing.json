@@ -1,0 +1,132 @@
+{
+  "source": "Panda Express Corporate Menu Nationwide Averages",
+  "checkedDate": "2026-10-01",
+  "disclaimer": "Prices are typical averages and vary by location, franchise, and platform.",
+  "items": {
+    "bowl": {
+      "name": "Bowl",
+      "price": 9.50,
+      "displayPrice": "$9.50+",
+      "serves": 1,
+      "includes": "1 Entrée + 1 Side"
+    },
+    "plate": {
+      "name": "Plate",
+      "price": 11.50,
+      "displayPrice": "$11.50+",
+      "serves": 1,
+      "includes": "2 Entrées + 1 Side"
+    },
+    "biggerPlate": {
+      "name": "Bigger Plate",
+      "price": 13.50,
+      "displayPrice": "$13.50+",
+      "serves": 1,
+      "includes": "3 Entrées + 1 Side"
+    },
+    "pandaBundles": {
+      "name": "Panda Bundles",
+      "price": 12.00,
+      "displayPrice": "$12.00+",
+      "serves": 1,
+      "includes": "Meal + Medium Drink"
+    },
+    "cubMeal": {
+      "name": "Panda Cub Meal™",
+      "price": 7.80,
+      "displayPrice": "$7.80",
+      "serves": 1,
+      "includes": "Jr. Entrée + Side + Drink + Fruit"
+    },
+    "familyMeal": {
+      "name": "Family Meal",
+      "price": 46.00,
+      "displayPrice": "$46.00+",
+      "serves": "4–5",
+      "servesMin": 4,
+      "servesMax": 5,
+      "includes": "3 Large Entrées + 2 Large Sides",
+      "family10Discount": 10.00,
+      "family10Price": 36.00,
+      "perPersonStandardMin": 9.20,
+      "perPersonStandardMax": 11.50,
+      "perPersonDiscountedMin": 7.20,
+      "perPersonDiscountedMax": 9.00
+    },
+    "aLaCarte": {
+      "small": 5.40,
+      "medium": 9.50,
+      "large": 13.60,
+      "displayPrice": "Sm $5.40 | Med $9.50 | Lg $13.60"
+    },
+    "aLaCartePremium": {
+      "small": 6.90,
+      "medium": 12.50,
+      "large": 18.10,
+      "displayPrice": "Sm $6.90 | Med $12.50 | Lg $18.10"
+    },
+    "catering": {
+      "entreeTray": {
+        "price": 48.00,
+        "displayPrice": "$48.00+ ($62.00 Premium)",
+        "serves": "12–14"
+      },
+      "appetizerTray": {
+        "price": 26.00,
+        "displayPrice": "$26.00+",
+        "serves": "12–14"
+      },
+      "partyBundle12_16": {
+        "price": 130.00,
+        "displayPrice": "$130.00+",
+        "serves": "12–16",
+        "servesCount": 14,
+        "perPerson": 9.29
+      },
+      "partyBundle18_22": {
+        "price": 185.00,
+        "displayPrice": "$185.00+",
+        "serves": "18–22",
+        "servesCount": 20,
+        "perPerson": 9.25
+      },
+      "partyBundle26_30": {
+        "price": 240.00,
+        "displayPrice": "$240.00+",
+        "serves": "26–30",
+        "servesCount": 28,
+        "perPerson": 8.57
+      }
+    }
+  },
+  "comparisons": {
+    "individualPlate": {
+      "orderType": "Individual Plate",
+      "serves": "1",
+      "typicalCost": "$11.50+",
+      "withCode": "$9.20+",
+      "costPerPerson": "$9.20–$11.50"
+    },
+    "biggerPlate": {
+      "orderType": "Bigger Plate",
+      "serves": "1",
+      "typicalCost": "$13.50+",
+      "withCode": "$10.80+",
+      "costPerPerson": "$10.80–$13.50"
+    },
+    "familyMeal": {
+      "orderType": "Family Meal",
+      "serves": "4–5",
+      "typicalCost": "$46.00+",
+      "withCode": "$36.00+",
+      "costPerPerson": "$7.20–$9.20"
+    },
+    "cateringBundle": {
+      "orderType": "12–16 Person Party Bundle",
+      "serves": "12–16",
+      "typicalCost": "$130.00+",
+      "withCode": "$130.00+",
+      "costPerPerson": "$8.13–$10.83"
+    }
+  }
+}

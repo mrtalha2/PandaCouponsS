@@ -1,0 +1,30 @@
+{
+  "authors": [
+    {
+      "id": "",
+      "name": "",
+      "role": "",
+      "credentials": "",
+      "bio": "",
+      "avatar": "",
+      "isActive": false
+    }
+  ],
+  "reviewers": [
+    {
+      "id": "",
+      "name": "",
+      "role": "",
+      "credentials": "",
+      "bio": "",
+      "avatar": "",
+      "isActive": false
+    }
+  ],
+  "editorialTeam": {
+    "name": "Panda Coupons Editorial Team",
+    "organization": "Independent Food & Dining Research Group",
+    "mission": "Independent consumer research cataloging restaurant savings, menu prices, and nutritional data.",
+    "reviewedDate": "2026-10-01"
+  }
+}

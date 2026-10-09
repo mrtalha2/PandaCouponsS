@@ -2,7 +2,7 @@
   {
     "id": "faq-1",
     "question": "Does Panda Express have a working coupon code right now?",
-    "answer": "Yes, though availability changes often. As of {{MONTH_YEAR}}, codes like PANDA20 and FAMILY10 have multiple recent reports of working, while others circulating online are unconfirmed or likely expired. Always check the status table above before relying on a specific code, and confirm the discount appears in your cart before paying."
+    "answer": "As of the last check (2026-10-01), PANDA20 and FAMILY10 are listed as Reported working. Availability changes often, so confirm the discount in your cart before paying."
   },
   {
     "id": "faq-2",
@@ -17,7 +17,7 @@
   {
     "id": "faq-4",
     "question": "Is there a current code for the Family Meal?",
-    "answer": "FAMILY10 has been reported working for $10 off a Family Meal as of {{MONTH_YEAR}}. Other codes tied to Family Meal promotions, like seasonal offers, tend to be shorter-lived and app-exclusive — check the status table for the most current read."
+    "answer": "FAMILY10 is listed as Reported working for $10 off a Family Meal as of the last check (2026-10-01). Always confirm the discount appears in your digital cart before paying."
   },
   {
     "id": "faq-5",
@@ -27,7 +27,7 @@
   {
     "id": "faq-6",
     "question": "Does Panda Express offer a military or student discount?",
-    "answer": "Military, veterans, first responders, and hospital workers can get 10% off in-store at participating corporate-owned locations with valid ID. There's no nationwide student discount, though some campus-area locations offer their own local discount — this varies by store, so it's worth asking at the counter."
+    "answer": "Military, veterans, and first responders may receive 10% off in-store at participating locations upon showing valid ID. Policy varies by store; ask at the counter. There is no standard nationwide student discount, though local campus-area stores occasionally offer regional promotions."
   },
   {
     "id": "faq-7",

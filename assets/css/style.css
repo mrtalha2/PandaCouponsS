@@ -3036,30 +3036,24 @@ details.faq-item[open] .faq-chevron {
   color: var(--color-primary);
 }
 
-/* Desktop Sticky TOC Bar (>= 1024px) */
+.home-toc-responsive,
 .home-toc-desktop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-borders);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.home-toc-responsive::-webkit-scrollbar,
+.home-toc-desktop::-webkit-scrollbar {
   display: none;
 }
-
-@media (min-width: 1024px) {
-  .home-toc-mobile {
-    display: none;
-  }
-  .home-toc-desktop {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: var(--color-card-bg);
-    border: 1px solid var(--color-borders);
-    border-radius: var(--radius-full);
-    padding: 0.5rem 1.25rem;
-    box-shadow: var(--shadow-sm);
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-  .home-toc-desktop::-webkit-scrollbar {
-    display: none;
-  }
   .home-toc-label {
     font-size: 0.78rem;
     font-weight: 700;

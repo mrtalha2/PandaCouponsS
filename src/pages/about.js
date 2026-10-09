@@ -69,7 +69,7 @@ function renderAbout() {
           <div class="stepper-circle">2</div>
           <div class="stepper-card">
             <h3>Honest Confidence Rating</h3>
-            <p>Codes are labeled Active, Check App, Unconfirmed, or Expired so you know the reliability before ordering.</p>
+            <p>Codes are labeled Active (Reported working), Unconfirmed, or Expired so you know the reliability before ordering.</p>
           </div>
         </div>
         <div class="stepper-step">

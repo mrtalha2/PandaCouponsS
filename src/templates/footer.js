@@ -13,7 +13,7 @@ function renderFooter() {
         <div class="footer-brand">
           <div class="footer-brand-title">${config.siteName}</div>
           <p style="color: #D1D5DB; font-size: 0.92rem; line-height: 1.6; margin-bottom: 1rem;">
-            Your independent guide to verified promo codes, family meal discounts, official rewards hacks, and live nutrition tracking for Panda Express orders.
+            Your independent guide to reported promo codes, family meal discounts, official rewards hacks, and live nutrition tracking for Panda Express orders.
           </p>
           <div style="font-size: 0.88rem;">
             <strong>Contact:</strong><br>
@@ -51,6 +51,12 @@ function renderFooter() {
             <li><a href="/panda-express-nutrition/">Nutrition Calculator</a></li>
             <li><a href="/panda-express-orange-chicken/">Orange Chicken Guide</a></li>
             <li><a href="/beijing-beef/">Beijing Beef Guide</a></li>
+            <li><a href="/panda-express-grilled-teriyaki/">Grilled Teriyaki Guide</a></li>
+            <li><a href="/panda-express-cream-cheese/">Cream Cheese Rangoon Guide</a></li>
+            <li><a href="/panda-express-black-pepper-steak/">Black Pepper Steak Guide</a></li>
+            <li><a href="/panda-express-sweet-sour-chicken/">Sweet &amp; Sour Chicken Guide</a></li>
+            <li><a href="/panda-express-string-bean-chicken/">String Bean Chicken Guide</a></li>
+            <li><a href="/panda-express-chow-mein/">Chow Mein Guide</a></li>
           </ul>
         </div>
 

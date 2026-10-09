@@ -5,8 +5,10 @@
 const fs = require('fs');
 const path = require('path');
 const couponsData = require('../../data/coupons.json');
+const pricingData = require('../../data/pricing.json');
 const faqData = require('../../data/faq.json');
 const config = require('../../data/site.config');
+const { renderAuthorComponent, renderAffiliateDisclosure } = require('../templates/components');
 
 function renderHome() {
   const lastVerifiedDate = "{{MONTH_YEAR}}";
@@ -40,29 +42,18 @@ function renderHome() {
   }
 
   function getCouponLabel(coupon) {
-    if (isCouponExpired(coupon)) return 'Expired';
-    const isoMonth = require('../utils/date').getIsoMonth();
-    const isCurrentMonth = coupon.lastChecked && coupon.lastChecked.startsWith(isoMonth);
-    const mentionsSource = /app|website|pandaexpress\.com|source|checkout/i.test(coupon.notes || '');
-    if (coupon.status === 'Active' && isCurrentMonth && mentionsSource && coupon.confidence === 'Verified') {
-      return 'Verified';
-    }
-    if (coupon.confidence === 'Multiple Recent Sources' || coupon.status === 'Active') {
-      return 'Reported working';
-    }
-    if (coupon.confidence === 'Reported, Unconfirmed' || coupon.status === 'Check App' || coupon.status === 'Unconfirmed') {
-      return 'Unconfirmed';
-    }
-    return coupon.status || 'Unconfirmed';
+    const status = getEffectiveStatus(coupon);
+    if (status === 'Active') return 'Reported working';
+    if (status === 'Expired') return 'Expired';
+    return 'Unconfirmed';
   }
 
   // Helper for status badge class
   function getStatusClass(status) {
-    const s = (status || '').toLowerCase().replace(/\s+/g, '-');
-    if (s.includes('active')) return 'status-active';
-    if (s.includes('check')) return 'status-check-app';
+    const s = (status || '').toLowerCase();
+    if (s.includes('active') || s.includes('working')) return 'status-active';
     if (s.includes('expired')) return 'status-expired';
-    return 'status-unverified';
+    return 'status-unconfirmed';
   }
 
   // Calculate metrics from coupons data
@@ -114,7 +105,7 @@ function renderHome() {
       <div class="hero-badge-row">
         <div class="pill-verified-date">
           <span class="pulse-dot-green"></span>
-          <span>Updated <strong class="js-current-month-year">${lastVerifiedDate}</strong></span>
+          <span>Last checked <strong>2026-10-01</strong></span>
         </div>
         <div class="pill-trust-badge">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
@@ -123,12 +114,12 @@ function renderHome() {
       </div>
 
       <h1 id="home-hero-heading" class="hero-main-title">
-        Panda Express Coupon Code: What Actually Works in <span class="highlight-gold js-current-month-year">${lastVerifiedDate}</span>
+        Panda Express Coupon Codes: What's Reported Working Now
       </h1>
 
       <div class="hero-lead-box">
         <p class="hero-subtitle">
-          Reviewed <span class="js-current-month-year">${lastVerifiedDate}</span> by the Panda Coupons Editorial Team • Most coupon lists are copied from each other and expired. Every code here is tagged with honest confidence levels so you know before you order.
+          Reviewed 2026-10-01 by the Editorial Team • Most coupon lists are copied from each other and expired. Every code here is tagged with honest confidence levels so you know before you order.
         </p>
       </div>
 
@@ -186,9 +177,9 @@ function renderHome() {
           <span>Explore All ${totalCodesCount} Codes</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
         </a>
-        <a href="#how-codes-work" class="btn btn-hero-ghost">
+        <a href="#verification-process-section" class="btn btn-hero-ghost">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"></path></svg>
-          <span>How We Verify</span>
+          <span>How We Check Codes &rarr;</span>
         </a>
         <a href="#family-meal-deals" class="btn btn-hero-ghost">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -224,12 +215,12 @@ function renderHome() {
       </div>
       <div class="stat-dock-divider"></div>
       <div class="stat-dock-item">
-        <div class="stat-dock-num" style="color: #22C55E;">${activeCount} Active</div>
+        <div class="stat-dock-num" style="color: #22C55E;">${activeCount} Reported Working</div>
         <div class="stat-dock-label">Confidence Rated</div>
       </div>
       <div class="stat-dock-divider"></div>
       <div class="stat-dock-item">
-        <div class="stat-dock-num js-current-month-year">${lastVerifiedDate}</div>
+        <div class="stat-dock-num">2026-10-01</div>
         <div class="stat-dock-label">Database Freshness</div>
       </div>
       <div class="stat-dock-divider"></div>
@@ -242,30 +233,8 @@ function renderHome() {
 
   <!-- TABLE OF CONTENTS (MOBILE ACCORDION + DESKTOP STICKY DOCK) -->
   <div class="container home-toc-wrapper">
-    <!-- Mobile Collapsible TOC -->
-    <details class="home-toc-mobile" id="homeTocMobile">
-      <summary class="home-toc-summary">
-        <span class="toc-icon">📑</span>
-        <span class="toc-title">Quick Navigation: Jump to Guide Sections</span>
-        <span class="toc-chevron">▼</span>
-      </summary>
-      <nav class="home-toc-links" aria-label="Table of contents mobile">
-        <a href="#how-codes-work" class="toc-link">⚙️ How Coupon Codes Actually Work</a>
-        <a href="#coupon-section" class="toc-link">🎟️ Status Table (${lastVerifiedDate})</a>
-        <a href="#howto-section-heading" class="toc-link">📋 How to Apply a Code</a>
-        <a href="#why-fail-heading" class="toc-link">⚠️ Why Codes Fail at Checkout</a>
-        <a href="#delivery-platforms-section" class="toc-link">🛵 DoorDash, Uber Eats &amp; Grubhub</a>
-        <a href="#family-meal-deals" class="toc-link">🥡 Family Meal Cost &amp; Savings Math</a>
-        <a href="#rewards-section-heading" class="toc-link">🐼 Panda Rewards vs. Coupon Codes</a>
-        <a href="#other-discounts-heading" class="toc-link">🎖️ Other Ways to Save in {{YEAR}}</a>
-        <a href="#verification-process-section" class="toc-link">🔍 Our Verification Process</a>
-        <a href="#faq-section-heading" class="toc-link">❓ Frequently Asked Questions</a>
-        <a href="#cta-final-heading" class="toc-link">📱 Panda Express App</a>
-      </nav>
-    </details>
-
-    <!-- Desktop Floating Sticky TOC Bar -->
-    <nav class="home-toc-desktop" id="homeTocDesktop" aria-label="Table of contents desktop">
+    <!-- Responsive Sticky TOC Bar -->
+    <nav class="home-toc-responsive" id="homeTocDesktop" aria-label="Table of contents">
       <div class="home-toc-label">Jump to:</div>
       <div class="home-toc-pills">
         <a href="#how-codes-work" class="toc-pill">⚙️ How Codes Work</a>
@@ -333,7 +302,7 @@ function renderHome() {
           Before you copy any code from this table or anywhere else, understand this: <strong>no coupon site — including this one — can guarantee a code works at the exact moment you check out</strong>. Codes rotate, deactivate after one use, or get switched off regionally without notice. What we can do is tell you how much corroboration each code has, so you're not wasting time on something that's been dead for months.
         </p>
         <p class="coupon-table-lead-note" style="color: #94A3B8; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0;">
-          Codes below come from public reports and may be location-limited.
+          Codes below come from public reports and may be location-limited. <a href="#verification-process-section" style="color: #F5B301; text-decoration: underline;">How we check codes &rarr;</a>
         </p>
       </div>
 
@@ -366,15 +335,15 @@ function renderHome() {
       </div>
 
       <!-- Live Results Count Announcement -->
-      <div id="couponResultsCount" class="coupon-results-live" aria-live="polite">
+      <div id="couponResultsCount" class="coupon-results-live" aria-live="polite" hidden>
         Showing ${totalCodesCount} of ${totalCodesCount} codes
       </div>
 
       <!-- Coupon Empty State -->
-      <div id="couponEmptyState" class="coupon-empty-state is-hidden">
+      <div id="couponEmptyState" class="coupon-empty-state is-hidden" hidden>
         <div class="empty-icon">🎟️</div>
         <h3>No codes match your search</h3>
-        <p>Try checking a different category or clear your search query to view all working discounts.</p>
+        <p>Try checking a different category or clear your search query to view all listed discounts.</p>
         <button type="button" id="btnClearCouponFilters" class="btn btn-hero-primary">Clear filters</button>
       </div>
 
@@ -393,7 +362,7 @@ function renderHome() {
             <article class="ticket-card" data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${effectiveStatus}">
               <div class="ticket-top">
                 <div class="ticket-status-row">
-                  <span class="status-badge ${getStatusClass(effectiveStatus)}">${effectiveStatus}</span>
+                  <span class="status-badge ${getStatusClass(effectiveStatus)}">${label}</span>
                   <span class="ticket-min-badge">${c.minOrder === 'None' ? 'No Min Order' : 'Min: ' + c.minOrder}</span>
                 </div>
                 <div class="ticket-discount">${c.discount}</div>
@@ -452,10 +421,11 @@ function renderHome() {
               else if (c.discount.toLowerCase().includes('free')) category = 'free';
 
               const effectiveStatus = getEffectiveStatus(c);
+              const label = getCouponLabel(c);
 
               return `
               <tr data-category="${category}" data-search="${c.code} ${c.discount} ${c.bestFor} ${c.notes} ${effectiveStatus}">
-                <td><span class="status-badge ${getStatusClass(effectiveStatus)}">${effectiveStatus}</span></td>
+                <td><span class="status-badge ${getStatusClass(effectiveStatus)}">${label}</span></td>
                 <td><span style="font-size: 0.8rem; color: #94A3B8;">${c.lastChecked}</span></td>
                 <td><strong>${c.minOrder === 'None' ? 'No Min Order' : c.minOrder}</strong></td>
                 <td><span class="discount-highlight">${c.discount}</span></td>
@@ -480,7 +450,7 @@ function renderHome() {
           * <strong>Important:</strong> This table is not exhaustive and not a guarantee. Confirm the discount actually appears in your cart before completing payment — if it doesn't apply, the code is dead, restricted to your region, or below the minimum spend.
         </p>
         <p style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 0; line-height: 1.5;">
-          ⚠️ <strong>A note on where these codes come from:</strong> Most circulate through Reddit threads, deal forums, and coupon aggregators — not from an official Panda Express public coupon feed, because one doesn't exist. Treat anything marked "Reported, Unconfirmed" as worth a try, not a promise.
+          ⚠️ <strong>A note on where these codes come from:</strong> Most circulate through Reddit threads, deal forums, and coupon aggregators — not from an official Panda Express public coupon feed, because one doesn't exist. Treat anything marked "Unconfirmed" as worth a try, not a promise.
         </p>
       </div>
     </div>
@@ -781,7 +751,7 @@ function renderHome() {
 
           <h3 class="family-card-title" style="font-size: 1.15rem;">Is the Family Meal Actually Worth It?</h3>
           <p style="color: #CBD5E1; font-size: 0.92rem; line-height: 1.6; margin-bottom: 1rem;">
-            Here's the honest math. A Family Meal without a code typically runs <strong>$45–$55</strong>. Ordering the same amount of food as individual plates costs closer to <strong>$70–$80</strong>. Apply a working code like <code>FAMILY10</code> and you're feeding five people for roughly <strong>$35–$45 — about $7–$9 per person</strong>.
+            Here's the honest math. A Family Meal without a code typically runs <strong>$46.00+</strong>. Ordering the same amount of food as individual plates costs closer to <strong>$57.50+</strong>. Apply a working code like <code>FAMILY10</code> and you're feeding four to five people for roughly <strong>$36.00+ — about $7.20–$9.00 per person</strong>.
           </p>
 
           <div class="table-responsive table-container" role="region" tabindex="0" aria-label="Family meal cost comparison table" style="margin: 0;">
@@ -800,30 +770,30 @@ function renderHome() {
                 <tr>
                   <td>Individual Plate</td>
                   <td>1</td>
-                  <td>$12–$14</td>
-                  <td>$9–$11</td>
-                  <td>$9–$14</td>
+                  <td>$11.50+</td>
+                  <td>$9.20+</td>
+                  <td>$9.20–$11.50</td>
                 </tr>
                 <tr>
                   <td>Bigger Plate</td>
                   <td>1</td>
-                  <td>$14–$16</td>
-                  <td>$11–$13</td>
-                  <td>$11–$16</td>
+                  <td>$13.50+</td>
+                  <td>$10.80+</td>
+                  <td>$10.80–$13.50</td>
                 </tr>
                 <tr style="background: rgba(245, 179, 1, 0.15);">
                   <td><strong style="color: #F5B301;">Family Meal</strong></td>
                   <td><strong>4–5</strong></td>
-                  <td>$45–$55</td>
-                  <td><strong style="color: #86EFAC;">$35–$45</strong></td>
-                  <td><strong style="color: #86EFAC;">$7–$9</strong></td>
+                  <td>$46.00+</td>
+                  <td><strong style="color: #86EFAC;">$36.00+ (with FAMILY10)</strong></td>
+                  <td><strong style="color: #86EFAC;">$7.20–$9.00</strong></td>
                 </tr>
                 <tr>
-                  <td>Catering (10)</td>
-                  <td>10</td>
-                  <td>$90–$120</td>
-                  <td>$80–$110</td>
-                  <td>$8–$12</td>
+                  <td>Party Catering (12–16)</td>
+                  <td>12–16</td>
+                  <td>$130.00+</td>
+                  <td>$130.00+</td>
+                  <td>$8.13–$10.83</td>
                 </tr>
               </tbody>
             </table>
@@ -839,28 +809,28 @@ function renderHome() {
 
           <div class="comparison-bar-group">
             <div class="comp-label-row">
-              <span>Family Meal (with Code FAMILY10 / $30 Deal)</span>
-              <strong class="text-green">~$7.00 / person</strong>
+              <span>Family Meal (with Code FAMILY10: $36.00)</span>
+              <strong class="text-green">~$7.20–$9.00 / person</strong>
             </div>
             <div class="comp-bar-track">
-              <div class="comp-bar-fill fill-green" style="width: 35%;"></div>
+              <div class="comp-bar-fill fill-green" style="width: 65%;"></div>
             </div>
           </div>
 
           <div class="comparison-bar-group">
             <div class="comp-label-row">
-              <span>Family Meal (Standard Retail Menu Price)</span>
-              <strong class="text-gold">~$9.50 / person</strong>
+              <span>Family Meal (Standard Retail Menu Price: $46.00)</span>
+              <strong class="text-gold">~$9.20–$11.50 / person</strong>
             </div>
             <div class="comp-bar-track">
-              <div class="comp-bar-fill fill-gold" style="width: 55%;"></div>
+              <div class="comp-bar-fill fill-gold" style="width: 85%;"></div>
             </div>
           </div>
 
           <div class="comparison-bar-group">
             <div class="comp-label-row">
-              <span>Individual Plates (5 Separate Orders)</span>
-              <strong class="text-red">~$15.00 / person</strong>
+              <span>Individual Plates (5 Separate Orders at $11.50+)</span>
+              <strong class="text-red">~$11.50 / person</strong>
             </div>
             <div class="comp-bar-track">
               <div class="comp-bar-fill fill-red" style="width: 100%;"></div>
@@ -868,7 +838,7 @@ function renderHome() {
           </div>
 
           <div class="comp-summary-note">
-            💡 <strong>Stacking Note:</strong> <strong>Can You Stack a Family Meal Code With Panda Rewards?</strong> Yes. Panda Express doesn't allow two coupon codes on one order, but applying a code doesn't block you from earning Rewards points on that same purchase. As long as you're logged into your Rewards account at checkout, you still earn points on the discounted total.
+            💡 <strong>Stacking Note:</strong> <strong>Can You Stack a Family Meal Code With Panda Rewards?</strong> Panda Express allows one promo code per order at digital checkout, but orders with applied promo codes still qualify to earn Panda Rewards points on eligible spending when logged into your account.
           </div>
 
           <div style="background: rgba(245, 179, 1, 0.15); border: 1px solid rgba(245, 179, 1, 0.35); border-radius: var(--radius-sm); padding: 0.85rem 1rem; margin-top: 1rem; color: #FEF3C7; font-size: 0.88rem;">
@@ -886,7 +856,7 @@ function renderHome() {
         <span class="kicker-tag kicker-white">LOYALTY &amp; STACKING</span>
         <h2 id="rewards-title" class="title-light">Panda Rewards vs. Coupon Codes — Which Saves More</h2>
         <p class="subtitle-light" style="max-width: 820px; margin-left: auto; margin-right: auto;">
-          Panda Rewards is Panda Express's free loyalty program, and it's worth understanding properly. For anyone who orders more than once a month, it delivers more consistent savings than hunting for a working Panda Express coupon code.
+          <a href="https://www.pandaexpress.com/rewards" target="_blank" rel="noopener noreferrer" style="color: #FDE047; text-decoration: underline;">Panda Rewards</a> is Panda Express's free loyalty program, and it's worth understanding properly. For anyone who orders more than once a month, it delivers more consistent savings than hunting for a working Panda Express coupon code.
         </p>
       </div>
 
@@ -1008,14 +978,14 @@ function renderHome() {
           <div class="discount-card-badge">IN-STORE</div>
           <div class="discount-icon"><svg class="step-svg-icon color-red" aria-hidden="true"><use href="#icon-military"></use></svg></div>
           <h3>Military and First Responder Discount</h3>
-          <p>Active duty military, veterans, first responders, and hospital workers can get <strong>10% off in-store</strong> at participating locations. Show a valid ID at the register. This applies mainly at corporate-owned locations and is an in-store-only benefit — it doesn't stack with online promo codes. Franchise locations near airports, universities, and theme parks may not participate, so it's worth confirming with your local store.</p>
+          <p>Some locations may offer a 10% discount in-store to military and first responders with valid ID. Participation is discretionary and varies by location, especially at non-corporate and franchise stores. Check with your local Panda Express register.</p>
         </div>
 
         <div class="discount-feature-card">
           <div class="discount-card-badge">CAMPUS</div>
           <div class="discount-icon"><svg class="step-svg-icon" aria-hidden="true"><use href="#icon-student"></use></svg></div>
           <h3>Student Discount</h3>
-          <p>Panda Express doesn't run a nationwide student discount program. Some campus and college-area locations offer a local discount with a valid student ID, but this varies entirely by location and management. If you're near a university, ask at the counter — don't assume it exists before you get there.</p>
+          <p>Panda Express does not maintain a universal nationwide student discount. Select locations near college campuses may occasionally offer local student promotions with valid student ID at management discretion.</p>
         </div>
 
         <div class="discount-feature-card">
@@ -1029,14 +999,14 @@ function renderHome() {
           <div class="discount-card-badge">REGIONAL</div>
           <div class="discount-icon"><svg class="step-svg-icon" aria-hidden="true"><use href="#icon-baseball"></use></svg></div>
           <h3>The Dodgers Home-Game Promotion</h3>
-          <p>Panda Express runs a promotion tied to Los Angeles Dodgers home games. When the Dodgers score <strong>7 or more runs at home</strong>, Panda Express releases a discount offer valid the following day at participating Southern California locations. It's time-sensitive, usually a flat discount or free item, and only redeemable through the app. Keep notifications on if in SoCal.</p>
+          <p>Historically, Panda Express has run a regional promotion tied to Los Angeles Dodgers home games in Southern California when scoring 7+ runs. When active, offers are time-sensitive, app-only, and subject to local terms.</p>
         </div>
 
         <div class="discount-feature-card highlight-gold-border">
           <div class="discount-card-badge gold-badge">PRO TIP</div>
           <div class="discount-icon"><svg class="step-svg-icon color-gold" aria-hidden="true"><use href="#icon-giftcard"></use></svg></div>
           <h3>The Gift Card Discount Most People Miss</h3>
-          <p>Buying a Panda Express gift card through Costco or Sam's Club at a markdown (typically $25 for $21–$22), then using it alongside a Panda Express coupon code and your Rewards account, stacks <strong>three savings layers</strong> into a single order with guaranteed results.</p>
+          <p>Purchasing discounted gift cards at retailers like Costco or Sam's Club can yield additional savings (e.g., $25 cards at a modest discount). If accepted at checkout and stacked with online codes, this can provide additional value.</p>
         </div>
       </div>
     </div>
@@ -1064,9 +1034,9 @@ function renderHome() {
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
           <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">What Each Confidence Level Means</h3>
           <ul style="font-size: 0.92rem; color: var(--color-muted-text); padding-left: 1.25rem; margin-bottom: 1rem;">
-            <li style="margin-bottom: 0.5rem;"><strong>Multiple Recent Sources:</strong> The code appears consistently across several independent sources within the last 30 days.</li>
-            <li style="margin-bottom: 0.5rem;"><strong>Reported, Unconfirmed:</strong> The code appears on coupon sites, but we found no recent independent confirmation it's still active.</li>
-            <li><strong>Likely Expired:</strong> Tied to a closed promotional window, or flagged as inactive across multiple sources.</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Active (Reported working):</strong> The code was recently reported working by community members or verified in active test carts. Still subject to location and account restrictions.</li>
+            <li style="margin-bottom: 0.5rem;"><strong>Unconfirmed:</strong> The code appears in circulation or third-party listings, but lacks recent independent confirmation.</li>
+            <li><strong>Expired:</strong> Past the promotional end date or consistently reported non-functional across locations.</li>
           </ul>
 
           <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--color-muted-text); margin-bottom: 0.35rem;">Where We Look</h4>
@@ -1077,6 +1047,9 @@ function renderHome() {
       </div>
     </div>
   </section>
+
+  ${renderAuthorComponent()}
+  ${renderAffiliateDisclosure()}
 
   <!-- 12. FREQUENTLY ASKED QUESTIONS (ACCORDION & FAQ SCHEMA) -->
   <section class="section section-cream section-border" aria-labelledby="faq-section-heading">
@@ -1131,12 +1104,12 @@ function renderHome() {
   <aside class="mobile-sticky-coupon-bar" id="mobileStickyCouponBar" role="region" aria-label="Top active coupon mobile shortcut">
     <div class="mobile-sticky-inner">
       <div class="mobile-sticky-info">
-        <span class="mobile-sticky-label">🔥 Top Promo Code</span>
+        <span class="mobile-sticky-label">🔥 Reported working</span>
         <code class="mobile-sticky-code">PANDA20</code>
       </div>
-      <button type="button" class="btn-copy mobile-sticky-btn" data-code="PANDA20" aria-label="Copy top code PANDA20">
-        <span>Copy 20% Off</span>
-      </button>
+      <a href="#coupon-section" class="btn-copy mobile-sticky-btn" aria-label="See latest reported coupon codes">
+        <span>See Latest Codes</span>
+      </a>
     </div>
   </aside>
   `;
