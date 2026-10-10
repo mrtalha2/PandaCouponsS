@@ -54,8 +54,9 @@ function saveLastmodCache() {
 }
 
 // Helper to write an HTML page
-async function writePage(routePath, pageData, assetHash) {
+async function writePage(routePath, pageData, assetHash, criticalCss = '') {
   pageData.assetHash = assetHash;
+  pageData.criticalCss = criticalCss;
   if (routePath === '/') {
     pageData.preloadHero = true;
   }
@@ -247,48 +248,57 @@ async function build() {
   fs.writeFileSync(path.join(DIST_DIR, 'assets', 'js', 'main.min.js'), terserResult.code, 'utf8');
   
 
+  // Minify Critical Above-the-Fold CSS (Inlined for 0ms Render-Blocking)
+  const rawCriticalCss = fs.readFileSync(path.join(__dirname, 'assets', 'css', 'critical.css'), 'utf8');
+  const cleanCriticalCss = new CleanCSS({ level: 2 }).minify(rawCriticalCss);
+  if (cleanCriticalCss.errors && cleanCriticalCss.errors.length) {
+    throw new Error('CleanCSS critical error: ' + cleanCriticalCss.errors.join(', '));
+  }
+  const criticalCss = cleanCriticalCss.styles;
+  console.log(`  ✓ critical.min.css: ${rawCriticalCss.length}B -> ${criticalCss.length}B (${((1 - criticalCss.length / rawCriticalCss.length) * 100).toFixed(1)}% savings)`);
+
   // 4. Render and Minify HTML Pages (Phase 7a, 7b, 7c)
   console.log('\n📄 Building and minifying HTML pages...');
   const routes = [];
 
   // Build Home Page
-  await writePage('/', renderHome(), assetHash);
+  await writePage('/', renderHome(), assetHash, criticalCss);
   routes.push('/');
 
   // Build Menu Page
-  await writePage('/panda-express-menu/', renderMenu(), assetHash);
+  await writePage('/panda-express-menu/', renderMenu(), assetHash, criticalCss);
   routes.push('/panda-express-menu/');
 
   // Build Nutrition Calculator Page
-  await writePage('/panda-express-nutrition/', renderNutrition(), assetHash);
+  await writePage('/panda-express-nutrition/', renderNutrition(), assetHash, criticalCss);
   routes.push('/panda-express-nutrition/');
 
   // Build Savings Calculator Cluster Page
-  await writePage('/panda-express-savings-calculator/', renderSavingsCalculator(), assetHash);
+  await writePage('/panda-express-savings-calculator/', renderSavingsCalculator(), assetHash, criticalCss);
   routes.push('/panda-express-savings-calculator/');
 
   // Build Food Pages from data/dishes.json
   for (const dish of dishesData) {
     const dishRoute = `/${dish.slug}/`;
-    await writePage(dishRoute, renderDish(dish), assetHash);
+    await writePage(dishRoute, renderDish(dish), assetHash, criticalCss);
     routes.push(dishRoute);
   }
 
   // Build Informational & Legal Pages
-  await writePage('/about-us/', renderAbout(), assetHash);
+  await writePage('/about-us/', renderAbout(), assetHash, criticalCss);
   routes.push('/about-us/');
 
-  await writePage('/contact-us/', renderContact(), assetHash);
+  await writePage('/contact-us/', renderContact(), assetHash, criticalCss);
   routes.push('/contact-us/');
 
-  await writePage('/disclaimer/', renderDisclaimer(), assetHash);
+  await writePage('/disclaimer/', renderDisclaimer(), assetHash, criticalCss);
   routes.push('/disclaimer/');
 
-  await writePage('/privacy-policy/', renderPrivacy(), assetHash);
+  await writePage('/privacy-policy/', renderPrivacy(), assetHash, criticalCss);
   routes.push('/privacy-policy/');
 
   // Build 404 page
-  await writePage('/404.html', render404(), assetHash);
+  await writePage('/404.html', render404(), assetHash, criticalCss);
 
   // 5. Copy root favicon, headers, and htaccess files
   const rootCopies = [

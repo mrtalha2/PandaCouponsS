@@ -22,10 +22,11 @@ const SOURCE_IMAGES = [
 ];
 
 const TARGET_WIDTHS = [
-  { width: 640, maxBytes: 30 * 1024, startQuality: 75 },
-  { width: 800, maxBytes: 45 * 1024, startQuality: 75 },
-  { width: 1280, maxBytes: 80 * 1024, startQuality: 78 },
-  { width: 1920, maxBytes: 130 * 1024, startQuality: 78 }
+  { width: 480, maxBytes: 22 * 1024, startQuality: 65 },
+  { width: 640, maxBytes: 28 * 1024, startQuality: 68 },
+  { width: 800, maxBytes: 42 * 1024, startQuality: 70 },
+  { width: 1280, maxBytes: 75 * 1024, startQuality: 72 },
+  { width: 1920, maxBytes: 120 * 1024, startQuality: 75 }
 ];
 
 async function optimizeImages() {

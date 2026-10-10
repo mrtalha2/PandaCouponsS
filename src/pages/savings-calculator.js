@@ -432,7 +432,13 @@ function renderSavingsCalculator() {
   </section>
 
   <!-- FINAL CTA -->
-  <section class="section final-cta-section bg-takeout-spread" aria-labelledby="calc-cta-heading">
+  <section class="section final-cta-section relative-container" aria-labelledby="calc-cta-heading">
+    <div class="section-bg-media" aria-hidden="true">
+      <picture>
+        <source type="image/webp" srcset="/public/images/optimized/takeout-spread-480.webp 480w, /public/images/optimized/takeout-spread-640.webp 640w, /public/images/optimized/takeout-spread-1280.webp 1280w" sizes="100vw">
+        <img src="/public/images/takeout-spread.jpg" alt="Panda Express entrees and savory takeout spread" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720">
+      </picture>
+    </div>
     <div class="cta-dark-mask"></div>
     <div class="container text-center relative-z">
       <h2 id="calc-cta-heading" class="title-light final-cta-title">

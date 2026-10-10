@@ -14,6 +14,7 @@ function renderLayout({
   ogImageAlt = null,
   preloadHero = false,
   assetHash = '',
+  criticalCss = '',
   suppressBreadcrumbsHtml = false,
   isNoindex = false,
   dateModified = null
@@ -154,17 +155,23 @@ ${noindexFlag ? '' : `  <link rel="canonical" href="${fullCanonicalUrl}">\n`}${c
   <!-- Preload Critical Self-Hosted Font (400 weight only) -->
   <link rel="preload" href="/public/fonts/plus-jakarta-sans-400.woff2" as="font" type="font/woff2" crossorigin>
 ${preloadHero ? `
-  <!-- Preload Homepage Hero Image (LCP critical path) -->
+  <!-- Preload Homepage Hero Image (Responsive with Mobile-First Sizing) -->
   <link rel="preload" as="image"
-        imagesrcset="/public/images/optimized/hero-wok-640.webp 640w,
+        imagesrcset="/public/images/optimized/hero-wok-480.webp 480w,
+                     /public/images/optimized/hero-wok-640.webp 640w,
                      /public/images/optimized/hero-wok-800.webp 800w,
                      /public/images/optimized/hero-wok-1280.webp 1280w,
                      /public/images/optimized/hero-wok-1920.webp 1920w"
-        imagesizes="100vw"
+        imagesizes="(max-width: 480px) 480px, (max-width: 768px) 640px, (max-width: 1200px) 800px, 1280px"
         fetchpriority="high">` : ''}
 
-  <!-- Core Stylesheet (Production Minified with Cache-Bust) -->
-  <link rel="stylesheet" href="/assets/css/style.${assetHash}.css">
+${criticalCss ? `  <!-- Critical Above-the-Fold Styles (Inlined for 0ms Render-Blocking) -->
+  <style id="critical-css">${criticalCss}</style>
+
+  <!-- Core Stylesheet (Loaded Asynchronously to Eliminate Render-Blocking) -->
+  <link rel="preload" href="/assets/css/style.${assetHash}.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/assets/css/style.${assetHash}.css"></noscript>` : `  <!-- Core Stylesheet (Production Minified with Cache-Bust) -->
+  <link rel="stylesheet" href="/assets/css/style.${assetHash}.css">`}
 
   <!-- Structured Data JSON-LD (Compact) -->
   <script type="application/ld+json">${JSON.stringify(defaultSchemas)}</script>

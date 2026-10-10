@@ -84,12 +84,13 @@ function renderHome() {
     <div class="hero-bg-media">
       <picture>
         <source type="image/webp" 
-                srcset="/public/images/optimized/hero-wok-640.webp 640w,
+                srcset="/public/images/optimized/hero-wok-480.webp 480w,
+                        /public/images/optimized/hero-wok-640.webp 640w,
                         /public/images/optimized/hero-wok-800.webp 800w,
                         /public/images/optimized/hero-wok-1280.webp 1280w,
                         /public/images/optimized/hero-wok-1920.webp 1920w"
-                sizes="100vw">
-        <img src="/public/images/hero-wok.jpg" 
+                sizes="(max-width: 480px) 480px, (max-width: 768px) 640px, (max-width: 1200px) 800px, 1280px">
+        <img src="/public/images/optimized/hero-wok-640.webp" 
              alt="Sizzling wok cooking fresh Chinese noodles over roaring open fire" 
              width="1920" 
              height="1080" 
@@ -727,7 +728,13 @@ function renderHome() {
   </section>
 
   <!-- 8. FAMILY MEAL COUPONS & WHETHER THEY'RE WORTH IT -->
-  <section id="family-meal-deals" class="section section-photo-overlay bg-family-meal" aria-labelledby="family-meal-heading">
+  <section id="family-meal-deals" class="section section-photo-overlay relative-container" aria-labelledby="family-meal-heading">
+    <div class="section-bg-media" aria-hidden="true">
+      <picture>
+        <source type="image/webp" srcset="/public/images/optimized/family-meal-480.webp 480w, /public/images/optimized/family-meal-640.webp 640w, /public/images/optimized/family-meal-1280.webp 1280w" sizes="100vw">
+        <img src="/public/images/family-meal.jpg" alt="Panda Express Family Meal featuring fresh entrees and sides" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720">
+      </picture>
+    </div>
     <div class="photo-dark-mask"></div>
     <div class="container relative-z">
       <div class="section-title-header text-center">
@@ -1077,7 +1084,13 @@ function renderHome() {
   </section>
 
   <!-- 13. FINAL CALL TO ACTION WITH SPREAD PHOTO -->
-  <section class="section final-cta-section bg-takeout-spread" aria-labelledby="cta-final-heading">
+  <section class="section final-cta-section relative-container" aria-labelledby="cta-final-heading">
+    <div class="section-bg-media" aria-hidden="true">
+      <picture>
+        <source type="image/webp" srcset="/public/images/optimized/takeout-spread-480.webp 480w, /public/images/optimized/takeout-spread-640.webp 640w, /public/images/optimized/takeout-spread-1280.webp 1280w" sizes="100vw">
+        <img src="/public/images/takeout-spread.jpg" alt="Panda Express takeout meal boxes and sides spread on table" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720">
+      </picture>
+    </div>
     <div class="cta-dark-mask"></div>
     <div class="container text-center relative-z">
       <h2 id="cta-final-heading" class="title-light final-cta-title">
