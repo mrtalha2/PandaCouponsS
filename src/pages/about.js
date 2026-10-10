@@ -89,7 +89,7 @@ function renderAbout() {
         Our editorial team selects featured coupon codes, pricing breakdowns, and nutritional tables based on public availability and consumer utility. We do not accept payment for coupon placement or favorable dish rankings.
       </p>
       <p style="font-size: 1.05rem; line-height: 1.75;">
-        <strong>How Readers Report Errors:</strong> If you find an expired code, an altered restaurant price, or a discrepancy in nutritional figures, email us at <a href="mailto:${config.contactEmail}" style="font-weight: 700; color: #C8102E;">${config.contactEmail}</a>. Our team investigates every submission and applies corrections promptly to maintain data accuracy.
+        <strong>How Readers Report Errors:</strong> If you find an expired code, an altered restaurant price, or a discrepancy in nutritional figures, email us at <span style="font-weight: 700; color: #C8102E; user-select: text; cursor: default;">${config.contactEmail}</span>. Our team investigates every submission and applies corrections promptly to maintain data accuracy.
       </p>
     </section>
 
@@ -122,9 +122,9 @@ function renderAbout() {
       <p style="max-width: 600px; margin: 0 auto 1.25rem auto;">
         We welcome submissions from fellow diners! If you discover a fresh regional promo code or notice that an existing code has ceased functioning, reach out to our editorial desk:
       </p>
-      <a href="mailto:${config.contactEmail}" class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem;">
+      <div class="btn" style="display: inline-flex; align-items: center; gap: 0.5rem; cursor: default; user-select: text;">
         ✉️ ${config.contactEmail}
-      </a>
+      </div>
     </div>
   `;
 

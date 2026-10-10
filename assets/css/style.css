@@ -2331,7 +2331,10 @@ details.faq-item[open] .faq-chevron {
 
 .footer-contact-link {
   color: #F87171;
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: default;
+  user-select: text;
 }
 
 .footer-top {

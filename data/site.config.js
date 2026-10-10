@@ -20,6 +20,7 @@ module.exports = {
   contactEmail: "helppandacoupons@gmail.com",
   googleSiteVerification: "LMdPthx2chXMoxahyRU6_1zxbgXem_wGmaFHrfMO49A",
   bingSiteVerification: "",
+  indexNowKey: "e0f7f3a8b4194098943ca14b8a4f9104",
   get currentYear() {
     return require('../src/utils/date').getCurrentYear();
   },

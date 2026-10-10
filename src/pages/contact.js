@@ -45,35 +45,32 @@ function renderContact() {
     <div class="contact-info-card" style="margin-bottom: 2.5rem; text-align: center; padding: 2.5rem 2rem;">
       <h2 style="font-size: 1.6rem; margin-top: 0; margin-bottom: 0.75rem;">Direct Email Contact</h2>
       <p style="font-size: 1.05rem; margin-bottom: 1.75rem; color: #D1D5DB; max-width: 600px; margin-left: auto; margin-right: auto;">
-        Our team handles all inquiries directly via email. Click below to compose a message or copy our address to your clipboard:
+        Our team handles all inquiries directly via email. Reach us at the address below or copy it to your clipboard:
       </p>
       
       <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; align-items: center; margin-bottom: 1rem;">
-        <a href="mailto:${config.contactEmail}" class="btn" style="font-size: 1.1rem; padding: 0.9rem 1.75rem;">
+        <div class="btn" style="font-size: 1.1rem; padding: 0.9rem 1.75rem; cursor: default; user-select: text;">
           ✉️ Email Us: ${config.contactEmail}
-        </a>
+        </div>
         <button type="button" class="btn btn-outline btn-copy-email" data-email="${config.contactEmail}" aria-label="Copy email address to clipboard" style="font-size: 1.05rem; padding: 0.85rem 1.5rem;">
           📋 Copy Email
         </button>
       </div>
     </div>
 
-    <!-- Quick-link mailto actions -->
+    <!-- Inquiry Guidelines & Subject Templates -->
     <div class="quick-inquiry-section" style="margin-bottom: 2.5rem;">
-      <h2 style="font-size: 1.35rem; margin-bottom: 1rem;">Common Inquiries &amp; Quick Email Templates</h2>
+      <h2 style="font-size: 1.35rem; margin-bottom: 1rem;">Common Inquiries &amp; Recommended Subject Lines</h2>
       <p style="font-size: 0.95rem; color: #D1D5DB; margin-bottom: 1.25rem;">
-        Select an inquiry category below to open a pre-formatted email draft in your email client:
+        To ensure prompt routing, use one of the suggested email subject lines below when contacting our desk:
       </p>
       <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
-        ${quickLinks.map(link => {
-          const mailtoUrl = `mailto:${config.contactEmail}?subject=${encodeURIComponent(link.subject)}&body=${encodeURIComponent(link.body)}`;
-          return `
-            <a href="${mailtoUrl}" class="quick-link-card" style="display: block; padding: 1.25rem 1.5rem; background: #18181B; border: 1px solid #27272A; border-radius: 12px; text-decoration: none; transition: border-color 0.2s ease;">
-              <div style="font-weight: 700; font-size: 1.05rem; color: #FFFFFF; margin-bottom: 0.25rem;">${link.title}</div>
-              <div style="font-size: 0.88rem; color: #9CA3AF;">Click to open pre-filled email draft &rarr;</div>
-            </a>
-          `;
-        }).join('')}
+        ${quickLinks.map(link => `
+          <div class="quick-link-card" style="display: block; padding: 1.25rem 1.5rem; background: #18181B; border: 1px solid #27272A; border-radius: 12px;">
+            <div style="font-weight: 700; font-size: 1.05rem; color: #FFFFFF; margin-bottom: 0.35rem;">${link.title}</div>
+            <div style="font-size: 0.88rem; color: #9CA3AF;">Suggested Subject: <code style="background: rgba(255,255,255,0.08); padding: 0.2rem 0.5rem; border-radius: 4px; color: #F87171;">${link.subject}</code></div>
+          </div>
+        `).join('')}
       </div>
     </div>
 

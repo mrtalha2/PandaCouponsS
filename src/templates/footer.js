@@ -17,10 +17,10 @@ function renderFooter() {
           </p>
           <div style="font-size: 0.88rem;">
             <strong>Contact:</strong><br>
-            <!-- Support Email -->
-            <a href="mailto:${config.contactEmail}" class="footer-contact-link">
+            <!-- Support Email (Non-clickable text) -->
+            <span class="footer-contact-link" style="text-decoration: none; cursor: default; user-select: text; display: inline-block;">
               ${config.contactEmail}
-            </a>
+            </span>
           </div>
           
           ${(() => {

@@ -10,34 +10,25 @@ const tests = [
 ];
 
 async function getTargetPort() {
-  const is3000Active = await new Promise((resolve) => {
-    const req = http.get('http://localhost:3000/healthz', (res) => {
-      res.resume();
-      resolve(true);
-    });
-    req.on('error', () => resolve(false));
-    req.setTimeout(300, () => { req.destroy(); resolve(false); });
-  });
-  if (is3000Active) return { port: 3000, server: null };
-
   const server = require('child_process').spawn('node', ['server.js'], { 
-    env: { ...process.env, PORT: '4005' },
+    env: { ...process.env, PORT: '4005', IGNORE_DOTENV: '1' },
     stdio: 'ignore'
   });
 
-  await new Promise((resolve) => {
+  await new Promise((resolve, reject) => {
     let checkCount = 0;
     const interval = setInterval(() => {
       checkCount++;
       const req = http.get('http://localhost:4005/healthz', (res) => {
-        res.resume();
-        clearInterval(interval);
-        resolve();
-      });
-      req.on('error', () => {
-        if (checkCount > 20) {
+        if (res.statusCode === 200) {
           clearInterval(interval);
           resolve();
+        }
+      });
+      req.on('error', () => {
+        if (checkCount > 30) {
+          clearInterval(interval);
+          reject(new Error('Test server failed to start on port 4005'));
         }
       });
       req.setTimeout(200, () => req.destroy());

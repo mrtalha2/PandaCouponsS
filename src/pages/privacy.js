@@ -33,7 +33,7 @@ function renderPrivacy() {
         <p>
           If you have questions regarding this Privacy Policy or wish to exercise any privacy rights, contact us directly at:
           <br>
-          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 700; color: #C8102E;">${config.contactEmail}</a>
+          ✉️ <span style="font-weight: 700; color: #C8102E; user-select: text; cursor: default;">${config.contactEmail}</span>
         </p>
       </section>
 

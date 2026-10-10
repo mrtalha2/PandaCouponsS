@@ -297,7 +297,8 @@ async function build() {
     { src: 'public/apple-touch-icon.png', dest: 'dist/apple-touch-icon.png' },
     { src: 'public/site.webmanifest', dest: 'dist/site.webmanifest' },
     { src: 'public/_headers', dest: 'dist/_headers' },
-    { src: 'public/.htaccess', dest: 'dist/.htaccess' }
+    { src: 'public/.htaccess', dest: 'dist/.htaccess' },
+    { src: `public/${config.indexNowKey}.txt`, dest: `dist/${config.indexNowKey}.txt` }
   ];
 
   rootCopies.forEach(({ src, dest }) => {

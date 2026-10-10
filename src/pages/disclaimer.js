@@ -84,9 +84,7 @@ function renderDisclaimer() {
           If you identify an expired coupon, an outdated price, or an inaccurate nutrition number, please send a note to our editorial inbox. We review reports and apply corrections promptly:
         </p>
         <p>
-          ✉️ <a href="mailto:${config.contactEmail}" style="font-weight: 700; color: #C8102E;">
-            ${config.contactEmail}
-          </a>
+          ✉️ <span style="font-weight: 700; color: #C8102E; user-select: text; cursor: default;">${config.contactEmail}</span>
         </p>
       </section>
     </div>

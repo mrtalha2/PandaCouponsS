@@ -17,7 +17,7 @@ const securityHeaders = {
 const cacheHeaders = {
   immutableAssets: 'public, max-age=31536000, immutable',
   staticAssets: 'public, max-age=604800, stale-while-revalidate=86400',
-  htmlPages: 'public, max-age=0, must-revalidate',
+  htmlPages: 'public, max-age=0, s-maxage=86400, stale-while-revalidate=604800, must-revalidate',
   healthCheck: 'no-store, no-cache, must-revalidate, proxy-revalidate'
 };
 
