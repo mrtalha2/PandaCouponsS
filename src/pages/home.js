@@ -866,7 +866,7 @@ function renderHome() {
         <span class="kicker-tag kicker-white">LOYALTY &amp; STACKING</span>
         <h2 id="rewards-title" class="title-light">Panda Rewards vs. Coupon Codes — Which Saves More</h2>
         <p class="subtitle-light" style="max-width: 820px; margin-left: auto; margin-right: auto;">
-          <a href="https://www.pandaexpress.com/rewards" target="_blank" rel="noopener noreferrer" style="color: #FDE047; text-decoration: underline;">Panda Rewards</a> is Panda Express's free loyalty program, and it's worth understanding properly. For anyone who orders more than once a month, it delivers more consistent savings than hunting for a working Panda Express coupon code.
+          <a href="/" style="color: #FDE047; text-decoration: underline;">Panda Rewards</a> is Panda Express's free loyalty program, and it's worth understanding properly. For anyone who orders more than once a month, it delivers more consistent savings than hunting for a working Panda Express coupon code.
         </p>
       </div>
 
