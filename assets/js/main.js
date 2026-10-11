@@ -1077,18 +1077,21 @@ function initNutritionSystem() {
     });
   }
 
-  // Mobile Table Scroll Affordance (Phase 1 & 5)
+  // Mobile Table Scroll Affordance (Batched in rAF to prevent forced synchronous layout)
   function checkTableScrollHint() {
     const tableResp = document.querySelector('.table-responsive');
     const hint = document.getElementById('tableScrollHint');
     if (!tableResp || !hint) return;
-    if (window.innerWidth <= 640 && tableResp.scrollWidth > tableResp.clientWidth) {
-      hint.style.display = 'block';
-    } else {
-      hint.style.display = 'none';
-    }
+    window.requestAnimationFrame(() => {
+      const isScrollable = tableResp.scrollWidth > tableResp.clientWidth;
+      if (window.innerWidth <= 640 && isScrollable) {
+        hint.style.display = 'block';
+      } else {
+        hint.style.display = 'none';
+      }
+    });
   }
-  window.addEventListener('resize', checkTableScrollHint, { passive: true });
+  window.addEventListener('resize', debounce(checkTableScrollHint, 150), { passive: true });
 
   // Initial explorer table render
   renderExplorerTable();
@@ -1103,11 +1106,18 @@ function initHeaderScroll() {
   const header = document.getElementById('siteHeader');
   if (!header) return;
 
+  let ticking = false;
   function onScroll() {
-    if (window.scrollY > 40) {
-      header.classList.add('is-scrolled');
-    } else {
-      header.classList.remove('is-scrolled');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.scrollY > 40) {
+          header.classList.add('is-scrolled');
+        } else {
+          header.classList.remove('is-scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
   }
 
@@ -1266,17 +1276,23 @@ function initMobileStickyBar() {
   const stickyBar = document.getElementById('mobileStickyCouponBar');
   if (!stickyBar) return;
 
+  let ticking = false;
   function handleScroll() {
-    // Show only on mobile screens (< 860px) and when scrolled past 300px
-    if (window.innerWidth <= 860 && window.scrollY > 320) {
-      stickyBar.classList.add('is-visible');
-    } else {
-      stickyBar.classList.remove('is-visible');
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        if (window.innerWidth <= 860 && window.scrollY > 320) {
+          stickyBar.classList.add('is-visible');
+        } else {
+          stickyBar.classList.remove('is-visible');
+        }
+        ticking = false;
+      });
+      ticking = true;
     }
   }
 
   window.addEventListener('scroll', handleScroll, { passive: true });
-  window.addEventListener('resize', handleScroll, { passive: true });
+  window.addEventListener('resize', debounce(handleScroll, 100), { passive: true });
   handleScroll();
 }
 

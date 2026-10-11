@@ -732,7 +732,7 @@ function renderHome() {
     <div class="section-bg-media" aria-hidden="true">
       <picture>
         <source type="image/webp" srcset="/public/images/optimized/family-meal-480.webp 480w, /public/images/optimized/family-meal-640.webp 640w, /public/images/optimized/family-meal-1280.webp 1280w" sizes="100vw">
-        <img src="/public/images/family-meal.jpg" alt="Panda Express Family Meal featuring fresh entrees and sides" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720">
+        <img src="/public/images/optimized/family-meal-640.webp" alt="Panda Express Family Meal featuring fresh entrees and sides" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720" style="aspect-ratio: 16 / 9;">
       </picture>
     </div>
     <div class="photo-dark-mask"></div>
@@ -748,7 +748,10 @@ function renderHome() {
       <div class="family-glass-layout">
         <!-- What's Included & Honest Math -->
         <div class="family-deals-card">
-          <img src="/public/images/optimized/content-food-spread.jpg" alt="Panda Express Family Meal spread featuring Orange Chicken and Chow Mein takeout boxes" width="800" height="800" style="width: 100%; height: auto; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: block; border: 1px solid rgba(255, 255, 255, 0.1);" loading="lazy" decoding="async">
+          <picture>
+            <source type="image/webp" srcset="/public/images/optimized/content-food-spread.webp">
+            <img src="/public/images/optimized/content-food-spread.webp" alt="Panda Express Family Meal spread featuring Orange Chicken and Chow Mein takeout boxes" width="800" height="800" style="width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: var(--radius-md); margin-bottom: 1.5rem; display: block; border: 1px solid rgba(255, 255, 255, 0.1);" loading="lazy" decoding="async">
+          </picture>
           <h3 class="family-card-title">What's Included in a Family Meal</h3>
           <ul style="color: #E2E8F0; font-size: 0.95rem; margin-bottom: 1.5rem; padding-left: 1.25rem;">
             <li><strong>3 large entrees</strong> (your choice)</li>
@@ -1088,7 +1091,7 @@ function renderHome() {
     <div class="section-bg-media" aria-hidden="true">
       <picture>
         <source type="image/webp" srcset="/public/images/optimized/takeout-spread-480.webp 480w, /public/images/optimized/takeout-spread-640.webp 640w, /public/images/optimized/takeout-spread-1280.webp 1280w" sizes="100vw">
-        <img src="/public/images/takeout-spread.jpg" alt="Panda Express takeout meal boxes and sides spread on table" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720">
+        <img src="/public/images/optimized/takeout-spread-640.webp" alt="Panda Express takeout meal boxes and sides spread on table" loading="lazy" decoding="async" class="section-bg-img" width="1280" height="720" style="aspect-ratio: 16 / 9;">
       </picture>
     </div>
     <div class="cta-dark-mask"></div>

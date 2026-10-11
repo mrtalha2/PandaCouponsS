@@ -3,12 +3,12 @@
    Inlined directly in <head> for Instant First Contentful Paint & Sub-Second Speed Index
    ========================================================================== */
 
-/* 1. Self-Hosted Typography: Plus Jakarta Sans */
+/* 1. Self-Hosted Typography: Plus Jakarta Sans with Size-Matched Fallback */
 @font-face {
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: url('/public/fonts/plus-jakarta-sans-400.woff2') format('woff2');
 }
 
@@ -16,8 +16,18 @@
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 700 900;
-  font-display: optional;
+  font-display: swap;
   src: url('/public/fonts/plus-jakarta-sans-700.woff2') format('woff2');
+}
+
+/* Fallback size-matched font to eliminate layout shift during font swap */
+@font-face {
+  font-family: 'Plus Jakarta Sans Fallback';
+  src: local('Arial'), local('Helvetica'), local('system-ui');
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
 }
 
 /* 2. Authentic Brand Palette & Layout Tokens */
@@ -45,8 +55,8 @@
   --status-expired-text: #B91C1C;
   --status-expired-bg: #FEE2E2;
 
-  --font-stack: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-primary: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-stack: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-primary: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --container-max-width: 1180px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -215,7 +225,7 @@ h1, h2, h3, h4, h5, h6 {
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .site-header.is-scrolled {
@@ -244,10 +254,11 @@ h1, h2, h3, h4, h5, h6 {
   height: 72px;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .header-inner {
-    height: clamp(58px, 15vw, 68px);
+    height: 64px;
   }
+}
   .brand-icon {
     width: 34px;
     height: 34px;
@@ -512,6 +523,12 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 0.82rem;
   color: #D1D5DB;
   max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-badge-row .pill-trust-badge {
+    display: none;
+  }
 }
 
 .hero-main-title {
@@ -808,7 +825,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .crumb-separator {
   margin: 0 0.25rem;
-  color: #9CA3AF;
+  color: #6B7280;
 }
 
 /* 8. Off-Screen Lazy Background Media Container */
@@ -836,7 +853,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* 9. Mobile Sticky Bottom Coupon Bar */
 .mobile-sticky-coupon-bar {
-  display: none;
+  display: block;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -848,6 +865,14 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
   z-index: 999;
   box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.35);
+  transform: translateY(110%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.mobile-sticky-coupon-bar.is-visible {
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobile-sticky-inner {
@@ -866,7 +891,7 @@ h1, h2, h3, h4, h5, h6 {
 .mobile-sticky-label {
   font-size: 0.7rem;
   font-weight: 700;
-  color: #94A3B8;
+  color: #CBD5E1;
   text-transform: uppercase;
 }
 
@@ -886,8 +911,132 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--radius-full);
 }
 
-@media (max-width: 768px) {
-  .mobile-sticky-coupon-bar {
+/* 10. Quick Stats Bar (Overlapping Hero) & Responsive TOC in Critical CSS */
+.stats-bar-container {
+  margin-top: -2.5rem;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+.stats-glass-dock {
+  background: rgba(18, 18, 20, 0.94);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 2rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  max-width: 100%;
+}
+
+@media (max-width: 640px) {
+  .stats-glass-dock {
+    padding: 1rem 0.75rem;
+    gap: 0.75rem;
+  }
+  .stat-dock-item {
+    min-width: 100px;
+  }
+}
+
+.stat-dock-item {
+  text-align: center;
+  flex: 1;
+  min-width: 130px;
+}
+
+.stat-dock-num {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: var(--color-white);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.stat-dock-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #CBD5E1;
+  margin-top: 0.25rem;
+}
+
+.stat-dock-divider {
+  width: 1px;
+  height: 36px;
+  background-color: rgba(255, 255, 255, 0.12);
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .stat-dock-divider {
     display: block;
   }
+}
+
+.home-toc-wrapper {
+  margin-bottom: 2rem;
+  position: relative;
+  z-index: 9;
+}
+
+.home-toc-responsive {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--color-card-bg);
+  border: 1px solid var(--color-borders);
+  border-radius: var(--radius-full);
+  padding: 0.5rem 1.25rem;
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  min-height: 48px;
+}
+
+.home-toc-responsive::-webkit-scrollbar {
+  display: none;
+}
+
+.home-toc-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted-text);
+  white-space: nowrap;
+  padding-right: 0.25rem;
+}
+
+.home-toc-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: nowrap;
+}
+
+.toc-pill {
+  white-space: nowrap;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted-text);
+  text-decoration: none;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--radius-full);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: inline-block;
+}
+
+.toc-pill:hover,
+.toc-pill.is-active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
 }

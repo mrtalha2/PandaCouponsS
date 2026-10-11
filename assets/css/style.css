@@ -9,12 +9,12 @@
    - 1280px (xl: wide desktop / large screens)
    ========================================================================== */
 
-/* Self-Hosted Typography: Plus Jakarta Sans */
+/* Self-Hosted Typography: Plus Jakarta Sans with Size-Matched Fallback */
 @font-face {
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 400;
-  font-display: optional;
+  font-display: swap;
   src: url('/public/fonts/plus-jakarta-sans-400.woff2') format('woff2');
 }
 
@@ -22,8 +22,17 @@
   font-family: 'Plus Jakarta Sans';
   font-style: normal;
   font-weight: 700 900;
-  font-display: optional;
+  font-display: swap;
   src: url('/public/fonts/plus-jakarta-sans-700.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Plus Jakarta Sans Fallback';
+  src: local('Arial'), local('Helvetica'), local('system-ui');
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+  size-adjust: 100%;
 }
 
 :root {
@@ -58,7 +67,7 @@
   --chart-fat: #D97706;
 
   /* Typography & Layout */
-  --font-stack: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-stack: 'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --container-max-width: 1180px;
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -72,8 +81,8 @@
   --shadow-lg: 0 16px 36px -6px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.04);
   --shadow-glow: 0 0 25px rgba(200, 16, 46, 0.25);
   
-  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-smooth: 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: transform 0.15s ease, opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  --transition-smooth: transform 0.25s ease, opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 
   /* Spacing & Page Gutter Tokens */
   --gutter-mobile: 1rem;       /* 16px */
@@ -220,8 +229,7 @@ body::before {
     #FAFAFA;
   z-index: -1;
   pointer-events: none;
-  will-change: transform;
-  transform: translateZ(0);
+  
 }
 
 main {
@@ -341,7 +349,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .site-header.is-scrolled {
@@ -369,6 +377,11 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   align-items: center;
   justify-content: space-between;
   height: 72px;
+}
+@media (max-width: 768px) {
+  .header-inner {
+    height: 64px;
+  }
 }
 
 .brand-logo {
@@ -481,7 +494,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.25);
   box-shadow: 0 3px 12px rgba(200, 16, 46, 0.4), 0 0 15px rgba(200, 16, 46, 0.2);
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   text-decoration: none;
   min-height: 44px;
   margin-left: 0.25rem;
@@ -638,7 +651,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   color: var(--color-white);
   font-size: 1.25rem;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .mobile-nav-close-btn:hover {
@@ -665,7 +678,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   font-weight: 700;
   border-radius: var(--radius-sm);
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .mobile-nav-link:hover, .mobile-nav-link:focus-visible {
@@ -823,7 +836,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   text-decoration: none;
   box-shadow: 0 4px 14px rgba(200, 16, 46, 0.28);
 }
@@ -876,7 +889,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   box-shadow: 0 2px 6px rgba(200, 16, 46, 0.25);
 }
 
@@ -1134,7 +1147,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border-radius: var(--radius-md);
   padding: var(--card-pad-mobile);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 @media (min-width: 641px) {
@@ -1275,7 +1288,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 @media (min-width: 641px) {
@@ -1505,7 +1518,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   cursor: pointer;
   background: transparent;
   color: #E2E8F0;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1575,7 +1588,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   font-weight: 700;
   color: #E5E7EB;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -1606,7 +1619,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border-radius: var(--radius-md);
   padding: 0.9rem 1rem;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   background: #1F2937;
   user-select: none;
 }
@@ -1741,7 +1754,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   font-family: inherit;
   font-size: 0.9rem;
   background: #F8FAFC;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .explorer-search-input:focus {
@@ -1843,7 +1856,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   border: 1.5px solid #CBD5E1;
   background: #F8FAFC;
   color: #1E293B;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .cat-pill:hover {
@@ -1950,7 +1963,7 @@ li { margin-bottom: 0.4rem; color: var(--color-body-text); }
   align-items: center;
   justify-content: center;
   color: #475569;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .modal-close-btn:hover {
@@ -2193,7 +2206,7 @@ details.faq-item {
   border: 1px solid #E2E8F0;
   border-radius: var(--radius-md);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 details.faq-item summary {
@@ -2392,7 +2405,7 @@ details.faq-item[open] .faq-chevron {
   background: #1C1C20;
   color: var(--color-white);
   font-size: 0.95rem;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .social-icon-btn:hover {
@@ -2430,7 +2443,7 @@ details.faq-item[open] .faq-chevron {
   border-radius: var(--radius-sm);
   background-color: var(--color-white);
   color: var(--color-body-text);
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .form-input:focus, .form-textarea:focus, .form-select:focus {
@@ -2481,11 +2494,15 @@ details.faq-item[open] .faq-chevron {
   object-fit: cover;
   object-position: center;
   transform: scale(1.03);
-  transition: transform 10s ease-out;
+  }
+@media (hover: hover) {
+  .hero-bg-img {
+    transition: transform 10s ease-out;
+  }
+  .hero-premium:hover .hero-bg-img {
+    transform: scale(1.06);
+  }
 }
-
-.hero-premium:hover .hero-bg-img {
-  transform: scale(1.06);
 }
 
 .hero-gradient-overlay {
@@ -2593,7 +2610,7 @@ details.faq-item[open] .faq-chevron {
   align-items: center;
   gap: 0.6rem;
   box-shadow: 0 8px 24px rgba(209, 49, 63, 0.4);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   min-height: 44px;
 }
 
@@ -2617,7 +2634,7 @@ details.faq-item[open] .faq-chevron {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   min-height: 44px;
 }
 
@@ -2642,7 +2659,7 @@ details.faq-item[open] .faq-chevron {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   min-height: 44px;
   text-decoration: none;
 }
@@ -2922,9 +2939,7 @@ details.faq-item[open] .faq-chevron {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #9CA3AF;
-  margin-top: 0.25rem;
-}
+  color: #CBD5E1; margin-top: 0.25rem; }
 
 .stat-dock-divider {
   width: 1px;
@@ -2985,7 +3000,7 @@ details.faq-item[open] .faq-chevron {
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
   padding: 0.85rem 1.25rem;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 .home-toc-summary {
@@ -3079,7 +3094,7 @@ details.faq-item[open] .faq-chevron {
     text-decoration: none;
     padding: 0.35rem 0.8rem;
     border-radius: var(--radius-full);
-    transition: all var(--transition-fast);
+    transition: var(--transition-fast);
   }
   .toc-pill:hover {
     color: var(--color-primary);
@@ -3214,7 +3229,7 @@ details.faq-item[open] .faq-chevron {
   padding: 0.45rem 1.15rem;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .coupon-filter-pill:hover {
@@ -3242,7 +3257,7 @@ details.faq-item[open] .faq-chevron {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .btn-toggle-view:hover {
@@ -3280,7 +3295,7 @@ details.faq-item[open] .faq-chevron {
   display: flex;
   flex-direction: column;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   overflow: visible;
   min-width: 0;
   max-width: 100%;
@@ -3495,7 +3510,7 @@ details.faq-item[open] .faq-chevron {
   border: none;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(200, 16, 46, 0.35);
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   white-space: nowrap;
 }
 
@@ -3515,7 +3530,7 @@ details.faq-item[open] .faq-chevron {
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   white-space: nowrap;
 }
 
@@ -3537,7 +3552,7 @@ details.faq-item[open] .faq-chevron {
   padding: 0.35rem 0.65rem;
   border-radius: var(--radius-sm);
   display: inline-block;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .btn-table-redeem:hover {
@@ -3571,7 +3586,7 @@ details.faq-item[open] .faq-chevron {
   color: var(--color-white);
   font-size: 0.88rem;
   font-family: inherit;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .coupon-search-input:focus {
@@ -3739,7 +3754,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   padding: var(--card-pad-mobile);
   flex: 1;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 @media (min-width: 641px) {
@@ -3871,7 +3886,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   border-radius: var(--radius-md);
   padding: var(--card-pad-mobile);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
   display: flex;
   flex-direction: column;
 }
@@ -4268,7 +4283,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   text-align: center;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 @media (min-width: 641px) {
@@ -4349,7 +4364,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   border-radius: var(--radius-md);
   padding: var(--card-pad-mobile);
   box-shadow: var(--shadow-sm);
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 @media (min-width: 641px) {
@@ -4431,7 +4446,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
 
 /* Mobile Sticky Bottom Coupon Bar */
 .mobile-sticky-coupon-bar {
-  display: none;
+  display: block;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -4443,7 +4458,13 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
   z-index: 999;
   box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.35);
-  animation: fadeInDown 0.3s ease-out;
+  transform: translateY(110%);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.mobile-sticky-coupon-bar.is-visible {
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .mobile-sticky-inner {
@@ -4482,14 +4503,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   border-radius: var(--radius-full);
 }
 
-@media (max-width: 768px) {
-  .mobile-sticky-coupon-bar {
-    display: block;
-  }
-  main {
-    padding-bottom: calc(75px + env(safe-area-inset-bottom, 0px));
-  }
-}
+/* Mobile sticky bar composited display */
 
 /* ==========================================================================
    SUBPAGE & FOOD DISH UPGRADES
@@ -4873,7 +4887,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   border-radius: var(--radius-full);
   font-size: 0.96rem;
   font-family: inherit;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   background: #FFFDF9;
 }
 
@@ -4930,7 +4944,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   padding: 0.55rem 1.15rem;
   border-radius: var(--radius-full);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
@@ -5018,7 +5032,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   box-shadow: 0 6px 20px -4px rgba(60, 45, 30, 0.05);
   display: flex;
   flex-direction: column;
-  transition: all var(--transition-smooth);
+  transition: var(--transition-smooth);
 }
 
 .card-theme-light:hover {
@@ -5196,7 +5210,7 @@ table.coupon-table.table-dark-mode tbody tr:hover td {
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  transition: all var(--transition-fast);
+  transition: var(--transition-fast);
 }
 
 .btn-order-direct-sm:hover {
@@ -6934,7 +6948,7 @@ th.sortable {
   border: 1px solid #1F2937;
   border-radius: 10px;
   padding: 1.25rem;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .nutr-faq-item:hover,
@@ -7011,7 +7025,7 @@ th.sortable {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .nutr-btn-outline:hover {
@@ -7069,7 +7083,7 @@ th.sortable {
   border: none;
   border-radius: 999px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   white-space: nowrap;
 }
 
@@ -7163,7 +7177,7 @@ th.sortable {
   border-radius: 12px;
   padding: 0.9rem 1.15rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   text-align: left;
   width: 100%;
 }
@@ -7209,7 +7223,7 @@ th.sortable {
   border-radius: 10px;
   padding: 0.9rem 1rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   user-select: none;
 }
 
@@ -7396,7 +7410,7 @@ th.sortable {
   font-size: 0.9rem;
   background: #111827;
   color: #FFFFFF;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
   box-sizing: border-box;
 }
 
@@ -7452,7 +7466,7 @@ th.sortable {
   font-size: 0.88rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .allergen-dropdown-btn:hover {
@@ -7554,7 +7568,7 @@ th.sortable {
   border: 1.5px solid #374151;
   background: #1F2937;
   color: #94A3B8;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
 }
 
 .cat-pill:hover {
@@ -7609,7 +7623,7 @@ th.sortable {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
-  transition: all 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
 .btn-cart-clear:hover {
@@ -7722,7 +7736,7 @@ th.sortable {
   align-items: center;
   justify-content: center;
   color: #FFFFFF;
-  transition: all 0.15s ease;
+  transition: transform 0.15s ease, opacity 0.15s ease, background-color 0.15s ease, color 0.15s ease;
 }
 
 .modal-close-btn:hover {
@@ -7865,7 +7879,7 @@ th.sortable {
   font-weight: 700;
   color: #64748B;
   cursor: pointer;
-  transition: all 0.14s ease;
+  transition: transform 0.14s ease, opacity 0.14s ease, background-color 0.14s ease;
   font-family: inherit;
   line-height: 1;
 }
@@ -8780,5 +8794,31 @@ th.sortable {
   a {
     color: #000000 !important;
     text-decoration: underline !important;
+  }
+}
+
+/* Performance: content-visibility for heavy below-the-fold sections */
+.faq-section,
+#faq-section-heading,
+.nutrition-guide-section,
+.category-section-block,
+.related-dishes-grid,
+#family-meal-deals,
+#delivery-platforms-section,
+#rewards-section-heading,
+#why-fail-heading,
+#howto-section-heading,
+#how-codes-work {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 500px;
+}
+
+/* Global Prefers Reduced Motion Guard */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
