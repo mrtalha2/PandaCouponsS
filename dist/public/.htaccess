@@ -28,11 +28,13 @@ DirectoryIndex index.html
   # 2. Clean URLs & Trailing Slash Normalization (Single Hop)
   # ----------------------------------------------------------------------
 
-  # Direct /index.html requests to root /
-  RewriteRule ^index\.html$ / [R=301,L]
+  # Direct /index.html and /index.php requests to canonical root https://pandaxpresscoupon.com/
+  RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(html|php) [NC]
+  RewriteRule ^index\.(html|php)$ https://pandaxpresscoupon.com/ [R=301,L]
 
-  # Direct /<path>/index.html to /<path>/
-  RewriteRule ^(.*)/index\.html$ /$1/ [R=301,L]
+  # Direct /<path>/index.html and /<path>/index.php to https://pandaxpresscoupon.com/<path>/
+  RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.+)/index\.(html|php) [NC]
+  RewriteRule ^(.+)/index\.(html|php)$ https://pandaxpresscoupon.com/$1/ [R=301,L]
 
   # Ensure directory paths have a trailing slash (301)
   RewriteCond %{REQUEST_FILENAME} -d

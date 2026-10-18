@@ -11,7 +11,9 @@ const redirectTests = [
   { from: '/panda-express-orange-chicken', expectedStatus: 301, expectedLocation: '/panda-express-orange-chicken/' },
   { from: '/beijing-beef', expectedStatus: 301, expectedLocation: '/beijing-beef/' },
   { from: '/index.html', expectedStatus: 301, expectedLocation: '/' },
-  { from: '/about-us/index.html', expectedStatus: 301, expectedLocation: '/about-us/' }
+  { from: '/index.php', expectedStatus: 301, expectedLocation: '/' },
+  { from: '/about-us/index.html', expectedStatus: 301, expectedLocation: '/about-us/' },
+  { from: '/about-us/index.php', expectedStatus: 301, expectedLocation: '/about-us/' }
 ];
 
 async function getTargetPort() {
