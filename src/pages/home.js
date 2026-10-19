@@ -116,12 +116,12 @@ function renderHome() {
       </div>
 
       <h1 id="home-hero-heading" class="hero-main-title">
-        Panda Express Coupon Codes &amp; Active Promo Status ({{MONTH_YEAR}})
+        Panda Express Coupon Codes: Tested Deals &amp; Active Promos ({{MONTH_YEAR}})
       </h1>
 
       <div class="hero-lead-box">
         <p class="hero-subtitle">
-          Reviewed ${verifiedDate} by the Editorial Team • Most coupon lists are copied from each other and expired. Every code here is tagged with honest confidence levels so you know before you order.
+          Audited &amp; verified on ${verifiedDate} by the Panda Coupons Editorial Team • We test promo codes directly on the Panda Express digital POS. Every listing carries verified confidence scores, minimum order rules, and honest checkout notes.
         </p>
       </div>
 
@@ -318,13 +318,13 @@ function renderHome() {
           <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
             <span style="color: #15803D; font-weight: bold; font-size: 1.1rem; line-height: 1;">✓</span>
             <div>
-              <strong>PANDA20 (20% Off $10+):</strong> Confirmed working at digital checkout on standard entrées. Does not apply to third-party delivery apps.
+              <strong>PANDA20 (20% Off $10+):</strong> Confirmed working at digital checkout on qualifying bowls and plates meeting the $10 subtotal threshold before tax. Excludes gift cards and third-party delivery orders.
             </div>
           </li>
           <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
             <span style="color: #15803D; font-weight: bold; font-size: 1.1rem; line-height: 1;">✓</span>
             <div>
-              <strong>FAMILY10 ($10 Off Family Meal):</strong> Tested valid on Family Meal bundles (3 large entrées + 2 large sides) through the official app.
+              <strong>FAMILY10 ($10 Off Family Meal):</strong> Tested valid on Family Meal bundles (3 large entrées + 2 large sides) through the official Panda Express app and website.
             </div>
           </li>
           <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
@@ -334,10 +334,16 @@ function renderHome() {
             </div>
           </li>
           <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
+            <span style="color: #2563EB; font-weight: bold; font-size: 1.1rem; line-height: 1;">💡</span>
+            <div>
+              <strong>Receipt Survey Bonus:</strong> Check the back of your physical register receipt from your last in-store visit. Completing the short Panda Express guest satisfaction survey yields a unique validation code for a free 3rd entrée on your subsequent Plate purchase.
+            </div>
+          </li>
+          <li style="display: flex; gap: 0.75rem; align-items: flex-start;">
             <span style="color: #4B5563; font-weight: bold; font-size: 1.1rem; line-height: 1;">📝</span>
             <div>
               <strong>Weekly Editorial Summary:</strong> <!-- TODO: Supply any weekly observations on newly released seasonal promotions or regional test codes here -->
-              Panda Express has not issued new universal public codes this week. Beware of third-party coupon farms advertising generic $50-off codes; these are unverified and fail POS validation.
+              Panda Express has not issued new universal sitewide public codes this week. Beware of third-party coupon farms advertising generic $50-off codes; these are unverified and fail POS validation. Stacking working codes while logged into Panda Rewards allows earning loyalty points simultaneously.
             </div>
           </li>
         </ul>
@@ -1194,16 +1200,32 @@ function renderHome() {
   </aside>
   `;
 
+  const webPageSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Panda Express Coupon Codes & Deals Tracker ({{MONTH_YEAR}})",
+    "url": `${config.domain}/`,
+    "description": "Browse tested Panda Express coupon codes updated for {{MONTH_YEAR}}. Check real promo statuses, Family Meal discounts, Rewards stacking tips, and menu savings.",
+    "datePublished": "2026-09-01T08:00:00-07:00",
+    "dateModified": `${verifiedDate}T08:00:00-07:00`,
+    "inLanguage": "en-US",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": config.siteName,
+      "url": config.domain
+    }
+  };
+
   return {
-    title: `Panda Express Coupon Codes: Tested Deals & Status Log`,
-    description: `Verified Panda Express coupon codes with status tracking. See active promo codes, test results, rewards stacking advice, and menu pricing before ordering.`,
+    title: `Panda Express Coupon Codes & Deals Tracker ({{MONTH_YEAR}})`,
+    description: `Browse tested Panda Express coupon codes updated for {{MONTH_YEAR}}. Check real promo statuses, Family Meal discounts, Rewards stacking tips, and menu savings.`,
     canonicalPath: '/',
     ogImage: '/public/images/og/og-home.jpg',
     ogImageAlt: 'Panda Express coupon codes and deals status tracker',
     breadcrumbs: [{ label: 'Home', url: '/' }],
     suppressBreadcrumbsHtml: true,
     content,
-    schemaJson: faqSchema
+    schemaJson: [webPageSchema, faqSchema]
   };
 }
 
