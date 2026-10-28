@@ -41,10 +41,14 @@
   --color-primary-hover: #A50D26;
   --color-primary-light: #FEE2E2;
   --color-primary-surface: #FFF5F5;
+  --color-primary-red: #C8102E;
   --color-black: #0B0B0C;
+  --color-heading: #0B0B0C;
   --color-header-bg: rgba(11, 11, 12, 0.94);
   --color-body-text: #1F242E;
+  --color-text: #1F242E;
   --color-muted-text: #374151;
+  --color-text-muted: #374151;
   --color-white: #FFFFFF;
   --color-soft-bg: #F9F8F6;
   --color-borders: #E5E7EB;
@@ -2503,7 +2507,6 @@ details.faq-item[open] .faq-chevron {
     transform: scale(1.06);
   }
 }
-}
 
 .hero-gradient-overlay {
   position: absolute;
@@ -3105,7 +3108,6 @@ details.faq-item[open] .faq-chevron {
     background: var(--color-primary);
     font-weight: 700;
   }
-}
 
 /* 3. Ticket-Style Coupon Section (Dark Wok Surface) */
 .coupon-dark-section {
@@ -3157,15 +3159,15 @@ details.faq-item[open] .faq-chevron {
 }
 
 .subtitle-light {
-  color: #94A3B8;
+  color: #CBD5E1;
   font-size: 1.05rem;
   max-width: 720px;
   line-height: 1.6;
 }
 
 .notice-callout-red {
-  background: rgba(200, 16, 46, 0.12);
-  border: 1px solid rgba(200, 16, 46, 0.35);
+  background: rgba(200, 16, 46, 0.15);
+  border: 1px solid rgba(200, 16, 46, 0.4);
   border-left: 4px solid var(--color-primary);
   border-radius: var(--radius-sm);
   padding: 1rem 1.25rem;
@@ -3173,7 +3175,7 @@ details.faq-item[open] .faq-chevron {
   align-items: flex-start;
   gap: 0.85rem;
   margin-bottom: 2rem;
-  color: #FCA5A5;
+  color: #FECACA;
   font-size: 0.92rem;
 }
 
@@ -3329,8 +3331,8 @@ details.faq-item[open] .faq-chevron {
 .ticket-min-badge {
   font-size: 0.78rem;
   font-weight: 700;
-  color: #94A3B8;
-  background: rgba(255, 255, 255, 0.06);
+  color: #E2E8F0;
+  background: rgba(255, 255, 255, 0.1);
   padding: 0.25rem 0.6rem;
   border-radius: var(--radius-sm);
 }
@@ -3356,7 +3358,7 @@ details.faq-item[open] .faq-chevron {
 
 .ticket-notes {
   font-size: 0.84rem;
-  color: #8E95A5;
+  color: #E2E8F0;
   line-height: 1.5;
   margin-bottom: 0;
 }

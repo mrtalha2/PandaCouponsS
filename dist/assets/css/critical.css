@@ -36,10 +36,14 @@
   --color-primary-hover: #A50D26;
   --color-primary-light: #FEE2E2;
   --color-primary-surface: #FFF5F5;
+  --color-primary-red: #C8102E;
   --color-black: #0B0B0C;
+  --color-heading: #0B0B0C;
   --color-header-bg: rgba(11, 11, 12, 0.94);
   --color-body-text: #1F242E;
+  --color-text: #1F242E;
   --color-muted-text: #374151;
+  --color-text-muted: #374151;
   --color-white: #FFFFFF;
   --color-soft-bg: #F9F8F6;
   --color-borders: #E5E7EB;
@@ -258,7 +262,6 @@ h1, h2, h3, h4, h5, h6 {
   .header-inner {
     height: 64px;
   }
-}
   .brand-icon {
     width: 34px;
     height: 34px;
@@ -809,7 +812,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .subtitle-light {
-  color: #D1D5DB;
+  color: #CBD5E1;
+}
+
+.coupon-dark-section {
+  background-color: #0E0E10;
+  color: var(--color-white);
 }
 
 .breadcrumbs {

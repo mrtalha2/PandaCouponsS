@@ -350,12 +350,12 @@ function renderHome() {
 
         <!-- Internal Links to Guide Pages -->
         <div style="margin-top: 1.75rem; padding-top: 1.25rem; border-top: 1px dashed var(--color-borders); display: flex; flex-direction: column; gap: 0.75rem;">
-          <span style="font-size: 0.9rem; font-weight: 600; color: var(--color-text);">Explore Our Independent Guides &amp; Decision Tools:</span>
+          <span style="font-size: 0.9rem; font-weight: 700; color: var(--color-heading, #1F242E);">Explore Our Independent Guides &amp; Decision Tools:</span>
           <div style="display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem;">
-            <a href="/panda-express-savings-calculator/" style="color: var(--color-primary-red); font-weight: 600; text-decoration: underline;">Panda Express Savings Calculator &rarr;</a>
-            <a href="/panda-express-menu/" style="color: var(--color-primary-red); font-weight: 600; text-decoration: underline;">Menu &amp; Bowl Price Directory &rarr;</a>
-            <a href="/panda-express-nutrition/" style="color: var(--color-primary-red); font-weight: 600; text-decoration: underline;">Meal Nutrition &amp; Macro Calculator &rarr;</a>
-            <a href="/panda-express-orange-chicken/" style="color: var(--color-primary-red); font-weight: 600; text-decoration: underline;">Orange Chicken Nutrition &amp; Pricing &rarr;</a>
+            <a href="/panda-express-savings-calculator/" style="color: var(--color-primary, #C8102E); font-weight: 600; text-decoration: underline;">Panda Express Savings Calculator &rarr;</a>
+            <a href="/panda-express-menu/" style="color: var(--color-primary, #C8102E); font-weight: 600; text-decoration: underline;">Menu &amp; Bowl Price Directory &rarr;</a>
+            <a href="/panda-express-nutrition/" style="color: var(--color-primary, #C8102E); font-weight: 600; text-decoration: underline;">Meal Nutrition &amp; Macro Calculator &rarr;</a>
+            <a href="/panda-express-orange-chicken/" style="color: var(--color-primary, #C8102E); font-weight: 600; text-decoration: underline;">Orange Chicken Nutrition &amp; Pricing &rarr;</a>
           </div>
         </div>
       </div>
@@ -372,8 +372,8 @@ function renderHome() {
         <p class="subtitle-light" style="max-width: 860px; margin-left: auto; margin-right: auto;">
           Before you copy any code from this table or anywhere else, understand this: <strong>no coupon site — including this one — can guarantee a code works at the exact moment you check out</strong>. Codes rotate, deactivate after one use, or get switched off regionally without notice. What we can do is tell you how much corroboration each code has, so you're not wasting time on something that's been dead for months.
         </p>
-        <p class="coupon-table-lead-note" style="color: #94A3B8; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0;">
-          Codes below come from public reports and may be location-limited. <a href="#verification-process-section" style="color: #F5B301; text-decoration: underline;">How we check codes &rarr;</a>
+        <p class="coupon-table-lead-note" style="color: #CBD5E1; font-size: 0.95rem; margin-top: 0.75rem; margin-bottom: 0;">
+          Codes below come from public reports and may be location-limited. <a href="#verification-process-section" style="color: #FBBF24; font-weight: 600; text-decoration: underline;">How we check codes &rarr;</a>
         </p>
       </div>
 
@@ -439,9 +439,9 @@ function renderHome() {
                 <div class="ticket-discount">${c.discount}</div>
                 <div class="ticket-bestfor">Best for: <strong>${c.bestFor}</strong></div>
                 <p class="ticket-notes">${c.notes}</p>
-                <div class="ticket-confidence" style="font-size: 0.78rem; color: #94A3B8; margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.35rem;">
+                <div class="ticket-confidence" style="font-size: 0.78rem; color: #CBD5E1; margin-top: 0.5rem; display: flex; align-items: center; justify-content: space-between; gap: 0.35rem;">
                   <div><span>Status:</span> <strong style="color: ${effectiveStatus === 'Active' ? '#86EFAC' : (effectiveStatus === 'Expired' ? '#FCA5A5' : '#FDE047')};">${label}</strong></div>
-                  <span style="font-size: 0.75rem; color: #64748B;">Checked ${c.lastChecked}</span>
+                  <span style="font-size: 0.75rem; color: #94A3B8;">Checked ${c.lastChecked}</span>
                 </div>
               </div>
 
@@ -516,11 +516,11 @@ function renderHome() {
       </div>
 
       <!-- Table Footnote & Sourcing Callouts -->
-      <div style="margin-top: 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: var(--radius-md); padding: 1.25rem;">
-        <p class="table-footnote" style="margin-bottom: 0.5rem; color: #E2E8F0;">
+      <div style="margin-top: 1.5rem; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: var(--radius-md); padding: 1.25rem;">
+        <p class="table-footnote" style="margin-bottom: 0.5rem; color: #FFFFFF;">
           * <strong>Important:</strong> This table is not exhaustive and not a guarantee. Confirm the discount actually appears in your cart before completing payment — if it doesn't apply, the code is dead, restricted to your region, or below the minimum spend.
         </p>
-        <p style="font-size: 0.82rem; color: #94A3B8; margin-bottom: 0; line-height: 1.5;">
+        <p style="font-size: 0.82rem; color: #E2E8F0; margin-bottom: 0; line-height: 1.5;">
           ⚠️ <strong>A note on where these codes come from:</strong> Most circulate through Reddit threads, deal forums, and coupon aggregators — not from an official Panda Express public coupon feed, because one doesn't exist. Treat anything marked "Unconfirmed" as worth a try, not a promise.
         </p>
       </div>
@@ -721,14 +721,14 @@ function renderHome() {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">Why In-App Codes Don't Transfer to Delivery Platforms</h3>
+          <h3 style="font-size: 1.2rem; color: var(--color-heading, #0B0B0C); margin-top: 0; font-weight: 700;">Why In-App Codes Don't Transfer to Delivery Platforms</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); line-height: 1.6; margin-bottom: 0;">
             Codes entered on <code>pandaexpress.com</code> or the Panda Express app are processed by Panda Express directly. DoorDash, Uber Eats, and Grubhub run entirely separate checkout systems. A promo box on one platform has no connection to the other. Pasting a Panda Express code into a DoorDash cart will simply return an error — the code isn't recognized because it was never meant to work there.
           </p>
         </div>
 
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">Where Delivery-Specific Promos Actually Live</h3>
+          <h3 style="font-size: 1.2rem; color: var(--color-heading, #0B0B0C); margin-top: 0; font-weight: 700;">Where Delivery-Specific Promos Actually Live</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); margin-bottom: 0.5rem;">Each delivery platform manages its own restaurant promotions, and they change independently of anything Panda Express runs directly:</p>
           <ul style="font-size: 0.9rem; color: var(--color-muted-text); padding-left: 1.25rem; margin-bottom: 0.5rem;">
             <li><strong>DoorDash</strong> — check the "Deals" or "Offers" tab within the app; Panda Express periodically appears in platform-wide promotions.</li>
@@ -1105,21 +1105,21 @@ function renderHome() {
 
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">How We Check Codes</h3>
+          <h3 style="font-size: 1.2rem; color: var(--color-heading, #0B0B0C); margin-top: 0; font-weight: 700;">How We Check Codes</h3>
           <p style="font-size: 0.92rem; color: var(--color-muted-text); line-height: 1.6; margin-bottom: 0;">
             We collect codes from Panda Express's own app and website and from public deal reports, try them where possible, and label each by how sure we are. Codes change often and vary by location, so confirm the discount in your cart before paying. We do not have a live feed from Panda Express.
           </p>
         </div>
 
         <div style="background: var(--color-card-bg); border-radius: var(--radius-md); padding: var(--card-pad-desktop); box-shadow: var(--shadow-sm); border: 1px solid var(--color-borders);">
-          <h3 style="font-size: 1.2rem; color: #FFFFFF; margin-top: 0; font-weight: 700;">What Each Confidence Level Means</h3>
+          <h3 style="font-size: 1.2rem; color: var(--color-heading, #0B0B0C); margin-top: 0; font-weight: 700;">What Each Confidence Level Means</h3>
           <ul style="font-size: 0.92rem; color: var(--color-muted-text); padding-left: 1.25rem; margin-bottom: 1rem;">
             <li style="margin-bottom: 0.5rem;"><strong>Active (Reported working):</strong> The code was recently reported working by community members or verified in active test carts. Still subject to location and account restrictions.</li>
             <li style="margin-bottom: 0.5rem;"><strong>Unconfirmed:</strong> The code appears in circulation or third-party listings, but lacks recent independent confirmation.</li>
             <li><strong>Expired:</strong> Past the promotional end date or consistently reported non-functional across locations.</li>
           </ul>
 
-          <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--color-muted-text); margin-bottom: 0.35rem;">Where We Look</h4>
+          <h4 style="font-size: 0.95rem; text-transform: uppercase; color: var(--color-heading, #0B0B0C); font-weight: 700; margin-bottom: 0.35rem;">Where We Look</h4>
           <p style="font-size: 0.88rem; color: var(--color-muted-text); margin-bottom: 0;">
             Panda Express digital channels (<code>pandaexpress.com</code> and the Rewards signup page), deal communities where codes are first reported, and cross-referencing dates to catch stale codes.
           </p>
