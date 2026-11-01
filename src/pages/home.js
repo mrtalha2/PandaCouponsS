@@ -11,7 +11,7 @@ const config = require('../../data/site.config');
 const { renderAuthorComponent, renderAffiliateDisclosure } = require('../templates/components');
 
 function renderHome() {
-  const verifiedDate = config.lastVerifiedDate || "2026-10-18";
+  const verifiedDate = config.lastVerifiedDate || "2026-11-01";
   const lastVerifiedDate = "{{MONTH_YEAR}}";
   const liveCoupons = (couponsData.coupons || []).filter(c => c.isDraft !== true);
 

@@ -6,6 +6,7 @@
 const fs = require('fs');
 const path = require('path');
 const menuData = require('../../data/menu.json');
+const pricingData = require('../../data/pricing.json');
 
 function renderMenu() {
   const badgeText = '🐼 {{YEAR}} PANDA EXPRESS MENU &amp; PRICES';
@@ -133,7 +134,7 @@ function renderMenu() {
             <span class="hero-stat-desc">${stat3Label}</span>
           </div>
           <div class="hero-stat-box">
-            <span class="hero-stat-val" style="color: #F5B301;">2026-10-01</span>
+            <span class="hero-stat-val" style="color: #F5B301;">${pricingData.checkedDate || '2026-11-01'}</span>
             <span class="hero-stat-desc">Prices Checked &bull; Vary by Location</span>
           </div>
         </div>

@@ -1,6 +1,6 @@
 {
   "source": "Official Panda Express Nutrition Guide",
-  "sourceCheckedDate": "2026-10-01",
+  "sourceCheckedDate": "2026-11-01",
   "disclaimer": "Nutrition source: official Panda Express nutrition guide, last checked {{MONTH_YEAR}}. Values vary by location and preparation.",
   "mealTypes": [
     {
